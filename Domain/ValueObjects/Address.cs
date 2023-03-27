@@ -21,7 +21,8 @@ namespace Domain.ValueObjects
             City = city;
         }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        /// <inheritdoc/>
+        protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Street;
             yield return City;

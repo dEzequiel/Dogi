@@ -1,61 +1,69 @@
 ﻿namespace Domain.Common
 {
-    public abstract class ValueObject
+    /// <summary>
+    /// Represents the base class all value objects derive from.
+    /// </summary>
+    public abstract class ValueObject : IEquatable<ValueObject>
     {
-        /// <summary>
-        /// Object Equal Operator
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        protected static bool EqualOperator(ValueObject left, ValueObject right)
+        public static bool operator ==(ValueObject a, ValueObject b)
         {
-            if (left is null ^ right is null)
+            if (a is null && b is null)
+            {
+                return true;
+            }
+
+            if (a is null || b is null)
             {
                 return false;
             }
 
-            return left?.Equals(right!) != false;
+            return a.Equals(b);
         }
 
-        /// <summary>
-        /// Object Not Equal
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        protected static bool NotEqualOperator(ValueObject left, ValueObject right)
-        {
-            return !(EqualOperator(left, right));
-        }
+        public static bool operator !=(ValueObject a, ValueObject b) => !(a == b);
 
-        protected abstract IEnumerable<object> GetEqualityComponents();
+        /// <inheritdoc />
+        public bool Equals(ValueObject other) => !(other is null) && GetAtomicValues().SequenceEqual(other.GetAtomicValues());
 
-        /// <summary>
-        /// Object Equals
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object? obj)
+        /// <inheritdoc />
+        public override bool Equals(object obj)
         {
-            if (obj == null || obj.GetType() != GetType())
+            if (obj == null)
             {
                 return false;
             }
 
-            var other = (ValueObject)obj;
-            return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+            if (GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            if (!(obj is ValueObject valueObject))
+            {
+                return false;
+            }
+
+            return GetAtomicValues().SequenceEqual(valueObject.GetAtomicValues());
         }
 
-        /// <summary>
-        /// Object HashCode
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc />
         public override int GetHashCode()
         {
-            return GetEqualityComponents()
-                .Select(x => x != null ? x.GetHashCode() : 0)
-                .Aggregate((x, y) => x ^ y);
+            HashCode hashCode = default;
+
+            foreach (object obj in GetAtomicValues())
+            {
+                hashCode.Add(obj);
+            }
+
+            return hashCode.ToHashCode();
         }
+
+        /// <summary>
+        /// Gets the atomic values of the value object.
+        /// </summary>
+        /// <returns>The collection of objects representing the value object values.</returns>
+        protected abstract IEnumerable<object> GetAtomicValues();
     }
 }
+
