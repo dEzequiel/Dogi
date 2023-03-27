@@ -9,8 +9,9 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes
         /// </summary>
+        private readonly List<Person> _persons = new();
         public Address Address { get; set; }
-        public IList<Person> Persons { get; private set; } = new List<Person>();
+        public IReadOnlyCollection<Person> Persons => _persons;
         public Poblation PoblationLevel { get; set; }
 
         /// <summary>
@@ -20,11 +21,21 @@ namespace Domain.Entities
         /// <param name="address"></param>
         /// <param name="persons"></param>
         /// <param name="poblationLevel"></param>
-        public House(Guid id, Address address, IList<Person> persons, Poblation poblationLevel) : base(id)
+        public House(Guid id, Address address, Poblation poblationLevel) : base(id)
         {
             Address = address;
-            Persons = persons;
             PoblationLevel = poblationLevel;
+        }
+
+        /// <summary>
+        /// Add Person to House.
+        /// </summary>
+        /// <param name="person">Person object.</param>
+        /// <returns>Added Person.</returns>
+        public Person AddPerson(Person person)
+        {
+            _persons.Add(person);
+            return person;
         }
     }
 }
