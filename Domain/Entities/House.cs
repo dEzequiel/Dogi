@@ -10,9 +10,9 @@ namespace Domain.Entities
         /// Attributes
         /// </summary>
         private readonly List<Person> _persons = new();
-        public Address Address { get; set; }
+        public Address Address { get; private set; }
         public IReadOnlyCollection<Person> Persons => _persons;
-        public Poblation PoblationLevel { get; set; }
+        public Poblation PoblationLevel { get; private set; }
 
         /// <summary>
         /// Constructor
