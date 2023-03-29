@@ -15,10 +15,26 @@ namespace Domain.ValueObjects
         /// </summary>
         /// <param name="street"></param>
         /// <param name="city"></param>
-        public Address(string street, string city)
+        private Address(string street, string city)
         {
             Street = street;
             City = city;
+        }
+
+        /// <summary>
+        /// Static Factory Pattern
+        /// </summary>
+        /// <param name="street"></param>
+        /// <param name="city"></param>
+        /// <returns>Address Object</returns>
+        public Address? Create(string street, string city)
+        {
+            if(string.IsNullOrEmpty(street) || string.IsNullOrEmpty(city))
+            {
+                return null;
+            }
+
+            return new Address(street, city);
         }
 
         /// <inheritdoc/>
