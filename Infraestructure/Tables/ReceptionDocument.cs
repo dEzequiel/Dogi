@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Tables
 {
-    [Table("ReceptionDocument", Schema = "dbo")]
+    /// <summary>
+    /// Code First. ReceptionDocument database table.
+    /// </summary>
+    [Table("ReceptionDocument", Schema = "Dogi")]
     public class ReceptionDocument
     {
         [Key]
@@ -16,8 +19,8 @@ namespace Infraestructure.Tables
         public Guid Id { get; set; }
         public Guid Category { get; private set; }
         public int Sex { get; private set; }
-        public bool HasChip { get; private set; } 
-        public string Color { get; private set; } 
+        public bool HasChip { get; private set; }
+        public string Color { get; private set; } = null!;
         public string? Observations { get; private set; } 
         public string? PickupLocation { get; private set; } 
         public DateTime? PickupDate { get; private set; }
