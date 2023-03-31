@@ -34,11 +34,12 @@ namespace Domain.Entities
         /// <param name="color"></param>
         private Animal(
             Guid id,
-            ReceptionDocument receptionDocument,
+            Guid receptionDocumentId,
             string name,
             int age,
             string color) : base(id)
         {
+            ReceptionDocumentId = receptionDocumentId;
             Name = name;
             Age = age;
             Color = color;
@@ -48,21 +49,19 @@ namespace Domain.Entities
         /// Static Factory Pattern. Creates new Animal in valid state.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="documentReceptionId"></param>
+        /// <param name="receptionDocumentId"></param>
         /// <param name="name"></param>
         /// <param name="age"></param>
         /// <param name="color"></param>
         /// <returns></returns>
         public static Result<Animal> Create(
             Guid id,
-            ReceptionDocument receptionDocument,
+            Guid receptionDocumentId,
             string name,
             int age,
             string color)
         {
-            var animal = new Animal(id, receptionDocument, name, age, color);
-
-            animal.ReceptionDocumentId = receptionDocument.Id;
+            var animal = new Animal(id, receptionDocumentId, name, age, color);
 
             return animal;
         }
