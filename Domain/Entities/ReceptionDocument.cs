@@ -13,7 +13,7 @@ namespace Domain.Entities
     /// <summary>
     /// It is a document filled out by the collection services at the time of action or by the protector when receiving the animal.
     /// </summary>
-    public sealed class ReceptionDocument : Entity
+    public class ReceptionDocument : Entity
     {
         /// <summary>
         /// Attributes.
