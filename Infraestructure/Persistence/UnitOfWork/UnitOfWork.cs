@@ -20,8 +20,6 @@ namespace Infraestructure.Persistence.UnitOfWork
         /// Constructor.
         /// </summary>
         /// <param name="context"></param>
-        /// <param name="workFlowAgent"></param>
-        /// <param name="configuration"></param>
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
