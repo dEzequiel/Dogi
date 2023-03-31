@@ -1,16 +1,9 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.Interfaces.Repositories;
 using Infraestructure.Context;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.InMemory;
-using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
 using Infraestructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Test.Infraestructure
 {
