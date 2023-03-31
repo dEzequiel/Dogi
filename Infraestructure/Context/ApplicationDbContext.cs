@@ -20,7 +20,8 @@ namespace Infraestructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ReceptionDocument>();
+            //modelBuilder.Entity<ReceptionDocument>();
+            new ReceptionDocumentTypeConfiguration().Configure(modelBuilder.Entity<ReceptionDocument>());
             new AnimalTypeConfiguration().Configure(modelBuilder.Entity<Animal>());
         }
     }

@@ -9,9 +9,8 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<Animal> builder)
         {
             builder
-                .ToTable("Animals", "dbo")
+                .ToTable("Animal", "Dogi")
                 .HasKey(x => x.Id)
-                .HasName("PK_Animals")
                 .IsClustered(false);
 
             builder.HasOne<ReceptionDocument>(f => f.ReceptionDocument)

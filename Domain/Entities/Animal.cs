@@ -34,12 +34,10 @@ namespace Domain.Entities
         /// <param name="color"></param>
         private Animal(
             Guid id,
-            Guid documentReceptionId,
             string name,
             int age,
             string color) : base(id)
         {
-            ReceptionDocumentId = documentReceptionId;
             Name = name;
             Age = age;
             Color = color;
@@ -61,7 +59,7 @@ namespace Domain.Entities
             int age,
             string color)
         {
-            return new Animal(id, documentReceptionId, name, age, color);
+            return new Animal(id, name, age, color);
         }
 
     }
