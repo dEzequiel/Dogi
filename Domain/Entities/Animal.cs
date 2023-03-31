@@ -13,7 +13,7 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid DocumentReceptionId { get; set; }
+        public Guid ReceptionDocumentId { get; set; }
         public string Name { get; private set; }
         public int Age { get; private set; }
         public string Color { get; private set; }
@@ -39,7 +39,7 @@ namespace Domain.Entities
             int age,
             string color) : base(id)
         {
-            DocumentReceptionId = documentReceptionId;
+            ReceptionDocumentId = documentReceptionId;
             Name = name;
             Age = age;
             Color = color;

@@ -28,6 +28,11 @@ namespace Domain.Entities
         public DateTime? PickupDate { get; private set; }
 
         /// <summary>
+        /// Navigation properties.
+        /// </summary>
+        public virtual Animal Animal { get; private set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="actor"></param>
