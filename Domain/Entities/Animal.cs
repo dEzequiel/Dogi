@@ -34,6 +34,7 @@ namespace Domain.Entities
         /// <param name="color"></param>
         private Animal(
             Guid id,
+            ReceptionDocument receptionDocument,
             string name,
             int age,
             string color) : base(id)
@@ -54,12 +55,16 @@ namespace Domain.Entities
         /// <returns></returns>
         public static Result<Animal> Create(
             Guid id,
-            Guid documentReceptionId,
+            ReceptionDocument receptionDocument,
             string name,
             int age,
             string color)
         {
-            return new Animal(id, name, age, color);
+            var animal = new Animal(id, receptionDocument, name, age, color);
+
+            animal.ReceptionDocumentId = receptionDocument.Id;
+
+            return animal;
         }
 
     }
