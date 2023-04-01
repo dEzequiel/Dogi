@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Exceptions;
 using Domain.Exceptions.Result;
 using System;
 using System.Collections.Generic;
@@ -61,9 +62,23 @@ namespace Domain.Entities
             int age,
             string color)
         {
-            var animal = new Animal(id, receptionDocumentId, name, age, color);
+            if (id == Guid.Empty)
+                return Result.Failure<Animal>(DomainErrors.Animal.AnimalIdIsNullOrEmpty);
 
-            return animal;
+            if (receptionDocumentId == Guid.Empty)
+                return Result.Failure<Animal>(DomainErrors.Animal.ReceptionDocumentIdIsNullOrEmpty);
+
+            if (string.IsNullOrEmpty(name))
+                return Result.Failure<Animal>(DomainErrors.Animal.AnimalNameCantBeNullOrEmpty);
+
+            if (age < 0)
+                return Result.Failure<Animal>(DomainErrors.Animal.AnimalAgeCantBeLowerThanZero);
+
+            if (string.IsNullOrEmpty(color))
+                return Result.Failure<Animal>(DomainErrors.Animal.AnimalColorCantBeNullOrEmpty);
+
+            return new Animal(id, receptionDocumentId, name, age, color);
+
         }
 
     }
