@@ -43,6 +43,8 @@ namespace Domain.Entities
         /// <param name="observations"></param>
         /// <param name="pickupLocation"></param>
         /// <param name="pickupDate"></param>
+        public ReceptionDocument(Guid id) : base(id) { }
+
         private ReceptionDocument(
             Guid id,
             Guid actor,
