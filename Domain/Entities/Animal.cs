@@ -33,6 +33,8 @@ namespace Domain.Entities
         /// <param name="name"></param>
         /// <param name="age"></param>
         /// <param name="color"></param>
+        public Animal(Guid id) : base(id) { }
+
         private Animal(
             Guid id,
             Guid receptionDocumentId,
