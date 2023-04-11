@@ -18,9 +18,9 @@
         /// </summary>
         public static class ReceptionDocument
         {
-            public static readonly Error ReceptionIdIsNullOrEmpty = new Error("ReceptionDocument.Id", "ReceptionDocument Id can't have null or default value.");
-            public static readonly Error ActorIsNullOrEmpty = new Error("ReceptionDocument.Actor", "Actor can't have null or default value.");
-            public static readonly Error CategoryIsNullOrEmpty = new Error("ReceptionDocument.Category", "Category can't have null or default value.");
+            public static readonly Error ReceptionIdIsNullOrEmpty = new Error("ReceptionDocument.Id", "ReceptionDocument Id can't have null or default values.");
+            public static readonly Error ActorIsNullOrEmpty = new Error("ReceptionDocument.Actor", "Actor can't have null or default values.");
+            public static readonly Error CategoryIsNullOrEmpty = new Error("ReceptionDocument.Category", "Category can't have null or default values.");
             public static readonly Error ColorIsEmpty = new Error("ReceptionDocument.Color", "Color can't be null or empty.");
         }
 
@@ -29,11 +29,21 @@
         /// </summary>
         public static class Animal
         {
-            public static readonly Error AnimalIdIsNullOrEmpty = new Error("Animal.Id", "Animal Id can't have null or default value");
-            public static readonly Error ReceptionDocumentIdIsNullOrEmpty = new Error("Animal.ReceptionDocumentId", "ReceptionDocumentId can't have null or default value.");
-            public static readonly Error AnimalNameCantBeNullOrEmpty = new Error("Animal.Name", "Name can't have null or empty value.");
-            public static readonly Error AnimalAgeCantBeLowerThanZero = new Error("Animal.Age", "Age can't have value lower tan zero.");
-            public static readonly Error AnimalColorCantBeNullOrEmpty = new Error("Animal.Color", "Color can't have null or empty value.");
+            public static readonly Error AnimalIdIsNullOrEmpty = new Error("Animal.Id", "Animal Id can't have null or default values");
+            public static readonly Error ReceptionDocumentIdIsNullOrEmpty = new Error("Animal.ReceptionDocumentId", "ReceptionDocumentId can't have null or default values.");
+            public static readonly Error AnimalNameCantBeNullOrEmpty = new Error("Animal.Name", "Name can't have null or empty values.");
+            public static readonly Error AnimalAgeCantBeLowerThanZero = new Error("Animal.Age", "Age can't have value lower tan zeros.");
+            public static readonly Error AnimalColorCantBeNullOrEmpty = new Error("Animal.Color", "Color can't have null or empty values.");
+        }
+
+        /// <summary>
+        /// Collection of Errors related to AnimalChip Entity.
+        /// </summary>
+        public static class AnimalChip
+        {
+            public static readonly Error AnimalChipIdIsNullOrEmpty = new Error("AnimalChip.Id", "Animal Id can't have null or default values.");
+            public static readonly Error AnimalChipOwnerIsNull = new Error("AnimalChip.Owner", "Animal Owner can't have null values.");
+
         }
     }
 }

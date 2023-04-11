@@ -2,6 +2,9 @@
 
 namespace Domain.ValueObjects
 {
+    /// <summary>
+    /// Represents the owner found by the chip.
+    /// </summary>
     public class AnimalChipOwner : ValueObject
     {
 

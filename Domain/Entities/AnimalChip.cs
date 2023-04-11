@@ -2,14 +2,12 @@
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
 using Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
+    /// <summary>
+    /// Represents the electronic chip of an animal.
+    /// </summary>
     public class AnimalChip : Entity
     {
 
@@ -31,16 +29,25 @@ namespace Domain.Entities
             Address = address;
         }
 
+        /// <summary>
+        /// Static Factory Pattern.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="owner"></param>
+        /// <param name="address"></param>
+        /// <returns></returns>
         public static Result<AnimalChip> Create(
             Guid id, 
-            AnimalChip owner, 
-            Address addressAddress)
+            AnimalChipOwner owner, 
+            Address address)
         {
             if (id == Guid.Empty)
                 return Result.Failure<AnimalChip>(DomainErrors.AnimalChip.AnimalChipIdIsNullOrEmpty);
 
             if (owner == null)
-                return Result.Failure<AnimalChip>(DomainErrors.AnimalChip.AnimalChipIdIsNullOrEmpty);
+                return Result.Failure<AnimalChip>(DomainErrors.AnimalChip.AnimalChipOwnerIsNull);
+
+            return new AnimalChip(id, owner, address);
         }
     }
 }

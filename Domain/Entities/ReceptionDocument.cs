@@ -21,7 +21,7 @@ namespace Domain.Entities
         public Guid Actor { get; private set; }
         public Guid Category { get; private set; }
         public Sex Sex { get; private set; }
-        public Chip Chip { get; private set; };
+        public AnimalChip Chip { get; private set; }
         public string Color { get; private set; } = string.Empty;
         public string? Observations { get; private set; } = string.Empty;
         public string? PickupLocation { get; private set; } = string.Empty;
@@ -38,7 +38,7 @@ namespace Domain.Entities
         /// <param name="actor"></param>
         /// <param name="sex"></param>
         /// <param name="category"></param>
-        /// <param name="hasChip"></param>
+        /// <param name="chip"></param>
         /// <param name="color"></param>
         /// <param name="observations"></param>
         /// <param name="pickupLocation"></param>
@@ -50,7 +50,7 @@ namespace Domain.Entities
             Guid actor,
             Guid category,
             Sex sex, 
-            bool hasChip, 
+            AnimalChip chip, 
             string color, 
             string? observations, 
             string? pickupLocation, 
@@ -59,7 +59,7 @@ namespace Domain.Entities
             Actor = actor;
             Sex = sex;
             Category = category;
-            HasChip = hasChip;
+            Chip = chip;
             Color = color;
             Observations = observations;
             PickupLocation = pickupLocation;
@@ -74,7 +74,7 @@ namespace Domain.Entities
         /// <param name="actor"></param>
         /// <param name="sex"></param>
         /// <param name="category"></param>
-        /// <param name="hasChip"></param>
+        /// <param name="chip"></param>
         /// <param name="color"></param>
         /// <param name="observations"></param>
         /// <param name="pickupLocation"></param>
@@ -85,7 +85,7 @@ namespace Domain.Entities
             Guid actor,
             Guid category,
             Sex sex,
-            bool hasChip,
+            AnimalChip chip,
             string color,
             string? observations,
             string? pickupLocation,
@@ -104,7 +104,7 @@ namespace Domain.Entities
             if(string.IsNullOrEmpty(color))
                 return Result.Failure<ReceptionDocument?>(DomainErrors.ReceptionDocument.ColorIsEmpty);
 
-            return new ReceptionDocument(id, actor, category, sex, hasChip, color, observations, pickupLocation, pickupDate);
+            return new ReceptionDocument(id, actor, category, sex, chip, color, observations, pickupLocation, pickupDate);
 
         }
     }
