@@ -21,7 +21,7 @@ namespace Domain.Entities
         public Guid Actor { get; private set; }
         public Guid Category { get; private set; }
         public Sex Sex { get; private set; }
-        public bool HasChip { get; private set; } = false;
+        public Chip Chip { get; private set; };
         public string Color { get; private set; } = string.Empty;
         public string? Observations { get; private set; } = string.Empty;
         public string? PickupLocation { get; private set; } = string.Empty;
