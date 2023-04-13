@@ -1,12 +1,6 @@
 ﻿using Domain.Common;
-using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -18,28 +12,15 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid Actor { get; private set; }
-        public Guid Category { get; private set; }
-        public Sex Sex { get; private set; }
-        public AnimalChip Chip { get; private set; }
-        public string Color { get; private set; } = string.Empty;
+        public bool HasChip { get; private set; }
         public string? Observations { get; private set; } = string.Empty;
         public string? PickupLocation { get; private set; } = string.Empty;
         public DateTime? PickupDate { get; private set; }
 
         /// <summary>
-        /// Navigation properties.
-        /// </summary>
-        public virtual Animal Animal { get; private set; }
-
-        /// <summary>
         /// Constructor
-        /// </summary>
-        /// <param name="actor"></param>
-        /// <param name="sex"></param>
-        /// <param name="category"></param>
-        /// <param name="chip"></param>
-        /// <param name="color"></param>
+        /// </summary>W
+        /// <param name="hasChip"></param>
         /// <param name="observations"></param>
         /// <param name="pickupLocation"></param>
         /// <param name="pickupDate"></param>
@@ -47,20 +28,12 @@ namespace Domain.Entities
 
         private ReceptionDocument(
             Guid id,
-            Guid actor,
-            Guid category,
-            Sex sex, 
-            AnimalChip chip, 
-            string color, 
+            bool hasChip, 
             string? observations, 
             string? pickupLocation, 
             DateTime? pickupDate) : base(id)
         {
-            Actor = actor;
-            Sex = sex;
-            Category = category;
-            Chip = chip;
-            Color = color;
+            HasChip = hasChip;
             Observations = observations;
             PickupLocation = pickupLocation;
             PickupDate = pickupDate;
@@ -71,22 +44,14 @@ namespace Domain.Entities
         /// in valid state.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="actor"></param>
-        /// <param name="sex"></param>
-        /// <param name="category"></param>
-        /// <param name="chip"></param>
-        /// <param name="color"></param>
+        /// <param name="hasChip"></param>
         /// <param name="observations"></param>
         /// <param name="pickupLocation"></param>
         /// <param name="pickupDate"></param>
         /// <returns>ReceptionDocument</returns>
         public static Result<ReceptionDocument?> Create(
             Guid id,
-            Guid actor,
-            Guid category,
-            Sex sex,
-            AnimalChip chip,
-            string color,
+            bool hasChip,
             string? observations,
             string? pickupLocation,
             DateTime? pickupDate)
@@ -95,16 +60,7 @@ namespace Domain.Entities
             if(id == Guid.Empty)
                 return Result.Failure<ReceptionDocument?>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty);
 
-            if (actor == Guid.Empty)
-                return Result.Failure<ReceptionDocument?>(DomainErrors.ReceptionDocument.ActorIsNullOrEmpty);
-            
-            if(category  == Guid.Empty)
-                return Result.Failure<ReceptionDocument?>(DomainErrors.ReceptionDocument.CategoryIsNullOrEmpty);
-
-            if(string.IsNullOrEmpty(color))
-                return Result.Failure<ReceptionDocument?>(DomainErrors.ReceptionDocument.ColorIsEmpty);
-
-            return new ReceptionDocument(id, actor, category, sex, chip, color, observations, pickupLocation, pickupDate);
+            return new ReceptionDocument(id, hasChip, observations, pickupLocation, pickupDate);
 
         }
     }
