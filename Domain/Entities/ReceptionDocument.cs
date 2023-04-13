@@ -18,6 +18,11 @@ namespace Domain.Entities
         public DateTime? PickupDate { get; private set; }
 
         /// <summary>
+        /// Navigation properties.
+        /// </summary>
+        public virtual Animal Animal { get; set; } = null!;
+
+        /// <summary>
         /// Constructor
         /// </summary>W
         /// <param name="hasChip"></param>
