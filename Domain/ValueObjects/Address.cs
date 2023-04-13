@@ -2,6 +2,9 @@
 
 namespace Domain.ValueObjects
 {
+    /// <summary>
+    /// Represents an address.
+    /// </summary>
     public class Address : ValueObject
     {
         /// <summary>

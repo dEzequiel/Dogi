@@ -39,26 +39,26 @@ namespace Test.Infraestructure
 
         private void Seed(ApplicationDbContext context)
         {
-            var CategoryId = Guid.Parse("1d5f841d-e020-4192-a0eb-77e97eb1b7d4");
+           // var CategoryId = Guid.Parse("1d5f841d-e020-4192-a0eb-77e97eb1b7d4");
 
-            var receptionDocuments = new List<ReceptionDocument>();
+           // var receptionDocuments = new List<ReceptionDocument>();
 
-            var reception = ReceptionDocument.Create(
-                Guid.Parse("a06a5f34-58ac-41ec-bccb-9a8c38696bd2"),
-                Guid.Parse("a06a5f34-58ac-41ec-bccb-9a8c38696bd2"),
-                CategoryId,
-                ((int)Sex.Male),
-                false,
-                "black",
-                null,
-                null,
-                null
-           );
+           // var reception = ReceptionDocument.Create(
+           //     Guid.Parse("a06a5f34-58ac-41ec-bccb-9a8c38696bd2"),
+           //     Guid.Parse("a06a5f34-58ac-41ec-bccb-9a8c38696bd2"),
+           //     CategoryId,
+           //     ((int)Sex.Male),
+           //     false,
+           //     "black",
+           //     null,
+           //     null,
+           //     null
+           //);
 
-            receptionDocuments.Add(reception.Value!);
+           // receptionDocuments.Add(reception.Value!);
 
-            context.ReceptionsDocuments.AddRange(receptionDocuments);
-            context.SaveChanges();
+           // context.ReceptionsDocuments.AddRange(receptionDocuments);
+           // context.SaveChanges();
         }
     }
 }

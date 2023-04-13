@@ -1,11 +1,7 @@
 ﻿using Domain.Common;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -14,16 +10,15 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid ReceptionDocumentId { get; set; }
-        public string Name { get; private set; }
+        public Guid ReceptionDocumentId { get; private set; }
+        public Sex Sex { get; private set; }
+        public string Name { get; private set; } = string.Empty;
         public int Age { get; private set; }
-        public string Color { get; private set; }
-        public bool IsMedicallyCheck { get; private set; } = false;
-
+        public string Color { get; private set; } = string.Empty;
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual ReceptionDocument ReceptionDocument { get; set; }
+        public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
