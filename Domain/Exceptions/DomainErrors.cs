@@ -41,9 +41,20 @@
         /// </summary>
         public static class AnimalChip
         {
-            public static readonly Error AnimalChipIdIsNullOrEmpty = new Error("AnimalChip.Id", "Animal Id can't have null or default values.");
-            public static readonly Error AnimalChipOwnerIsNull = new Error("AnimalChip.Owner", "Animal Owner can't have null values.");
+            public static readonly Error AnimalChipIdIsNullOrEmpty = new Error("AnimalChip.Id", "AnimalChip Id can't have null or default values.");
+            public static readonly Error AnimalChipOwnerIsNull = new Error("AnimalChip.Owner", "AnimalChip Owner can't have null values.");
 
+        }
+
+        /// <summary>
+        /// Collection of Errors related to IndividualProceeding Entity.
+        /// </summary>
+        public static class IndividualProceeding
+        {
+            public static readonly Error IndividualProcessIdIsNullOrEmpty = new Error("IndividualProcess.Id", "IndividualProcess Id can't have null or default values.");
+            public static readonly Error IndividualProcessReceptionDocumentIdIsNullOrEmpty = new Error("IndividualProcess.ReceptionDocumentId", "IndividualProcess ReceptionDocumentId can't have null or default values.");
+            public static readonly Error IndividualProcessStatusIsNull= new Error("IndividualProcess.Status", "IndividualProcess Status can't have null values.");
+            public static readonly Error IndividualProcessAnimalCategorysIsNull = new Error("IndividualProcess.AnimalCategory", "IndividualProcess Status can't have null values.");
         }
     }
 }
