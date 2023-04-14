@@ -10,7 +10,7 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid ReceptionDocumentId { get; private set; }
+        public Guid IndividualProceedingId { get; private set; }
         public Sex Sex { get; private set; }
         public string Name { get; private set; } = string.Empty;
         public int Age { get; private set; }
@@ -18,13 +18,13 @@ namespace Domain.Entities
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
+        public virtual IndividualProceeding IndividualProceeding { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="documentReceptionId"></param>
+        /// <param name="individualProceedingId"></param>
         /// <param name="name"></param>
         /// <param name="age"></param>
         /// <param name="color"></param>
@@ -32,12 +32,12 @@ namespace Domain.Entities
 
         private Animal(
             Guid id,
-            Guid receptionDocumentId,
+            Guid individualProceedingId,
             string name,
             int age,
             string color) : base(id)
         {
-            ReceptionDocumentId = receptionDocumentId;
+            IndividualProceedingId = individualProceedingId;
             Name = name;
             Age = age;
             Color = color;
@@ -47,14 +47,14 @@ namespace Domain.Entities
         /// Static Factory Pattern. Creates new Animal in valid state.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="receptionDocumentId"></param>
+        /// <param name="individualProceedingId"></param>
         /// <param name="name"></param>
         /// <param name="age"></param>
         /// <param name="color"></param>
         /// <returns></returns>
         public static Result<Animal> Create(
             Guid id,
-            Guid receptionDocumentId,
+            Guid individualProceedingId,
             string name,
             int age,
             string color)
@@ -62,8 +62,8 @@ namespace Domain.Entities
             if (id == Guid.Empty)
                 return Result.Failure<Animal>(DomainErrors.Animal.AnimalIdIsNullOrEmpty);
 
-            if (receptionDocumentId == Guid.Empty)
-                return Result.Failure<Animal>(DomainErrors.Animal.ReceptionDocumentIdIsNullOrEmpty);
+            if (individualProceedingId == Guid.Empty)
+                return Result.Failure<Animal>(DomainErrors.Animal.IndividualProceedingIdIsNullOrEmpty);
 
             if (string.IsNullOrEmpty(name))
                 return Result.Failure<Animal>(DomainErrors.Animal.AnimalNameCantBeNullOrEmpty);
@@ -74,7 +74,7 @@ namespace Domain.Entities
             if (string.IsNullOrEmpty(color))
                 return Result.Failure<Animal>(DomainErrors.Animal.AnimalColorCantBeNullOrEmpty);
 
-            return new Animal(id, receptionDocumentId, name, age, color);
+            return new Animal(id, individualProceedingId, name, age, color);
 
         }
 

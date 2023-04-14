@@ -23,7 +23,7 @@ namespace Domain.Entities
         /// Revisar las propiedades de navegacion en caso de que una entidad/valueobject sea relacionada.
 
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
-
+        public virtual Animal Animal { get; private set; } = null!;
         
         public IndividualProceeding(Guid id) : base(id) { }
 

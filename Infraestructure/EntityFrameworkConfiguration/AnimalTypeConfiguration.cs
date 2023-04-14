@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,11 +12,11 @@ namespace Infraestructure.EntityFrameworkConfiguration
             builder
                 .ToTable("Animal", "Dogi")
                 .HasKey(x => x.Id)
-                .IsClustered(false);
+            .IsClustered(false);
 
-            builder.HasOne<ReceptionDocument>(f => f.ReceptionDocument)
+            builder.HasOne<IndividualProceeding>(f => f.IndividualProceeding)
                 .WithOne(r => r.Animal)
-                .HasForeignKey<Animal>(rd => rd.ReceptionDocumentId);
+                .HasForeignKey<Animal>(rd => rd.IndividualProceedingId);                
         }
     }
 }

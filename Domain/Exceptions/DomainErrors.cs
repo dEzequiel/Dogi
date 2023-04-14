@@ -30,7 +30,7 @@
         public static class Animal
         {
             public static readonly Error AnimalIdIsNullOrEmpty = new Error("Animal.Id", "Animal Id can't have null or default values");
-            public static readonly Error ReceptionDocumentIdIsNullOrEmpty = new Error("Animal.ReceptionDocumentId", "ReceptionDocumentId can't have null or default values.");
+            public static readonly Error IndividualProceedingIdIsNullOrEmpty = new Error("Animal.IndividualProceedingId", "IndividualProceedingId can't have null or default values.");
             public static readonly Error AnimalNameCantBeNullOrEmpty = new Error("Animal.Name", "Name can't have null or empty values.");
             public static readonly Error AnimalAgeCantBeLowerThanZero = new Error("Animal.Age", "Age can't have value lower tan zeros.");
             public static readonly Error AnimalColorCantBeNullOrEmpty = new Error("Animal.Color", "Color can't have null or empty values.");
