@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{BDEF4BAB-432D-4351-94B1-8860B028F1B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crosscuting", "Crosscuting\Crosscuting.csproj", "{1FD0E111-6591-4447-8B3B-4CF058045781}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crosscuting", "Crosscuting\Crosscuting.csproj", "{1FD0E111-6591-4447-8B3B-4CF058045781}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
