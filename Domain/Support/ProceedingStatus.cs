@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Support
+namespace Domain.Support
 {
     /// <summary>
     /// Support table representing records eqivalent to IndividualProceedingStatus domain enumerator.

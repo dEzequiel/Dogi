@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Domain.SupportTables
+namespace Domain.Support
 {
     /// <summary>
     /// Support table representing records equivalent to Sex domain enumerator.

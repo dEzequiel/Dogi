@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Infraestructure.Support
+namespace Domain.Support
 {
     /// <summary>
     /// Support table representing records equivalent to AnimalCategory domain enumerator.
