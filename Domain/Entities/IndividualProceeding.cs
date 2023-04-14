@@ -24,7 +24,8 @@ namespace Domain.Entities
 
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
         public virtual Animal Animal { get; private set; } = null!;
-        
+        public virtual AnimalChip? AnimalChip { get; private set; } = null!;
+
         public IndividualProceeding(Guid id) : base(id) { }
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace Domain.Entities
         /// <param name="status"></param>
         /// <param name="animalCategory"></param>
         /// <param name="animallChipId"></param>
-        public IndividualProceeding(Guid id, Guid receptionDocumentId, IndividualProceedingStatus status, AnimalCategory animalCategory, Guid? animallChipId) : base(id)
+        private IndividualProceeding(Guid id, Guid receptionDocumentId, IndividualProceedingStatus status, AnimalCategory animalCategory, Guid? animallChipId) : base(id)
         {
             ReceptionDocumentId = receptionDocumentId;
             Status = status;

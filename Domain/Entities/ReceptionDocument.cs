@@ -20,8 +20,7 @@ namespace Domain.Entities
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual Animal Animal { get; set; } = null!;
-
+        public virtual IndividualProceeding? IndividualProceeding { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>W
