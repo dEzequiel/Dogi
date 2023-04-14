@@ -1,11 +1,7 @@
 ﻿using Domain.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Entities;
 
-namespace Infraestructure.Support
+namespace Domain.Support
 {
     /// <summary>
     /// Support table representing records eqivalent to IndividualProceedingStatus domain enumerator.
@@ -16,6 +12,11 @@ namespace Infraestructure.Support
         /// Attributes.
         /// </summary>
         public string Status { get; set; }
+
+        /// <summary>
+        /// Navigation properties.
+        /// </summary>
+        public ICollection<IndividualProceeding> Processees { get; set; }
 
         /// <summary>
         /// Constructor.

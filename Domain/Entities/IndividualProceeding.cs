@@ -1,7 +1,7 @@
 ﻿using Domain.Common;
-using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
+using Domain.Support;
 
 namespace Domain.Entities
 {
@@ -10,20 +10,20 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
+        public Guid AnimalId { get; private set; }
         public Guid ReceptionDocumentId { get; private set; }
-        public IndividualProceedingStatus Status { get; private set; }
-        public AnimalCategory AnimalCategory { get; private set; }
+        public int StatusId { get; private set; }
+        public int CategoryId { get; private set; }
         public Guid? AnimalChipId { get; private set; }
         //public Guid MedicalRecordId { get; private set; }
 
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        
-        /// Revisar las propiedades de navegacion en caso de que una entidad/valueobject sea relacionada.
-
+        public virtual Animal Animal { get; set; } = null!;
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
-        public virtual Animal Animal { get; private set; } = null!;
+        public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
+        public virtual AnimalCategory AnimalCategory { get; private set; } = null!;
         public virtual AnimalChip? AnimalChip { get; private set; } = null!;
 
         public IndividualProceeding(Guid id) : base(id) { }
@@ -36,18 +36,20 @@ namespace Domain.Entities
         /// <param name="status"></param>
         /// <param name="animalCategory"></param>
         /// <param name="animallChipId"></param>
-        private IndividualProceeding(Guid id, Guid receptionDocumentId, IndividualProceedingStatus status, AnimalCategory animalCategory, Guid? animallChipId) : base(id)
+        private IndividualProceeding(Guid id, Guid animalId, Guid receptionDocumentId, int status, int animalCategory, Guid? animalChipId) : base(id)
         {
+            AnimalId = animalId;
             ReceptionDocumentId = receptionDocumentId;
-            Status = status;
-            AnimalCategory = animalCategory;
-            AnimalChipId = animallChipId;
+            StatusId = status;
+            CategoryId = animalCategory;
+            AnimalChipId = animalChipId;
         }
 
         /// <summary>
         /// Static Factory Pattern. Creates new IndividualProcess in valid state.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="animalId"></param>
         /// <param name="receptionDocumentId"></param>
         /// <param name="status"></param>
         /// <param name="animalCategory"></param>
@@ -55,9 +57,10 @@ namespace Domain.Entities
         /// <returns></returns>
         public static Result<IndividualProceeding> Create(
             Guid id,
+            Guid animalId,
             Guid receptionDocumentId,
-            IndividualProceedingStatus status,
-            AnimalCategory animalCategory, 
+            int status,
+            int animalCategory, 
             Guid? animalChipId)
         {
             if (id == Guid.Empty)
@@ -66,7 +69,7 @@ namespace Domain.Entities
             if(receptionDocumentId == Guid.Empty)
                 return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding.IndividualProcessReceptionDocumentIdIsNullOrEmpty);
 
-            return new IndividualProceeding(id, receptionDocumentId, status, animalCategory, animalChipId);
+            return new IndividualProceeding(id, animalId, receptionDocumentId, status, animalCategory, animalChipId);
 
         }
     }

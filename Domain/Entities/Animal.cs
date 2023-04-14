@@ -1,7 +1,7 @@
 ﻿using Domain.Common;
-using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
+using Domain.Support;
 
 namespace Domain.Entities
 {
@@ -10,15 +10,16 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid IndividualProceedingId { get; private set; }
-        public Sex Sex { get; private set; }
+        public int SexId { get; private set; }
         public string Name { get; private set; } = string.Empty;
         public int Age { get; private set; }
         public string Color { get; private set; } = string.Empty;
+
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual IndividualProceeding IndividualProceeding { get; set; } = null!;
+        public virtual IndividualProceeding IndividualProceeding { get; private set; }
+        public virtual Sex Sex { get; private set; } = null!;
 
         /// <summary>
         /// Constructor.
@@ -32,12 +33,10 @@ namespace Domain.Entities
 
         private Animal(
             Guid id,
-            Guid individualProceedingId,
             string name,
             int age,
             string color) : base(id)
         {
-            IndividualProceedingId = individualProceedingId;
             Name = name;
             Age = age;
             Color = color;
@@ -54,16 +53,12 @@ namespace Domain.Entities
         /// <returns></returns>
         public static Result<Animal> Create(
             Guid id,
-            Guid individualProceedingId,
             string name,
             int age,
             string color)
         {
             if (id == Guid.Empty)
                 return Result.Failure<Animal>(DomainErrors.Animal.AnimalIdIsNullOrEmpty);
-
-            if (individualProceedingId == Guid.Empty)
-                return Result.Failure<Animal>(DomainErrors.Animal.IndividualProceedingIdIsNullOrEmpty);
 
             if (string.IsNullOrEmpty(name))
                 return Result.Failure<Animal>(DomainErrors.Animal.AnimalNameCantBeNullOrEmpty);
@@ -74,7 +69,7 @@ namespace Domain.Entities
             if (string.IsNullOrEmpty(color))
                 return Result.Failure<Animal>(DomainErrors.Animal.AnimalColorCantBeNullOrEmpty);
 
-            return new Animal(id, individualProceedingId, name, age, color);
+            return new Animal(id, name, age, color);
 
         }
 

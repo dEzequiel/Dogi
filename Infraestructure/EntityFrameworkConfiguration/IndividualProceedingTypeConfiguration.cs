@@ -1,11 +1,7 @@
 ﻿using Domain.Entities;
+using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.EntityFrameworkConfiguration
 {
@@ -18,6 +14,11 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
+            builder.HasOne<Animal>(b => b.Animal)
+                .WithOne(b => b.IndividualProceeding)
+                .HasForeignKey<IndividualProceeding>(fk => fk.AnimalId)
+                .IsRequired(false);
+
             builder.HasOne<ReceptionDocument>(f => f.ReceptionDocument)
                 .WithOne(r => r.IndividualProceeding)
                 .HasForeignKey<IndividualProceeding>(rd => rd.ReceptionDocumentId);
@@ -27,11 +28,15 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasForeignKey<IndividualProceeding>(fk => fk.AnimalChipId)
                 .IsRequired(false);
 
-            builder.Property(s => s.Status)
-                    .HasConversion<int>();
+            builder.HasOne<ProceedingStatus>(b => b.ProceedingStatus)
+                .WithMany(p => p.Processees)
+                .HasForeignKey(fk => fk.StatusId)
+                .IsRequired(false);
 
-            builder.Property(s => s.AnimalCategory)
-                    .HasConversion<int>();
+            builder.HasOne<AnimalCategory>(b => b.AnimalCategory)
+                .WithMany(p => p.Processees)
+                .HasForeignKey(fk => fk.CategoryId)
+                .IsRequired(false);
 
         }
     }

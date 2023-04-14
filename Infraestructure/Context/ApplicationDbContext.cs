@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
-using Domain.SupportTables;
+using Domain.Support;
+using Domain.Support;
 using Infraestructure.EntityFrameworkConfiguration;
-using Infraestructure.Support;
 using Microsoft.EntityFrameworkCore;
 namespace Infraestructure.Context
 {

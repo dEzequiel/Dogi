@@ -1,6 +1,7 @@
 ﻿using Domain.Common;
+using Domain.Entities;
 
-namespace Infraestructure.Support
+namespace Domain.Support
 {
     /// <summary>
     /// Support table representing records equivalent to AnimalCategory domain enumerator.
@@ -11,6 +12,11 @@ namespace Infraestructure.Support
         /// Attributes.
         /// </summary>
         public string Type { get ; set; }
+
+        /// <summary>
+        /// Navigation properties.
+        /// </summary>
+        public ICollection<IndividualProceeding> Processees { get; set; }
 
         /// <summary>
         /// Constructor.
