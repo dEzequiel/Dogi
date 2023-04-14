@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities;
 
 namespace Domain.ValueObjects
 {
@@ -18,6 +19,7 @@ namespace Domain.ValueObjects
         /// </summary>
         /// <param name="street"></param>
         /// <param name="city"></param>
+        public Address() { }
         private Address(string street, string city)
         {
             Street = street;
