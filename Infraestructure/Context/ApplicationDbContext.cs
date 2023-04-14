@@ -1,6 +1,5 @@
 ﻿using Domain.Entities;
 using Domain.Support;
-using Domain.Support;
 using Infraestructure.EntityFrameworkConfiguration;
 using Microsoft.EntityFrameworkCore;
 namespace Infraestructure.Context
@@ -17,10 +16,15 @@ namespace Infraestructure.Context
         }
 
         // Tables
-        public DbSet<ReceptionDocument> ReceptionsDocuments { get; set; }
-        public DbSet<Animal> Animals { get; set; }
-        public DbSet<AnimalChip> AnimalChips { get; set; }
-        public DbSet<IndividualProceeding> IndividualProceedings { get; set; }
+        public DbSet<ReceptionDocument> ReceptionDocument { get; set; }
+        public DbSet<Animal> Animal { get; set; }
+        public DbSet<AnimalChip> AnimalChip { get; set; }
+        public DbSet<IndividualProceeding> IndividualProceeding { get; set; }
+        
+        // Support Tables
+        public DbSet<Sex> Sex { get; set; }
+        public DbSet<ProceedingStatus> ProceedingStatus { get; set; }
+        public DbSet<AnimalCategory> AnimalCategory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
