@@ -19,7 +19,7 @@ namespace Domain.SupportTables
         /// <param name="name"></param>
         public Sex(int id, string type) : base(id)
         {
-            type = type;
+            Type = type;
         }
     }
 }
