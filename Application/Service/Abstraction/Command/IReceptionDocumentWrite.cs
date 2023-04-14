@@ -14,7 +14,7 @@ namespace Application.Service.Abstraction.Command
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<ReceptionDocumentForGet> AddAsync(ReceptionDocumentForAdd entity, CancellationToken ct = default);
+        Task<ReceptionDocumentForGet> AddAsync(ReceptionDocumentForAdd entity);
 
         /// <summary>
         /// Update existing ReceptionDocument.
@@ -22,7 +22,7 @@ namespace Application.Service.Abstraction.Command
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<ReceptionDocumentForGet?> UpdateAsync(ReceptionDocumentForUpdate entity, CancellationToken ct = default);
+        Task<ReceptionDocumentForGet?> UpdateAsync(ReceptionDocumentForUpdate entity);
 
         /// <summary>
         /// Soft delete existing ReceptionDocument.
@@ -30,6 +30,6 @@ namespace Application.Service.Abstraction.Command
         /// <param name="id"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<bool> LogicRemoveAsync(Guid id,  CancellationToken ct = default);
+        Task<bool> LogicRemoveAsync(Guid id);
     }
 }
