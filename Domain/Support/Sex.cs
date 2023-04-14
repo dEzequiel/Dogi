@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities;
 
 namespace Domain.Support
 {
@@ -11,6 +12,11 @@ namespace Domain.Support
         /// Attributes.
         /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// Navigation properties.
+        /// </summary>
+        public ICollection<Animal> Animals { get; set; }
 
         /// <summary>
         /// Constructor.
