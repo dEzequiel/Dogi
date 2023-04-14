@@ -1,4 +1,6 @@
 ﻿using Domain.Entities;
+using Domain.SupportTables;
+using Domain.ValueObjects;
 using Infraestructure.EntityFrameworkConfiguration;
 using Microsoft.EntityFrameworkCore;
 namespace Infraestructure.Context
@@ -11,18 +13,22 @@ namespace Infraestructure.Context
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            
         }
 
         // Tables
         public DbSet<ReceptionDocument> ReceptionsDocuments { get; set; }
         public DbSet<Animal> Animals { get; set; }
+        public DbSet<AnimalChip> AnimalChips { get; set; }
+        public DbSet<IndividualProceeding> IndividualProceedings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<ReceptionDocument>();
             new ReceptionDocumentTypeConfiguration().Configure(modelBuilder.Entity<ReceptionDocument>());
             new AnimalTypeConfiguration().Configure(modelBuilder.Entity<Animal>());
+            new AnimalChipTypeConfiguration().Configure(modelBuilder.Entity<AnimalChip>());
+            new IndividualProceedingTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceeding>());
+            new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());
         }
     }
 }
