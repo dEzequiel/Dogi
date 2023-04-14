@@ -10,16 +10,16 @@ namespace Domain.SupportTables
         /// <summary>
         /// Attributes.
         /// </summary>
-        public string Name { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
-        public Sex(int id, string name) : base(id)
+        public Sex(int id, string type) : base(id)
         {
-            Name = name;
+            type = type;
         }
     }
 }
