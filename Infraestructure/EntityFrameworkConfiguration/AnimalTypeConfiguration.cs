@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Infraestructure.EntityFrameworkConfiguration
 {
@@ -13,9 +15,16 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasOne<ReceptionDocument>(f => f.ReceptionDocument)
+            builder.HasOne(f => f.IndividualProceeding)
                 .WithOne(r => r.Animal)
-                .HasForeignKey<Animal>(rd => rd.ReceptionDocumentId);
+                .HasForeignKey<Animal>(rd => rd.IndividualProceedingId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(a => a.Sex)
+                   .HasConversion<int>()
+                    .IsRequired();
+
+          
         }
     }
 }

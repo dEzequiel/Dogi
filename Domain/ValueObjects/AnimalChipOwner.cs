@@ -19,6 +19,7 @@ namespace Domain.ValueObjects
         /// </summary>
         /// <param name="name"></param>
         /// <param name="lastname"></param>
+        public AnimalChipOwner() { }
         private AnimalChipOwner(string name, string lastname)
         {
             Name = name;

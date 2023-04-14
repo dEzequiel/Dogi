@@ -10,7 +10,6 @@ namespace Domain.Entities
     /// </summary>
     public class AnimalChip : Entity
     {
-
         /// <summary>
         /// Attributes.
         /// </summary>
@@ -18,17 +17,23 @@ namespace Domain.Entities
         public Address Address { get; set; }
 
         /// <summary>
+        /// Navigation properties
+        /// </summary>
+        public virtual IndividualProceeding IndividualProceeding { get; set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="owner"></param>
         /// <param name="addressAddress"></param>
+        public AnimalChip(Guid id) : base(id) { }
         private AnimalChip(Guid id, AnimalChipOwner owner, Address address) : base(id)
         {
             Owner = owner;
             Address = address;
         }
-
+        
         /// <summary>
         /// Static Factory Pattern.
         /// </summary>
