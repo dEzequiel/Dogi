@@ -23,31 +23,31 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task AddAsync(Animal entity, CancellationToken ct = default)
+        public async Task AddAsync(Animal entity)
         {
-            await _animals.AddAsync(entity, ct);
+            await _animals.AddAsync(entity);
         }
 
         /// <inheritdoc/>
-        public async Task AddRangeAsync(IEnumerable<Animal> entities, CancellationToken ct = default)
+        public async Task AddRangeAsync(IEnumerable<Animal> entities)
         {
-            await _animals.AddRangeAsync(entities, ct);
+            await _animals.AddRangeAsync(entities);
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<Animal>> FindAsync(Expression<Func<Animal, bool>> predicate, CancellationToken ct = default)
+        public async Task<IEnumerable<Animal>> FindAsync(Expression<Func<Animal, bool>> predicate)
         {
-            return await _animals.AsNoTracking().Where(predicate).ToListAsync(ct);
+            return await _animals.AsNoTracking().Where(predicate).ToListAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<Animal>> GetAllAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<Animal>> GetAllAsync()
         {
-            return await _animals.AsNoTracking().ToListAsync(ct);
+            return await _animals.AsNoTracking().ToListAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<Animal?> GetAsync(Guid id, CancellationToken ct = default)
+        public async Task<Animal?> GetAsync(Guid id)
         {
             return await _animals.FirstOrDefaultAsync(x => x.Id == id);
         }

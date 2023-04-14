@@ -29,8 +29,9 @@ namespace Domain.Entities
         /// <param name="pickupLocation"></param>
         /// <param name="pickupDate"></param>
         public ReceptionDocument(Guid id) : base(id) { }
+        public ReceptionDocument() : base(Guid.NewGuid()) { }
 
-        private ReceptionDocument(
+        public ReceptionDocument(
             Guid id,
             bool hasChip, 
             string? observations, 

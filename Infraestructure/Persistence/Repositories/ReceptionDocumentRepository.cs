@@ -29,31 +29,31 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task AddAsync(ReceptionDocument entity, CancellationToken ct = default)
+        public async Task AddAsync(ReceptionDocument entity)
         {
-            await _receptions.AddAsync(entity, ct);
+            await _receptions.AddAsync(entity);
         }
 
         /// <inheritdoc/>
-        public async Task AddRangeAsync(IEnumerable<ReceptionDocument> entities, CancellationToken ct = default)
+        public async Task AddRangeAsync(IEnumerable<ReceptionDocument> entities)
         {
-            await _receptions.AddRangeAsync(entities, ct);
+            await _receptions.AddRangeAsync(entities);
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ReceptionDocument>> FindAsync(Expression<Func<ReceptionDocument, bool>> predicate, CancellationToken ct = default)
+        public async Task<IEnumerable<ReceptionDocument>> FindAsync(Expression<Func<ReceptionDocument, bool>> predicate)
         {
-            return await _receptions.Where(predicate).ToListAsync(ct);
+            return await _receptions.Where(predicate).ToListAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default)
+        public async Task<IEnumerable<ReceptionDocument>> GetAllAsync()
         {
-            return await _receptions.AsNoTracking().ToListAsync(ct);
+            return await _receptions.AsNoTracking().ToListAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<ReceptionDocument?> GetAsync(Guid id, CancellationToken ct = default)
+        public async Task<ReceptionDocument?> GetAsync(Guid id)
         {
             return await _receptions.FirstOrDefaultAsync(x => x.Id == id);
         }

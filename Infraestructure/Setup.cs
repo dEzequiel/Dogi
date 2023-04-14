@@ -1,5 +1,5 @@
-﻿using Infraestructure.Persistence.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
+﻿using Application.Service.Interfaces;
+using Infraestructure.Persistence.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infraestructure
