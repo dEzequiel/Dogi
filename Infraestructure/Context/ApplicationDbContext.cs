@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.SupportTables;
-using Domain.ValueObjects;
 using Infraestructure.EntityFrameworkConfiguration;
+using Infraestructure.Support;
 using Microsoft.EntityFrameworkCore;
 namespace Infraestructure.Context
 {
@@ -29,6 +29,8 @@ namespace Infraestructure.Context
             new AnimalChipTypeConfiguration().Configure(modelBuilder.Entity<AnimalChip>());
             new IndividualProceedingTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceeding>());
             new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());
+            new AnimalCategoryTypeConfiguration().Configure(modelBuilder.Entity<AnimalCategory>());
+            new ProceedingStatusTypeConfiguration().Configure(modelBuilder.Entity<ProceedingStatus>());
         }
     }
 }

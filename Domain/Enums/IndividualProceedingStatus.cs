@@ -5,8 +5,8 @@
     /// </summary>
     public enum IndividualProceedingStatus
     {
-        Close = 0,
-        Open = 1,
-        Adopted = 2
+        Close = 1,
+        Open = 2,
+        Adopted = 3
     }
 }

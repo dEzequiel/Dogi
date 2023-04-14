@@ -21,7 +21,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
             builder.HasData(
                 Enum.GetValues(typeof(Domain.Enums.Sex))
                 .Cast<Domain.Enums.Sex>()
-                .Select(e => new { Id = (int)e, Name = e.ToString() })
+                .Select(e => new { Id = (int)e, Type = e.ToString() })
             );
         }
     }

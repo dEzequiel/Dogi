@@ -1,14 +1,25 @@
-﻿namespace Domain.SupportTables
-{
-    public class Sex
-    {
-        public Sex(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+﻿using Domain.Common;
 
-        public int Id { get; set; }
-        public string Name { get; set; }
+namespace Domain.SupportTables
+{
+    /// <summary>
+    /// Support table representing records equivalent to Sex domain enumerator.
+    /// </summary>
+    public class Sex : SupportTable
+    {
+        /// <summary>
+        /// Attributes.
+        /// </summary>
+        public string Type { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        public Sex(int id, string type) : base(id)
+        {
+            Type = type;
+        }
     }
 }

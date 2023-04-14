@@ -6,13 +6,13 @@ namespace Domain.Enums
     /// </summary>
     public enum AnimalCategory
     {
-        Dogs = 0,
-        Cats = 1,
-        Rabbits = 2,
-        Rodents = 3,
-        Birds = 4,
-        Reptiles = 5,
-        Exotic = 6,
-        Farm = 7
+        Dogs = 1,
+        Cats = 2,
+        Rabbits = 3,
+        Rodents = 4,
+        Birds = 5,
+        Reptiles = 6,
+        Exotic = 7,
+        Farm = 8
     }
 }
