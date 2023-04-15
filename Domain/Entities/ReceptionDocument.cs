@@ -54,14 +54,20 @@ namespace Domain.Entities
         /// <param name="pickupLocation"></param>
         /// <param name="pickupDate"></param>
         /// <returns>ReceptionDocument</returns>
-        public static Result<ReceptionDocument?> Create(
+        public virtual Result<ReceptionDocument> Create(
             bool hasChip,
             string? observations,
             string? pickupLocation,
             DateTime? pickupDate)
         {
-            return new ReceptionDocument(Guid.NewGuid(), hasChip, observations, pickupLocation, pickupDate);
+            var result = new ReceptionDocument(Guid.NewGuid(), hasChip, observations, pickupLocation, pickupDate);
 
+            if (result != null)
+            {
+                return Result.Success(result!);
+            }
+
+            return Result.Failure<ReceptionDocument>(DomainErrors.ReceptionDocument.ReceptionDocumentCreateFailed);
         }
     }
 }
