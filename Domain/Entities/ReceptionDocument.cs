@@ -55,17 +55,12 @@ namespace Domain.Entities
         /// <param name="pickupDate"></param>
         /// <returns>ReceptionDocument</returns>
         public static Result<ReceptionDocument?> Create(
-            Guid id,
             bool hasChip,
             string? observations,
             string? pickupLocation,
             DateTime? pickupDate)
         {
-
-            if(id == Guid.Empty)
-                return Result.Failure<ReceptionDocument?>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty);
-
-            return new ReceptionDocument(id, hasChip, observations, pickupLocation, pickupDate);
+            return new ReceptionDocument(Guid.NewGuid(), hasChip, observations, pickupLocation, pickupDate);
 
         }
     }
