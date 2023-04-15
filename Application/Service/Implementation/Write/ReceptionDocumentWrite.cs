@@ -9,15 +9,17 @@ namespace Application.Service.Implementation.Command
 {
     public class ReceptionDocumentWrite : IReceptionDocumentWrite
     {
+        private readonly ReceptionDocument _receptionDocument;
         private readonly ILogger<ReceptionDocumentWrite> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ReceptionDocumentWrite(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ReceptionDocumentWrite> logger)
+        public ReceptionDocumentWrite(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ReceptionDocumentWrite> logger, ReceptionDocument receptionDocument)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _receptionDocument = receptionDocument;
         }
 
         public async Task<ReceptionDocumentForGet> AddAsync(ReceptionDocumentForAdd entity)
@@ -26,17 +28,17 @@ namespace Application.Service.Implementation.Command
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            var document = ReceptionDocument.Create(
-                entity.HasChip, 
-                entity.Observations, 
-                entity.PickupLocation, 
+            var document = _receptionDocument.Create(
+                entity.HasChip,
+                entity.Observations,
+                entity.PickupLocation,
                 entity.PickupDate);
 
-            if (!document.IsSuccess)
+            if (document.IsFailure)
             {
                 _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Error");
 
-                throw new Exception("");
+                throw new InvalidDataException(document.Error);
             }
 
             await repository.AddAsync(document.Value!);
