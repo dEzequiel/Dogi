@@ -21,14 +21,20 @@ namespace Application.Service.Implementation.Command
         {
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            // Implementacion del mapeo de DTO For Add a ReceptionDocument.
-            var document = _mapper.Map<ReceptionDocument>(entity);
+            var document = ReceptionDocument.Create(
+                entity.HasChip, 
+                entity.Observations, 
+                entity.PickupLocation, 
+                entity.PickupDate);
 
-            await repository.AddAsync(document);
+            if (!document.IsSuccess)
+                throw new Exception();
+
+            await repository.AddAsync(document.Value!);
 
             await _unitOfWork.CompleteAsync();
 
-            var result = _mapper.Map<ReceptionDocumentForGet>(document);
+            var result = _mapper.Map<ReceptionDocumentForGet>(document.Value);
 
             return result;
         }
