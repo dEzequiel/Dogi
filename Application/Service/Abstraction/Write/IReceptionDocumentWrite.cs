@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.ReceptionDocument;
 using Crosscuting.Base.Interfaces;
 
-namespace Application.Service.Abstraction.Command
+namespace Application.Service.Abstraction
 {
     /// <summary>
     /// ReceptionDocument write operations definition.
