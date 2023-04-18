@@ -13,7 +13,11 @@ namespace Application
         public static IServiceCollection InitApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            
+            services.AddMediatR(conf =>
+            {
+                conf.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
+
             return services;
         }
     }
