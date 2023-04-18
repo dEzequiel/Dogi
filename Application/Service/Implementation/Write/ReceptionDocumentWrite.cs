@@ -28,24 +28,22 @@ namespace Application.Service.Implementation.Command
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            var document = _receptionDocument.Create(
-                entity.HasChip,
-                entity.Observations,
-                entity.PickupLocation,
-                entity.PickupDate);
+            var document = _mapper.Map<ReceptionDocument>(entity);
 
-            if (document.IsFailure)
+            var validDocument = _receptionDocument.Verify(document);
+
+            if (validDocument.IsFailure)
             {
                 _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Error");
 
-                throw new InvalidDataException(document.Error);
+                throw new InvalidDataException(validDocument.Error.Message);
             }
 
-            await repository.AddAsync(document.Value!);
+            await repository.AddAsync(validDocument.Value);
 
             await _unitOfWork.CompleteAsync();
 
-            var result = _mapper.Map<ReceptionDocumentForGet>(document.Value);
+            var result = _mapper.Map<ReceptionDocumentForGet>(validDocument.Value);
 
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> End");
 
