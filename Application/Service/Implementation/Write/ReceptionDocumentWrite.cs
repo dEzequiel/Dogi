@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.ReceptionDocument;
-using Application.Service.Abstraction.Command;
+using Application.Service.Abstraction;
 using Application.Service.Interfaces;
 using AutoMapper;
 using Domain.Entities;
