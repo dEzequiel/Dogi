@@ -11,7 +11,7 @@ namespace Application.Features.ReceptionDocument.Commands
     /// </summary>
     public class InsertReceptionDocumentRequest : IRequest<ApiResponse<ReceptionDocumentForGet>>
     {
-        public ReceptionDocumentForAdd ReceptionDocumentData { get; private set; }
+        public ReceptionDocumentForAdd ReceptionDocumentData { get; private set; } = null!;
 
         public InsertReceptionDocumentRequest(ReceptionDocumentForAdd receptionDocumentData)
         {
