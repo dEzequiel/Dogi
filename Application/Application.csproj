@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\ReceptionDocument\Commands\" />
-    <Folder Include="CQRS\ReceptionDocument\Queries\" />
+    <Folder Include="Features\ReceptionDocument\Commands\" />
+    <Folder Include="Features\ReceptionDocument\Queries\" />
   </ItemGroup>
 
 </Project>
