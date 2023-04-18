@@ -13,7 +13,7 @@ namespace Application
         public static IServiceCollection InitApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+            
             return services;
         }
     }

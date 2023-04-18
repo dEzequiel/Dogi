@@ -54,19 +54,13 @@ namespace Domain.Entities
         /// <param name="pickupLocation"></param>
         /// <param name="pickupDate"></param>
         /// <returns>ReceptionDocument</returns>
-        public static Result<ReceptionDocument?> Create(
-            Guid id,
-            bool hasChip,
-            string? observations,
-            string? pickupLocation,
-            DateTime? pickupDate)
+        public virtual Result<ReceptionDocument> Verify(
+            ReceptionDocument document)
         {
+            if(document.Id == Guid.Empty)
+                return Result.Failure<ReceptionDocument>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty);
 
-            if(id == Guid.Empty)
-                return Result.Failure<ReceptionDocument?>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty);
-
-            return new ReceptionDocument(id, hasChip, observations, pickupLocation, pickupDate);
-
+            return Result.Success(document);
         }
     }
 }

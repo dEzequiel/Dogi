@@ -18,6 +18,7 @@
         /// </summary>
         public static class ReceptionDocument
         {
+            public static readonly Error ReceptionDocumentCreateFailed = new Error("ReceptionDocument", "Something went wront when creating ReceptionDocument.");
             public static readonly Error ReceptionIdIsNullOrEmpty = new Error("ReceptionDocument.Id", "ReceptionDocument Id can't have null or default values.");
             public static readonly Error ActorIsNullOrEmpty = new Error("ReceptionDocument.Actor", "Actor can't have null or default values.");
             public static readonly Error CategoryIsNullOrEmpty = new Error("ReceptionDocument.Category", "Category can't have null or default values.");
