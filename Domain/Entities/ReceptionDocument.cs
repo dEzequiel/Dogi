@@ -12,10 +12,10 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public bool HasChip { get; private set; }
-        public string? Observations { get; private set; } = string.Empty;
-        public string? PickupLocation { get; private set; } = string.Empty;
-        public DateTime? PickupDate { get; private set; }
+        public bool? HasChip { get; set; }
+        public string? Observations { get; set; } = string.Empty;
+        public string? PickupLocation { get; set; } = string.Empty;
+        public DateTime? PickupDate { get; set; }
 
         /// <summary>
         /// Navigation properties.
@@ -33,7 +33,7 @@ namespace Domain.Entities
 
         public ReceptionDocument(
             Guid id,
-            bool hasChip, 
+            bool? hasChip, 
             string? observations, 
             string? pickupLocation, 
             DateTime? pickupDate) : base(id)

@@ -4,6 +4,7 @@ using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Application.Service.Abstraction;
 using Application.Service.Implementation.Command;
+using Api.GraphQLQueries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 /// GraphQL Setup.
 /// </summary>
 builder.Services.AddGraphQLServer()
-                .AddQueryType();
+                .AddQueryType<Query>();
 
 var app = builder.Build();
 
@@ -44,7 +45,6 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
-app.MapGet("/", () => "Hello, World!");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -54,6 +54,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
+
+app.MapGraphQL("/graphql");
 
 
 app.Run();
