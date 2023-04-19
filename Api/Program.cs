@@ -2,6 +2,8 @@ using Infraestructure;
 using Application;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Application.Service.Abstraction;
+using Application.Service.Implementation.Command;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +14,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Project layers.
-builder.Services
+///<summary>
+/// Layers configuration.
+/// </summary>
+    builder.Services
         .InitInfrastructure()
-        .InitApplication();
+        .InitApplication(builder.Configuration);
 
 // Database SqlServer connetion.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DogiConnection"));
 });
+
+
+
+
+///<summary>
+/// GraphQL Setup.
+/// </summary>
+builder.Services.AddGraphQLServer()
+                .AddQueryType();
 
 var app = builder.Build();
 
@@ -31,6 +44,7 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
+app.MapGet("/", () => "Hello, World!");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -40,5 +54,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 
 app.Run();
