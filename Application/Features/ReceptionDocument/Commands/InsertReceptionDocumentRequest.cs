@@ -22,18 +22,21 @@ namespace Application.Features.ReceptionDocument.Commands
     /// <summary>
     /// Insert ReceptionDocument handler implementation.
     /// </summary>
-    public class InsertReceptionDocumentRequestHandler : IRequestHandler<InsertReceptionDocumentRequest, ApiResponse<ReceptionDocumentForGet>>
+    public class InsertReceptionDocumentRequestHandler : IRequestHandler<InsertReceptionDocumentRequest, 
+                                                         ApiResponse<ReceptionDocumentForGet>>
     {
         private readonly ILogger<InsertReceptionDocumentRequestHandler> _logger;
         private readonly IReceptionDocumentWrite _receptionDocumentService;
 
-        public InsertReceptionDocumentRequestHandler(ILogger<InsertReceptionDocumentRequestHandler> logger, IReceptionDocumentWrite receptionDocumentService)
+        public InsertReceptionDocumentRequestHandler(ILogger<InsertReceptionDocumentRequestHandler> logger, 
+                                                     IReceptionDocumentWrite receptionDocumentService)
         {
             _logger = logger;
             _receptionDocumentService = receptionDocumentService;
         }
 
-        public async Task<ApiResponse<ReceptionDocumentForGet>> Handle(InsertReceptionDocumentRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<ReceptionDocumentForGet>> Handle(InsertReceptionDocumentRequest request, 
+                                                                       CancellationToken cancellationToken)
         {
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> Start");
 

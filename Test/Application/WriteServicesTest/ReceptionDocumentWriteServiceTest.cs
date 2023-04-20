@@ -45,8 +45,13 @@ namespace Test.Application.WriteServicesTest
         {
 
             // Arrange
-            var invalidDocument = new Domain.Entities.ReceptionDocument(Guid.Empty, documentAdd.HasChip, documentAdd.Observations, documentAdd.PickupLocation, documentAdd.PickupDate);
-            mapperMock.Setup(m => m.Map<Domain.Entities.ReceptionDocument>(It.IsAny<ReceptionDocumentForAdd>())).Returns(invalidDocument);
+            var invalidDocument = new Domain.Entities.ReceptionDocument(Guid.Empty, documentAdd.HasChip, 
+                                                                        documentAdd.Observations, 
+                                                                        documentAdd.PickupLocation, 
+                                                                        documentAdd.PickupDate);
+            
+            mapperMock.Setup(m => m.Map<Domain.Entities.ReceptionDocument>(It.IsAny<ReceptionDocumentForAdd>()))
+                     .Returns(invalidDocument);
             receptionDocumentEntityMock.Setup(x => x.Verify(invalidDocument))
                 .Returns(Result.Failure<Domain.Entities.ReceptionDocument>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty));
 

@@ -25,7 +25,6 @@ namespace Application
             services.AddTransient<IReceptionDocumentWrite, ReceptionDocumentWrite>();
             services.AddTransient<ReceptionDocument>();
 
-
             return services;
         }
     }

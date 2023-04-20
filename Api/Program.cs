@@ -30,7 +30,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 
-
 ///<summary>
 /// GraphQL Setup.
 /// </summary>

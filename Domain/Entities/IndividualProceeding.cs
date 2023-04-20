@@ -36,7 +36,8 @@ namespace Domain.Entities
         /// <param name="status"></param>
         /// <param name="animalCategory"></param>
         /// <param name="animallChipId"></param>
-        private IndividualProceeding(Guid id, Guid animalId, Guid receptionDocumentId, int status, int animalCategory, Guid? animalChipId) : base(id)
+        private IndividualProceeding(Guid id, Guid animalId, Guid receptionDocumentId, int status, int animalCategory, 
+                                     Guid? animalChipId) : base(id)
         {
             AnimalId = animalId;
             ReceptionDocumentId = receptionDocumentId;
@@ -64,10 +65,12 @@ namespace Domain.Entities
             Guid? animalChipId)
         {
             if (id == Guid.Empty)
-                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding.IndividualProcessIdIsNullOrEmpty);
+                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
+                                                                            .IndividualProcessIdIsNullOrEmpty);
 
             if(receptionDocumentId == Guid.Empty)
-                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding.IndividualProcessReceptionDocumentIdIsNullOrEmpty);
+                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
+                                                                            .IndividualProcessReceptionDocumentIdIsNullOrEmpty);
 
             return new IndividualProceeding(id, animalId, receptionDocumentId, status, animalCategory, animalChipId);
 

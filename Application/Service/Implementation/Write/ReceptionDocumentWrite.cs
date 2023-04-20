@@ -14,7 +14,8 @@ namespace Application.Service.Implementation.Command
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ReceptionDocumentWrite(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ReceptionDocumentWrite> logger, ReceptionDocument receptionDocument)
+        public ReceptionDocumentWrite(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ReceptionDocumentWrite> logger, 
+                                        ReceptionDocument receptionDocument)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

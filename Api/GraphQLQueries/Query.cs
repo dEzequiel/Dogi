@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infraestructure.Context;
 
 namespace Api.GraphQLQueries
 {
@@ -8,6 +9,10 @@ namespace Api.GraphQLQueries
         /// Resolver. 
         /// </summary>
         /// <returns></returns>
-        public ReceptionDocument GetBook() => new ReceptionDocument { Id = Guid.NewGuid(), Observations = "Hello HotChocolate", HasChip = null, IndividualProceeding = null, PickupDate = null, PickupLocation = null};
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<ReceptionDocument> GetReceptionDocuments([Service] ApplicationDbContext context) =>
+            context.ReceptionDocument;
     }
 }
