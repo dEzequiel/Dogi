@@ -21,8 +21,7 @@ builder.Services.AddSwaggerGen();
 /// GraphQL Setup.
 /// </summary>
 builder.Services.AddGraphQLServer()
-    .AddQueryType<Query>()
-    .AddType<ReceptionDocumentType>();
+    .AddQueryType<QueryType>();
 ///<summary>
 /// Layers configuration.
 /// </summary>
