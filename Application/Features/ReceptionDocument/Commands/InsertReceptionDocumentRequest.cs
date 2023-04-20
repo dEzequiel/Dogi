@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.ReceptionDocument;
 using Application.Service.Abstraction;
+using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -13,10 +14,13 @@ namespace Application.Features.ReceptionDocument.Commands
     {
         public ReceptionDocumentForAdd ReceptionDocumentData { get; private set; } = null!;
 
-        public InsertReceptionDocumentRequest(ReceptionDocumentForAdd receptionDocumentData)
-        {
-            ReceptionDocumentData = receptionDocumentData;
-        }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="receptionDocumentData"></param>
+        public InsertReceptionDocumentRequest(ReceptionDocumentForAdd receptionDocumentData) =>
+            this.ReceptionDocumentData = receptionDocumentData;
+
     }
 
     /// <summary>
@@ -26,21 +30,29 @@ namespace Application.Features.ReceptionDocument.Commands
                                                          ApiResponse<ReceptionDocumentForGet>>
     {
         private readonly ILogger<InsertReceptionDocumentRequestHandler> _logger;
-        private readonly IReceptionDocumentWrite _receptionDocumentService;
+        private readonly IReceptionDocumentWrite _receptionDocumentWriteService;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="receptionDocumentWriteService"></param>
         public InsertReceptionDocumentRequestHandler(ILogger<InsertReceptionDocumentRequestHandler> logger, 
-                                                     IReceptionDocumentWrite receptionDocumentService)
+            IReceptionDocumentWrite receptionDocumentWriteService)
         {
-            _logger = logger;
-            _receptionDocumentService = receptionDocumentService;
+            _logger = Guard.Against.Null(logger, nameof(logger));
+            _receptionDocumentWriteService = Guard.Against.Null(receptionDocumentWriteService);
         }
 
+        ///<inheritdoc/>
         public async Task<ApiResponse<ReceptionDocumentForGet>> Handle(InsertReceptionDocumentRequest request, 
                                                                        CancellationToken cancellationToken)
         {
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> Start");
 
-            ReceptionDocumentForGet result = await _receptionDocumentService.AddAsync(request.ReceptionDocumentData);
+            Guard.Against.Null(request, nameof(request));
+            
+            ReceptionDocumentForGet result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData);
 
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> End");
 

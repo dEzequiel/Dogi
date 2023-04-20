@@ -48,6 +48,8 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
     {
         _logger.LogInformation($"GetReceptionDocumentByIdRequestHandler --> GetByIdAsync({request.Id}) --> Start");
 
+        Guard.Against.Null(request, nameof(request));
+
         ReceptionDocumentForGet result = await _receptionDocumentReadService.GetByIdAsync(request.Id);
         
         _logger.LogInformation("GetReceptionDocumentByIdRequestHandler --> GetByIdAsync --> End");
