@@ -48,6 +48,12 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
+        public async Task<int> GetAllCountAsync()
+        {
+            return await _receptions.CountAsync();
+        }
+
+        /// <inheritdoc/>
         public async Task<IEnumerable<ReceptionDocument>> FindAsync(Expression<Func<ReceptionDocument, bool>> predicate)
         {
             return await _receptions.Where(predicate).ToListAsync();
