@@ -5,7 +5,6 @@ using AutoFixture.Xunit2;
 using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
-using Domain.Interfaces.Repositories;
 using Moq;
 using Test.Utils.Attributes;
 using InvalidDataException = Crosscuting.Base.Exceptions.InvalidDataException;
@@ -66,5 +65,26 @@ public class ReceptionDocumentReadServiceTest
         // Act & Assert
         var ex = await Assert.ThrowsAsync<InvalidDataException>(() => sut.GetByIdAsync(document.Id));
         Assert.Equal(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty.Message, ex.Message);
+    }
+    
+    [Theory]
+    [AutoMoqData]
+    internal async Task ShouldGetAllReceptionDocumentsAsync(
+        [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+        [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+        IEnumerable<ReceptionDocument> collectionDocumentGet,
+        ReceptionDocumentRead sut)
+    {
+        // Arrange
+        unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
+
+        repositoryMock.Setup(r => r.GetAllAsync())
+            .ReturnsAsync(collectionDocumentGet);
+        
+        // Act
+        var result = await sut.GetAllAsync();
+        
+        // Assert
+        //Assert.Equal(document.Id, documentGet.Id);
     }
 }

@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using Application.Service.Interfaces;
+using Domain.Entities;
 using Domain.Enums;
-using Domain.Interfaces.Repositories;
 using Infraestructure.Context;
 using Infraestructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces.Repositories
+namespace Application.Service.Interfaces
 {
     /// <summary>
     /// Repository Pattern.

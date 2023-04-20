@@ -1,6 +1,6 @@
 ﻿using Api.GraphQLTypes;
+using Application.Service.Interfaces;
 using Domain.Entities;
-using Domain.Interfaces.Repositories;
 using Infraestructure.Context;
 
 namespace Api.GraphQLQueries

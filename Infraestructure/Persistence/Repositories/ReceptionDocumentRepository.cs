@@ -1,14 +1,9 @@
 ﻿
 using Domain.Entities;
-using Domain.Interfaces.Repositories;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs.Response;
 
 namespace Infraestructure.Persistence.Repositories

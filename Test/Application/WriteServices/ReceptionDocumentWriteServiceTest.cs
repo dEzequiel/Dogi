@@ -5,7 +5,6 @@ using AutoFixture.Xunit2;
 using AutoMapper;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
-using Domain.Interfaces.Repositories;
 using Moq;
 using Test.Utils.Attributes;
 

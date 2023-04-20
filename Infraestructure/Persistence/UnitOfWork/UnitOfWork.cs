@@ -1,5 +1,4 @@
 ﻿using Application.Service.Interfaces;
-using Domain.Interfaces.Repositories;
 using Infraestructure.Context;
 using Infraestructure.Persistence.Repositories;
 
