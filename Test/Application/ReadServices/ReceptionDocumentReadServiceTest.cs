@@ -96,4 +96,35 @@ public class ReceptionDocumentReadServiceTest
         Assert.IsType<PageResponse<IEnumerable<ReceptionDocumentForGet>>>(result);
         Assert.Equal(totalCount, result.TotalCount);
     }
+    
+    [Theory]
+    [AutoMoqData]
+    internal async Task ShouldGetAllReceptionDocumentsPaginatedFilterByChipPossessionAsync(
+        [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+        [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+        IEnumerable<ReceptionDocument> collectionDocument,
+        ReceptionDocumentRead sut)
+    {
+        // Arrange
+        int totalCount = 3;
+        
+        unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
+
+        repositoryMock.Setup(r => r.GetAllCountAsync())
+            .ReturnsAsync(totalCount);
+        
+        repositoryMock.Setup(r => r.GetAllPaginatedFilterByChipPossessionAsync(
+                It.IsAny<PaginatedRequest>(),
+                It.IsAny<bool>()))
+            .ReturnsAsync(collectionDocument);
+        
+        // Act
+        var result = await sut.GetAllPaginatedFilterByChipPossession(new PaginatedRequest(), true);
+        
+        // Assert
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.IsType<PageResponse<IEnumerable<ReceptionDocumentForGet>>>(result);
+        Assert.Equal(totalCount, result.TotalCount);
+    }
 }
