@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Application.Service.Abstraction;
 using Application.Service.Implementation.Command;
 using Api.GraphQLQueries;
+using Api.GraphQLTypes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +21,8 @@ builder.Services.AddSwaggerGen();
 /// GraphQL Setup.
 /// </summary>
 builder.Services.AddGraphQLServer()
-    .AddQueryType<Query>();
-
+    .AddQueryType<Query>()
+    .AddType<ReceptionDocumentType>();
 ///<summary>
 /// Layers configuration.
 /// </summary>
@@ -56,7 +57,12 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-app.MapGraphQL("/graphql");
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGraphQL("/api/graphql");
+});
 
 
 app.Run();
