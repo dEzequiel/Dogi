@@ -2,6 +2,7 @@
 using Application.Service.Implementation.Read;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
+using Crosscuting.Api.DTOs.Response;
 using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
@@ -69,22 +70,30 @@ public class ReceptionDocumentReadServiceTest
     
     [Theory]
     [AutoMoqData]
-    internal async Task ShouldGetAllReceptionDocumentsAsync(
+    internal async Task ShouldGetAllReceptionDocumentsPaginatedAsync(
         [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
         [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
-        IEnumerable<ReceptionDocument> collectionDocumentGet,
+        IEnumerable<ReceptionDocument> collectionDocument,
         ReceptionDocumentRead sut)
     {
         // Arrange
+        int totalCount = 3;
+        
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
-        repositoryMock.Setup(r => r.GetAllAsync())
-            .ReturnsAsync(collectionDocumentGet);
+        repositoryMock.Setup(r => r.GetAllCountAsync())
+            .ReturnsAsync(totalCount);
+        
+        repositoryMock.Setup(r => r.GetAllPaginatedAsync(It.IsAny<PaginatedRequest>()))
+            .ReturnsAsync(collectionDocument);
         
         // Act
-        var result = await sut.GetAllAsync();
+        var result = await sut.GetAllPaginatedAsync(new PaginatedRequest());
         
         // Assert
-        //Assert.Equal(document.Id, documentGet.Id);
+        Assert.NotNull(result);
+        Assert.NotNull(result.Data);
+        Assert.IsType<PageResponse<IEnumerable<ReceptionDocumentForGet>>>(result);
+        Assert.Equal(totalCount, result.TotalCount);
     }
 }
