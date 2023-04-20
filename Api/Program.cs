@@ -60,7 +60,7 @@ app.UseRouting();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapGraphQL("/api/graphql");
+    endpoints.MapGraphQL();
 });
 
 
