@@ -4,7 +4,7 @@ using Crosscuting.Base.Interfaces;
 namespace Application.Service.Abstraction
 {
     /// <summary>
-    /// ReceptionDocument write operations definition.
+    /// ReceptionDocument Write Service Definition.
     /// </summary>
     public interface IReceptionDocumentWrite : IApplicationServiceBase
     {
