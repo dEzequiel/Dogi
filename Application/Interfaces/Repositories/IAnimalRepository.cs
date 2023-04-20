@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Domain.Interfaces.Repositories
+namespace Application.Service.Interfaces
 {
     public interface IAnimalRepository : IRepository<Animal>
     {

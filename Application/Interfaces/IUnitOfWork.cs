@@ -1,5 +1,4 @@
-﻿using Domain.Interfaces.Repositories;
-
+﻿
 namespace Application.Service.Interfaces
 {
     public interface IUnitOfWork : IDisposable

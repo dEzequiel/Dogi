@@ -31,6 +31,7 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
         _receptionDocument = Guard.Against.Null(receptionDocument, nameof(receptionDocument));
     }
     
+    /// <inheritdoc/>
     public async Task<ReceptionDocumentForGet?> GetByIdAsync(Guid id)
     {
         _logger.LogInformation($"ReceptionDocumentRead --> GetByIdAsync({id}) --> Start");
@@ -56,9 +57,52 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
         return result;
     }
 
-    public Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllAsync()
+    /// <inheritdoc/>
+    public async Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllPaginatedAsync(PaginatedRequest paginated)
     {
-        throw new NotImplementedException();
+        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedAsync --> Start");
+
+        var repository = _unitOfWork.ReceptionDocumentRepository;
+
+        int totalCount = await repository.GetAllCountAsync();
+
+        var documents = await repository.GetAllPaginatedAsync(paginated);
+
+        var result = _mapper.Map<IEnumerable<ReceptionDocumentForGet>>(documents);
+        
+        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedAsync --> End");
+
+        return new PageResponse<IEnumerable<ReceptionDocumentForGet>>()
+        {
+            Data = result,
+            TotalCount = totalCount,
+            NumPage = paginated.NumPage,
+            PageSize = paginated.PageSize
+        };
+    }
+
+    public async Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllPaginatedFilterByChipPossession
+        (PaginatedRequest paginated, bool hasChip)
+    {
+        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedFilterByChipPossession --> Start");
+
+        var repository = _unitOfWork.ReceptionDocumentRepository;
+
+        int totalCount = await repository.GetAllCountAsync();
+
+        var documents = await repository.GetAllPaginatedFilterByChipPossessionAsync(paginated, hasChip);
+
+        var result = _mapper.Map<IEnumerable<ReceptionDocumentForGet>>(documents);
+        
+        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedFilterByChipPossession --> End");
+
+        return new PageResponse<IEnumerable<ReceptionDocumentForGet>>()
+        {
+            Data = result,
+            TotalCount = totalCount,
+            NumPage = paginated.NumPage,
+            PageSize = paginated.PageSize
+        };
     }
 
     public Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>?> GetAllByChipAsync(bool hasChip)

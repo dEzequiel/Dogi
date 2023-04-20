@@ -1,14 +1,11 @@
 ﻿
 using Domain.Entities;
-using Domain.Interfaces.Repositories;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Application.DTOs.ReceptionDocument;
+using Application.Service.Interfaces;
+using Crosscuting.Api.DTOs.Response;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -38,6 +35,38 @@ namespace Infraestructure.Persistence.Repositories
         public async Task AddRangeAsync(IEnumerable<ReceptionDocument> entities)
         {
             await _receptions.AddRangeAsync(entities);
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedAsync(PaginatedRequest paginated)
+        {
+            if (paginated.NumPage == default && paginated.PageSize == default)
+                return await _receptions.AsNoTracking().ToListAsync();
+
+            var skip = (paginated.NumPage - 1) * paginated.PageSize;
+
+            return await _receptions.AsNoTracking().Skip(skip).Take(paginated.PageSize).ToListAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedFilterByChipPossessionAsync(
+            PaginatedRequest paginated, bool hasChip)
+        {
+            if (paginated.NumPage == default && paginated.PageSize == default)
+                return await _receptions.AsNoTracking().ToListAsync();
+            
+            var skip = (paginated.NumPage - 1) * paginated.PageSize;
+
+            return await _receptions.Where(x => x.HasChip == hasChip)
+                                            .AsNoTracking().Skip(skip)
+                                            .Take(paginated.PageSize)
+                                            .ToListAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<int> GetAllCountAsync()
+        {
+            return await _receptions.CountAsync();
         }
 
         /// <inheritdoc/>

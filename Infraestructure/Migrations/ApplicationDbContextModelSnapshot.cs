@@ -112,7 +112,7 @@ namespace Infraestructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("HasChip")
+                    b.Property<bool?>("HasChip")
                         .HasColumnType("bit");
 
                     b.Property<string>("Observations")

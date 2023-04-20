@@ -20,8 +20,16 @@ public interface IReceptionDocumentRead : IApplicationServiceBase
     /// Obtain existing ReceptionDocuments.
     /// </summary>
     /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllAsync();
+    Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllPaginatedAsync(PaginatedRequest paginated);
 
+    /// <summary>
+    /// Obtain existing ReceptionDocuments filter by chip possession.
+    /// </summary>
+    /// <param name="paginated"></param>
+    /// <param name="hasChip"></param>
+    /// <returns></returns>
+    Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllPaginatedFilterByChipPossession(PaginatedRequest paginated,
+                                                                                                    bool hasChip);
     /// <summary>
     /// Obtain existing ReceptionDocuments filter with animal chip possession.
     /// </summary>
