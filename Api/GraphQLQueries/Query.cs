@@ -9,9 +9,6 @@ namespace Api.GraphQLQueries
         /// Resolver. 
         /// </summary>
         /// <returns></returns>
-        [UseProjection]
-        [UseFiltering]
-        [UseSorting]
         public IQueryable<ReceptionDocument> GetReceptionDocuments([Service] ApplicationDbContext context) =>
             context.ReceptionDocument;
     }

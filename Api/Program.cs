@@ -11,9 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+///<summary>
+/// GraphQL Setup.
+/// </summary>
+builder.Services.AddGraphQLServer()
+    .AddQueryType<Query>();
 
 ///<summary>
 /// Layers configuration.
@@ -28,13 +35,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DogiConnection"));
 });
 
-
-
-///<summary>
-/// GraphQL Setup.
-/// </summary>
-builder.Services.AddGraphQLServer()
-                .AddQueryType<Query>();
 
 var app = builder.Build();
 
