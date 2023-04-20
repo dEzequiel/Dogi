@@ -81,6 +81,30 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
         };
     }
 
+    public async Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllPaginatedFilterByChipPossession
+        (PaginatedRequest paginated, bool hasChip)
+    {
+        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedFilterByChipPossession --> Start");
+
+        var repository = _unitOfWork.ReceptionDocumentRepository;
+
+        int totalCount = await repository.GetAllCountAsync();
+
+        var documents = await repository.GetAllPaginatedFilterByChipPossessionAsync(paginated, hasChip);
+
+        var result = _mapper.Map<IEnumerable<ReceptionDocumentForGet>>(documents);
+        
+        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedFilterByChipPossession --> End");
+
+        return new PageResponse<IEnumerable<ReceptionDocumentForGet>>()
+        {
+            Data = result,
+            TotalCount = totalCount,
+            NumPage = paginated.NumPage,
+            PageSize = paginated.PageSize
+        };
+    }
+
     public Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>?> GetAllByChipAsync(bool hasChip)
     {
         throw new NotImplementedException();
