@@ -3,6 +3,7 @@ using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Application.DTOs.ReceptionDocument;
 using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs.Response;
 
@@ -45,6 +46,21 @@ namespace Infraestructure.Persistence.Repositories
             var skip = (paginated.NumPage - 1) * paginated.PageSize;
 
             return await _receptions.AsNoTracking().Skip(skip).Take(paginated.PageSize).ToListAsync();
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedFilterByChipPossessionAsync(
+            PaginatedRequest paginated, bool hasChip)
+        {
+            if (paginated.NumPage == default && paginated.PageSize == default)
+                return await _receptions.AsNoTracking().ToListAsync();
+            
+            var skip = (paginated.NumPage - 1) * paginated.PageSize;
+
+            return await _receptions.Where(x => x.HasChip == hasChip)
+                                            .AsNoTracking().Skip(skip)
+                                            .Take(paginated.PageSize)
+                                            .ToListAsync();
         }
 
         /// <inheritdoc/>
