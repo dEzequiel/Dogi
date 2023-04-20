@@ -5,17 +5,18 @@ using Domain.Exceptions.Result;
 namespace Domain.Entities
 {
     /// <summary>
-    /// It is a document filled out by the collection services at the time of action or by the protector when receiving the animal.
+    /// It is a document filled out by the collection services at the time of action or by the protector when receiving
+    /// the animal.
     /// </summary>
     public class ReceptionDocument : Entity
     {
         /// <summary>
         /// Attributes.
         /// </summary>
-        public bool HasChip { get; private set; }
-        public string? Observations { get; private set; } = string.Empty;
-        public string? PickupLocation { get; private set; } = string.Empty;
-        public DateTime? PickupDate { get; private set; }
+        public bool? HasChip { get; set; }
+        public string? Observations { get; set; } = string.Empty;
+        public string? PickupLocation { get; set; } = string.Empty;
+        public DateTime? PickupDate { get; set; }
 
         /// <summary>
         /// Navigation properties.
@@ -33,7 +34,7 @@ namespace Domain.Entities
 
         public ReceptionDocument(
             Guid id,
-            bool hasChip, 
+            bool? hasChip, 
             string? observations, 
             string? pickupLocation, 
             DateTime? pickupDate) : base(id)

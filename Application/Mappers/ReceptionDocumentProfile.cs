@@ -11,7 +11,8 @@ namespace Application.Mappers
             CreateMap<ReceptionDocument, ReceptionDocumentForGet>();
 
             CreateMap<ReceptionDocumentForAdd, ReceptionDocument>()
-                .ForMember(dest => dest.Id, src => src.MapFrom(src => Guid.NewGuid()));
+                .ForMember(dest => dest.Id, src 
+                                                                                        => src.MapFrom(src => Guid.NewGuid()));
         }
     }
 }
