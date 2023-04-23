@@ -7,6 +7,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Service.Abstraction.Read;
+using Application.Service.Implementation.Read;
+using Application.Service.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Domain.Entities;
 
@@ -23,6 +26,7 @@ namespace Application
             });
 
             services.AddTransient<IReceptionDocumentWrite, ReceptionDocumentWrite>();
+            services.AddTransient<IReceptionDocumentRead, ReceptionDocumentRead>();
             services.AddTransient<ReceptionDocument>();
 
             return services;
