@@ -1,3 +1,4 @@
+using Api.GraphQLMutations;
 using Infraestructure;
 using Application;
 using Infraestructure.Context;
@@ -21,7 +22,8 @@ builder.Services.AddSwaggerGen();
 /// GraphQL Setup.
 /// </summary>
 builder.Services.AddGraphQLServer()
-    .AddQueryType<QueryType>();
+    .AddQueryType<QueryType>()
+    .AddMutationType<MutationType>();
 
 ///<summary>
 /// Layers configuration.
