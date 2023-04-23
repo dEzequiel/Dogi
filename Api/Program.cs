@@ -22,6 +22,7 @@ builder.Services.AddSwaggerGen();
 /// </summary>
 builder.Services.AddGraphQLServer()
     .AddQueryType<QueryType>();
+
 ///<summary>
 /// Layers configuration.
 /// </summary>
