@@ -1,7 +1,13 @@
 ﻿using Api.GraphQLTypes;
+using Application.DTOs.ReceptionDocument;
+using Application.Features.ReceptionDocument.Queries;
 using Application.Service.Interfaces;
+using Ardalis.GuardClauses;
+using Crosscuting.Api.DTOs.Response;
 using Domain.Entities;
 using Infraestructure.Context;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.GraphQLQueries
 {
@@ -11,18 +17,25 @@ namespace Api.GraphQLQueries
     /// </summary>
     public class Query
     {
+        private IMediator _mediator;
+
+        public Query(IMediator mediator)
+        {
+            _mediator = Guard.Against.Null(mediator, nameof(mediator));
+        }
+
         public string Hello() => "Worldd";
 
-        public ReceptionDocument? GetReceptionDocument(Guid id)
+        public async Task<ApiResponse<ReceptionDocumentForGet>?> GetReceptionDocument(Guid id, CancellationToken ct = default)
         {
-            var objec = new ReceptionDocument(Guid.Parse("83cff3cd-b820-4b7b-9333-f7ec1b7a6faf"), false, 
-                "test", "test",
-                DateTime.Now);
+            var result = await _mediator.Send(new GetReceptionDocumentByIdRequest(id), ct);
 
-            if (objec.Id == id)
-                return objec;
+            if (!result.Succeeded)
+            {
+                return new ("not found");
+            }
 
-            return null;
+            return result;
         }
     }
 
@@ -33,7 +46,7 @@ namespace Api.GraphQLQueries
     {
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
-            descriptor.Field(q => q.GetReceptionDocument(default))
+            descriptor.Field(q => q.GetReceptionDocument(default, default))
                 .Type<ReceptionDocumentType>()
                 .Argument("id", a => a.Type<NonNullType<UuidType>>());
         }
