@@ -1,4 +1,5 @@
 ﻿using Api.GraphQLQueries;
+using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 
 namespace Api.GraphQLMutations;
@@ -15,6 +16,16 @@ public class ReceptionDocumentMutation
         };
         
         _documents.Add(doc);
+
+        return true;
+    }
+
+    public bool UpdateReceptionDocument(Guid actualId, Guid newId)
+    {
+        ReceptionDocument? doc = _documents.FirstOrDefault(d => d.Id == actualId);
+
+        if (doc is null)
+            throw new GraphQLException(new Error("DOC NOT FOUND.", StatusCodes.Status404NotFound.ToString()));
 
         return true;
     }
