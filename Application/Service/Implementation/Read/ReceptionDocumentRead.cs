@@ -14,18 +14,13 @@ namespace Application.Service.Implementation.Read;
 /// </summary>
 public class ReceptionDocumentRead : IReceptionDocumentRead
 {
-    private readonly ReceptionDocument _receptionDocument;
     private readonly ILogger<ReceptionDocumentWrite> _logger;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
     
-    public ReceptionDocumentRead(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ReceptionDocumentWrite> logger, 
-        ReceptionDocument receptionDocument)
+    public ReceptionDocumentRead(IUnitOfWork unitOfWork, ILogger<ReceptionDocumentWrite> logger)
     {
         _unitOfWork = Guard.Against.Null(unitOfWork, nameof(unitOfWork));
-        _mapper = Guard.Against.Null(mapper, nameof(mapper));
         _logger = Guard.Against.Null(logger, nameof(logger));
-        _receptionDocument = Guard.Against.Null(receptionDocument, nameof(receptionDocument));
     }
     
     /// <inheritdoc/>
