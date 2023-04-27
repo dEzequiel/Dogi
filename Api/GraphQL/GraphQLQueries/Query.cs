@@ -1,5 +1,4 @@
-﻿using Api.GraphQLTypes;
-using Application.DTOs.ReceptionDocument;
+﻿using Application.DTOs.ReceptionDocument;
 using Application.Features.ReceptionDocument.Queries;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
@@ -9,7 +8,7 @@ using Infraestructure.Context;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.GraphQLQueries
+namespace Api.GraphQL.GraphQLQueries
 {
     /// <summary>
     /// Each field defined on this type is available at the root of a query.
@@ -32,7 +31,7 @@ namespace Api.GraphQLQueries
 
             if (!result.Succeeded)
             {
-                return new ("not found");
+                return new("not found");
             }
 
             return result;
@@ -51,6 +50,6 @@ namespace Api.GraphQLQueries
                 .Argument("id", a => a.Type<NonNullType<UuidType>>());
         }
     }
-    
-    
+
+
 }

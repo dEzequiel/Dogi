@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Api.GraphQLTypes;
+namespace Api.GraphQL.GraphQLTypes;
 
 public class ReceptionDocumentType : ObjectType<ReceptionDocument>
 {
@@ -19,6 +19,6 @@ public class ReceptionDocumentType : ObjectType<ReceptionDocument>
         descriptor.Field(f => f.PickupDate)
             .Type<DateType>();
 
-        descriptor.Ignore((f => f.IndividualProceeding));
+        descriptor.Ignore(f => f.IndividualProceeding);
     }
 }

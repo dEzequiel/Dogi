@@ -1,11 +1,11 @@
 ﻿using Domain.Entities;
 
-namespace Api.GraphQLQueries;
+namespace Api.GraphQL.GraphQLQueries;
 
 public class ReceptionDocumentType : ObjectType<ReceptionDocument>
 {
     protected override void Configure(IObjectTypeDescriptor<ReceptionDocument> descriptor)
     {
-        
+
     }
 }

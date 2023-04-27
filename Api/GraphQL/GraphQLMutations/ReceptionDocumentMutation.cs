@@ -1,20 +1,19 @@
-﻿using Api.GraphQLQueries;
-using Crosscuting.Base.Exceptions;
+﻿using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 
-namespace Api.GraphQLMutations;
+namespace Api.GraphQL.GraphQLMutations;
 
 public class ReceptionDocumentMutation
 {
     private readonly List<ReceptionDocument> _documents = new List<ReceptionDocument>();
-    
+
     public bool CreateReceptionDocument(Guid id)
     {
         ReceptionDocument doc = new ReceptionDocument()
         {
             Id = Guid.NewGuid()
         };
-        
+
         _documents.Add(doc);
 
         return true;

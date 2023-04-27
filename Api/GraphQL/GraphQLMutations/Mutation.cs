@@ -1,14 +1,14 @@
-﻿namespace Api.GraphQLMutations;
+﻿namespace Api.GraphQL.GraphQLMutations;
 
 public class Mutation
 {
     private ReceptionDocumentMutation _receptionDocument;
-    
+
     public Mutation()
     {
         _receptionDocument = new ReceptionDocumentMutation();
     }
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -19,7 +19,7 @@ public class Mutation
         var result = _receptionDocument.CreateReceptionDocument(id);
         return result;
     }
-    
+
     public bool UpdateReceptionDocument(Guid actualId, Guid newId)
     {
         var result = _receptionDocument.UpdateReceptionDocument(actualId, newId);
@@ -37,4 +37,4 @@ public class MutationType : ObjectType<Mutation>
         descriptor.Field(f => f.AddReceptionDocument(default));
         descriptor.Field(f => f.UpdateReceptionDocument(default, default));
     }
-}    
+}
