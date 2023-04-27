@@ -2,8 +2,8 @@ using Infraestructure;
 using Application;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Api.GraphQL.GraphQLMutations;
 using Api.GraphQL.GraphQLTypes;
+using Api.GraphQL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +22,7 @@ builder.Services
     .AddGraphQLServer()
     .RegisterDbContext<ApplicationDbContext>()
     .AddQueryType<QueryType>()
-    .AddMutationType<MutationType>();
-
+    .AddErrorFilter<ErrorFilter>();
 ///<summary>
 /// Layers configuration.
 /// </summary>
