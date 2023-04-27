@@ -2,6 +2,9 @@
 
 namespace Api.GraphQL.GraphQLTypes;
 
+/// <summary>
+/// ReceptionDocument HotChocolate Type implementation.
+/// </summary>
 public class ReceptionDocumentType : ObjectType<ReceptionDocument>
 {
     protected override void Configure(IObjectTypeDescriptor<ReceptionDocument> descriptor)
