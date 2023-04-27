@@ -5,7 +5,7 @@ namespace Api.GraphQL.GraphQLQueries
     /// <summary>
     /// Public queries.
     /// </summary>
-    public class Query
+    public partial class Query
     {
         /// <summary>
         /// Reception Document entity public queries.
