@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Service.Abstraction;
+﻿using Application.Service.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
@@ -10,15 +9,15 @@ namespace Application.Features.ReceptionDocument.Commands
     /// <summary>
     /// Insert ReceptionDocument request implementation.
     /// </summary>
-    public class InsertReceptionDocumentRequest : IRequest<ApiResponse<ReceptionDocumentForGet>>
+    public class InsertReceptionDocumentRequest : IRequest<ApiResponse<Domain.Entities.ReceptionDocument>>
     {
-        public ReceptionDocumentForAdd ReceptionDocumentData { get; private set; } = null!;
+        public Domain.Entities.ReceptionDocument ReceptionDocumentData { get; private set; } = null!;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="receptionDocumentData"></param>
-        public InsertReceptionDocumentRequest(ReceptionDocumentForAdd receptionDocumentData) =>
+        public InsertReceptionDocumentRequest(Domain.Entities.ReceptionDocument receptionDocumentData) =>
             this.ReceptionDocumentData = receptionDocumentData;
 
     }
@@ -27,7 +26,7 @@ namespace Application.Features.ReceptionDocument.Commands
     /// Insert ReceptionDocument handler implementation.
     /// </summary>
     public class InsertReceptionDocumentRequestHandler : IRequestHandler<InsertReceptionDocumentRequest, 
-                                                         ApiResponse<ReceptionDocumentForGet>>
+                                                         ApiResponse<Domain.Entities.ReceptionDocument>>
     {
         private readonly ILogger<InsertReceptionDocumentRequestHandler> _logger;
         private readonly IReceptionDocumentWrite _receptionDocumentWriteService;
@@ -45,18 +44,18 @@ namespace Application.Features.ReceptionDocument.Commands
         }
 
         ///<inheritdoc/>
-        public async Task<ApiResponse<ReceptionDocumentForGet>> Handle(InsertReceptionDocumentRequest request, 
+        public async Task<ApiResponse<Domain.Entities.ReceptionDocument>> Handle(InsertReceptionDocumentRequest request, 
                                                                        CancellationToken cancellationToken)
         {
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> Start");
 
             Guard.Against.Null(request, nameof(request));
             
-            ReceptionDocumentForGet result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData);
+            Domain.Entities.ReceptionDocument result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData);
 
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> End");
 
-            return new ApiResponse<ReceptionDocumentForGet>(result);
+            return new ApiResponse<Domain.Entities.ReceptionDocument>(result);
 
         }
     }

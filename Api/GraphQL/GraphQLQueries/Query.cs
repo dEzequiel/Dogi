@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Features.ReceptionDocument.Queries;
+﻿using Application.Features.ReceptionDocument.Queries;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
@@ -25,7 +24,7 @@ namespace Api.GraphQL.GraphQLQueries
 
         public string Hello() => "Worldd";
 
-        public async Task<ApiResponse<ReceptionDocumentForGet>?> GetReceptionDocument(Guid id, CancellationToken ct = default)
+        public async Task<ApiResponse<ReceptionDocument>?> GetReceptionDocument(Guid id, CancellationToken ct = default)
         {
             var result = await _mediator.Send(new GetReceptionDocumentByIdRequest(id), ct);
 
@@ -38,8 +37,9 @@ namespace Api.GraphQL.GraphQLQueries
         }
     }
 
+    
     /// <summary>
-    /// The query type in GraphQL represents a read-only view of all of our entities and ways to retrieve them.
+    /// 
     /// </summary>
     public class QueryType : ObjectType<Query>
     {

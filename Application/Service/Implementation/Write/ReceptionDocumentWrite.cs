@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Service.Abstraction;
+﻿using Application.Service.Abstraction;
 using Application.Service.Interfaces;
 using AutoMapper;
 using Domain.Entities;
@@ -23,15 +22,13 @@ namespace Application.Service.Implementation.Command
             _receptionDocument = receptionDocument;
         }
 
-        public async Task<ReceptionDocumentForGet> AddAsync(ReceptionDocumentForAdd entity)
+        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity)
         {
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Start");
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            var document = _mapper.Map<ReceptionDocument>(entity);
-
-            var validDocument = _receptionDocument.Verify(document);
+            var validDocument = _receptionDocument.Verify(entity);
 
             if (validDocument.IsFailure)
             {
@@ -44,11 +41,9 @@ namespace Application.Service.Implementation.Command
 
             await _unitOfWork.CompleteAsync();
 
-            var result = _mapper.Map<ReceptionDocumentForGet>(validDocument.Value);
-
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> End");
 
-            return result;
+            return validDocument.Value;
         }
 
         public Task<bool> LogicRemoveAsync(Guid id)
@@ -56,7 +51,7 @@ namespace Application.Service.Implementation.Command
             throw new NotImplementedException();
         }
 
-        public Task<ReceptionDocumentForGet?> UpdateAsync(ReceptionDocumentForUpdate entity)
+        public Task<ReceptionDocument?> UpdateAsync(ReceptionDocument entity)
         {
             throw new NotImplementedException();
         }

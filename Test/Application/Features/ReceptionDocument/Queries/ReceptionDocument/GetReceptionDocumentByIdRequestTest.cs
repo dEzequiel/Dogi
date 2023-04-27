@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Features.ReceptionDocument.Queries;
+﻿using Application.Features.ReceptionDocument.Queries;
 using Application.Service.Abstraction.Read;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs.Response;
@@ -24,7 +23,7 @@ public class GetReceptionDocumentByIdRequestTest
     [AutoMoqData]
     internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
         [Frozen] Mock<IReceptionDocumentRead> receptionDocumentReadServiceMock,
-        ReceptionDocumentForGet documentForGet,
+        Domain.Entities.ReceptionDocument documentForGet,
         GetReceptionDocumentByIdRequest request,
         GetReceptionDocumentByIdRequestHandler handler)
     {
@@ -36,7 +35,7 @@ public class GetReceptionDocumentByIdRequestTest
         var result = await handler.Handle(request, default);
 
         // Assert
-        Assert.IsType<ApiResponse<ReceptionDocumentForGet>>(result);
+        Assert.IsType<ApiResponse<Domain.Entities.ReceptionDocument>>(result);
         receptionDocumentReadServiceMock.Verify(x => x.GetByIdAsync(It.IsAny<Guid>()));
     }
 }

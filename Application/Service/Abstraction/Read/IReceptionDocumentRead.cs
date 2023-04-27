@@ -1,6 +1,6 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Crosscuting.Api.DTOs.Response;
+﻿using Crosscuting.Api.DTOs.Response;
 using Crosscuting.Base.Interfaces;
+using Domain.Entities;
 
 namespace Application.Service.Abstraction.Read;
 
@@ -14,13 +14,13 @@ public interface IReceptionDocumentRead : IApplicationServiceBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<ReceptionDocumentForGet?> GetByIdAsync(Guid id);
+    Task<ReceptionDocument?> GetByIdAsync(Guid id);
 
     /// <summary>
     /// Obtain existing ReceptionDocuments.
     /// </summary>
     /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllPaginatedAsync(PaginatedRequest paginated);
+    Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedAsync(PaginatedRequest paginated);
 
     /// <summary>
     /// Obtain existing ReceptionDocuments filter by chip possession.
@@ -28,12 +28,12 @@ public interface IReceptionDocumentRead : IApplicationServiceBase
     /// <param name="paginated"></param>
     /// <param name="hasChip"></param>
     /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>> GetAllPaginatedFilterByChipPossession(PaginatedRequest paginated,
+    Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedFilterByChipPossession(PaginatedRequest paginated,
                                                                                                     bool hasChip);
     /// <summary>
     /// Obtain existing ReceptionDocuments filter with animal chip possession.
     /// </summary>
     /// <param name="hasChip"></param>
     /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocumentForGet>>?> GetAllByChipAsync(bool hasChip);
+    Task<PageResponse<IEnumerable<ReceptionDocument>>?> GetAllByChipAsync(bool hasChip);
 }

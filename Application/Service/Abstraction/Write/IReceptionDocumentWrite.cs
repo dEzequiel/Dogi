@@ -1,5 +1,5 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Crosscuting.Base.Interfaces;
+﻿using Crosscuting.Base.Interfaces;
+using Domain.Entities;
 
 namespace Application.Service.Abstraction
 {
@@ -14,7 +14,7 @@ namespace Application.Service.Abstraction
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<ReceptionDocumentForGet> AddAsync(ReceptionDocumentForAdd entity);
+        Task<ReceptionDocument> AddAsync(ReceptionDocument entity);
 
         /// <summary>
         /// Update existing ReceptionDocument.
@@ -22,7 +22,7 @@ namespace Application.Service.Abstraction
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<ReceptionDocumentForGet?> UpdateAsync(ReceptionDocumentForUpdate entity);
+        Task<ReceptionDocument?> UpdateAsync(ReceptionDocument entity);
 
         /// <summary>
         /// Soft delete existing ReceptionDocument.

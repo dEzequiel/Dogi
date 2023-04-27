@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Service.Implementation.Read;
+﻿using Application.Service.Implementation.Read;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs.Response;
@@ -20,12 +19,11 @@ public class ReceptionDocumentReadServiceTest
     internal async Task ShouldGetReceptionDocumentByIdAsync(
         [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
         [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
-        ReceptionDocumentForGet documentGet,
+        Domain.Entities.ReceptionDocument documentGet,
         ReceptionDocument document,
         ReceptionDocumentRead sut)
     {
         // Arrange
-        documentGet.Id = document.Id;
         
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
@@ -34,9 +32,9 @@ public class ReceptionDocumentReadServiceTest
         
         // Act
         var result = await sut.GetByIdAsync(document.Id);
-        
+
         // Assert
-        Assert.Equal(document.Id, documentGet.Id);
+        Assert.NotNull(result);
     }
 
     [Theory]
@@ -46,7 +44,7 @@ public class ReceptionDocumentReadServiceTest
         [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
         [Frozen] Mock<Domain.Entities.ReceptionDocument> receptionDocumentEntityMock,
         ReceptionDocument document,
-        ReceptionDocumentForAdd documentAdd,
+        Domain.Entities.ReceptionDocument documentAdd,
         ReceptionDocumentRead sut)
     {
         // Arrange
@@ -93,7 +91,7 @@ public class ReceptionDocumentReadServiceTest
         // Assert
         Assert.NotNull(result);
         Assert.NotNull(result.Data);
-        Assert.IsType<PageResponse<IEnumerable<ReceptionDocumentForGet>>>(result);
+        Assert.IsType<PageResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>(result);
         Assert.Equal(totalCount, result.TotalCount);
     }
     
@@ -124,7 +122,7 @@ public class ReceptionDocumentReadServiceTest
         // Assert
         Assert.NotNull(result);
         Assert.NotNull(result.Data);
-        Assert.IsType<PageResponse<IEnumerable<ReceptionDocumentForGet>>>(result);
+        Assert.IsType<PageResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>(result);
         Assert.Equal(totalCount, result.TotalCount);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Service.Abstraction.Read;
+﻿using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
@@ -10,7 +9,7 @@ namespace Application.Features.ReceptionDocument.Queries;
 /// <summary>
 /// Get ReceptionDocument by identifier request implementation.
 /// </summary>
-public class GetReceptionDocumentByIdRequest : IRequest<ApiResponse<ReceptionDocumentForGet>>
+public class GetReceptionDocumentByIdRequest : IRequest<ApiResponse<Domain.Entities.ReceptionDocument>>
 {
     public Guid Id { get; private set; }
     
@@ -25,7 +24,7 @@ public class GetReceptionDocumentByIdRequest : IRequest<ApiResponse<ReceptionDoc
 /// Get ReceptionDocument by identifier handler implementation.
 /// </summary>
 public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetReceptionDocumentByIdRequest,
-    ApiResponse<ReceptionDocumentForGet>>
+    ApiResponse<Domain.Entities.ReceptionDocument>>
 {
     private readonly ILogger<GetReceptionDocumentByIdRequestHandler> _logger;
     private readonly IReceptionDocumentRead _receptionDocumentReadService;
@@ -43,17 +42,17 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
     }
 
     ///<inheritdoc/>
-    public async Task<ApiResponse<ReceptionDocumentForGet>> Handle(GetReceptionDocumentByIdRequest request, 
+    public async Task<ApiResponse<Domain.Entities.ReceptionDocument>> Handle(GetReceptionDocumentByIdRequest request, 
         CancellationToken cancellationToken)
     {
         _logger.LogInformation($"GetReceptionDocumentByIdRequestHandler --> GetByIdAsync({request.Id}) --> Start");
 
         Guard.Against.Null(request, nameof(request));
 
-        ReceptionDocumentForGet result = await _receptionDocumentReadService.GetByIdAsync(request.Id);
+        Domain.Entities.ReceptionDocument result = await _receptionDocumentReadService.GetByIdAsync(request.Id);
         
         _logger.LogInformation("GetReceptionDocumentByIdRequestHandler --> GetByIdAsync --> End");
 
-        return new ApiResponse<ReceptionDocumentForGet>(result);
+        return new ApiResponse<Domain.Entities.ReceptionDocument>(result);
     }
 }
