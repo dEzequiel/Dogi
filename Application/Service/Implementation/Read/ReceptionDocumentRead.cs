@@ -4,10 +4,8 @@ using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using Crosscuting.Api.DTOs.Response;
-using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
-using Crosscuting.Base.Exceptions;
 
 namespace Application.Service.Implementation.Read;
 
@@ -40,25 +38,10 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
         var repository = _unitOfWork.ReceptionDocumentRepository;
 
         var document = await repository.GetAsync(id);
-
-        if (document == null)
-        {
-            _logger.LogInformation($"ReceptionDocumentRead --> GetByIdAsync({id}) --> Not Found");
-
-            return null;
-        }
-
-        var validDocument = _receptionDocument.Verify(document);
-
-        if (validDocument.IsFailure)
-        {
-            _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Error");
-            throw new Crosscuting.Base.Exceptions.InvalidDataException(validDocument.Error.Message);
-        }
         
         _logger.LogInformation($"ReceptionDocumentRead --> GetByIdAsync({id}) --> End");
 
-        return validDocument.Value;
+        return document;
     }
 
     /// <inheritdoc/>

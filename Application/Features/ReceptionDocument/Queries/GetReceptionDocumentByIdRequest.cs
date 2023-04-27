@@ -28,6 +28,7 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
 {
     private readonly ILogger<GetReceptionDocumentByIdRequestHandler> _logger;
     private readonly IReceptionDocumentRead _receptionDocumentReadService;
+    private const string RECEPTION_DOCUMENT_NOT_FOUND = "ReceptionDocument with id {0} not found.";
 
     /// <summary>
     /// Constructor.
@@ -49,8 +50,20 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
 
         Guard.Against.Null(request, nameof(request));
 
-        Domain.Entities.ReceptionDocument result = await _receptionDocumentReadService.GetByIdAsync(request.Id);
+        Domain.Entities.ReceptionDocument? result = await _receptionDocumentReadService.GetByIdAsync(request.Id);
         
+        if(result is null)
+        {
+            _logger.LogInformation($"GetReceptionDocumentByIdRequestHandler --> GetByIdAsync({request.Id}) --> Not Found");
+
+            return new ApiResponse<Domain.Entities.ReceptionDocument>()
+            {
+                Succeeded = false,
+                Message = string.Format(RECEPTION_DOCUMENT_NOT_FOUND, request.Id),
+                Data = result
+            };  
+        }
+
         _logger.LogInformation("GetReceptionDocumentByIdRequestHandler --> GetByIdAsync --> End");
 
         return new ApiResponse<Domain.Entities.ReceptionDocument>(result);
