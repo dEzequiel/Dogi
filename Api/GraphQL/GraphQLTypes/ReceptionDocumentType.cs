@@ -8,7 +8,6 @@ public class ReceptionDocumentType : ObjectType<ReceptionDocument>
     {
         descriptor
             .Field(f => f.Id)
-            .Argument("id", a => a.Type<NonNullType<UuidType>>())
             .Type<NonNullType<UuidType>>();
 
         descriptor.Field(f => f.HasChip)
