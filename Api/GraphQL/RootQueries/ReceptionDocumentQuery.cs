@@ -3,7 +3,7 @@
 namespace Api.GraphQL.GraphQLQueries
 {
     /// <summary>
-    /// Public queries.
+    /// Public ReceptionDocument queries.
     /// </summary>
     public partial class Query
     {
