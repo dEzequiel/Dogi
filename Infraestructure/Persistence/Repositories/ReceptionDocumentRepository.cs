@@ -63,9 +63,6 @@ namespace Infraestructure.Persistence.Repositories
         /// <inheritdoc/>
         public async Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipPossessionAsync(bool? hasChip, CancellationToken ct = default)
         {
-            if (hasChip is null)
-                return await GetAllAsync(ct);
-
             return await _receptions.Where(x => x.HasChip == hasChip).AsNoTracking().ToListAsync(ct);
         }
 

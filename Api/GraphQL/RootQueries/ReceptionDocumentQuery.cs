@@ -12,5 +12,6 @@ namespace Api.GraphQL.GraphQLQueries
         /// </summary>
         public ReceptionDocument? ReceptionDocumentId { get; }
         public IEnumerable<ReceptionDocument>? ReceptionDocuments { get; }
+        public IEnumerable<ReceptionDocument>? ReceptionDocumentsFilterByChip { get; }
     }
 }

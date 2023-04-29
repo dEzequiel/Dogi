@@ -12,10 +12,13 @@ using System.Threading.Tasks;
 namespace Application.Features.ReceptionDocument.Queries
 {
     /// <summary>
-    /// Get all ReceptionDocuments.
+    /// Get all ReceptionDocuments request implementation.
     /// </summary>
     public class GetAllReceptionDocumentsRequest : IRequest<ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>> { }
 
+    /// <summary>
+    /// Get all ReceptionDocuments handler implementation.
+    /// </summary>
     public class GetAllReceptionDocumentsRequestHandler : IRequestHandler<GetAllReceptionDocumentsRequest,
         ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>
     {

@@ -27,6 +27,18 @@ namespace Api.GraphQL.GraphQLTypes
                     IncludeTotalCount = true
                 })
                 .ResolveWith<ReceptionDocumentQueries>(q => q.GetAllPaginatedAsync(default, default));
+
+            descriptor.Field(q => q.ReceptionDocumentsFilterByChip)
+                .Type<ReceptionDocumentType>()
+                .Argument("hasChip", a => a.Type<BooleanType>())
+                .UsePaging<ReceptionDocumentType>(
+                options: new PagingOptions
+                {
+                    DefaultPageSize = 10,
+                    MaxPageSize = 20,
+                    IncludeTotalCount = true
+                })
+                .ResolveWith<ReceptionDocumentQueries>(q => q.GetAllFilterByChipPossessionPaginatedAsync(default, default, default));
         }
     }
 }

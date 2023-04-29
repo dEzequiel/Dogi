@@ -33,7 +33,8 @@ namespace Test.Application.Features.ReceptionDocument.Commands
         {
             // Arrange
             receptionDocumentWriteServiceMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.ReceptionDocument>(), 
-                                                                    It.IsAny<AdminData>()))
+                                                                    It.IsAny<AdminData>(),
+                                                                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(documentDataForGet);
 
             // Act

@@ -36,7 +36,7 @@ namespace Test.Application.Features.ReceptionDocument.Commands
             // Arrange
             var idToDelete = Guid.NewGuid();
 
-            receptionDocumentWriteServiceMock.Setup(x => x.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>()))
+            receptionDocumentWriteServiceMock.Setup(x => x.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 
             // Act

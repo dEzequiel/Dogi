@@ -3,6 +3,7 @@ using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs.Response;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
 using Moq;
@@ -50,20 +51,15 @@ public class ReceptionDocumentReadServiceTest
         
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
-        repositoryMock.Setup(r => r.GetAllCountAsync())
-            .ReturnsAsync(totalCount);
-        
-        repositoryMock.Setup(r => r.GetAllPaginatedAsync(It.IsAny<PaginatedRequest>()))
+        repositoryMock.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(collectionDocument);
-        
+
         // Act
-        var result = await sut.GetAllPaginatedAsync(new PaginatedRequest());
+        CancellationToken ct = default;
+        var result = await sut.GetAllAsync(ct);
         
         // Assert
         Assert.NotNull(result);
-        Assert.NotNull(result.Data);
-        Assert.IsType<PageResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>(result);
-        Assert.Equal(totalCount, result.TotalCount);
     }
     
     [Theory]
@@ -79,21 +75,16 @@ public class ReceptionDocumentReadServiceTest
         
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
-        repositoryMock.Setup(r => r.GetAllCountAsync())
-            .ReturnsAsync(totalCount);
         
-        repositoryMock.Setup(r => r.GetAllPaginatedFilterByChipPossessionAsync(
-                It.IsAny<PaginatedRequest>(),
-                It.IsAny<bool>()))
+        repositoryMock.Setup(r => r.GetAllFilterByChipPossessionAsync(
+                It.IsAny<bool>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(collectionDocument);
         
         // Act
-        var result = await sut.GetAllPaginatedFilterByChipPossession(new PaginatedRequest(), true);
+        var result = await sut.GetAllFilterByChipAsync(false);
         
         // Assert
         Assert.NotNull(result);
-        Assert.NotNull(result.Data);
-        Assert.IsType<PageResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>(result);
-        Assert.Equal(totalCount, result.TotalCount);
     }
 }
