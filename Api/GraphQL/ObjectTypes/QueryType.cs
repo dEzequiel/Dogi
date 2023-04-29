@@ -15,6 +15,10 @@ namespace Api.GraphQL.GraphQLTypes
                 .Type<ReceptionDocumentType>()
                 .Argument("id", a => a.Type<NonNullType<UuidType>>())
                 .ResolveWith<ReceptionDocumentQueries>(q => q.GetById(default, default, default));
+
+            descriptor.Field(q => q.ReceptionDocuments)
+                .Type<ListType<ReceptionDocumentType>>()
+                .ResolveWith<ReceptionDocumentQueries>(q => q.GetAllPaginatedAsync(default, default));
         }
     }
 }

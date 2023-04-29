@@ -35,5 +35,12 @@ namespace Api.GraphQL.GraphQLQueries
 
             return result.Data;
         }
+
+        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedAsync([Service] ISender _mediator, CancellationToken ct = default)
+        {
+            var result = await _mediator.Send(new GetAllReceptionDocumentsRequest(), ct);
+
+            return result.Data;
+        }
     }
 }

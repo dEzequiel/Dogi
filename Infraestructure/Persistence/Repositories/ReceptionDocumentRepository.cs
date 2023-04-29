@@ -54,14 +54,10 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedAsync(PaginatedRequest paginated)
+        public async Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default)
         {
-            if (paginated.NumPage == default && paginated.PageSize == default)
-                return await _receptions.AsNoTracking().ToListAsync();
+            return await _receptions.AsNoTracking().ToListAsync(ct);
 
-            var skip = (paginated.NumPage - 1) * paginated.PageSize;
-
-            return await _receptions.AsNoTracking().Skip(skip).Take(paginated.PageSize).ToListAsync();
         }
 
         /// <inheritdoc/>

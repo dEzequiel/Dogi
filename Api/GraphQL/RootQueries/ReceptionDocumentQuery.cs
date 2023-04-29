@@ -11,6 +11,6 @@ namespace Api.GraphQL.GraphQLQueries
         /// Reception Document entity public queries.
         /// </summary>
         public ReceptionDocument? ReceptionDocumentId { get; }
-        //public IEnumerable<ReceptionDocument>? ReceptionDocuments { get; }
+        public IEnumerable<ReceptionDocument>? ReceptionDocuments { get; }
     }
 }

@@ -20,7 +20,7 @@ public interface IReceptionDocumentRead : IApplicationServiceBase
     /// Obtain existing ReceptionDocuments.
     /// </summary>
     /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedAsync(PaginatedRequest paginated);
+    Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default);
 
     /// <summary>
     /// Obtain existing ReceptionDocuments filter by chip possession.

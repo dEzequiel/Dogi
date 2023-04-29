@@ -19,7 +19,7 @@ namespace Application.Service.Interfaces
         /// </summary>
         /// <param name="paginated"></param>
         /// <returns>Collection of ReceptionDocuments.</returns>
-        Task<IEnumerable<ReceptionDocument>> GetAllPaginatedAsync(PaginatedRequest paginated);
+        Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default);
 
         /// <summary>
         /// Get all ReceptionDocuments with pagination properties filter by chip possesion.

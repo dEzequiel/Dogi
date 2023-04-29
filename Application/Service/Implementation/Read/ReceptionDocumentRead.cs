@@ -40,25 +40,17 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
     }
 
     /// <inheritdoc/>
-    public async Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedAsync(PaginatedRequest paginated)
+    public async Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default)
     {
         _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedAsync --> Start");
 
         var repository = _unitOfWork.ReceptionDocumentRepository;
 
-        int totalCount = await repository.GetAllCountAsync();
-
-        var documents = await repository.GetAllPaginatedAsync(paginated);
+        var documents = await repository.GetAllAsync(ct);
         
         _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedAsync --> End");
 
-        return new PageResponse<IEnumerable<ReceptionDocument>>()
-        {
-            Data = documents,
-            TotalCount = totalCount,
-            NumPage = paginated.NumPage,
-            PageSize = paginated.PageSize
-        };
+        return documents;
     }
 
     public async Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedFilterByChipPossession
