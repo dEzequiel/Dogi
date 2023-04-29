@@ -1,5 +1,6 @@
 ﻿using Application.Service.Abstraction;
 using Application.Service.Interfaces;
+using Ardalis.GuardClauses;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -25,6 +26,10 @@ namespace Application.Service.Implementation.Command
         public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity)
         {
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Start");
+
+            Guard.Against.Null(entity, nameof(entity));
+            Guard.Against.Null(entity.PickupDate, nameof(entity.PickupDate));
+            Guard.Against.NullOrEmpty(entity.PickupLocation, nameof(entity.PickupLocation));
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
