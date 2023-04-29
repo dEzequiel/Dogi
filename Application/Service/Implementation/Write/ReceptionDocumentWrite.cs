@@ -28,22 +28,13 @@ namespace Application.Service.Implementation.Command
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            var validDocument = _receptionDocument.Verify(entity);
-
-            if (validDocument.IsFailure)
-            {
-                _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Error");
-
-                throw new InvalidDataException(validDocument.Error.Message);
-            }
-
-            await repository.AddAsync(validDocument.Value);
+            await repository.AddAsync(entity);
 
             await _unitOfWork.CompleteAsync();
 
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> End");
 
-            return validDocument.Value;
+            return entity;
         }
 
         public Task<bool> LogicRemoveAsync(Guid id)

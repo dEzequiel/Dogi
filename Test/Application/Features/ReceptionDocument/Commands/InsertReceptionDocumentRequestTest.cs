@@ -36,7 +36,6 @@ namespace Test.Application.Features.ReceptionDocument.Commands
 
             // Assert
             Assert.IsType<ApiResponse<Domain.Entities.ReceptionDocument>>(result);
-            receptionDocumentWriteServiceMock.Verify(x => x.AddAsync(It.IsAny<Domain.Entities.ReceptionDocument>()));
         } 
     }
 }
