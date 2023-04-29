@@ -23,7 +23,7 @@ namespace Application.Service.Implementation.Command
         }
 
         ///<inheritdoc />
-        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity, AdminData admin)
+        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity, AdminData admin, CancellationToken ct = default)
         {
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Start");
 
@@ -36,9 +36,9 @@ namespace Application.Service.Implementation.Command
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            await repository.AddAsync(entity, admin);
+            await repository.AddAsync(entity, admin, ct);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync(ct);
 
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> End");
 
@@ -46,7 +46,7 @@ namespace Application.Service.Implementation.Command
         }
 
         ///<inheritdoc />
-        public async Task<bool> LogicRemoveAsync(Guid id, AdminData admin)
+        public async Task<bool> LogicRemoveAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
             _logger.LogInformation($"ReceptionDocumentWrite --> LogicRemoveAsync({id}) --> Start");
 
@@ -54,9 +54,9 @@ namespace Application.Service.Implementation.Command
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            await repository.LogicRemoveAsync(id, admin);
+            await repository.LogicRemoveAsync(id, admin, ct);
 
-            await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync(ct);
 
             _logger.LogInformation("ReceptionDocumentWrite --> LogicRemoveAsync --> End");
 
@@ -64,10 +64,6 @@ namespace Application.Service.Implementation.Command
 
         }
 
-        public Task<ReceptionDocument?> UpdateAsync(ReceptionDocument entity)
-        {
-            throw new NotImplementedException();
-        }
 
         ///<inheritdoc/>
         public void Dispose()

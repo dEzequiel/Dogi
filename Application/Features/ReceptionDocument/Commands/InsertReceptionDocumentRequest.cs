@@ -57,7 +57,7 @@ namespace Application.Features.ReceptionDocument.Commands
 
             Guard.Against.Null(request, nameof(request));
             
-            Domain.Entities.ReceptionDocument result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData, request.AdminData);
+            Domain.Entities.ReceptionDocument result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData, request.AdminData, cancellationToken);
 
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> End");
 

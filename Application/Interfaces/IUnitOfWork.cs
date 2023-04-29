@@ -12,6 +12,6 @@ namespace Application.Service.Interfaces
         /// Complete method for transaction complete
         /// </summary>
         /// <returns>Return transaction status</returns>
-        Task<int> CompleteAsync();
+        Task<int> CompleteAsync(CancellationToken ct = default);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Abstraction;
 using AutoFixture.Xunit2;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
 using Moq;
 using System;
@@ -16,10 +17,10 @@ namespace Test.Application.Features.ReceptionDocument.Commands
     {
         [Theory]
         [AutoMoqData]
-        internal void RequestShouldSetIdProperty(Guid idToDelete)
+        internal void RequestShouldSetIdProperty(Guid idToDelete, [Frozen] AdminData admin)
         {
             // Act
-            var request = new LogicRemoveReceptionDocumentRequest(idToDelete);
+            var request = new LogicRemoveReceptionDocumentRequest(idToDelete, admin);
             // Assert
             Assert.Equal(expected: idToDelete, actual: request.Id);
         }
@@ -27,6 +28,7 @@ namespace Test.Application.Features.ReceptionDocument.Commands
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
+            [Frozen] AdminData admin,
             [Frozen] Mock<IReceptionDocumentWrite> receptionDocumentWriteServiceMock,
             LogicRemoveReceptionDocumentRequest request,
             LogicRemoveReceptionDocumentRequestHandler handler)
@@ -34,7 +36,7 @@ namespace Test.Application.Features.ReceptionDocument.Commands
             // Arrange
             var idToDelete = Guid.NewGuid();
 
-            receptionDocumentWriteServiceMock.Setup(x => x.LogicRemoveAsync(It.IsAny<Guid>()))
+            receptionDocumentWriteServiceMock.Setup(x => x.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>()))
                 .ReturnsAsync(true);
 
             // Act
