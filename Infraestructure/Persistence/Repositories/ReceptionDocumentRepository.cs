@@ -3,7 +3,6 @@ using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using Application.DTOs.ReceptionDocument;
 using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs.Response;
 

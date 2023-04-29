@@ -1,7 +1,7 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Features.ReceptionDocument.Queries;
+﻿using Application.Features.ReceptionDocument.Queries;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +21,7 @@ public class ReceptionDocumentController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ApiResponse<ReceptionDocumentForGet>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<ReceptionDocument>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -31,7 +31,7 @@ public class ReceptionDocumentController : ControllerBase
 
         if (!result.Succeeded)
         {
-            return NotFound(new ApiResponse<ReceptionDocumentForGet>("not found"));
+            return NotFound(new ApiResponse<ReceptionDocument>("not found"));
         }
 
         return Ok(result);

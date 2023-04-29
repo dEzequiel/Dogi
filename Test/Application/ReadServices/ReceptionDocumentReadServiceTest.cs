@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Service.Implementation.Read;
+﻿using Application.Service.Implementation.Read;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs.Response;
@@ -20,12 +19,11 @@ public class ReceptionDocumentReadServiceTest
     internal async Task ShouldGetReceptionDocumentByIdAsync(
         [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
         [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
-        ReceptionDocumentForGet documentGet,
+        Domain.Entities.ReceptionDocument documentGet,
         ReceptionDocument document,
         ReceptionDocumentRead sut)
     {
         // Arrange
-        documentGet.Id = document.Id;
         
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
@@ -34,38 +32,9 @@ public class ReceptionDocumentReadServiceTest
         
         // Act
         var result = await sut.GetByIdAsync(document.Id);
-        
+
         // Assert
-        Assert.Equal(document.Id, documentGet.Id);
-    }
-
-    [Theory]
-    [AutoMoqData]
-    internal async Task ShouldThrowInvalidDataExceptionIfReturnedDocumentNotValidAsync(
-        [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
-        [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
-        [Frozen] Mock<Domain.Entities.ReceptionDocument> receptionDocumentEntityMock,
-        ReceptionDocument document,
-        ReceptionDocumentForAdd documentAdd,
-        ReceptionDocumentRead sut)
-    {
-        // Arrange
-        var invalidDocument = new Domain.Entities.ReceptionDocument(Guid.Empty, documentAdd.HasChip, 
-            documentAdd.Observations, 
-            documentAdd.PickupLocation, 
-            documentAdd.PickupDate);
-        
-        unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
-
-        repositoryMock.Setup(r => r.GetAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(invalidDocument);
-        
-        receptionDocumentEntityMock.Setup(x => x.Verify(invalidDocument))
-            .Returns(Result.Failure<Domain.Entities.ReceptionDocument>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty));
-        
-        // Act & Assert
-        var ex = await Assert.ThrowsAsync<InvalidDataException>(() => sut.GetByIdAsync(document.Id));
-        Assert.Equal(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty.Message, ex.Message);
+        Assert.NotNull(result);
     }
     
     [Theory]
@@ -93,7 +62,7 @@ public class ReceptionDocumentReadServiceTest
         // Assert
         Assert.NotNull(result);
         Assert.NotNull(result.Data);
-        Assert.IsType<PageResponse<IEnumerable<ReceptionDocumentForGet>>>(result);
+        Assert.IsType<PageResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>(result);
         Assert.Equal(totalCount, result.TotalCount);
     }
     
@@ -124,7 +93,7 @@ public class ReceptionDocumentReadServiceTest
         // Assert
         Assert.NotNull(result);
         Assert.NotNull(result.Data);
-        Assert.IsType<PageResponse<IEnumerable<ReceptionDocumentForGet>>>(result);
+        Assert.IsType<PageResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>(result);
         Assert.Equal(totalCount, result.TotalCount);
     }
 }

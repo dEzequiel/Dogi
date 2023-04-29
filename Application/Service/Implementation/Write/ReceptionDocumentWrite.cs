@@ -1,6 +1,6 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Service.Abstraction;
+﻿using Application.Service.Abstraction;
 using Application.Service.Interfaces;
+using Ardalis.GuardClauses;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -9,46 +9,34 @@ namespace Application.Service.Implementation.Command
 {
     public class ReceptionDocumentWrite : IReceptionDocumentWrite
     {
-        private readonly ReceptionDocument _receptionDocument;
         private readonly ILogger<ReceptionDocumentWrite> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ReceptionDocumentWrite(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ReceptionDocumentWrite> logger, 
-                                        ReceptionDocument receptionDocument)
+        public ReceptionDocumentWrite(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ReceptionDocumentWrite> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
-            _receptionDocument = receptionDocument;
         }
 
-        public async Task<ReceptionDocumentForGet> AddAsync(ReceptionDocumentForAdd entity)
+        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity)
         {
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Start");
 
+            Guard.Against.Null(entity, nameof(entity));
+            //Guard.Against.Null(entity.PickupDate, nameof(entity.PickupDate));
+            Guard.Against.NullOrEmpty(entity.PickupLocation, nameof(entity.PickupLocation));
+
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            var document = _mapper.Map<ReceptionDocument>(entity);
-
-            var validDocument = _receptionDocument.Verify(document);
-
-            if (validDocument.IsFailure)
-            {
-                _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Error");
-
-                throw new InvalidDataException(validDocument.Error.Message);
-            }
-
-            await repository.AddAsync(validDocument.Value);
+            await repository.AddAsync(entity);
 
             await _unitOfWork.CompleteAsync();
 
-            var result = _mapper.Map<ReceptionDocumentForGet>(validDocument.Value);
-
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> End");
 
-            return result;
+            return entity;
         }
 
         public Task<bool> LogicRemoveAsync(Guid id)
@@ -56,7 +44,7 @@ namespace Application.Service.Implementation.Command
             throw new NotImplementedException();
         }
 
-        public Task<ReceptionDocumentForGet?> UpdateAsync(ReceptionDocumentForUpdate entity)
+        public Task<ReceptionDocument?> UpdateAsync(ReceptionDocument entity)
         {
             throw new NotImplementedException();
         }

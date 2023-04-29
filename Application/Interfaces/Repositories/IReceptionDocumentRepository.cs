@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Crosscuting.Api.DTOs.Response;
 
 namespace Application.Service.Interfaces

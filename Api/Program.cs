@@ -2,10 +2,10 @@ using Infraestructure;
 using Application;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Application.Service.Abstraction;
-using Application.Service.Implementation.Command;
-using Api.GraphQLQueries;
-using Api.GraphQLTypes;
+using Api.GraphQL.GraphQLTypes;
+using Api.GraphQL;
+using Api.GraphQL.Types;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +20,19 @@ builder.Services.AddSwaggerGen();
 ///<summary>
 /// GraphQL Setup.
 /// </summary>
-builder.Services.AddGraphQLServer()
-    .AddQueryType<QueryType>();
+builder.Services
+    .AddGraphQLServer()
+    .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
+    .RegisterDbContext<ApplicationDbContext>()
+    .AddQueryType<QueryType>()
+    .AddMutationType<MutationType>();
+    //.AddErrorFilter<ErrorFilter>();
+    
+
 ///<summary>
 /// Layers configuration.
 /// </summary>
-    builder.Services
+builder.Services
         .InitInfrastructure()
         .InitApplication(builder.Configuration);
 

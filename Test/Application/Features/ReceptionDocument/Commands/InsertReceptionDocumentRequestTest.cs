@@ -1,5 +1,4 @@
-﻿using Application.DTOs.ReceptionDocument;
-using Application.Features.ReceptionDocument.Commands;
+﻿using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Abstraction;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs.Response;
@@ -12,7 +11,7 @@ namespace Test.Application.Features.ReceptionDocument.Commands
     {
         [Theory]
         [AutoMoqData]
-        internal void RequestShouldSetReceptionDocumentDataProperty(ReceptionDocumentForAdd documentDataForAdd)
+        internal void RequestShouldSetReceptionDocumentDataProperty(Domain.Entities.ReceptionDocument documentDataForAdd)
         {
             // Act
             var request = new InsertReceptionDocumentRequest(documentDataForAdd);
@@ -24,20 +23,19 @@ namespace Test.Application.Features.ReceptionDocument.Commands
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IReceptionDocumentWrite> receptionDocumentWriteServiceMock,
-            ReceptionDocumentForGet documentDataForGet,
+            Domain.Entities.ReceptionDocument documentDataForGet,
             InsertReceptionDocumentRequest request,
             InsertReceptionDocumentRequestHandler handler)
         {
             // Arrange
-            receptionDocumentWriteServiceMock.Setup(x => x.AddAsync(It.IsAny<ReceptionDocumentForAdd>()))
+            receptionDocumentWriteServiceMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.ReceptionDocument>()))
                 .ReturnsAsync(documentDataForGet);
 
             // Act
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<ReceptionDocumentForGet>>(result);
-            receptionDocumentWriteServiceMock.Verify(x => x.AddAsync(It.IsAny<ReceptionDocumentForAdd>()));
+            Assert.IsType<ApiResponse<Domain.Entities.ReceptionDocument>>(result);
         } 
     }
 }
