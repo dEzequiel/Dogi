@@ -1,4 +1,5 @@
 ﻿using Api.GraphQL.GraphQLQueries;
+using HotChocolate.Types.Pagination;
 
 namespace Api.GraphQL.GraphQLTypes
 {
@@ -17,7 +18,14 @@ namespace Api.GraphQL.GraphQLTypes
                 .ResolveWith<ReceptionDocumentQueries>(q => q.GetById(default, default, default));
 
             descriptor.Field(q => q.ReceptionDocuments)
-                .Type<ListType<ReceptionDocumentType>>()
+                .Type<ReceptionDocumentType>()
+                .UsePaging<ReceptionDocumentType>(
+                options: new PagingOptions
+                {
+                    DefaultPageSize = 10,
+                    MaxPageSize = 20,
+                    IncludeTotalCount = true
+                })
                 .ResolveWith<ReceptionDocumentQueries>(q => q.GetAllPaginatedAsync(default, default));
         }
     }
