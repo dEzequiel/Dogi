@@ -1,10 +1,19 @@
 ﻿using Domain.Entities;
 using Crosscuting.Api.DTOs.Response;
+using Crosscuting.Api.DTOs;
 
 namespace Application.Service.Interfaces
 {
     public interface IReceptionDocumentRepository : IRepository<ReceptionDocument>
     {
+        /// <summary>
+        /// Add new ReceptionDocument.
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="admin"></param>
+        /// <returns></returns>
+        Task AddAsync(ReceptionDocument entity, AdminData admin);
+
         /// <summary>
         /// Get all ReceptionDocuments with pagination properties.
         /// </summary>
@@ -31,6 +40,6 @@ namespace Application.Service.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task LogicRemoveAsync(Guid id);
+        Task LogicRemoveAsync(Guid id, AdminData admin);
     }
 }

@@ -2,9 +2,11 @@
 using Application.Features.ReceptionDocument.Commands;
 using Ardalis.GuardClauses;
 using AutoMapper;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.GraphQL.Mutations
 {
@@ -36,7 +38,7 @@ namespace Api.GraphQL.Mutations
         public async Task<ReceptionDocument> AddReceptionDocumentAsync([Service] ISender _mediator, ReceptionDocument input)
         {
 
-            var result = await _mediator.Send(new InsertReceptionDocumentRequest(input));
+            var result = await _mediator.Send(new InsertReceptionDocumentRequest(input, GetAdminData()));
 
             if(!result.Succeeded)
             {
@@ -50,7 +52,7 @@ namespace Api.GraphQL.Mutations
 
         public async Task<bool> MarkReceptionDocumentAsRemovedAsync([Service] ISender _mediator, Guid idToDelete)
         {
-            var result = await _mediator.Send(new LogicRemoveReceptionDocumentRequest(idToDelete));
+            var result = await _mediator.Send(new LogicRemoveReceptionDocumentRequest(idToDelete, GetAdminData()));
 
             if(!result.Succeeded)
             {
@@ -58,6 +60,15 @@ namespace Api.GraphQL.Mutations
             }
 
             return result.Data;
+        }
+
+        private AdminData GetAdminData()
+        {
+            return new AdminData()
+            {
+                Id = Guid.NewGuid(),
+                Email = "shelter-admin@mock.com"
+            };
         }
     }
 }

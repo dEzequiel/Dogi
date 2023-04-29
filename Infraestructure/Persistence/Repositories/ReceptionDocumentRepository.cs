@@ -8,6 +8,7 @@ using Crosscuting.Api.DTOs.Response;
 using Azure.Core;
 using Crosscuting.Base.Exceptions;
 using MediatR;
+using Crosscuting.Api.DTOs;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -35,6 +36,15 @@ namespace Infraestructure.Persistence.Repositories
         {
             await _receptionsAll.AddAsync(entity);
 
+        }
+
+        /// <inheritdoc/>
+        public async Task AddAsync(ReceptionDocument entity, AdminData admin)
+        {
+            entity.Created = DateTime.UtcNow;
+            entity.CreatedBy = admin.Email;
+
+            await _receptionsAll.AddAsync(entity);
         }
 
         /// <inheritdoc/>
@@ -94,7 +104,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task LogicRemoveAsync(Guid id)
+        public async Task LogicRemoveAsync(Guid id, AdminData admin)
         {
             var entity = await _receptions.SingleOrDefaultAsync(x => x.Id == id);
 
@@ -102,6 +112,8 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException(string.Format(RECEPTION_DOCUMENT_NOT_FOUND, id));
 
             entity.IsDeleted = true;
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = admin.Email;
         }
     }
 }

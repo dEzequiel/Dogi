@@ -2,6 +2,7 @@
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using AutoMapper;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -22,17 +23,20 @@ namespace Application.Service.Implementation.Command
         }
 
         ///<inheritdoc />
-        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity)
+        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity, AdminData admin)
         {
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Start");
 
             Guard.Against.Null(entity, nameof(entity));
             //Guard.Against.Null(entity.PickupDate, nameof(entity.PickupDate));
             Guard.Against.NullOrEmpty(entity.PickupLocation, nameof(entity.PickupLocation));
+            Guard.Against.Null(admin, nameof(admin));
+            Guard.Against.NullOrEmpty(admin.Id, nameof(admin.Id));
+            Guard.Against.NullOrEmpty(admin.Email, nameof(admin.Email));
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            await repository.AddAsync(entity);
+            await repository.AddAsync(entity, admin);
 
             await _unitOfWork.CompleteAsync();
 
@@ -42,7 +46,7 @@ namespace Application.Service.Implementation.Command
         }
 
         ///<inheritdoc />
-        public async Task<bool> LogicRemoveAsync(Guid id)
+        public async Task<bool> LogicRemoveAsync(Guid id, AdminData admin)
         {
             _logger.LogInformation($"ReceptionDocumentWrite --> LogicRemoveAsync({id}) --> Start");
 
@@ -50,7 +54,7 @@ namespace Application.Service.Implementation.Command
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
-            await repository.LogicRemoveAsync(id);
+            await repository.LogicRemoveAsync(id, admin);
 
             await _unitOfWork.CompleteAsync();
 
