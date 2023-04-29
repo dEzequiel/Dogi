@@ -1,4 +1,5 @@
-﻿using Crosscuting.Base.Interfaces;
+﻿using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Interfaces;
 using Domain.Entities;
 
 namespace Application.Service.Abstraction
@@ -14,7 +15,7 @@ namespace Application.Service.Abstraction
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<ReceptionDocument> AddAsync(ReceptionDocument entity);
+        Task<ReceptionDocument> AddAsync(ReceptionDocument entity, AdminData admin);
 
         /// <summary>
         /// Update existing ReceptionDocument.
@@ -30,6 +31,6 @@ namespace Application.Service.Abstraction
         /// <param name="id"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<bool> LogicRemoveAsync(Guid id);
+        Task<bool> LogicRemoveAsync(Guid id, AdminData admin);
     }
 }

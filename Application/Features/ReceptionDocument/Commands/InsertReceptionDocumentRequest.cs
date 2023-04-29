@@ -1,6 +1,8 @@
 ﻿using Application.Service.Abstraction;
 using Ardalis.GuardClauses;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
+using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -12,14 +14,18 @@ namespace Application.Features.ReceptionDocument.Commands
     public class InsertReceptionDocumentRequest : IRequest<ApiResponse<Domain.Entities.ReceptionDocument>>
     {
         public Domain.Entities.ReceptionDocument ReceptionDocumentData { get; private set; } = null!;
+        public AdminData AdminData { get; private set; } = null!;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="receptionDocumentData"></param>
-        public InsertReceptionDocumentRequest(Domain.Entities.ReceptionDocument receptionDocumentData) =>
-            this.ReceptionDocumentData = receptionDocumentData;
-
+        /// <param name="adminData"></param>
+        public InsertReceptionDocumentRequest(Domain.Entities.ReceptionDocument receptionDocumentData, AdminData adminData)
+        {
+            ReceptionDocumentData = receptionDocumentData;
+            AdminData = adminData;
+        }
     }
 
     /// <summary>
@@ -51,7 +57,7 @@ namespace Application.Features.ReceptionDocument.Commands
 
             Guard.Against.Null(request, nameof(request));
             
-            Domain.Entities.ReceptionDocument result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData);
+            Domain.Entities.ReceptionDocument result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData, request.AdminData);
 
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> End");
 

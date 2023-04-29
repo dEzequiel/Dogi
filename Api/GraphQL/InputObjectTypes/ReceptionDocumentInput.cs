@@ -29,6 +29,12 @@ namespace Api.GraphQL.InputObjectTypes
             //    .Type<NonNullType<DateType>>()
             //    .DefaultValue(DateTimeOffset.Now);
 
+            descriptor.Ignore(f => f.IndividualProceeding);
+            descriptor.Ignore(f => f.Created);
+            descriptor.Ignore(f => f.CreatedBy);
+            descriptor.Ignore(f => f.LastModified);
+            descriptor.Ignore(f => f.LastModifiedBy);
+
         }
     }
 

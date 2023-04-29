@@ -1,6 +1,8 @@
 ﻿using Application.Service.Abstraction;
 using Ardalis.GuardClauses;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
+using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,14 +19,16 @@ namespace Application.Features.ReceptionDocument.Commands
     public class LogicRemoveReceptionDocumentRequest : IRequest<ApiResponse<bool>>
     {
         public Guid Id { get; set; }
+        public AdminData AdminData { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
-        public LogicRemoveReceptionDocumentRequest(Guid id)
+        public LogicRemoveReceptionDocumentRequest(Guid id, AdminData adminData)
         {
             Id = id;
+            AdminData = adminData;
         }
     }
 
@@ -56,7 +60,7 @@ namespace Application.Features.ReceptionDocument.Commands
             Guard.Against.Null(request, nameof(request));
             Guard.Against.NullOrEmpty(request.Id, nameof(request.Id));
 
-            bool result = await _receptionDocumentWriteService.LogicRemoveAsync(request.Id);
+            bool result = await _receptionDocumentWriteService.LogicRemoveAsync(request.Id, request.AdminData);
 
             _logger.LogInformation("LogicRemoveReceptionDocumentRequestHandler --> Handle --> End");
 

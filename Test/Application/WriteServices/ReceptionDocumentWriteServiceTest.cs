@@ -2,6 +2,8 @@
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using AutoMapper;
+using Crosscuting.Api.DTOs;
+using Domain.Entities;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
 using Moq;
@@ -16,6 +18,7 @@ namespace Test.Application.WriteServicesTest
         internal async Task ShouldAddNewReceptionDocumentAsync(
             [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+            [Frozen] AdminData admin,
             Domain.Entities.ReceptionDocument documentAdd,
             ReceptionDocumentWrite sut)
         {
@@ -26,7 +29,7 @@ namespace Test.Application.WriteServicesTest
                 .Returns(Task.CompletedTask);
 
             // act
-            var result = await sut.AddAsync(documentAdd);
+            var result = await sut.AddAsync(documentAdd, admin);
 
             // Assert
             Assert.Equal(result.Observations, documentAdd.Observations);
@@ -38,6 +41,7 @@ namespace Test.Application.WriteServicesTest
         internal async Task ShouldMarkAsSoftDeletedReceptionDOcumentAsync(
             [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+            [Frozen] AdminData admin,
             ReceptionDocumentWrite sut)
         {
             // Arrange
@@ -45,11 +49,11 @@ namespace Test.Application.WriteServicesTest
 
             unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
-            repositoryMock.Setup(r => r.LogicRemoveAsync(It.IsAny<Guid>()))
+            repositoryMock.Setup(r => r.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>()))
                 .Returns(Task.CompletedTask);
 
             // Act
-            var result = await sut.LogicRemoveAsync(idToDelete);
+            var result = await sut.LogicRemoveAsync(idToDelete, admin);
 
             // Assert
             Assert.True(result);

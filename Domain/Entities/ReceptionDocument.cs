@@ -8,7 +8,7 @@ namespace Domain.Entities
     /// It is a document filled out by the collection services at the time of action or by the protector when receiving
     /// the animal.
     /// </summary>
-    public class ReceptionDocument : Entity
+    public class ReceptionDocument : AuditableEntity
     {
         /// <summary>
         /// Attributes.
