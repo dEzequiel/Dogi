@@ -44,24 +44,5 @@ namespace Domain.Entities
             PickupLocation = pickupLocation;
             PickupDate = pickupDate;
         }
-
-        /// <summary>
-        /// Static Factory Pattern. Creates new ReceptionDocument in valid state.
-        /// in valid state.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="hasChip"></param>
-        /// <param name="observations"></param>
-        /// <param name="pickupLocation"></param>
-        /// <param name="pickupDate"></param>
-        /// <returns>ReceptionDocument</returns>
-        public virtual Result<ReceptionDocument> Verify(
-            ReceptionDocument document)
-        {
-            if(document.Id == Guid.Empty)
-                return Result.Failure<ReceptionDocument>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty);
-
-            return Result.Success(document);
-        }
     }
 }

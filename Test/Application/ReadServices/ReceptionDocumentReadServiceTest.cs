@@ -36,35 +36,6 @@ public class ReceptionDocumentReadServiceTest
         // Assert
         Assert.NotNull(result);
     }
-
-    [Theory]
-    [AutoMoqData]
-    internal async Task ShouldThrowInvalidDataExceptionIfReturnedDocumentNotValidAsync(
-        [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
-        [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
-        [Frozen] Mock<Domain.Entities.ReceptionDocument> receptionDocumentEntityMock,
-        ReceptionDocument document,
-        Domain.Entities.ReceptionDocument documentAdd,
-        ReceptionDocumentRead sut)
-    {
-        // Arrange
-        var invalidDocument = new Domain.Entities.ReceptionDocument(Guid.Empty, documentAdd.HasChip, 
-            documentAdd.Observations, 
-            documentAdd.PickupLocation, 
-            documentAdd.PickupDate);
-        
-        unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
-
-        repositoryMock.Setup(r => r.GetAsync(It.IsAny<Guid>()))
-            .ReturnsAsync(invalidDocument);
-        
-        receptionDocumentEntityMock.Setup(x => x.Verify(invalidDocument))
-            .Returns(Result.Failure<Domain.Entities.ReceptionDocument>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty));
-        
-        // Act & Assert
-        var ex = await Assert.ThrowsAsync<InvalidDataException>(() => sut.GetByIdAsync(document.Id));
-        Assert.Equal(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty.Message, ex.Message);
-    }
     
     [Theory]
     [AutoMoqData]
