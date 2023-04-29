@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs.Response;
+using Azure.Core;
+using Crosscuting.Base.Exceptions;
+using MediatR;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -13,7 +16,9 @@ namespace Infraestructure.Persistence.Repositories
         /// <summary>
         /// Attributes.
         /// </summary>
-        protected readonly DbSet<ReceptionDocument> _receptions;
+        private const string RECEPTION_DOCUMENT_NOT_FOUND = "ReceptionDocument with id {0} not found.";
+        protected IQueryable<ReceptionDocument> _receptions;
+        protected DbSet<ReceptionDocument> _receptionsAll;
 
         /// <summary>
         /// Constructor.
@@ -21,19 +26,21 @@ namespace Infraestructure.Persistence.Repositories
         /// <param name="context"></param>
         public ReceptionDocumentRepository(ApplicationDbContext context)
         {
-            _receptions = context.Set<ReceptionDocument>();
+            _receptions = _receptionsAll!.Where(x => !x.IsDeleted);
+            _receptionsAll = context.Set<ReceptionDocument>();
         }
 
         /// <inheritdoc/>
         public async Task AddAsync(ReceptionDocument entity)
         {
-            await _receptions.AddAsync(entity);
+            await _receptionsAll.AddAsync(entity);
+
         }
 
         /// <inheritdoc/>
         public async Task AddRangeAsync(IEnumerable<ReceptionDocument> entities)
         {
-            await _receptions.AddRangeAsync(entities);
+            await _receptionsAll.AddRangeAsync(entities);
         }
 
         /// <inheritdoc/>
@@ -84,6 +91,17 @@ namespace Infraestructure.Persistence.Repositories
         public async Task<ReceptionDocument?> GetAsync(Guid id)
         {
             return await _receptions.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        /// <inheritdoc/>
+        public async Task LogicRemoveAsync(Guid id)
+        {
+            var entity = await _receptions.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (entity == null)
+                throw new DogiException(string.Format(RECEPTION_DOCUMENT_NOT_FOUND, id));
+
+            entity.IsDeleted = true;
         }
     }
 }

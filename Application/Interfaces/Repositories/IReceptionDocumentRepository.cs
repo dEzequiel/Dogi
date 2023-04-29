@@ -25,5 +25,12 @@ namespace Application.Service.Interfaces
         /// </summary>
         /// <returns>Number representing the total count of ReceptionDocuments.</returns>
         Task<int> GetAllCountAsync();
+
+        /// <summary>
+        /// Mark ReceptionDocument as deleted.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task LogicRemoveAsync(Guid id);
     }
 }
