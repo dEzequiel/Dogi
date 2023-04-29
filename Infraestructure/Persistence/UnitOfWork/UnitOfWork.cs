@@ -29,9 +29,9 @@ namespace Infraestructure.Persistence.UnitOfWork
         /// Complete database transactions.
         /// </summary>
         /// <returns></returns>
-        public async Task<int> CompleteAsync()
+        public async Task<int> CompleteAsync(CancellationToken ct = default)
         {
-            return await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync(ct);
         }
 
         /// <summary>

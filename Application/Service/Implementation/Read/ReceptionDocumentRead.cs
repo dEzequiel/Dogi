@@ -24,7 +24,7 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
     }
     
     /// <inheritdoc/>
-    public async Task<ReceptionDocument?> GetByIdAsync(Guid id)
+    public async Task<ReceptionDocument?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         _logger.LogInformation($"ReceptionDocumentRead --> GetByIdAsync({id}) --> Start");
 
@@ -40,47 +40,31 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
     }
 
     /// <inheritdoc/>
-    public async Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedAsync(PaginatedRequest paginated)
+    public async Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default)
     {
         _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedAsync --> Start");
 
         var repository = _unitOfWork.ReceptionDocumentRepository;
 
-        int totalCount = await repository.GetAllCountAsync();
-
-        var documents = await repository.GetAllPaginatedAsync(paginated);
+        var documents = await repository.GetAllAsync(ct);
         
         _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedAsync --> End");
 
-        return new PageResponse<IEnumerable<ReceptionDocument>>()
-        {
-            Data = documents,
-            TotalCount = totalCount,
-            NumPage = paginated.NumPage,
-            PageSize = paginated.PageSize
-        };
+        return documents;
     }
 
-    public async Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedFilterByChipPossession
-        (PaginatedRequest paginated, bool hasChip)
+    public async Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipAsync(bool hasChip, CancellationToken ct = default)
     {
-        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedFilterByChipPossession --> Start");
+        _logger.LogInformation($"ReceptionDocumentRead --> GetAllFilterByChipAsync({hasChip}) --> Start");
 
         var repository = _unitOfWork.ReceptionDocumentRepository;
 
-        int totalCount = await repository.GetAllCountAsync();
 
-        var documents = await repository.GetAllPaginatedFilterByChipPossessionAsync(paginated, hasChip);
+        var documents = await repository.GetAllFilterByChipPossessionAsync(hasChip, ct);
         
-        _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedFilterByChipPossession --> End");
+        _logger.LogInformation("ReceptionDocumentRead --> GetAllFilterByChipAsync --> End");
 
-        return new PageResponse<IEnumerable<ReceptionDocument>>()
-        {
-            Data = documents,
-            TotalCount = totalCount,
-            NumPage = paginated.NumPage,
-            PageSize = paginated.PageSize
-        };
+        return documents;
     }
 
     public Task<PageResponse<IEnumerable<ReceptionDocument>>?> GetAllByChipAsync(bool hasChip)

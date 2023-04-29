@@ -1,4 +1,5 @@
 ﻿using Api.GraphQL.GraphQLQueries;
+using HotChocolate.Types.Pagination;
 
 namespace Api.GraphQL.GraphQLTypes
 {
@@ -15,6 +16,29 @@ namespace Api.GraphQL.GraphQLTypes
                 .Type<ReceptionDocumentType>()
                 .Argument("id", a => a.Type<NonNullType<UuidType>>())
                 .ResolveWith<ReceptionDocumentQueries>(q => q.GetById(default, default, default));
+
+            descriptor.Field(q => q.ReceptionDocuments)
+                .Type<ReceptionDocumentType>()
+                .UsePaging<ReceptionDocumentType>(
+                options: new PagingOptions
+                {
+                    DefaultPageSize = 10,
+                    MaxPageSize = 20,
+                    IncludeTotalCount = true
+                })
+                .ResolveWith<ReceptionDocumentQueries>(q => q.GetAllPaginatedAsync(default, default));
+
+            descriptor.Field(q => q.ReceptionDocumentsFilterByChip)
+                .Type<ReceptionDocumentType>()
+                .Argument("hasChip", a => a.Type<BooleanType>())
+                .UsePaging<ReceptionDocumentType>(
+                options: new PagingOptions
+                {
+                    DefaultPageSize = 10,
+                    MaxPageSize = 20,
+                    IncludeTotalCount = true
+                })
+                .ResolveWith<ReceptionDocumentQueries>(q => q.GetAllFilterByChipPossessionPaginatedAsync(default, default, default));
         }
     }
 }

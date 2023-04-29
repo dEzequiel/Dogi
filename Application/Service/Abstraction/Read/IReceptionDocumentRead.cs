@@ -14,26 +14,18 @@ public interface IReceptionDocumentRead : IApplicationServiceBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    Task<ReceptionDocument?> GetByIdAsync(Guid id);
+    Task<ReceptionDocument?> GetByIdAsync(Guid id, CancellationToken ct = default);
 
     /// <summary>
     /// Obtain existing ReceptionDocuments.
     /// </summary>
     /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedAsync(PaginatedRequest paginated);
+    Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default);
 
-    /// <summary>
-    /// Obtain existing ReceptionDocuments filter by chip possession.
-    /// </summary>
-    /// <param name="paginated"></param>
-    /// <param name="hasChip"></param>
-    /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocument>>> GetAllPaginatedFilterByChipPossession(PaginatedRequest paginated,
-                                                                                                    bool hasChip);
     /// <summary>
     /// Obtain existing ReceptionDocuments filter with animal chip possession.
     /// </summary>
     /// <param name="hasChip"></param>
     /// <returns></returns>
-    Task<PageResponse<IEnumerable<ReceptionDocument>>?> GetAllByChipAsync(bool hasChip);
+    Task<IEnumerable<ReceptionDocument>?> GetAllFilterByChipAsync(bool hasChip, CancellationToken ct = default);
 }

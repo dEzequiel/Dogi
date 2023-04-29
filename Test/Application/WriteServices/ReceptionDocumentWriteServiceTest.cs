@@ -49,7 +49,7 @@ namespace Test.Application.WriteServicesTest
 
             unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
-            repositoryMock.Setup(r => r.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>()))
+            repositoryMock.Setup(r => r.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act

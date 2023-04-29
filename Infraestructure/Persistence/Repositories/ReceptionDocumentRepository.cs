@@ -39,12 +39,12 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task AddAsync(ReceptionDocument entity, AdminData admin)
+        public async Task AddAsync(ReceptionDocument entity, AdminData admin, CancellationToken ct = default)
         {
             entity.Created = DateTime.UtcNow;
             entity.CreatedBy = admin.Email;
 
-            await _receptionsAll.AddAsync(entity);
+            await _receptionsAll.AddAsync(entity, ct);
         }
 
         /// <inheritdoc/>
@@ -54,35 +54,16 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedAsync(PaginatedRequest paginated)
+        public async Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default)
         {
-            if (paginated.NumPage == default && paginated.PageSize == default)
-                return await _receptions.AsNoTracking().ToListAsync();
+            return await _receptions.AsNoTracking().ToListAsync(ct);
 
-            var skip = (paginated.NumPage - 1) * paginated.PageSize;
-
-            return await _receptions.AsNoTracking().Skip(skip).Take(paginated.PageSize).ToListAsync();
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedFilterByChipPossessionAsync(
-            PaginatedRequest paginated, bool hasChip)
+        public async Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipPossessionAsync(bool? hasChip, CancellationToken ct = default)
         {
-            if (paginated.NumPage == default && paginated.PageSize == default)
-                return await _receptions.AsNoTracking().ToListAsync();
-            
-            var skip = (paginated.NumPage - 1) * paginated.PageSize;
-
-            return await _receptions.Where(x => x.HasChip == hasChip)
-                                            .AsNoTracking().Skip(skip)
-                                            .Take(paginated.PageSize)
-                                            .ToListAsync();
-        }
-
-        /// <inheritdoc/>
-        public async Task<int> GetAllCountAsync()
-        {
-            return await _receptions.CountAsync();
+            return await _receptions.Where(x => x.HasChip == hasChip).AsNoTracking().ToListAsync(ct);
         }
 
         /// <inheritdoc/>
@@ -104,9 +85,9 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task LogicRemoveAsync(Guid id, AdminData admin)
+        public async Task LogicRemoveAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
-            var entity = await _receptions.SingleOrDefaultAsync(x => x.Id == id);
+            var entity = await _receptions.SingleOrDefaultAsync(x => x.Id == id, ct);
 
             if (entity == null)
                 throw new DogiException(string.Format(RECEPTION_DOCUMENT_NOT_FOUND, id));

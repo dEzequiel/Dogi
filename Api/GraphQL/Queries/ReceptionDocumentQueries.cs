@@ -1,6 +1,7 @@
 ﻿using Application.Features.ReceptionDocument.Queries;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
+using Domain.Enums;
 using MediatR;
 
 namespace Api.GraphQL.GraphQLQueries
@@ -32,6 +33,21 @@ namespace Api.GraphQL.GraphQLQueries
             {
                 throw new DogiException(result.Message, new KeyNotFoundException(result.Message));
             }
+
+            return result.Data;
+        }
+
+        public async Task<IEnumerable<ReceptionDocument>> GetAllPaginatedAsync([Service] ISender _mediator, CancellationToken ct = default)
+        {
+            var result = await _mediator.Send(new GetAllReceptionDocumentsRequest(), ct);
+
+            return result.Data;
+        }
+
+        public async Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipPossessionPaginatedAsync([Service] ISender _mediator, bool hasChip,
+            CancellationToken ct  = default)
+        {
+            var result = await _mediator.Send(new GetAllReceptionDocumentsFilterByChipRequest(hasChip), ct);
 
             return result.Data;
         }

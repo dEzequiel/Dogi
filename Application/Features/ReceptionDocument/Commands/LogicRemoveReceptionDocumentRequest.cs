@@ -60,7 +60,7 @@ namespace Application.Features.ReceptionDocument.Commands
             Guard.Against.Null(request, nameof(request));
             Guard.Against.NullOrEmpty(request.Id, nameof(request.Id));
 
-            bool result = await _receptionDocumentWriteService.LogicRemoveAsync(request.Id, request.AdminData);
+            bool result = await _receptionDocumentWriteService.LogicRemoveAsync(request.Id, request.AdminData, cancellationToken);
 
             _logger.LogInformation("LogicRemoveReceptionDocumentRequestHandler --> Handle --> End");
 

@@ -28,7 +28,7 @@ public class GetReceptionDocumentByIdRequestTest
         GetReceptionDocumentByIdRequestHandler handler)
     {
         // Arrange
-        receptionDocumentReadServiceMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>()))
+        receptionDocumentReadServiceMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(documentForGet);
         
         // Act
@@ -36,6 +36,6 @@ public class GetReceptionDocumentByIdRequestTest
 
         // Assert
         Assert.IsType<ApiResponse<Domain.Entities.ReceptionDocument>>(result);
-        receptionDocumentReadServiceMock.Verify(x => x.GetByIdAsync(It.IsAny<Guid>()));
+        receptionDocumentReadServiceMock.Verify(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
     }
 }

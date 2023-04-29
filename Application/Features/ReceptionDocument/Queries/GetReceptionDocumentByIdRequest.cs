@@ -50,7 +50,7 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
 
         Guard.Against.Null(request, nameof(request));
 
-        Domain.Entities.ReceptionDocument? result = await _receptionDocumentReadService.GetByIdAsync(request.Id);
+        Domain.Entities.ReceptionDocument? result = await _receptionDocumentReadService.GetByIdAsync(request.Id, cancellationToken);
         
         if(result is null)
         {
