@@ -11,7 +11,11 @@ namespace Api.GraphQL.Types
         {
                 descriptor.Field("AddReceptionDocumentAsync")
                       .Argument("input", arg => arg.Type<ReceptionDocumentInputType>())
-                      .ResolveWith<ReceptionDocumentMutations>(q => q.AddReceptionDocumentAsync(default, default, default));
+                      .ResolveWith<ReceptionDocumentMutations>(q => q.AddReceptionDocumentAsync(default, default));
+
+                descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
+                    .Argument("idToDelete", arg => arg.Type<UuidType>())
+                    .ResolveWith<ReceptionDocumentMutations>(q => q.MarkReceptionDocumentAsRemovedAsync(default, default));
         }
     }
 }

@@ -50,6 +50,8 @@ namespace Application.Service.Implementation.Command
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
+            await repository.LogicRemoveAsync(id);
+
             await _unitOfWork.CompleteAsync();
 
             _logger.LogInformation("ReceptionDocumentWrite --> LogicRemoveAsync --> End");

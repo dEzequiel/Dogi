@@ -26,8 +26,8 @@ namespace Infraestructure.Persistence.Repositories
         /// <param name="context"></param>
         public ReceptionDocumentRepository(ApplicationDbContext context)
         {
-            _receptions = _receptionsAll!.Where(x => !x.IsDeleted);
             _receptionsAll = context.Set<ReceptionDocument>();
+            _receptions = _receptionsAll!.Where(x => !x.IsDeleted);
         }
 
         /// <inheritdoc/>
