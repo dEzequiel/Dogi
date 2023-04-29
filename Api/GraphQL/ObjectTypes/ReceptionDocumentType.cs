@@ -25,8 +25,8 @@ public class ReceptionDocumentType : ObjectType<ReceptionDocument>
         descriptor.Field(f => f.PickupLocation)
             .Type<NonNullType<StringType>>();
 
-        descriptor.Field(f => f.PickupDate)
-            .Type<NonNullType<DateType>>();
+        //descriptor.Field(f => f.PickupDate)
+        //    .Type<NonNullType<DateType>>();
 
         descriptor.Ignore(f => f.IndividualProceeding);
     }

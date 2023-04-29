@@ -25,10 +25,9 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Field(f => f.PickupLocation)
                 .Type<NonNullType<StringType>>();
 
-            descriptor.Field(f => f.PickupDate)
-                .Type<NonNullType<DateType>>()
-                .DefaultValue(DateTimeOffset.Now)
-                .Ignore(true);
+            //descriptor.Field(f => f.PickupDate)
+            //    .Type<NonNullType<DateType>>()
+            //    .DefaultValue(DateTimeOffset.Now);
 
         }
     }

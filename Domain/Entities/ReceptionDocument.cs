@@ -16,7 +16,7 @@ namespace Domain.Entities
         public bool? HasChip { get; set; }
         public string? Observations { get; set; } = string.Empty;
         public string PickupLocation { get; set; } = null!;
-        public DateTime PickupDate { get; set; }
+        //public DateTime PickupDate { get; set; }
         public bool IsDeleted { get; set; }
 
         /// <summary>
@@ -37,13 +37,11 @@ namespace Domain.Entities
             Guid id,
             bool? hasChip, 
             string? observations, 
-            string pickupLocation, 
-            DateTime pickupDate) : base(id)
+            string pickupLocation) : base(id)
         {
             HasChip = hasChip;
             Observations = observations;
             PickupLocation = pickupLocation;
-            PickupDate = pickupDate;
         }   
     }
 }
