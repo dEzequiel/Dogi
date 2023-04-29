@@ -17,6 +17,7 @@ namespace Domain.Entities
         public string? Observations { get; set; } = string.Empty;
         public string PickupLocation { get; set; } = null!;
         public DateTime PickupDate { get; set; }
+        public bool IsDeleted { get; set; }
 
         /// <summary>
         /// Navigation properties.

@@ -8,7 +8,13 @@ namespace Api.GraphQL.InputObjectTypes
         {
             descriptor.Field(f => f.Id)
               .Type<UuidType>()
-              .DefaultValue(Guid.NewGuid());
+              .DefaultValue(Guid.NewGuid())
+              .Ignore(true);
+
+            descriptor.Field(f => f.IsDeleted)
+                .Type<NonNullType<BooleanType>>()
+                .DefaultValue(false)
+                .Ignore(true);
 
             descriptor.Field(f => f.HasChip)
                 .Type<BooleanType>();
@@ -17,10 +23,13 @@ namespace Api.GraphQL.InputObjectTypes
                 .Type<StringType>();
 
             descriptor.Field(f => f.PickupLocation)
-                .Type<StringType>();
+                .Type<NonNullType<StringType>>();
 
             descriptor.Field(f => f.PickupDate)
-                .Type<DateTimeType>();
+                .Type<NonNullType<DateType>>()
+                .DefaultValue(DateTimeOffset.Now)
+                .Ignore(true);
+
         }
     }
 

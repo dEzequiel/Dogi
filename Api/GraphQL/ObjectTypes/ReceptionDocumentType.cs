@@ -13,6 +13,9 @@ public class ReceptionDocumentType : ObjectType<ReceptionDocument>
             .Field(f => f.Id)
             .Type<NonNullType<UuidType>>();
 
+        descriptor.Field(f => f.IsDeleted)
+            .Type<NonNullType<BooleanType>>();
+
         descriptor.Field(f => f.HasChip)
             .Type<BooleanType>();
 
@@ -20,10 +23,10 @@ public class ReceptionDocumentType : ObjectType<ReceptionDocument>
             .Type<StringType>();
 
         descriptor.Field(f => f.PickupLocation)
-            .Type<StringType>();
+            .Type<NonNullType<StringType>>();
 
         descriptor.Field(f => f.PickupDate)
-            .Type<DateType>();
+            .Type<NonNullType<DateType>>();
 
         descriptor.Ignore(f => f.IndividualProceeding);
     }
