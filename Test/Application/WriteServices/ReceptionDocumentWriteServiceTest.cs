@@ -33,6 +33,28 @@ namespace Test.Application.WriteServicesTest
 
         }
 
+        [Theory]
+        [AutoMoqData]
+        internal async Task ShouldMarkAsSoftDeletedReceptionDOcumentAsync(
+            [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+            [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+            ReceptionDocumentWrite sut)
+        {
+            // Arrange
+            var idToDelete = Guid.NewGuid();
+
+            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
+
+            repositoryMock.Setup(r => r.LogicRemoveAsync(It.IsAny<Guid>()))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            var result = await sut.LogicRemoveAsync(idToDelete);
+
+            // Assert
+            Assert.True(result);
+        }
+
         //[Theory]
         //[AutoMoqData]
         //internal async Task ShouldThrowInvalidDataExceptionWhenAddReceptionDocumentAsync(
@@ -47,7 +69,7 @@ namespace Test.Application.WriteServicesTest
         //                                                                documentAdd.Observations, 
         //                                                                documentAdd.PickupLocation, 
         //                                                                documentAdd.PickupDate);
-            
+
         //    mapperMock.Setup(m => m.Map<Domain.Entities.ReceptionDocument>(It.IsAny<Domain.Entities.ReceptionDocument>()))
         //             .Returns(invalidDocument);
         //    receptionDocumentEntityMock.Setup(x => x.Verify(invalidDocument))

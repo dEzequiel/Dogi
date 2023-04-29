@@ -2,6 +2,7 @@
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using AutoMapper;
+using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +21,7 @@ namespace Application.Service.Implementation.Command
             _logger = logger;
         }
 
+        ///<inheritdoc />
         public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity)
         {
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Start");
@@ -39,9 +41,23 @@ namespace Application.Service.Implementation.Command
             return entity;
         }
 
-        public Task<bool> LogicRemoveAsync(Guid id)
+        ///<inheritdoc />
+        public async Task<bool> LogicRemoveAsync(Guid id)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation($"ReceptionDocumentWrite --> LogicRemoveAsync({id}) --> Start");
+
+            Guard.Against.NullOrEmpty(id, nameof(id));
+
+            var repository = _unitOfWork.ReceptionDocumentRepository;
+
+            await repository.LogicRemoveAsync(id);
+
+            await _unitOfWork.CompleteAsync();
+
+            _logger.LogInformation("ReceptionDocumentWrite --> LogicRemoveAsync --> End");
+
+            return true;
+
         }
 
         public Task<ReceptionDocument?> UpdateAsync(ReceptionDocument entity)
