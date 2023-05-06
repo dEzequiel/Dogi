@@ -1,0 +1,5 @@
+Reception collection: All calls related to the registration of a new animal.
+
+- Reception of a new animal
+- Chip analysis
+- Individual file
