@@ -39,7 +39,8 @@ builder.Services
 // Database SqlServer connetion.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration["Azure:ConnectionString"])
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DogiConnection"))
+    //options.UseSqlServer(builder.Configuration["Azure:ConnectionString"])
            .EnableSensitiveDataLogging()
            .EnableDetailedErrors();
 });
