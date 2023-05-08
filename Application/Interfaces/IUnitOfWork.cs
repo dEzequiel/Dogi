@@ -1,4 +1,6 @@
 ﻿
+using Application.Interfaces.Repositories;
+
 namespace Application.Service.Interfaces
 {
     public interface IUnitOfWork : IDisposable
@@ -7,7 +9,7 @@ namespace Application.Service.Interfaces
         /// ReceptionDocumentRepository
         /// </summary>
         IReceptionDocumentRepository ReceptionDocumentRepository { get; }
-
+        IIndividualProceedingRepository IndividualProceedingRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>

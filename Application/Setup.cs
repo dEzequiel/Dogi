@@ -12,6 +12,8 @@ using Application.Service.Implementation.Read;
 using Application.Service.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Domain.Entities;
+using Application.Service.Abstraction.Write;
+using Application.Service.Implementation.Write;
 
 namespace Application
 {
@@ -28,6 +30,10 @@ namespace Application
             services.AddTransient<IReceptionDocumentWrite, ReceptionDocumentWrite>();
             services.AddTransient<IReceptionDocumentRead, ReceptionDocumentRead>();
             services.AddTransient<ReceptionDocument>();
+
+            services.AddTransient<IIndividualProceedingWrite, IndividualProceedingWrite>();
+            //services.AddTransient<IReceptionDocumentRead, ReceptionDocumentRead>();
+            services.AddTransient<IndividualProceeding>();
 
             return services;
         }

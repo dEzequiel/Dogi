@@ -10,10 +10,10 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid AnimalId { get; private set; }
-        public Guid ReceptionDocumentId { get; private set; }
-        public int StatusId { get; private set; }
-        public bool IsDeleted { get; set; }
+        public Guid AnimalId { get; set; }
+        public Guid ReceptionDocumentId { get; set; }
+        public int StatusId { get; set; }
+        public bool IsDeleted { get; set; } = false;
         //public Guid MedicalRecordId { get; private set; }
 
         /// <summary>

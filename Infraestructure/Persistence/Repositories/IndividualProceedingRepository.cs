@@ -38,6 +38,7 @@ namespace Infraestructure.Persistence.Repositories
         {
             entity.Created = DateTime.UtcNow;
             entity.CreatedBy = admin.Email;
+            entity.IsDeleted = false;
 
             await _individualProceedingsAll.AddAsync(entity, ct);
         }
