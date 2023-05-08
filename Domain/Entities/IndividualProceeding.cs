@@ -5,7 +5,7 @@ using Domain.Support;
 
 namespace Domain.Entities
 {
-    public class IndividualProceeding : Entity
+    public class IndividualProceeding : AuditableEntity
     {
         /// <summary>
         /// Attributes.
