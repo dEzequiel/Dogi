@@ -19,7 +19,12 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithMany(r => r.Animals)
                 .HasForeignKey(fk => fk.SexId)
                 .OnDelete(DeleteBehavior.NoAction);
-          
+
+            builder.HasOne(f => f.AnimalCategory)
+                .WithMany(r => r.Animals)
+                .HasForeignKey(fk => fk.AnimalCategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }
