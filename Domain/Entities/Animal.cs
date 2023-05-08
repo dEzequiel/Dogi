@@ -5,7 +5,7 @@ using Domain.Support;
 
 namespace Domain.Entities
 {
-    public class Animal : Entity
+    public class Animal : AuditableEntity
     {
         /// <summary>
         /// Attributes.
@@ -15,6 +15,7 @@ namespace Domain.Entities
         public string Name { get;  set; } = string.Empty;
         public int Age { get;  set; }
         public string Color { get;  set; } = string.Empty;
+        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// Navigation properties.
