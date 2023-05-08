@@ -23,19 +23,9 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithOne(r => r.IndividualProceeding)
                 .HasForeignKey<IndividualProceeding>(rd => rd.ReceptionDocumentId);
 
-            builder.HasOne<AnimalChip>(b => b.AnimalChip)
-                .WithOne(b => b.IndividualProceeding)
-                .HasForeignKey<IndividualProceeding>(fk => fk.AnimalChipId)
-                .IsRequired(false);
-
             builder.HasOne<ProceedingStatus>(b => b.ProceedingStatus)
                 .WithMany(p => p.Processees)
                 .HasForeignKey(fk => fk.StatusId)
-                .IsRequired(false);
-
-            builder.HasOne<AnimalCategory>(b => b.AnimalCategory)
-                .WithMany(p => p.Processees)
-                .HasForeignKey(fk => fk.CategoryId)
                 .IsRequired(false);
 
         }

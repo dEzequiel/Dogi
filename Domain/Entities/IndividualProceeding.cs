@@ -13,8 +13,7 @@ namespace Domain.Entities
         public Guid AnimalId { get; private set; }
         public Guid ReceptionDocumentId { get; private set; }
         public int StatusId { get; private set; }
-        public int CategoryId { get; private set; }
-        public Guid? AnimalChipId { get; private set; }
+        public bool IsDeleted { get; set; }
         //public Guid MedicalRecordId { get; private set; }
 
         /// <summary>
@@ -23,8 +22,6 @@ namespace Domain.Entities
         public virtual Animal Animal { get; set; } = null!;
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
-        public virtual AnimalCategory AnimalCategory { get; private set; } = null!;
-        public virtual AnimalChip? AnimalChip { get; private set; } = null!;
 
         public IndividualProceeding(Guid id) : base(id) { }
 
@@ -32,18 +29,14 @@ namespace Domain.Entities
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="animalId"></param>
         /// <param name="receptionDocumentId"></param>
         /// <param name="status"></param>
-        /// <param name="animalCategory"></param>
-        /// <param name="animallChipId"></param>
-        private IndividualProceeding(Guid id, Guid animalId, Guid receptionDocumentId, int status, int animalCategory, 
-                                     Guid? animalChipId) : base(id)
+        private IndividualProceeding(Guid id, Guid animalId, Guid receptionDocumentId, int status) : base(id)
         {
             AnimalId = animalId;
             ReceptionDocumentId = receptionDocumentId;
             StatusId = status;
-            CategoryId = animalCategory;
-            AnimalChipId = animalChipId;
         }
 
         /// <summary>
@@ -60,9 +53,7 @@ namespace Domain.Entities
             Guid id,
             Guid animalId,
             Guid receptionDocumentId,
-            int status,
-            int animalCategory, 
-            Guid? animalChipId)
+            int status)
         {
             if (id == Guid.Empty)
                 return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
@@ -72,7 +63,7 @@ namespace Domain.Entities
                 return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
                                                                             .IndividualProcessReceptionDocumentIdIsNullOrEmpty);
 
-            return new IndividualProceeding(id, animalId, receptionDocumentId, status, animalCategory, animalChipId);
+            return new IndividualProceeding(id, animalId, receptionDocumentId, status);
 
         }
     }
