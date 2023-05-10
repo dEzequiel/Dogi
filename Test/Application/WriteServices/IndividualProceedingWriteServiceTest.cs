@@ -27,7 +27,6 @@ namespace Test.Application.WriteServices
         {
             // Arrange
             CancellationToken cancellationToken = new CancellationToken();
-            individualProceedingAdd.AnimalId = individualProceedingAdd.Animal.Id;
             individualProceedingAdd.ReceptionDocumentId = individualProceedingAdd.ReceptionDocument.Id;
             //individualProceedingAdd.StatusId = individualProceedingAdd.Status.Id;
 
@@ -41,7 +40,6 @@ namespace Test.Application.WriteServices
 
             // Assert
             Assert.Equal(result.StatusId, individualProceedingAdd.StatusId);
-            Assert.Equal(result.AnimalId, individualProceedingAdd.AnimalId);
             Assert.Equal(result.ReceptionDocumentId, individualProceedingAdd.ReceptionDocumentId);
         }
     }
