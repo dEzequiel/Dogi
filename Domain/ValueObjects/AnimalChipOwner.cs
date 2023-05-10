@@ -11,34 +11,22 @@ namespace Domain.ValueObjects
         /// <summary>
         /// Attributes.
         /// </summary>
-        public string Name { get; }
-        public string Lastname { get; }
-
+        public string Name { get; set;  }
+        public string Lastname { get; set; }
+        public string Address { get; set; }
+        public bool IsResponsible { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="name"></param>
         /// <param name="lastname"></param>
         public AnimalChipOwner() { }
-        private AnimalChipOwner(string name, string lastname)
+        private AnimalChipOwner(string name, string lastname, string address, bool isResponsible)
         {
             Name = name;
             Lastname = lastname;
-        }
-
-        /// <summary>
-        /// Static Factory Pattern.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="lastname"></param>
-        public AnimalChipOwner? Create(string name, string lastname)
-        {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(lastname))
-            {
-                return null;
-            }
-
-            return new AnimalChipOwner(name, lastname);
+            IsResponsible = isResponsible;
+            Address = address;
         }
 
         protected override IEnumerable<object> GetAtomicValues()

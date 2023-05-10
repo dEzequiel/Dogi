@@ -17,7 +17,6 @@ namespace Infraestructure.Context
 
         // Tables
         public DbSet<ReceptionDocument> ReceptionDocument { get; set; }
-        public DbSet<Animal> Animal { get; set; }
         public DbSet<AnimalChip> AnimalChip { get; set; }
         public DbSet<IndividualProceeding> IndividualProceeding { get; set; }
         
@@ -29,7 +28,6 @@ namespace Infraestructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             new ReceptionDocumentTypeConfiguration().Configure(modelBuilder.Entity<ReceptionDocument>());
-            new AnimalTypeConfiguration().Configure(modelBuilder.Entity<Animal>());
             new AnimalChipTypeConfiguration().Configure(modelBuilder.Entity<AnimalChip>());
             new IndividualProceedingTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceeding>());
             new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());

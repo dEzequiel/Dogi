@@ -14,11 +14,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasOne<Animal>(b => b.Animal)
-                .WithOne(b => b.IndividualProceeding)
-                .HasForeignKey<IndividualProceeding>(fk => fk.AnimalId)
-                .IsRequired(false);
-
             builder.HasOne<ReceptionDocument>(f => f.ReceptionDocument)
                 .WithOne(r => r.IndividualProceeding)
                 .HasForeignKey<IndividualProceeding>(rd => rd.ReceptionDocumentId);

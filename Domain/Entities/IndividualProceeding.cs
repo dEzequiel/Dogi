@@ -10,61 +10,39 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid AnimalId { get; set; }
         public Guid ReceptionDocumentId { get; set; }
         public int StatusId { get; set; }
-        public bool IsDeleted { get; set; } = false;
         //public Guid MedicalRecordId { get; private set; }
+        public Guid CategoryId { get; set; }
+        public int SexId { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual Animal Animal { get; set; } = null!;
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
+        public virtual AnimalCategory AnimalCategory { get; set; }
+        public virtual Sex Sex { get; set; }
+
 
         public IndividualProceeding(Guid id) : base(id) { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="animalId"></param>
         /// <param name="receptionDocumentId"></param>
-        /// <param name="status"></param>
-        private IndividualProceeding(Guid id, Guid animalId, Guid receptionDocumentId, int status) : base(id)
+        /// <param name="statusId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="sexId"></param>
+        /// <param name="isDeleted"></param>
+        public IndividualProceeding(Guid receptionDocumentId, int statusId, Guid categoryId, 
+            int sexId, bool isDeleted) : this(receptionDocumentId)
         {
-            AnimalId = animalId;
-            ReceptionDocumentId = receptionDocumentId;
-            StatusId = status;
-        }
-
-        /// <summary>
-        /// Static Factory Pattern. Creates new IndividualProcess in valid state.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="animalId"></param>
-        /// <param name="receptionDocumentId"></param>
-        /// <param name="status"></param>
-        /// <param name="animalCategory"></param>
-        /// <param name="animalChipId"></param>
-        /// <returns></returns>
-        public static Result<IndividualProceeding> Create(
-            Guid id,
-            Guid animalId,
-            Guid receptionDocumentId,
-            int status)
-        {
-            if (id == Guid.Empty)
-                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
-                                                                            .IndividualProcessIdIsNullOrEmpty);
-
-            if(receptionDocumentId == Guid.Empty)
-                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
-                                                                            .IndividualProcessReceptionDocumentIdIsNullOrEmpty);
-
-            return new IndividualProceeding(id, animalId, receptionDocumentId, status);
-
+            StatusId = statusId;
+            CategoryId = categoryId;
+            SexId = sexId;
+            IsDeleted = isDeleted;
         }
     }
 }

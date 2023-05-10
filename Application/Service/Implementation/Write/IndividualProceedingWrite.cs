@@ -32,7 +32,6 @@ namespace Application.Service.Implementation.Write
             _logger.LogInformation("IndividualProceedingWrite --> AddAsync --> Start");
 
             Guard.Against.Null(entity, nameof(entity));
-            Guard.Against.NullOrEmpty(entity.AnimalId, nameof(entity.AnimalId));
             Guard.Against.NullOrEmpty(entity.ReceptionDocumentId, nameof(entity.ReceptionDocumentId));
             Guard.Against.Null(entity.StatusId, nameof(entity.StatusId));
             Guard.Against.Null(admin, nameof(admin));
