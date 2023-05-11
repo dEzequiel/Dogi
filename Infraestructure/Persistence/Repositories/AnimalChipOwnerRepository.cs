@@ -1,6 +1,6 @@
 ﻿using Application.Interfaces.Repositories;
 using Crosscuting.Api.DTOs;
-using Domain.ValueObjects;
+using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;

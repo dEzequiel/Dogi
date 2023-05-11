@@ -2,7 +2,7 @@
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
-using Domain.ValueObjects;
+using Domain.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
@@ -26,7 +26,7 @@ namespace Application.Service.Implementation.Write
             Guard.Against.Null(entity, nameof(entity));
             Guard.Against.Null(entity.Name, nameof(entity.Name));
             Guard.Against.NullOrEmpty(entity.Lastname, nameof(entity.Lastname));
-            Guard.Against.NullOrEmpty(entity.Address, nameof(entity.Address));
+            Guard.Against.Null(entity.Address, nameof(entity.Address));
             Guard.Against.Null(entity.IsResponsible, nameof(entity.IsResponsible));
             Guard.Against.Null(admin, nameof(admin));
             Guard.Against.NullOrEmpty(admin.Id, nameof(admin.Id));

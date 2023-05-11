@@ -7,7 +7,7 @@ using Application.Service.Implementation.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
-using Domain.ValueObjects;
+using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

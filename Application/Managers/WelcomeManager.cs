@@ -3,7 +3,6 @@ using Application.Service.Abstraction;
 using Application.Service.Abstraction.Write;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
-using Domain.ValueObjects;
 
 namespace Application.Managers
 {

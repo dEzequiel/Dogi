@@ -1,6 +1,6 @@
 ﻿using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs;
-using Domain.ValueObjects;
+using Domain.Entities;
 
 
 namespace Application.Interfaces.Repositories

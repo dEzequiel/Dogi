@@ -1,7 +1,6 @@
 ﻿using Domain.Common;
 using Domain.Exceptions;
 using Domain.Exceptions.Result;
-using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
@@ -13,13 +12,14 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public AnimalChipOwner Owner { get; set; }
-        public Address Address { get; set; }
+        public Guid? AnimalChipOwnerId { get; set; }
+        public string ChipNumber { get; set; }
 
         /// <summary>
         /// Navigation properties
         /// </summary>
         public virtual IndividualProceeding IndividualProceeding { get; set; }
+        public virtual AnimalChipOwner? AnimalChipOwner { get;  set; }
 
         /// <summary>
         /// Constructor.
@@ -27,32 +27,11 @@ namespace Domain.Entities
         /// <param name="id"></param>
         /// <param name="owner"></param>
         /// <param name="addressAddress"></param>
-        public AnimalChip(Guid id) : base(id) { }
-        private AnimalChip(Guid id, AnimalChipOwner owner, Address address) : base(id)
+        public AnimalChip() : base(Guid.NewGuid()) { }
+        private AnimalChip(Guid id, Guid animalChipOwnerId, string chipNumber) : base(id)
         {
-            Owner = owner;
-            Address = address;
-        }
-        
-        /// <summary>
-        /// Static Factory Pattern.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="owner"></param>
-        /// <param name="address"></param>
-        /// <returns></returns>
-        public static Result<AnimalChip> Create(
-            Guid id, 
-            AnimalChipOwner owner, 
-            Address address)
-        {
-            if (id == Guid.Empty)
-                return Result.Failure<AnimalChip>(DomainErrors.AnimalChip.AnimalChipIdIsNullOrEmpty);
-
-            if (owner == null)
-                return Result.Failure<AnimalChip>(DomainErrors.AnimalChip.AnimalChipOwnerIsNull);
-
-            return new AnimalChip(id, owner, address);
+            ChipNumber = chipNumber;
+            AnimalChipOwnerId = animalChipOwnerId;
         }
     }
 }

@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Domain.Entities;
 using Application.Service.Abstraction.Write;
 using Application.Service.Implementation.Write;
-using Domain.ValueObjects;
 using Application.Managers;
 
 namespace Application
@@ -39,6 +38,8 @@ namespace Application
 
             services.AddTransient<IAnimalChipOwnerWrite, AnimalChipOwnerWrite>();
             services.AddTransient<AnimalChipOwner>();
+
+            services.AddTransient<AnimalChip>();
 
             services.AddTransient<WelcomeManager>();
 

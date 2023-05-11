@@ -29,6 +29,7 @@ namespace Infraestructure.Context
         {
             new ReceptionDocumentTypeConfiguration().Configure(modelBuilder.Entity<ReceptionDocument>());
             new AnimalChipTypeConfiguration().Configure(modelBuilder.Entity<AnimalChip>());
+            new AnimalChipOwnerTypeConfiguration().Configure(modelBuilder.Entity<AnimalChipOwner>());
             new IndividualProceedingTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceeding>());
             new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());
             new AnimalCategoryTypeConfiguration().Configure(modelBuilder.Entity<AnimalCategory>());
