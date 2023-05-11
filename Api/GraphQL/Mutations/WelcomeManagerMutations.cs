@@ -26,9 +26,12 @@ namespace Api.GraphQL.Mutations
 
         public WelcomeManagerMutations() { }
 
-        public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentWithAnimalChipOwnerInformation([Service] ISender _mediator, ReceptionDocumentWithAnimalOwnerInfo input)
+        public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentWithAnimalChipOwnerInformation([Service] ISender _mediator, 
+            ReceptionDocumentWithAnimalOwnerInfo input)
         {
-            var result = await _mediator.Send(new InsertReceptionDocumentWithAnimalOwnerInfoRequest(input.ReceptionDocument, input.AnimalChipOwner, GetAdminData()));
+            var result = await _mediator.Send(new InsertReceptionDocumentWithAnimalOwnerInfoRequest(input.ReceptionDocument, input.AnimalChipOwner, 
+                GetAdminData()));
+
             if (!result.Succeeded)
             {
                 throw new DogiException(result.Message);
