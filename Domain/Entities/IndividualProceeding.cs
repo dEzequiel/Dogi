@@ -27,6 +27,7 @@ namespace Domain.Entities
 
 
         public IndividualProceeding(Guid id) : base(id) { }
+        public IndividualProceeding() : base(Guid.NewGuid()) { }
 
         /// <summary>
         /// Constructor.
