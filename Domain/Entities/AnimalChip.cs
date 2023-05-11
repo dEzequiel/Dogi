@@ -1,6 +1,5 @@
 ﻿using Domain.Common;
-using Domain.Exceptions;
-using Domain.Exceptions.Result;
+using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
@@ -12,14 +11,14 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid? AnimalChipOwnerId { get; set; }
+        public AnimalChipOwner Owner { get; set; }
+        public string? Name { get; set; }
         public string ChipNumber { get; set; }
 
         /// <summary>
         /// Navigation properties
         /// </summary>
         public virtual IndividualProceeding IndividualProceeding { get; set; }
-        public virtual AnimalChipOwner? AnimalChipOwner { get;  set; }
 
         /// <summary>
         /// Constructor.
@@ -28,10 +27,11 @@ namespace Domain.Entities
         /// <param name="owner"></param>
         /// <param name="addressAddress"></param>
         public AnimalChip() : base(Guid.NewGuid()) { }
-        private AnimalChip(Guid id, Guid animalChipOwnerId, string chipNumber) : base(id)
+        private AnimalChip(Guid id, string name, string chipNumber, AnimalChipOwner animalChipOwner) : base(id)
         {
+            Name = name;
             ChipNumber = chipNumber;
-            AnimalChipOwnerId = animalChipOwnerId;
+            Owner = animalChipOwner;
         }
     }
 }
