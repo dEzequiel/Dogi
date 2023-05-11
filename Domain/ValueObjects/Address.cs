@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Entities;
 
 namespace Domain.ValueObjects
 {
@@ -13,40 +12,27 @@ namespace Domain.ValueObjects
         /// </summary>
         public string Street { get; }
         public string City { get; }
-
+        public string ZipCode { get; }
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="street"></param>
         /// <param name="city"></param>
         public Address() { }
-        private Address(string street, string city)
+        private Address(string street, string city, string zipCode)
         {
             Street = street;
             City = city;
+            ZipCode = zipCode;
         }
 
-        /// <summary>
-        /// Static Factory Pattern
-        /// </summary>
-        /// <param name="street"></param>
-        /// <param name="city"></param>
-        /// <returns>Address Object</returns>
-        public Address? Create(string street, string city)
-        {
-            if(string.IsNullOrEmpty(street) || string.IsNullOrEmpty(city))
-            {
-                return null;
-            }
-
-            return new Address(street, city);
-        }
 
         /// <inheritdoc/>
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Street;
             yield return City;
+            yield return ZipCode;
         }
     }
 }
