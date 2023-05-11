@@ -19,6 +19,8 @@ namespace Infraestructure.Context
         public DbSet<ReceptionDocument> ReceptionDocument { get; set; }
         public DbSet<AnimalChip> AnimalChip { get; set; }
         public DbSet<IndividualProceeding> IndividualProceeding { get; set; }
+        public DbSet<AnimalChipOwner> AnimalChipOwner { get; set; }
+
         
         // Support Tables
         public DbSet<Sex> Sex { get; set; }

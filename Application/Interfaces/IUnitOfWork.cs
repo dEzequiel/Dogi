@@ -11,6 +11,7 @@ namespace Application.Service.Interfaces
         IReceptionDocumentRepository ReceptionDocumentRepository { get; }
         IIndividualProceedingRepository IndividualProceedingRepository { get; }
         IAnimalChipOwnerRepository AnimalChipOwnerRepository { get; }
+        IAnimalChipRepository AnimalChipRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>
