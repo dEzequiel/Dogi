@@ -1,4 +1,5 @@
-﻿using Application.DTOs.WelcomeManager;
+﻿using Api.GraphQL.ObjectTypes;
+using Application.DTOs.WelcomeManager;
 
 namespace Api.GraphQL.InputObjectTypes
 {
@@ -10,10 +11,13 @@ namespace Api.GraphQL.InputObjectTypes
         protected override void Configure(IInputObjectTypeDescriptor<ReceptionDocumentWithAnimalOwnerInfo> descriptor)
         {
             descriptor.Field(f => f.ReceptionDocument)
-              .Type<ReceptionDocumentInputType>();
+              .Type<ReceptionDocumentInput>();
 
             descriptor.Field(f => f.AnimalChipOwner)
-                .Type<AnimalChipOwnerInputType>();
+                .Type<AnimalChipOwnerInput>();
+
+            descriptor.Field(f => f.AnimalChip)
+                .Type<AnimalChipInput>();
 
         }
     }

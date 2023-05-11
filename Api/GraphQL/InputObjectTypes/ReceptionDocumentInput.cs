@@ -5,14 +5,10 @@ namespace Api.GraphQL.InputObjectTypes
     /// <summary>
     /// ReceptionDocument input type for graphql mutations.
     /// </summary>
-    public class ReceptionDocumentInputType : InputObjectType<ReceptionDocument>
+    public class ReceptionDocumentInput : InputObjectType<ReceptionDocument>
     {
         protected override void Configure(IInputObjectTypeDescriptor<ReceptionDocument> descriptor)
         {
-            descriptor.Field(f => f.Id)
-              .Type<UuidType>()
-              .DefaultValue(Guid.NewGuid())
-              .Ignore(true);
 
             descriptor.Field(f => f.IsDeleted)
                 .Type<NonNullType<BooleanType>>()

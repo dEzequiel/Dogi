@@ -5,15 +5,10 @@ namespace Api.GraphQL.InputObjectTypes
     /// <summary>
     /// AnimalChipOwner input type for graphql mutations.
     /// </summary>
-    public class AnimalChipOwnerInputType : InputObjectType<AnimalChipOwner>
+    public class AnimalChipOwnerInput : InputObjectType<AnimalChipOwner>
     {
         protected override void Configure(IInputObjectTypeDescriptor<AnimalChipOwner> descriptor)
         {
-            descriptor.Field(f => f.Name)
-              .Type<UuidType>()
-              .DefaultValue(Guid.NewGuid())
-              .Ignore(true);
-
             descriptor.Field(f => f.Name)
                 .Type<StringType>();
 
