@@ -14,9 +14,18 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasOne<AnimalChipOwner>(f => f.AnimalChipOwner)
-                .WithOne(r => r.AnimalChip)
-                .HasForeignKey<AnimalChip>(r => r.AnimalChipOwnerId);
+            builder.OwnsOne(vo => vo.Owner, owner =>
+            {
+                owner.Property(x => x.Name).HasColumnName("OwnerName");
+                owner.Property(x => x.Lastname).HasColumnName("OwnerLastName");
+                owner.Property(x => x.Contact).HasColumnName("OwnerContact");
+                owner.OwnsOne(z => z.Address, address =>
+                {
+                    address.Property(x => x.Street).HasColumnName("OwnerAddressStreet");
+                    address.Property(x => x.City).HasColumnName("OwnerAddressCity");
+                    address.Property(x => x.ZipCode).HasColumnName("OwnerAddressZipCode");
+                });
+            });
 
 
         }
