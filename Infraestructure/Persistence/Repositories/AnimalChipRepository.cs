@@ -56,5 +56,10 @@ namespace Infraestructure.Persistence.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<AnimalChip> AddAsync(AnimalChip entity, CancellationToken ct = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
