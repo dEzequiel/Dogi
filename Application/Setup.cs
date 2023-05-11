@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Domain.Entities;
 using Application.Service.Abstraction.Write;
 using Application.Service.Implementation.Write;
+using Domain.ValueObjects;
+using Application.Managers;
 
 namespace Application
 {
@@ -28,12 +30,17 @@ namespace Application
             });
 
             services.AddTransient<IReceptionDocumentWrite, ReceptionDocumentWrite>();
-            services.AddTransient<IReceptionDocumentRead, ReceptionDocumentRead>();
+            services.AddTransient<IReceptionDocumentRead, ReceptionDocumentRead>();            
             services.AddTransient<ReceptionDocument>();
 
             services.AddTransient<IIndividualProceedingWrite, IndividualProceedingWrite>();
             //services.AddTransient<IReceptionDocumentRead, ReceptionDocumentRead>();
             services.AddTransient<IndividualProceeding>();
+
+            services.AddTransient<IAnimalChipOwnerWrite, AnimalChipOwnerWrite>();
+            services.AddTransient<AnimalChipOwner>();
+
+            services.AddTransient<WelcomeManager>();
 
             return services;
         }

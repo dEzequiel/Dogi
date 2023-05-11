@@ -13,19 +13,17 @@ namespace Application.Managers
         private IReceptionDocumentWrite _receptionDocumentWrite;
 
 
-        public WelcomeManager() { }
-
         public WelcomeManager(IAnimalChipOwnerWrite animalChipOwnerWrite, IReceptionDocumentWrite receptionDocumentWrite)
         {
             _animalChipOwnerWrite = animalChipOwnerWrite;
             _receptionDocumentWrite = receptionDocumentWrite;
         }
 
-        public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddAnimalWithOwnerInfo(ReceptionDocument receptionDocument, AnimalChipOwner animalChipOwner, AdminData AdminData)
+        public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddAnimalWithOwnerInfo(ReceptionDocument receptionDocument, AnimalChipOwner animalChipOwner, AdminData adminData)
         {
-            if(receptionDocument.HasChip.HasValue)
+            if(!receptionDocument.HasChip.HasValue)
             {
-                var entity = await _receptionDocumentWrite.AddAsync(receptionDocument, AdminData);
+                var entity = await _receptionDocumentWrite.AddAsync(receptionDocument, adminData);
 
                 return new ReceptionDocumentWithAnimalOwnerInfo()
                 {
@@ -35,8 +33,8 @@ namespace Application.Managers
 
             } else
             {
-                var receptionDocumententity = await _receptionDocumentWrite.AddAsync(receptionDocument, AdminData);
-                var animalChipOwnerEntity = await  _animalChipOwnerWrite.AddAsync(animalChipOwner, AdminData);
+                var receptionDocumententity = await _receptionDocumentWrite.AddAsync(receptionDocument, adminData);
+                var animalChipOwnerEntity = await  _animalChipOwnerWrite.AddAsync(animalChipOwner, adminData);
 
                 return new ReceptionDocumentWithAnimalOwnerInfo()
                 {
