@@ -1,17 +1,15 @@
-﻿using Api.GraphQL.InputObjectTypes;
-using Application.Features.ReceptionDocument.Commands;
+﻿using Application.Features.ReceptionDocument.Commands;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
 
 namespace Api.GraphQL.Mutations
 {
     /// <summary>
-    /// Public ReceptionDocument mutations.
+    /// ReceptionDocument entity public mutations.
     /// </summary>
     [ExtendObjectType("Mutation")]
     public class ReceptionDocumentMutations
@@ -31,9 +29,6 @@ namespace Api.GraphQL.Mutations
         {
         }
 
-        /// <summary>
-        /// ReceptionDocument entity public mutations.
-        /// </summary>
 
         public async Task<ReceptionDocument> AddReceptionDocumentAsync([Service] ISender _mediator, ReceptionDocument input)
         {
@@ -47,7 +42,7 @@ namespace Api.GraphQL.Mutations
             }
 
 
-            return result.Data;
+            return result.Data;                                                                                                                        
         }
 
         public async Task<bool> MarkReceptionDocumentAsRemovedAsync([Service] ISender _mediator, Guid idToDelete)
