@@ -10,9 +10,9 @@ namespace Domain.ValueObjects
         /// <summary>
         /// Attributes
         /// </summary>
-        public string Street { get; }
-        public string City { get; }
-        public string ZipCode { get; }
+        public string? Street { get; }
+        public string? City { get; }
+        public string? ZipCode { get; }
         /// <summary>
         /// Constructor
         /// </summary>
