@@ -2,6 +2,9 @@
 
 namespace Api.GraphQL.InputObjectTypes
 {
+    /// <summary>
+    /// ReceptionDocument input type for graphql mutations.
+    /// </summary>
     public class ReceptionDocumentInputType : InputObjectType<ReceptionDocument>
     {
         protected override void Configure(IInputObjectTypeDescriptor<ReceptionDocument> descriptor)
