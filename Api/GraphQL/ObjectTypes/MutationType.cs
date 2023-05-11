@@ -8,10 +8,12 @@ namespace Api.GraphQL.Types
     {
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor descriptor)
-        {
-                descriptor.Field("AddReceptionDocumentAsync")
-                      .Argument("input", arg => arg.Type<ReceptionDocumentInputType>())
-                      .ResolveWith<ReceptionDocumentMutations>(q => q.AddReceptionDocumentAsync(default, default));
+        {   
+                
+
+                descriptor.Field("AddReceptionDocumentWithAnimalChipOwnerInfoAsync")
+                      .Argument("input", arg => arg.Type<ReceptionDocumentWithAnimalChipOwnerInfoInput>())
+                      .ResolveWith<WelcomeManagerMutations>(q => q.AddReceptionDocumentWithAnimalChipOwnerInformation(default, default));
 
                 descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                     .Argument("idToDelete", arg => arg.Type<UuidType>())
