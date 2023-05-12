@@ -35,7 +35,7 @@ namespace Api.GraphQL.Mutations
         public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentWithAnimalChipOwnerInformation([Service] ISender _mediator, 
             ReceptionDocumentWithAnimalOwnerInfo input)
         {
-            var result = await _mediator.Send(new InsertReceptionDocumentWithAnimalOwnerInfoRequest(input.ReceptionDocument, input.AnimalChipOwner, 
+            var result = await _mediator.Send(new InsertReceptionDocumentWithAnimalOwnerInfoRequest(input, 
                 GetAdminData()));
 
             if (!result.Succeeded)

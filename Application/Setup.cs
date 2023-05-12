@@ -36,9 +36,8 @@ namespace Application
             //services.AddTransient<IReceptionDocumentRead, ReceptionDocumentRead>();
             services.AddTransient<IndividualProceeding>();
 
-            services.AddTransient<IAnimalChipOwnerWrite, AnimalChipOwnerWrite>();
-            services.AddTransient<AnimalChipOwner>();
 
+            services.AddTransient<IAnimalChipWrite, AnimalChipWrite > ();
             services.AddTransient<AnimalChip>();
 
             services.AddTransient<WelcomeManager>();

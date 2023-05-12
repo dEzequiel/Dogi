@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\AnimalChipOwner\Queries\" />
+    <Folder Include="Features\AnimalChip\Queries\" />
   </ItemGroup>
 
 </Project>

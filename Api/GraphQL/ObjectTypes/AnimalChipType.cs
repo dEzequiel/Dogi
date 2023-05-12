@@ -11,17 +11,19 @@ namespace Api.GraphQL.ObjectTypes
                 .Type<NonNullType<UuidType>>();
 
             descriptor
+                .Field(f => f.Name)
+                .Type<StringType>();
+
+            descriptor
                 .Field(f => f.ChipNumber) 
                 .Type<NonNullType<StringType>>();
 
-            descriptor
-                .Field(f => f.AnimalChipOwnerId) 
-                .Type<NonNullType<UuidType>>();
 
-            descriptor.Ignore(f => f.AnimalChipOwner);
             descriptor.Ignore(f => f.IndividualProceeding);
-
-
+            descriptor.Ignore(f => f.Created);
+            descriptor.Ignore(f => f.CreatedBy);
+            descriptor.Ignore(f => f.LastModified);
+            descriptor.Ignore(f => f.LastModifiedBy);
         }
     }
 }

@@ -18,14 +18,12 @@ namespace Application.Features.WelcomeManagerFeature.Command
         /// <summary>
         /// Constructor
         /// </summary>
-        public Domain.Entities.ReceptionDocument ReceptionDocument { get; set; } = null!;
-        public AnimalChipOwner? AnimalChipOwner { get; set; }
+        public ReceptionDocumentWithAnimalOwnerInfo Data { get; set; } = null!;
         public AdminData AdminData { get; set; } = null!;
 
-        public InsertReceptionDocumentWithAnimalOwnerInfoRequest(Domain.Entities.ReceptionDocument receptionDocument, AnimalChipOwner? animalChipOwner, AdminData adminData)
+        public InsertReceptionDocumentWithAnimalOwnerInfoRequest(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
         {
-            ReceptionDocument = receptionDocument;
-            AnimalChipOwner = animalChipOwner;
+            Data = data;
             AdminData = adminData;
         }
     }
@@ -35,16 +33,16 @@ namespace Application.Features.WelcomeManagerFeature.Command
         private readonly ILogger<InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler> _logger;
         private readonly WelcomeManager welcomeManager;
 
-        private IAnimalChipOwnerWrite _animalChipOwnerWrite;
         private IReceptionDocumentWrite _receptionDocumentWrite;
+        private IAnimalChipWrite _animalChipWrite;
 
-        public InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler(ILogger<InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler> logger, IAnimalChipOwnerWrite animalChipOwnerWrite,
-            IReceptionDocumentWrite receptionDocumentWrite)
+        public InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler(ILogger<InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler> logger,
+            IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite)
         {
             _logger = logger;
-            _animalChipOwnerWrite = animalChipOwnerWrite;
             _receptionDocumentWrite = receptionDocumentWrite;
-            welcomeManager = new WelcomeManager(_animalChipOwnerWrite, _receptionDocumentWrite);
+            _animalChipWrite = animalChipWrite;
+            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite);
         }
         public async Task<ApiResponse<ReceptionDocumentWithAnimalOwnerInfo>> Handle(InsertReceptionDocumentWithAnimalOwnerInfoRequest request, CancellationToken cancellationToken)
         {
@@ -52,7 +50,7 @@ namespace Application.Features.WelcomeManagerFeature.Command
 
             Guard.Against.Null(request, nameof(request));
 
-            var result = await welcomeManager.AddAnimalWithOwnerInfo(request.ReceptionDocument, request.AnimalChipOwner, request.AdminData);
+            var result = await welcomeManager.AddAnimalWithOwnerInfo(request.Data, request.AdminData);
 
             _logger.LogInformation("InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler --> AddAsync --> End");
 

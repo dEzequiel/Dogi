@@ -13,8 +13,6 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Field(f => f.ReceptionDocument)
               .Type<ReceptionDocumentInput>();
 
-            descriptor.Field(f => f.AnimalChipOwner)
-                .Type<AnimalChipOwnerInput>();
 
             descriptor.Field(f => f.AnimalChip)
                 .Type<AnimalChipInput>();

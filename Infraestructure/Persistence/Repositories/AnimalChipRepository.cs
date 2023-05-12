@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
+using Crosscuting.Api.DTOs;
 using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -57,7 +58,7 @@ namespace Infraestructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<AnimalChip> AddAsync(AnimalChip entity, CancellationToken ct = default)
+        public Task<AnimalChip> AddAsync(AnimalChip entity, AdminData admin, CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }

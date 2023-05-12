@@ -5,17 +5,18 @@ namespace Application.DTOs.WelcomeManager
     public class ReceptionDocumentWithAnimalOwnerInfo
     {
         public ReceptionDocument ReceptionDocument { get; set; } = null!;
-        public AnimalChipOwner? AnimalChipOwner { get; set; }
+        public AnimalChip? AnimalChip { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="receptionDocument"></param>
         /// <param name="animalChipOwner"></param>
-        public ReceptionDocumentWithAnimalOwnerInfo(ReceptionDocument receptionDocument, AnimalChipOwner? animalChipOwner)
+        /// <param name="animalChip"></param>
+        public ReceptionDocumentWithAnimalOwnerInfo(ReceptionDocument receptionDocument, AnimalChip? animalChip)
         {
             ReceptionDocument = receptionDocument;
-            AnimalChipOwner = animalChipOwner;
+            AnimalChip = animalChip;
         }
 
         public ReceptionDocumentWithAnimalOwnerInfo()
