@@ -19,7 +19,6 @@ namespace Api.GraphQL.ObjectTypes
                 .Type<NonNullType<StringType>>();
 
 
-            descriptor.Ignore(f => f.IndividualProceeding);
             descriptor.Ignore(f => f.Created);
             descriptor.Ignore(f => f.CreatedBy);
             descriptor.Ignore(f => f.LastModified);

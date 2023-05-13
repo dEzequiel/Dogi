@@ -9,6 +9,10 @@ namespace Api.GraphQL.InputObjectTypes
     {
         protected override void Configure(IInputObjectTypeDescriptor<ReceptionDocument> descriptor)
         {
+            descriptor
+            .Field(f => f.Id)
+            .Type<NonNullType<UuidType>>()
+            .Ignore(true);
 
             descriptor.Field(f => f.IsDeleted)
                 .Type<NonNullType<BooleanType>>()

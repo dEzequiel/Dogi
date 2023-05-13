@@ -14,6 +14,7 @@ namespace Api.GraphQL.InputObjectTypes
             .Field(f => f.ChipNumber)
             .Type<NonNullType<StringType>>();
 
+            descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.Created);
             descriptor.Ignore(f => f.CreatedBy);
             descriptor.Ignore(f => f.LastModified);
