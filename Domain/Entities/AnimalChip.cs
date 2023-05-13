@@ -15,10 +15,6 @@ namespace Domain.Entities
         public string? Name { get; set; }
         public string ChipNumber { get; set; }
 
-        /// <summary>
-        /// Navigation properties
-        /// </summary>
-        public virtual IndividualProceeding IndividualProceeding { get; set; }
 
         /// <summary>
         /// Constructor.

@@ -58,9 +58,13 @@ namespace Infraestructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<AnimalChip> AddAsync(AnimalChip entity, AdminData admin, CancellationToken ct = default)
+        /// <inheritdoc />
+        public async Task AddAsync(AnimalChip entity, AdminData admin, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            entity.Created = DateTime.Now;
+            entity.CreatedBy = admin.Email;
+
+            await _animalChipSet.AddAsync(entity, ct);
         }
     }
 }

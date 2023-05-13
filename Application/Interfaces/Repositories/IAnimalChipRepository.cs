@@ -12,6 +12,6 @@ namespace Application.Interfaces.Repositories
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<AnimalChip> AddAsync(AnimalChip entity, AdminData admin, CancellationToken ct = default);
+        Task AddAsync(AnimalChip entity, AdminData admin, CancellationToken ct = default);
     }
 }
