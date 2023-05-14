@@ -25,6 +25,7 @@ namespace Infraestructure.Context
         public DbSet<Sex> Sex { get; set; }
         public DbSet<ProceedingStatus> ProceedingStatus { get; set; }
         public DbSet<AnimalCategory> AnimalCategory { get; set; }
+        public DbSet<AnimalZone> AnimalZone { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
