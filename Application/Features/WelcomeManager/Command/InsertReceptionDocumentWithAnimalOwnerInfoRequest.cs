@@ -4,6 +4,7 @@ using Application.Service.Abstraction;
 using Application.Service.Abstraction.Write;
 using Application.Service.Implementation.Command;
 using Application.Service.Implementation.Write;
+using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
@@ -36,16 +37,19 @@ namespace Application.Features.WelcomeManagerFeature.Command
         private IReceptionDocumentWrite _receptionDocumentWrite;
         private IAnimalChipWrite _animalChipWrite;
         private IIndividualProceedingWrite _individualProceedingWrite;
+        private IUnitOfWork _unitOfWork;
 
         public InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler(ILogger<InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler> logger,
-            IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite)
+            IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite,
+            IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _receptionDocumentWrite = receptionDocumentWrite;
             _animalChipWrite = animalChipWrite;
             _individualProceedingWrite = individualProceedingWrite;
+            _unitOfWork = unitOfWork;
 
-            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite, _individualProceedingWrite);
+            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite, _individualProceedingWrite, _unitOfWork);
         }
         public async Task<ApiResponse<RegisterInformation>> Handle(InsertReceptionDocumentWithAnimalOwnerInfoRequest request, CancellationToken cancellationToken)
         {

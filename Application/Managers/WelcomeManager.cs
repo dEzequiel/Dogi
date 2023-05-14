@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.WelcomeManager;
 using Application.Service.Abstraction;
 using Application.Service.Abstraction.Write;
+using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
 using Domain.Enums;
@@ -12,18 +13,19 @@ namespace Application.Managers
         private IReceptionDocumentWrite _receptionDocumentWrite;
         private IAnimalChipWrite _animalChipWrite;
         private IIndividualProceedingWrite _individualProceedingWrite;
-
+        private IUnitOfWork _unitOfWork;
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="animalChipOwnerWrite"></param>
         /// <param name="receptionDocumentWrite"></param>
         /// <param name="animalChipWrite"></param>
-        public WelcomeManager(IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite)
+        public WelcomeManager(IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite, IUnitOfWork unitOfWork)
         {
             _receptionDocumentWrite = receptionDocumentWrite;
             _animalChipWrite = animalChipWrite;
             _individualProceedingWrite = individualProceedingWrite;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -50,8 +52,9 @@ namespace Application.Managers
             var receptionDocument = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
 
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocument.Id;
-            data.IndividualProceeding!.ZoneId = ((int)AnimalZone.Quarantine);
 
+            AssignQuarantineZoneToNewHost(data);
+            
             var individualProceeding = await _individualProceedingWrite.AddAsync(data.IndividualProceeding!, adminData);
 
             return new ReceptionDocumentWithIndividualProceeding()
@@ -72,5 +75,16 @@ namespace Application.Managers
                 AnimalChip = animalChipEntity,
             };
        }
+
+        private void AssignQuarantineZoneToNewHost(ReceptionDocumentWithAnimalInformation data) {
+            
+            var AnimalZoneRepository = _unitOfWork.AnimalZoneRepository.GetQueryableAsync();
+
+            var animalZone =  AnimalZoneRepository.FirstOrDefault(x => x.Id == (int)AnimalZone.Quarantine);
+
+            data.IndividualProceeding!.ZoneId = ((int)AnimalZone.Quarantine);
+            data.IndividualProceeding!.AnimalZone = animalZone!;
+        
+        }
     }
 }
