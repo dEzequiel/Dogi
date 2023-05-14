@@ -21,7 +21,8 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Field(f => f.StatusId)
                 .Type<NonNullType<IntType>>();
             
-            descriptor.Ignore(f => f.CategoryId);
+            descriptor.Field(f => f.CategoryId)
+                .Type<NonNullType<IntType>>();
             
             descriptor.Field(f => f.SexId)
                 .Type<NonNullType<IntType>>();

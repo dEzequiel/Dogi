@@ -14,7 +14,7 @@ namespace Domain.Entities
         public string? Color {get; set;}
         public int StatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
-        public Guid CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public int SexId { get; set; }
         public bool IsDeleted { get; set; } = false;
 
@@ -38,7 +38,7 @@ namespace Domain.Entities
         /// <param name="categoryId"></param>
         /// <param name="sexId"></param>
         /// <param name="isDeleted"></param>
-        public IndividualProceeding(Guid receptionDocumentId, int statusId, Guid categoryId, 
+        public IndividualProceeding(Guid receptionDocumentId, int statusId, int categoryId, 
             int sexId, bool isDeleted) : this(receptionDocumentId)
         {
             StatusId = statusId;

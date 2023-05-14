@@ -23,6 +23,10 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasForeignKey(fk => fk.StatusId)
                 .IsRequired(false);
 
+            builder.HasOne<AnimalCategory>(f => f.AnimalCategory)
+                .WithMany(r => r.IndividualProceedings)
+                .HasForeignKey(fk => fk.CategoryId);
+                
         }
     }
 }

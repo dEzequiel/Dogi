@@ -28,7 +28,7 @@ namespace Api.GraphQL.ObjectTypes
                 .Type<NonNullType<IntType>>();
             
             descriptor.Field(f => f.CategoryId)
-                .Type<NonNullType<UuidType>>();
+                .Type<NonNullType<IntType>>();
 
             descriptor.Field(f => f.SexId)
                 .Type<NonNullType<IntType>>();
