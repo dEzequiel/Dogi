@@ -11,23 +11,33 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Person Owner { get; set; }
+        public string OwnerPersonalIdentifier { get; set; }
         public string? Name { get; set; }
         public string ChipNumber { get; set; }
+        public bool OwnerIsResponsible { get; set; }
 
+        /// <summary>
+        /// Navigation properties.
+        /// </summary>
+        public virtual Person AnimalChipOwner { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="owner"></param>
-        /// <param name="addressAddress"></param>
+        /// <param name="name"></param>
+        /// <param name="chipNumber"></param>
+        /// <param name="ownerIsResponsible"></param>
+
+
         public AnimalChip() : base(Guid.NewGuid()) { }
-        private AnimalChip(Guid id, string name, string chipNumber, Person animalChipOwner) : base(id)
+        private AnimalChip(Guid id, string name, string chipNumber, string ownerPersonalIdentifier, bool ownerIsResponsible) : base(id)
         {
             Name = name;
             ChipNumber = chipNumber;
-            Owner = animalChipOwner;
+            OwnerPersonalIdentifier = ownerPersonalIdentifier;
+            OwnerIsResponsible = ownerIsResponsible;
         }
     }
 }

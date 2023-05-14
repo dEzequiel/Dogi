@@ -15,6 +15,11 @@ namespace Domain.Entities
         public Address? Address { get; set; }
 
         /// <summary>
+        /// Navigation properties.
+        /// </summary>
+        public virtual ICollection<AnimalChip> AnimalChips { get; set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="personIdentifier"></param>
