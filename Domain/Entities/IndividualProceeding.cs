@@ -41,8 +41,8 @@ namespace Domain.Entities
         /// <param name="sexId"></param>
         /// <param name="zoneId"></param>
         /// <param name="isDeleted"></param>
-        public IndividualProceeding(Guid receptionDocumentId, int statusId, int categoryId, 
-            int sexId, int zoneId, bool isDeleted) : this(receptionDocumentId)
+        public IndividualProceeding(Guid id, Guid receptionDocumentId, int statusId, int categoryId, 
+            int sexId, int zoneId, bool isDeleted) : base(id)
         {
             StatusId = statusId;
             CategoryId = categoryId;
