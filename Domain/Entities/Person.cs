@@ -13,11 +13,14 @@ namespace Domain.Entities
         public string? Lastname { get; set; }
         public string? Contact { get; set; }
         public Address? Address { get; set; }
+        public bool IsBan { get; set; }
 
         /// <summary>
         /// Navigation properties.
         /// </summary>
         public virtual ICollection<AnimalChip> AnimalChips { get; set; }
+
+        public virtual ICollection<PersonBannedInformation> PersonBannedInformations { get; set; }
 
         /// <summary>
         /// Constructor
@@ -27,13 +30,19 @@ namespace Domain.Entities
         /// <param name="lastname"></param>
         /// <param name="contact"></param>
         /// <param name="address"></param>
-        public Person(string personalIdentifier, string? name, string? lastname, string? contact, Address? address) 
+        public Person(string personalIdentifier,
+            string? name,
+            string? lastname,
+            string? contact,
+            Address? address,
+            bool isBan) 
         {
             PersonIdentifier = personalIdentifier;
             Name = name;
             Lastname = lastname;
             Contact = contact;
             Address = address;
+            IsBan = isBan;
         }
     }
 }
