@@ -1,6 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Exceptions;
-using Domain.Exceptions.Result;
 using Domain.Support;
 
 namespace Domain.Entities
@@ -11,6 +9,9 @@ namespace Domain.Entities
         /// Attributes.
         /// </summary>
         public Guid ReceptionDocumentId { get; set; }
+        public string? Name { get; set; }
+        public int? Age { get; set; }
+        public string? Color {get; set;}
         public int StatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
         public Guid CategoryId { get; set; }

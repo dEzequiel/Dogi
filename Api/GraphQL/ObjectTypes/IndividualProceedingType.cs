@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Domain.Entities;
 
 namespace Api.GraphQL.ObjectTypes
@@ -15,6 +11,15 @@ namespace Api.GraphQL.ObjectTypes
         {
             descriptor.Field(f => f.Id)
             .Type<NonNullType<UuidType>>();
+
+            descriptor.Field(f => f.Name)
+                .Type<StringType>();
+            
+            descriptor.Field(f => f.Age)
+                .Type<IntType>();
+
+            descriptor.Field(f => f.Color)
+                .Type<StringType>();
 
             descriptor.Field(f => f.IsDeleted)
                 .Type<NonNullType<BooleanType>>();

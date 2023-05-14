@@ -9,16 +9,25 @@ namespace Api.GraphQL.InputObjectTypes
     {
         protected override void Configure(IInputObjectTypeDescriptor<IndividualProceeding> descriptor)
         {
+            descriptor.Field(f => f.Name)
+                .Type<StringType>();
+
+            descriptor.Field(f => f.Age)
+                .Type<IntType>();
+            
+            descriptor.Field(f => f.Color)
+                .Type<StringType>();
+
             descriptor.Field(f => f.StatusId)
                 .Type<NonNullType<IntType>>();
             
-            descriptor.Field(f => f.CategoryId)
-                .Type<NonNullType<UuidType>>();
+            descriptor.Ignore(f => f.CategoryId);
             
             descriptor.Field(f => f.SexId)
                 .Type<NonNullType<IntType>>();
             
             descriptor.Ignore(f => f.Id);
+            descriptor.Ignore(f => f.ReceptionDocumentId);
             descriptor.Ignore(f => f.IsDeleted);
             descriptor.Ignore(f => f.ReceptionDocument);
             descriptor.Ignore(f => f.ProceedingStatus);
