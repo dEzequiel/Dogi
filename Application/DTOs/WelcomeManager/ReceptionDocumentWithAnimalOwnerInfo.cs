@@ -11,7 +11,6 @@ namespace Application.DTOs.WelcomeManager
         /// Constructor.
         /// </summary>
         /// <param name="receptionDocument"></param>
-        /// <param name="animalChipOwner"></param>
         /// <param name="animalChip"></param>
         public ReceptionDocumentWithAnimalOwnerInfo(ReceptionDocument receptionDocument, AnimalChip? animalChip)
         {
