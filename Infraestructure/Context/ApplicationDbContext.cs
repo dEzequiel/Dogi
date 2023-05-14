@@ -34,6 +34,7 @@ namespace Infraestructure.Context
             new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());
             new AnimalCategoryTypeConfiguration().Configure(modelBuilder.Entity<AnimalCategory>());
             new ProceedingStatusTypeConfiguration().Configure(modelBuilder.Entity<ProceedingStatus>());
+            new AnimalZoneTypeConfiguration().Configure(modelBuilder.Entity<AnimalZone>());
         }
     }
 }

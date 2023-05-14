@@ -16,6 +16,7 @@ namespace Domain.Entities
         //public Guid MedicalRecordId { get; private set; }
         public int CategoryId { get; set; }
         public int SexId { get; set; }
+        public int ZoneId { get; set; }
         public bool IsDeleted { get; set; } = false;
 
         /// <summary>
@@ -25,6 +26,7 @@ namespace Domain.Entities
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
         public virtual AnimalCategory AnimalCategory { get; set; }
         public virtual Sex Sex { get; set; }
+        public virtual AnimalZone AnimalZone { get; set; }
 
 
         public IndividualProceeding(Guid id) : base(id) { }
@@ -37,13 +39,15 @@ namespace Domain.Entities
         /// <param name="statusId"></param>
         /// <param name="categoryId"></param>
         /// <param name="sexId"></param>
+        /// <param name="zoneId"></param>
         /// <param name="isDeleted"></param>
         public IndividualProceeding(Guid receptionDocumentId, int statusId, int categoryId, 
-            int sexId, bool isDeleted) : this(receptionDocumentId)
+            int sexId, int zoneId, bool isDeleted) : this(receptionDocumentId)
         {
             StatusId = statusId;
             CategoryId = categoryId;
             SexId = sexId;
+            ZoneId = zoneId;
             IsDeleted = isDeleted;
         }
     }
