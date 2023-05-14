@@ -11,15 +11,15 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public string OwnerPersonalIdentifier { get; set; }
+        public string OwnerPersonalIdentifier { get; set; } = null!;
         public string? Name { get; set; }
-        public string ChipNumber { get; set; }
-        public bool OwnerIsResponsible { get; set; }
+        public string ChipNumber { get; set; } = null!;
+        public bool? OwnerIsResponsible { get; set; }
 
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual Person AnimalChipOwner { get; set; }
+        public virtual Person? AnimalChipOwner { get; set; }
 
         /// <summary>
         /// Constructor.
@@ -32,7 +32,11 @@ namespace Domain.Entities
 
 
         public AnimalChip() : base(Guid.NewGuid()) { }
-        private AnimalChip(Guid id, string name, string chipNumber, string ownerPersonalIdentifier, bool ownerIsResponsible) : base(id)
+        private AnimalChip(Guid id,
+            string name,
+            string chipNumber,
+            string ownerPersonalIdentifier,
+            bool ownerIsResponsible) : base(id)
         {
             Name = name;
             ChipNumber = chipNumber;

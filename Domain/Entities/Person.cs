@@ -8,7 +8,7 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public string PersonIdentifier { get; set; }
+        public string PersonIdentifier { get; set; } = null!;
         public string? Name { get; set; }
         public string? Lastname { get; set; }
         public string? Contact { get; set; }

@@ -24,8 +24,8 @@ namespace Domain.Entities
         /// </summary>
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
-        public virtual AnimalCategory AnimalCategory { get; set; }
-        public virtual Sex Sex { get; set; }
+        public virtual AnimalCategory AnimalCategory { get; set; } = null!;
+        public virtual Sex Sex { get; set; } = null!; 
         public virtual AnimalZone AnimalZone { get; set; } = null!;
 
 
@@ -41,8 +41,13 @@ namespace Domain.Entities
         /// <param name="sexId"></param>
         /// <param name="zoneId"></param>
         /// <param name="isDeleted"></param>
-        public IndividualProceeding(Guid id, Guid receptionDocumentId, int statusId, int categoryId, 
-            int sexId, int zoneId, bool isDeleted) : base(id)
+        public IndividualProceeding(Guid id,
+            Guid receptionDocumentId,
+            int statusId,
+            int categoryId,
+            int sexId,
+            int zoneId,
+            bool isDeleted) : base(id)
         {
             StatusId = statusId;
             CategoryId = categoryId;
