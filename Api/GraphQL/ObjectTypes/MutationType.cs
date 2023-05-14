@@ -12,7 +12,7 @@ namespace Api.GraphQL.Types
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
-            descriptor.Field(f => f.AddReceptionDocumentWithAnimalOwnerInfo)
+            descriptor.Field(f => f.RegiterNewAnimal)
                     .Argument("input", arg => arg.Type<ReceptionDocumentWithAnimalChipOwnerInfoInput>())
                     .ResolveWith<WelcomeManagerMutations>(q => q.AddReceptionDocumentWithAnimalChipOwnerInformation(default, default));
 

@@ -32,8 +32,8 @@ namespace Api.GraphQL.Mutations
         /// <param name="input"></param>
         /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
         /// <exception cref="DogiException"></exception>
-        public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentWithAnimalChipOwnerInformation([Service] ISender _mediator, 
-            ReceptionDocumentWithAnimalOwnerInfo input)
+        public async Task<RegisterInformation> AddReceptionDocumentWithAnimalChipOwnerInformation([Service] ISender _mediator, 
+            ReceptionDocumentWithAnimalInformation input)
         {
             var result = await _mediator.Send(new InsertReceptionDocumentWithAnimalOwnerInfoRequest(input, 
                 GetAdminData()));

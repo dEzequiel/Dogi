@@ -10,6 +10,6 @@ namespace Api.GraphQL.RootMutations
         /// <summary>
         /// Add a new reception document taking into account whether the animal has a chip or not. With this condition you take one way or the other.
         /// </summary>
-        public ReceptionDocumentWithAnimalOwnerInfo AddReceptionDocumentWithAnimalOwnerInfo { get; set; } = null!;
+        public ReceptionDocumentWithAnimalInformation RegiterNewAnimal { get; set; } = null!;
     }
 }

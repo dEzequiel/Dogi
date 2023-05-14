@@ -10,16 +10,19 @@ namespace Application.Managers
     {
         private IReceptionDocumentWrite _receptionDocumentWrite;
         private IAnimalChipWrite _animalChipWrite;
+        private IIndividualProceedingWrite _individualProceedingWrite;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="animalChipOwnerWrite"></param>
         /// <param name="receptionDocumentWrite"></param>
-        public WelcomeManager(IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite)
+        /// <param name="animalChipWrite"></param>
+        public WelcomeManager(IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite)
         {
             _receptionDocumentWrite = receptionDocumentWrite;
             _animalChipWrite = animalChipWrite;
+            _individualProceedingWrite = individualProceedingWrite;
         }
 
         /// <summary>
@@ -28,35 +31,49 @@ namespace Application.Managers
         /// <param name="data"></param>
         /// <param name="adminData"></param>
         /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
-        public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddAnimalWithOwnerInfo(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
+        public async Task<RegisterInformation> AddAnimalWithOwnerInfo(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
         {
             if(!data.ReceptionDocument.HasChip)
             {
-                return await AddReceptionDocumentInformation(data, adminData);
+               var result = await AddReceptionDocumentInformation(data, adminData);
+               return new RegisterInformation()
+               {
+                   ReceptionDocumentWithIndividualProceeding = result,
+                   ReceptionDocumentWithAnimalOwnerInfo = null,
+               };
 
             } else
             {
-                return await AddReceptionDocumentWithAnimalChipOwnerInformation(data, adminData);
+                var result = await AddReceptionDocumentWithAnimalChipOwnerInformation(data, adminData);
+                return new RegisterInformation()
+                {
+                    ReceptionDocumentWithAnimalOwnerInfo = result,
+                    ReceptionDocumentWithIndividualProceeding = null,
+                };
             }
         }
 
-        private async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentInformation(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
+        private async Task<ReceptionDocumentWithIndividualProceeding> AddReceptionDocumentInformation(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
         {
-            var entity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
+            var receptionDocument = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
 
-            return new ReceptionDocumentWithAnimalOwnerInfo()
+            data.IndividualProceeding!.ReceptionDocumentId = receptionDocument.Id;
+
+            var individualProceeding = await _individualProceedingWrite.AddAsync(data.IndividualProceeding!, adminData);
+
+            return new ReceptionDocumentWithIndividualProceeding()
             {
-                ReceptionDocument = entity,
-                AnimalChip = null,
+                ReceptionDocument = receptionDocument,
+                IndividualProceeding = individualProceeding,
             };
         }
 
-        private async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentWithAnimalChipOwnerInformation(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
+        private async Task<ReceptionDocumentWithAnimalInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
         {
             var entity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
             var animalChipEntity = await _animalChipWrite.AddAsync(data.AnimalChip!, adminData);
 
-            return new ReceptionDocumentWithAnimalOwnerInfo()
+            return new ReceptionDocumentWithAnimalInformation()
             {
                 ReceptionDocument = entity,
                 AnimalChip = animalChipEntity,

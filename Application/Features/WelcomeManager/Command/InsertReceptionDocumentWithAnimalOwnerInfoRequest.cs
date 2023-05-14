@@ -13,38 +13,41 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.WelcomeManagerFeature.Command
 {
-    public class InsertReceptionDocumentWithAnimalOwnerInfoRequest : IRequest<ApiResponse<ReceptionDocumentWithAnimalOwnerInfo>>
+    public class InsertReceptionDocumentWithAnimalOwnerInfoRequest : IRequest<ApiResponse<RegisterInformation>>
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        public ReceptionDocumentWithAnimalOwnerInfo Data { get; set; } = null!;
+        public ReceptionDocumentWithAnimalInformation Data { get; set; } = null!;
         public AdminData AdminData { get; set; } = null!;
 
-        public InsertReceptionDocumentWithAnimalOwnerInfoRequest(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
+        public InsertReceptionDocumentWithAnimalOwnerInfoRequest(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
         {
             Data = data;
             AdminData = adminData;
         }
     }
 
-    public class InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler : IRequestHandler<InsertReceptionDocumentWithAnimalOwnerInfoRequest, ApiResponse<ReceptionDocumentWithAnimalOwnerInfo>>
+    public class InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler : IRequestHandler<InsertReceptionDocumentWithAnimalOwnerInfoRequest, ApiResponse<RegisterInformation>>
     {
         private readonly ILogger<InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler> _logger;
         private readonly WelcomeManager welcomeManager;
 
         private IReceptionDocumentWrite _receptionDocumentWrite;
         private IAnimalChipWrite _animalChipWrite;
+        private IIndividualProceedingWrite _individualProceedingWrite;
 
         public InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler(ILogger<InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler> logger,
-            IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite)
+            IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite)
         {
             _logger = logger;
             _receptionDocumentWrite = receptionDocumentWrite;
             _animalChipWrite = animalChipWrite;
-            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite);
+            _individualProceedingWrite = individualProceedingWrite;
+
+            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite, _individualProceedingWrite);
         }
-        public async Task<ApiResponse<ReceptionDocumentWithAnimalOwnerInfo>> Handle(InsertReceptionDocumentWithAnimalOwnerInfoRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<RegisterInformation>> Handle(InsertReceptionDocumentWithAnimalOwnerInfoRequest request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler --> AddAsync --> Start");
 
@@ -54,7 +57,7 @@ namespace Application.Features.WelcomeManagerFeature.Command
 
             _logger.LogInformation("InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler --> AddAsync --> End");
 
-            return new ApiResponse<ReceptionDocumentWithAnimalOwnerInfo>(result);
+            return new ApiResponse<RegisterInformation>(result);
         }
     }   
 }
