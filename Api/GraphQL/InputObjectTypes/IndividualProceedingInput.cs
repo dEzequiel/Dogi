@@ -26,16 +26,15 @@ namespace Api.GraphQL.InputObjectTypes
             
             descriptor.Field(f => f.SexId)
                 .Type<NonNullType<IntType>>();
-            
-            descriptor.Field(f => f.ZoneId)
-                .Type<NonNullType<IntType>>();
-            
+            descriptor.Ignore(f => f.ZoneId);            
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.ReceptionDocumentId);
             descriptor.Ignore(f => f.IsDeleted);
             descriptor.Ignore(f => f.ReceptionDocument);
             descriptor.Ignore(f => f.ProceedingStatus);
             descriptor.Ignore(f => f.AnimalCategory);
+            descriptor.Ignore(f => f.ZoneId);
+            descriptor.Ignore(f => f.AnimalZone);
             descriptor.Ignore(f => f.Sex);
             descriptor.Ignore(f => f.Created);
             descriptor.Ignore(f => f.CreatedBy);

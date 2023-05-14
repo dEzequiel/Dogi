@@ -3,6 +3,7 @@ using Application.Service.Abstraction;
 using Application.Service.Abstraction.Write;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Managers
 {
@@ -49,6 +50,7 @@ namespace Application.Managers
             var receptionDocument = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
 
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocument.Id;
+            data.IndividualProceeding!.ZoneId = ((int)AnimalZone.Quarantine);
 
             var individualProceeding = await _individualProceedingWrite.AddAsync(data.IndividualProceeding!, adminData);
 
