@@ -18,6 +18,7 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IReceptionDocumentRepository ReceptionDocumentRepository => new ReceptionDocumentRepository(_context);
         public IIndividualProceedingRepository IndividualProceedingRepository => new IndividualProceedingRepository(_context);
         public IAnimalChipRepository AnimalChipRepository => new AnimalChipRepository(_context);
+        public IAnimalZoneRepository AnimalZoneRepository => new AnimalZoneRepository(_context);
 
         /// <summary>
         /// Constructor.
