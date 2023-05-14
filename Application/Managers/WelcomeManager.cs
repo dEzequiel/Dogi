@@ -32,26 +32,35 @@ namespace Application.Managers
         {
             if(!data.ReceptionDocument.HasChip)
             {
-                var entity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
-
-                return new ReceptionDocumentWithAnimalOwnerInfo()
-                {
-                    ReceptionDocument = entity,
-                    AnimalChip = null,
-                };
+                return await AddReceptionDocumentInformation(data, adminData);
 
             } else
             {
-                var receptionDocumententity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
-
-                var animalChipEntity = await _animalChipWrite.AddAsync(data.AnimalChip, adminData);
-
-                return new ReceptionDocumentWithAnimalOwnerInfo()
-                {
-                    ReceptionDocument = receptionDocumententity,
-                    AnimalChip = animalChipEntity,
-                };
+                return await AddReceptionDocumentWithAnimalChipOwnerInformation(data, adminData);
             }
         }
+
+        private async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentInformation(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
+        {
+            var entity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
+
+            return new ReceptionDocumentWithAnimalOwnerInfo()
+            {
+                ReceptionDocument = entity,
+                AnimalChip = null,
+            };
+        }
+
+        private async Task<ReceptionDocumentWithAnimalOwnerInfo> AddReceptionDocumentWithAnimalChipOwnerInformation(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
+        {
+            var entity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
+            var animalChipEntity = await _animalChipWrite.AddAsync(data.AnimalChip!, adminData);
+
+            return new ReceptionDocumentWithAnimalOwnerInfo()
+            {
+                ReceptionDocument = entity,
+                AnimalChip = animalChipEntity,
+            };
+       }
     }
 }
