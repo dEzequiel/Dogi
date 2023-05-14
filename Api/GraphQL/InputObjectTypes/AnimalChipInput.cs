@@ -16,7 +16,7 @@ namespace Api.GraphQL.InputObjectTypes
 
             descriptor
             .Field(f => f.Owner)
-            .Type<NonNullType<AnimalChipOwnerInput>>();
+            .Type<NonNullType<PersonInput>>();
 
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.Created);

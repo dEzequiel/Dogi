@@ -11,7 +11,7 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public AnimalChipOwner Owner { get; set; }
+        public Person Owner { get; set; }
         public string? Name { get; set; }
         public string ChipNumber { get; set; }
 
@@ -23,7 +23,7 @@ namespace Domain.Entities
         /// <param name="owner"></param>
         /// <param name="addressAddress"></param>
         public AnimalChip() : base(Guid.NewGuid()) { }
-        private AnimalChip(Guid id, string name, string chipNumber, AnimalChipOwner animalChipOwner) : base(id)
+        private AnimalChip(Guid id, string name, string chipNumber, Person animalChipOwner) : base(id)
         {
             Name = name;
             ChipNumber = chipNumber;

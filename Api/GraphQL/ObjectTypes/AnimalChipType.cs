@@ -12,7 +12,7 @@ namespace Api.GraphQL.ObjectTypes
 
             descriptor
                 .Field(f => f.Owner)
-                .Type<AnimalChipOwnerType>();
+                .Type<PersonType>();
 
             descriptor
                 .Field(f => f.Name)

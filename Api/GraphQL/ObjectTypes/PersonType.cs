@@ -1,11 +1,19 @@
-using Domain.ValueObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Api.GraphQL.ObjectTypes
 {
-    public class AnimalChipOwnerType : ObjectType<AnimalChipOwner>
+    public class PersonType : ObjectType<Person>
     {
-        protected override void Configure(IObjectTypeDescriptor<AnimalChipOwner> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<Person> descriptor)
         {
+            descriptor.
+                Field(f => f.PersonIdentifier)
+                .Type<NonNullType<StringType>>();
+
             descriptor.
                 Field(f => f.Name)
                 .Type<StringType>();
@@ -22,9 +30,6 @@ namespace Api.GraphQL.ObjectTypes
                 Field(f => f.Address)
                 .Type<AddressType>();
             
-            descriptor.
-                Field(f => f.IsResponsible)
-                .Type<NonNullType<BooleanType>>();
         }
     }
 }
