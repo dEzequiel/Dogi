@@ -5,7 +5,7 @@ using Domain.Entities;
 
 namespace Infraestructure.EntityFrameworkConfiguration
 {
-    public class PersonBannedInformationType : IEntityTypeConfiguration<PersonBannedInformation>
+    public class PersonBannedInformationTypeConfiguration : IEntityTypeConfiguration<PersonBannedInformation>
     {
         public void Configure(EntityTypeBuilder<PersonBannedInformation> builder)
         {

@@ -9,7 +9,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder
-                .ToTable("IndividualProceeding", "Dogi")
+                .ToTable("Person", "Dogi")
                 .HasKey(x => x.PersonIdentifier)
                 .IsClustered(false);
 

@@ -19,6 +19,8 @@ namespace Infraestructure.Context
         public DbSet<ReceptionDocument> ReceptionDocument { get; set; }
         public DbSet<AnimalChip> AnimalChip { get; set; }
         public DbSet<IndividualProceeding> IndividualProceeding { get; set; }
+        public DbSet<Person> Persons { get;  set; }
+        public DbSet<PersonBannedInformation> PersonBannedInformations { get; set;}
 
         
         // Support Tables
@@ -36,6 +38,8 @@ namespace Infraestructure.Context
             new AnimalCategoryTypeConfiguration().Configure(modelBuilder.Entity<AnimalCategory>());
             new ProceedingStatusTypeConfiguration().Configure(modelBuilder.Entity<ProceedingStatus>());
             new AnimalZoneTypeConfiguration().Configure(modelBuilder.Entity<AnimalZone>());
+            new PersonTypeConfiguration().Configure(modelBuilder.Entity<Person>());
+            new PersonBannedInformationTypeConfiguration().Configure(modelBuilder.Entity<PersonBannedInformation>());
         }
     }
 }
