@@ -18,9 +18,9 @@ namespace Domain.Entities
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual ICollection<AnimalChip> AnimalChips { get; set; }
+        public virtual ICollection<AnimalChip>? AnimalChips { get; set; }
 
-        public virtual ICollection<PersonBannedInformation> Bans { get; set; }
+        public virtual ICollection<PersonBannedInformation>? Bans { get; set; }
 
         /// <summary>
         /// Constructor
@@ -30,6 +30,9 @@ namespace Domain.Entities
         /// <param name="lastname"></param>
         /// <param name="contact"></param>
         /// <param name="address"></param>
+         public Person()
+        {
+        }
         public Person(string personalIdentifier,
             string? name,
             string? lastname,
@@ -44,5 +47,7 @@ namespace Domain.Entities
             Address = address;
             IsBan = isBan;
         }
+
+
     }
 }
