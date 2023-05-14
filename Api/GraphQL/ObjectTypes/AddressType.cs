@@ -13,6 +13,10 @@ namespace Api.GraphQL.ObjectTypes
             descriptor
                 .Field(f => f.City)
                 .Type<StringType>();
+
+            descriptor
+                .Field(f => f.ZipCode)
+                .Type<StringType>();
         }
     }
 }
