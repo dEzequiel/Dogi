@@ -30,7 +30,7 @@ namespace Application.Managers
         /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
         public async Task<ReceptionDocumentWithAnimalOwnerInfo> AddAnimalWithOwnerInfo(ReceptionDocumentWithAnimalOwnerInfo data, AdminData adminData)
         {
-            if(!data.ReceptionDocument.HasChip.Value)
+            if(!data.ReceptionDocument.HasChip)
             {
                 var entity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
 

@@ -1,6 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Exceptions;
-using Domain.Exceptions.Result;
 
 namespace Domain.Entities
 {
@@ -13,11 +11,11 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public bool? HasChip { get; set; }
+        public bool HasChip { get; set; }
         public string? Observations { get; set; } = string.Empty;
-        public string PickupLocation { get; set; } = null!;
+        public string? PickupLocation { get; set; } = null!;
         //public DateTime PickupDate { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// Navigation properties.
@@ -35,7 +33,7 @@ namespace Domain.Entities
 
         public ReceptionDocument(
             Guid id,
-            bool? hasChip, 
+            bool hasChip, 
             string? observations, 
             string pickupLocation) : base(id)
         {
