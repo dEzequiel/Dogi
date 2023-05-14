@@ -15,7 +15,7 @@ namespace Domain.ValueObjects
         public string? Lastname { get; set; }
         public string? Contact { get; set; }
         public Address? Address { get; set; }
-        public bool? IsResponsible { get; set; }
+        public bool IsResponsible { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
