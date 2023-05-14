@@ -1,7 +1,6 @@
 using Domain.Common;
-using Domain.Entities;
 
-namespace Domain.ValueObjects
+namespace Domain.Entities
 {
     public class PersonBannedInformation : AuditableEntity
     {

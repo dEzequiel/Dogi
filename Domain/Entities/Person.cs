@@ -20,7 +20,7 @@ namespace Domain.Entities
         /// </summary>
         public virtual ICollection<AnimalChip> AnimalChips { get; set; }
 
-        public virtual ICollection<PersonBannedInformation> PersonBannedInformations { get; set; }
+        public virtual ICollection<PersonBannedInformation> Bans { get; set; }
 
         /// <summary>
         /// Constructor
