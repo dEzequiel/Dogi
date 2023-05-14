@@ -33,6 +33,9 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Field(f => f.SexId)
                 .Type<NonNullType<IntType>>();
             
+            descriptor.Field(f => f.ZoneId)
+                .Type<NonNullType<IntType>>();
+            
             descriptor.Ignore(f => f.ReceptionDocument);
             descriptor.Ignore(f => f.ProceedingStatus);
             descriptor.Ignore(f => f.AnimalCategory);
