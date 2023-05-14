@@ -36,20 +36,11 @@ namespace Application.Managers
             if(!data.ReceptionDocument.HasChip)
             {
                var result = await AddReceptionDocumentInformation(data, adminData);
-               return new RegisterInformation()
-               {
-                   ReceptionDocumentWithIndividualProceeding = result,
-                   ReceptionDocumentWithAnimalOwnerInfo = null,
-               };
-
+               return new RegisterInformation(result.ReceptionDocument, result.IndividualProceeding);
             } else
             {
                 var result = await AddReceptionDocumentWithAnimalChipOwnerInformation(data, adminData);
-                return new RegisterInformation()
-                {
-                    ReceptionDocumentWithAnimalOwnerInfo = result,
-                    ReceptionDocumentWithIndividualProceeding = null,
-                };
+                return new RegisterInformation(result.ReceptionDocument, result.AnimalChip);
             }
         }
 
