@@ -15,8 +15,12 @@ namespace Api.GraphQL.InputObjectTypes
             .Type<NonNullType<StringType>>();
 
             descriptor
-            .Field(f => f.Owner)
-            .Type<NonNullType<PersonInput>>();
+            .Field(f => f.OwnerPersonalIdentifier)
+            .Type<NonNullType<StringType>>();
+
+            descriptor
+            .Field(f => f.OwnerIsResponsible)
+            .Type<NonNullType<BooleanType>>();
 
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.Created);

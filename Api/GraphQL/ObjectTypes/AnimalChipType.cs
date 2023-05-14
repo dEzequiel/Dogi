@@ -11,8 +11,8 @@ namespace Api.GraphQL.ObjectTypes
                 .Type<NonNullType<UuidType>>();
 
             descriptor
-                .Field(f => f.Owner)
-                .Type<PersonType>();
+                .Field(f => f.OwnerPersonalIdentifier)
+                .Type<NonNullType<StringType>>();
 
             descriptor
                 .Field(f => f.Name)
