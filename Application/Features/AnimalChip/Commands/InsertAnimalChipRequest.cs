@@ -6,7 +6,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.AnimalChipOwnerFeature.Commands.Commands
+namespace Application.Features.InsertAnimalChipRequest.Commands
 {
     /// <summary>
     /// Insert AnimalChipOwner request implementation.
