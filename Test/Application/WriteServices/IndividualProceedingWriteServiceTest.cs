@@ -71,7 +71,7 @@ namespace Test.Application.WriteServices
 
         [Theory]
         [AutoMoqData]
-        internal async Task ShouldnAddNewIndividualProceedingIfAdminIsNullAsync(
+        internal async Task ShouldntAddNewIndividualProceedingIfAdminIsNullAsync(
             [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IIndividualProceedingRepository> repositoryMock,
             [Frozen] IndividualProceeding individualProceedingAdd,

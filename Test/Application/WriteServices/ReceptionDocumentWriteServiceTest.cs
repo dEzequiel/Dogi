@@ -6,7 +6,7 @@ using Domain.Entities;
 using Moq;
 using Test.Utils.Attributes;
 
-namespace Test.Application.WriteServicesTest
+namespace Test.Application.WriteServices
 {
     public class ReceptionDocumentWriteServiceTest
     {
