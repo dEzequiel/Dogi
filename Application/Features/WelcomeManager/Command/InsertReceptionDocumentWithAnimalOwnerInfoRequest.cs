@@ -38,18 +38,20 @@ namespace Application.Features.WelcomeManagerFeature.Command
         private IAnimalChipWrite _animalChipWrite;
         private IIndividualProceedingWrite _individualProceedingWrite;
         private IUnitOfWork _unitOfWork;
+        private IMediator _mediator;
 
         public InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler(ILogger<InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler> logger,
             IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork, IMediator mediator)
         {
             _logger = logger;
             _receptionDocumentWrite = receptionDocumentWrite;
             _animalChipWrite = animalChipWrite;
             _individualProceedingWrite = individualProceedingWrite;
             _unitOfWork = unitOfWork;
+            _mediator = mediator;
 
-            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite, _individualProceedingWrite, _unitOfWork);
+            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite, _individualProceedingWrite, _mediator,  _unitOfWork);
         }
         public async Task<ApiResponse<RegisterInformation>> Handle(InsertReceptionDocumentWithAnimalOwnerInfoRequest request, CancellationToken cancellationToken)
         {

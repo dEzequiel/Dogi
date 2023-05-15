@@ -1,10 +1,14 @@
 ﻿using Application.DTOs.WelcomeManager;
+using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Abstraction;
 using Application.Service.Abstraction.Write;
 using Application.Service.Interfaces;
+using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Domain.Enums;
+using MediatR;
 
 namespace Application.Managers
 {
@@ -13,6 +17,7 @@ namespace Application.Managers
         private IReceptionDocumentWrite _receptionDocumentWrite;
         private IAnimalChipWrite _animalChipWrite;
         private IIndividualProceedingWrite _individualProceedingWrite;
+        private IMediator _mediator;
         private IUnitOfWork _unitOfWork;
         /// <summary>
         /// Constructor.
@@ -20,11 +25,12 @@ namespace Application.Managers
         /// <param name="animalChipOwnerWrite"></param>
         /// <param name="receptionDocumentWrite"></param>
         /// <param name="animalChipWrite"></param>
-        public WelcomeManager(IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite, IUnitOfWork unitOfWork)
+        public WelcomeManager(IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite, IMediator mediator ,IUnitOfWork unitOfWork)
         {
             _receptionDocumentWrite = receptionDocumentWrite;
             _animalChipWrite = animalChipWrite;
             _individualProceedingWrite = individualProceedingWrite;
+            _mediator = mediator;
             _unitOfWork = unitOfWork;
         }
 
@@ -49,17 +55,31 @@ namespace Application.Managers
 
         private async Task<ReceptionDocumentWithIndividualProceeding> AddReceptionDocumentInformation(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
         {
-            var receptionDocument = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
+            //var receptionDocument = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
+            var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+            if(!receptionDocumentRequest.Succeeded)
+            {
+                throw new DogiException("Error when trying to insert the reception document."); 
+            }
+            
+            Guard.Against.Null(receptionDocumentRequest.Data, nameof(receptionDocumentRequest.Data));
 
+            var receptionDocument = receptionDocumentRequest.Data;
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocument.Id;
 
             AssignQuarantineZoneToNewHost(data);
             
             var individualProceeding = await _individualProceedingWrite.AddAsync(data.IndividualProceeding!, adminData);
+            // var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+            // if(!individualProceeding.Succeeded)
+            // {
+            //     throw new DogiException("Error when trying to insert the individual proceeding."); 
+            // }
 
             return new ReceptionDocumentWithIndividualProceeding()
             {
                 ReceptionDocument = receptionDocument,
+                //IndividualProceeding = individualProceeding.Data,
                 IndividualProceeding = individualProceeding,
             };
         }
