@@ -30,7 +30,11 @@ namespace Application.Service.Implementation.Write
 
             Guard.Against.Null(entity, nameof(entity));
             Guard.Against.Null(entity.ChipNumber, nameof(entity.ChipNumber));
-
+            Guard.Against.NullOrEmpty(entity.OwnerPersonalIdentifier, nameof(entity.OwnerPersonalIdentifier));
+            Guard.Against.Null(admin, nameof(admin));
+            Guard.Against.NullOrEmpty(admin.Id, nameof(admin.Id));
+            Guard.Against.NullOrEmpty(admin.Email, nameof(admin.Email));
+            
             var repository = _unitOfWork.AnimalChipRepository;
 
             await repository.AddAsync(entity, admin, ct);
