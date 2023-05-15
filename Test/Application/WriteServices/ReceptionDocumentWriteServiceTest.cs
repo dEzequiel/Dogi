@@ -1,11 +1,8 @@
 ﻿using Application.Service.Implementation.Command;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
-using AutoMapper;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
-using Domain.Exceptions;
-using Domain.Exceptions.Result;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -15,30 +12,88 @@ namespace Test.Application.WriteServicesTest
     {
         [Theory]
         [AutoMoqData]
-        internal async Task ShouldAddNewReceptionDocumentAsync(
-            [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+        internal async Task ShouldAddNewReceptionDocumentAsync([Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
             [Frozen] AdminData admin,
             Domain.Entities.ReceptionDocument documentAdd,
             ReceptionDocumentWrite sut)
         {
             // Arrange
-            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository)
+                .Returns(repositoryMock.Object);
 
-            repositoryMock.Setup(r => r.AddAsync(It.IsAny<Domain.Entities.ReceptionDocument>()))
+            repositoryMock.Setup(r => r.AddAsync(
+                It.IsAny<Domain.Entities.ReceptionDocument>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act
             var result = await sut.AddAsync(documentAdd, admin);
 
             // Assert
-            Assert.Equal(result.Observations, documentAdd.Observations);
+            Assert.NotNull(result);
+            Assert.IsType<ReceptionDocument>(result);
 
+            unitOfWorkMock.Verify(u => u.ReceptionDocumentRepository, Times.Once);
+            repositoryMock.Verify(r => r.AddAsync(
+                It.IsAny<Domain.Entities.ReceptionDocument>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+            unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Theory]
         [AutoMoqData]
-        internal async Task ShouldMarkAsSoftDeletedReceptionDOcumentAsync(
+        internal async Task ShouldntAddNewReceptionDocumentIfIsNullAsync(
+            [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+            [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+            [Frozen] AdminData admin,
+            ReceptionDocumentWrite sut)
+        {
+            // Arrange
+            Domain.Entities.ReceptionDocument documentAdd = null!;
+
+            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository)
+                .Returns(repositoryMock.Object);
+
+            repositoryMock.Setup(r => r.AddAsync(
+                It.IsAny<Domain.Entities.ReceptionDocument>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            // act & assert
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.AddAsync(documentAdd, admin));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        internal async Task ShouldntAddNewReceptionDocumentIfAdminIsNullAsync(
+            [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+            [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+            Domain.Entities.ReceptionDocument documentAdd,
+            ReceptionDocumentWrite sut)
+        {
+            // Arrange
+            AdminData admin = null!;
+
+            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository)
+                .Returns(repositoryMock.Object);
+
+            repositoryMock.Setup(r => r.AddAsync(
+                It.IsAny<Domain.Entities.ReceptionDocument>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            // act & assert
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.AddAsync(documentAdd, admin));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        internal async Task ShouldMarkAsSoftDeletedReceptionDocumentAsync(
             [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
             [Frozen] AdminData admin,
@@ -47,42 +102,81 @@ namespace Test.Application.WriteServicesTest
             // Arrange
             var idToDelete = Guid.NewGuid();
 
-            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
+            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository)
+                .Returns(repositoryMock.Object);
 
-            repositoryMock.Setup(r => r.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>(), It.IsAny<CancellationToken>()))
+            repositoryMock.Setup(r => r.LogicRemoveAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act
-            var result = await sut.LogicRemoveAsync(idToDelete, admin);
+            var result = await sut.LogicRemoveAsync(
+                idToDelete,
+                admin);
 
             // Assert
             Assert.True(result);
+            unitOfWorkMock.Verify(u => u.ReceptionDocumentRepository, Times.Once);
+            repositoryMock.Verify(r => r.LogicRemoveAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+            unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
 
-        //[Theory]
-        //[AutoMoqData]
-        //internal async Task ShouldThrowInvalidDataExceptionWhenAddReceptionDocumentAsync(
-        //    [Frozen] Mock<Domain.Entities.ReceptionDocument> receptionDocumentEntityMock,
-        //    [Frozen] Mock<IMapper> mapperMock,
-        //    Domain.Entities.ReceptionDocument documentAdd,
-        //    ReceptionDocumentWrite sut)
-        //{
+        [Theory]
+        [AutoMoqData]
+        internal async Task ShouldntMarkAsSoftDeletedReceptionDocumentIfIdIsNullAsync(
+            [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+            [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+            [Frozen] AdminData admin,
+            ReceptionDocumentWrite sut)
+        {
+            // Arrange
+            var idToDelete = Guid.Empty;
 
-        //    // Arrange
-        //    var invalidDocument = new Domain.Entities.ReceptionDocument(Guid.Empty, documentAdd.HasChip, 
-        //                                                                documentAdd.Observations, 
-        //                                                                documentAdd.PickupLocation, 
-        //                                                                documentAdd.PickupDate);
+            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository)
+                .Returns(repositoryMock.Object);
 
-        //    mapperMock.Setup(m => m.Map<Domain.Entities.ReceptionDocument>(It.IsAny<Domain.Entities.ReceptionDocument>()))
-        //             .Returns(invalidDocument);
-        //    receptionDocumentEntityMock.Setup(x => x.Verify(invalidDocument))
-        //        .Returns(Result.Failure<Domain.Entities.ReceptionDocument>(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty));
+            repositoryMock.Setup(r => r.LogicRemoveAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
-        //    // Act & Assert
-        //    var ex = await Assert.ThrowsAsync<InvalidDataException>(() => sut.AddAsync(documentAdd));
-        //    Assert.Equal(DomainErrors.ReceptionDocument.ReceptionIdIsNullOrEmpty.Message, ex.Message);
-        //}
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentException>(() => sut.LogicRemoveAsync(
+                idToDelete,
+                admin));
+        }
+
+        [Theory]
+        [AutoMoqData]
+        internal async Task ShouldntMarkAsSoftDeletedIfAdminIsNullAsync(
+            [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+            [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
+            ReceptionDocumentWrite sut)
+        {
+            // Arrange
+            var idToDelete = Guid.NewGuid();
+            AdminData admin = null!;
+
+            unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository)
+                .Returns(repositoryMock.Object);
+
+            repositoryMock.Setup(r => r.LogicRemoveAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.LogicRemoveAsync(
+                idToDelete,
+                admin));
+        }
     }
     
 }

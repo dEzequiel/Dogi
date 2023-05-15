@@ -51,6 +51,7 @@ namespace Application.Service.Implementation.Command
             _logger.LogInformation($"ReceptionDocumentWrite --> LogicRemoveAsync({id}) --> Start");
 
             Guard.Against.NullOrEmpty(id, nameof(id));
+            Guard.Against.Null(admin, nameof(admin));
 
             var repository = _unitOfWork.ReceptionDocumentRepository;
 
