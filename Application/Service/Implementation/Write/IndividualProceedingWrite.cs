@@ -27,6 +27,8 @@ namespace Application.Service.Implementation.Write
             Guard.Against.Null(entity, nameof(entity));
             Guard.Against.NullOrEmpty(entity.ReceptionDocumentId, nameof(entity.ReceptionDocumentId));
             Guard.Against.Null(entity.StatusId, nameof(entity.StatusId));
+            Guard.Against.Null(entity.SexId, nameof(entity.SexId));
+            Guard.Against.Null(entity.ZoneId, nameof(entity.ZoneId));
             Guard.Against.Null(admin, nameof(admin));
             Guard.Against.NullOrEmpty(admin.Id, nameof(admin.Id));
             Guard.Against.NullOrEmpty(admin.Email, nameof(admin.Email));
