@@ -66,11 +66,6 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
 
         return documents;
     }
-
-    public Task<PageResponse<IEnumerable<ReceptionDocument>>?> GetAllByChipAsync(bool hasChip)
-    {
-        throw new NotImplementedException();
-    }
     
     public void Dispose()
     {

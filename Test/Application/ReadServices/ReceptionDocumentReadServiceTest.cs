@@ -1,14 +1,9 @@
 ﻿using Application.Service.Implementation.Read;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
-using Crosscuting.Api.DTOs.Response;
 using Domain.Entities;
-using Domain.Enums;
-using Domain.Exceptions;
-using Domain.Exceptions.Result;
 using Moq;
 using Test.Utils.Attributes;
-using InvalidDataException = Crosscuting.Base.Exceptions.InvalidDataException;
 
 
 namespace Test.Application.ReadServices;
@@ -25,7 +20,6 @@ public class ReceptionDocumentReadServiceTest
         ReceptionDocumentRead sut)
     {
         // Arrange
-        
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
         repositoryMock.Setup(r => r.GetAsync(It.IsAny<Guid>()))
@@ -36,19 +30,34 @@ public class ReceptionDocumentReadServiceTest
 
         // Assert
         Assert.NotNull(result);
+        Assert.IsType<ReceptionDocument>(result);
+
+        unitOfWorkMock.Verify(u => u.ReceptionDocumentRepository, Times.Once);
+        repositoryMock.Verify(r => r.GetAsync(It.IsAny<Guid>()), Times.Once);
     }
     
     [Theory]
     [AutoMoqData]
-    internal async Task ShouldGetAllReceptionDocumentsPaginatedAsync(
+    internal async Task ShouldThrowArgumentNullExceptionIfIdIsNullAsync(
+        ReceptionDocumentRead sut,
+        Guid idToSearch)
+    {
+        // Assert
+        Guid id = Guid.Empty;
+    
+        // Act & assert
+        await Assert.ThrowsAsync<ArgumentException>(() => sut.GetByIdAsync(id));
+    }
+
+    [Theory]
+    [AutoMoqData]
+    internal async Task ShouldGetAllReceptionDocumentsAsync(
         [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
         [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
         IEnumerable<ReceptionDocument> collectionDocument,
         ReceptionDocumentRead sut)
     {
         // Arrange
-        int totalCount = 3;
-        
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
         repositoryMock.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
@@ -60,19 +69,18 @@ public class ReceptionDocumentReadServiceTest
         
         // Assert
         Assert.NotNull(result);
+        Assert.IsAssignableFrom<IEnumerable<ReceptionDocument>>(result);
     }
     
     [Theory]
     [AutoMoqData]
-    internal async Task ShouldGetAllReceptionDocumentsPaginatedFilterByChipPossessionAsync(
+    internal async Task ShouldGetAllReceptionDocumentsFilterByChipPossessionAsync(
         [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
         [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
         IEnumerable<ReceptionDocument> collectionDocument,
         ReceptionDocumentRead sut)
     {
         // Arrange
-        int totalCount = 3;
-        
         unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository).Returns(repositoryMock.Object);
 
         
@@ -86,5 +94,6 @@ public class ReceptionDocumentReadServiceTest
         
         // Assert
         Assert.NotNull(result);
+        Assert.IsAssignableFrom<IEnumerable<ReceptionDocument>>(result);
     }
 }
