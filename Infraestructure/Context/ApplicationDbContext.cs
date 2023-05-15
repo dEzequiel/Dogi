@@ -16,18 +16,18 @@ namespace Infraestructure.Context
         }
 
         // Tables
-        public DbSet<ReceptionDocument> ReceptionDocument { get; set; }
-        public DbSet<AnimalChip> AnimalChip { get; set; }
-        public DbSet<IndividualProceeding> IndividualProceeding { get; set; }
-        public DbSet<Person> Persons { get;  set; }
-        public DbSet<PersonBannedInformation> PersonBannedInformations { get; set;}
+        public DbSet<ReceptionDocument> ReceptionDocument { get; set; } = null!;
+        public DbSet<AnimalChip> AnimalChip { get; set; } = null!;
+        public DbSet<IndividualProceeding> IndividualProceeding { get; set; } = null!;
+        public DbSet<Person> Persons { get;  set; } = null!;
+        public DbSet<PersonBannedInformation> PersonBannedInformations { get; set;} = null!;
 
         
         // Support Tables
-        public DbSet<Sex> Sex { get; set; }
-        public DbSet<ProceedingStatus> ProceedingStatus { get; set; }
-        public DbSet<AnimalCategory> AnimalCategory { get; set; }
-        public DbSet<AnimalZone> AnimalZone { get; set; }
+        public DbSet<Sex> Sex { get; set; } = null!;
+        public DbSet<ProceedingStatus> ProceedingStatus { get; set; } = null!;
+        public DbSet<AnimalCategory> AnimalCategory { get; set; } = null!;
+        public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

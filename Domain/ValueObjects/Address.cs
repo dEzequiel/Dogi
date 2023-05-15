@@ -30,9 +30,9 @@ namespace Domain.ValueObjects
         /// <inheritdoc/>
         protected override IEnumerable<object> GetAtomicValues()
         {
-            yield return Street;
-            yield return City;
-            yield return ZipCode;
+            yield return Street?? string.Empty;
+            yield return City?? string.Empty;
+            yield return ZipCode?? string.Empty;
         }
     }
 }

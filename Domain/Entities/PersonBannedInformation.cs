@@ -13,7 +13,7 @@ namespace Domain.Entities
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual Person Person {get; set; }  
+        public virtual Person Person {get; set; }  = null!;
 
         /// <summary>
         /// Constructor.

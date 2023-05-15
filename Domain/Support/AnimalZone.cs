@@ -13,7 +13,7 @@ namespace Domain.Support
         ///<summary>
         /// Navigation properties.
         ///</summary>
-        public virtual ICollection<IndividualProceeding> IndividualProceedings { get; set; }
+        public virtual ICollection<IndividualProceeding>? IndividualProceedings { get; set; }
 
         ///<summary>
         /// Constructor.

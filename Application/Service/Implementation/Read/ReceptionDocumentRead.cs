@@ -53,7 +53,7 @@ public class ReceptionDocumentRead : IReceptionDocumentRead
         return documents;
     }
 
-    public async Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipAsync(bool hasChip, CancellationToken ct = default)
+    public async Task<IEnumerable<ReceptionDocument>?> GetAllFilterByChipAsync(bool hasChip, CancellationToken ct = default)
     {
         _logger.LogInformation($"ReceptionDocumentRead --> GetAllFilterByChipAsync({hasChip}) --> Start");
 

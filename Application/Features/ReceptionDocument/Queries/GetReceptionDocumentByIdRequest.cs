@@ -60,7 +60,7 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
             {
                 Succeeded = false,
                 Message = string.Format(RECEPTION_DOCUMENT_NOT_FOUND, request.Id),
-                Data = result
+                Data =  null
             };  
         }
 
