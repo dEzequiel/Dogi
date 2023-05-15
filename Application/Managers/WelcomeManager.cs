@@ -8,7 +8,7 @@ using Domain.Enums;
 
 namespace Application.Managers
 {
-    public class WelcomeManager 
+    public class WelcomeManager : IWelcomeManager
     {
         private IReceptionDocumentWrite _receptionDocumentWrite;
         private IAnimalChipWrite _animalChipWrite;
@@ -75,7 +75,7 @@ namespace Application.Managers
                 AnimalChip = animalChipEntity,
             };
        }
-
+    
         private void AssignQuarantineZoneToNewHost(ReceptionDocumentWithAnimalInformation data) {
             
             var AnimalZoneRepository = _unitOfWork.AnimalZoneRepository.GetQueryableAsync();
@@ -85,6 +85,12 @@ namespace Application.Managers
             data.IndividualProceeding!.ZoneId = ((int)AnimalZone.Quarantine);
             data.IndividualProceeding!.AnimalZone = animalZone!;
         
+        }
+
+        ///<inheritdoc />
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
     }
 }

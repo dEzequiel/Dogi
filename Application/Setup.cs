@@ -40,7 +40,7 @@ namespace Application
             services.AddTransient<IAnimalChipWrite, AnimalChipWrite > ();
             services.AddTransient<AnimalChip>();
 
-            services.AddTransient<WelcomeManager>();
+            services.AddTransient<IWelcomeManager, WelcomeManager>();
 
             return services;
         }
