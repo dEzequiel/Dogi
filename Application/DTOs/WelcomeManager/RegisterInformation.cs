@@ -5,21 +5,24 @@ namespace Application.DTOs.WelcomeManager
     public class RegisterInformation
     {
         public ReceptionDocument ReceptionDocument { get; set; } = null!;
-        public IndividualProceeding? IndividualProceeding { get; set; }
+        public IndividualProceeding IndividualProceeding { get; set; }
         public AnimalChip? AnimalChip { get; set; }
 
-        public RegisterInformation() {}
-
-        public RegisterInformation(ReceptionDocument receptionDocument, IndividualProceeding? individualProceeding)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="receptionDocument"></param>
+        /// <param name="individualProceeding"></param>
+        /// <param name="animalChip"></param>
+        public RegisterInformation(ReceptionDocument receptionDocument, IndividualProceeding individualProceeding, AnimalChip? animalChip)
         {
             ReceptionDocument = receptionDocument;
             IndividualProceeding = individualProceeding;
-        }
-
-        public RegisterInformation(ReceptionDocument receptionDocument, AnimalChip? animalChip)
-        {
-            ReceptionDocument = receptionDocument;
             AnimalChip = animalChip;
         }
+
+        public RegisterInformation() {}
+
+
     }
 }
