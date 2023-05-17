@@ -35,7 +35,7 @@ namespace Api.GraphQL.Mutations
         public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender _mediator, 
             RegisterInformation input)
         {
-            var result = await _mediator.Send(new InsertReceptionDocumentWithAnimalOwnerInfoRequest(input, 
+            var result = await _mediator.Send(new InsertRegisterInformationRequest(input, 
                 GetAdminData()));
 
             if (!result.Succeeded)
