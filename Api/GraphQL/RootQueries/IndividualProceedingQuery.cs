@@ -10,6 +10,6 @@ namespace Api.GraphQL.GraphQLQueries
         /// <summary>
         /// Animal entity public queries.
         /// </summary>
-        public Animal? Animal { get; }
+        public IndividualProceeding? IndividualProceeding { get; }
     }
 }

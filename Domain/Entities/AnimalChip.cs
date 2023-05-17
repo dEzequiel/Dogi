@@ -1,6 +1,4 @@
 ﻿using Domain.Common;
-using Domain.Exceptions;
-using Domain.Exceptions.Result;
 using Domain.ValueObjects;
 
 namespace Domain.Entities
@@ -8,51 +6,42 @@ namespace Domain.Entities
     /// <summary>
     /// Represents the electronic chip of an animal.
     /// </summary>
-    public class AnimalChip : Entity
+    public class AnimalChip : AuditableEntity
     {
         /// <summary>
         /// Attributes.
         /// </summary>
-        public AnimalChipOwner Owner { get; set; }
-        public Address Address { get; set; }
+        public string OwnerPersonalIdentifier { get; set; } = null!;
+        public string? Name { get; set; }
+        public string ChipNumber { get; set; } = null!;
+        public bool? OwnerIsResponsible { get; set; }
 
         /// <summary>
-        /// Navigation properties
+        /// Navigation properties.
         /// </summary>
-        public virtual IndividualProceeding IndividualProceeding { get; set; }
+        public virtual Person? AnimalChipOwner { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="owner"></param>
-        /// <param name="addressAddress"></param>
-        public AnimalChip(Guid id) : base(id) { }
-        private AnimalChip(Guid id, AnimalChipOwner owner, Address address) : base(id)
-        {
-            Owner = owner;
-            Address = address;
-        }
-        
-        /// <summary>
-        /// Static Factory Pattern.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="owner"></param>
-        /// <param name="address"></param>
-        /// <returns></returns>
-        public static Result<AnimalChip> Create(
-            Guid id, 
-            AnimalChipOwner owner, 
-            Address address)
-        {
-            if (id == Guid.Empty)
-                return Result.Failure<AnimalChip>(DomainErrors.AnimalChip.AnimalChipIdIsNullOrEmpty);
+        /// <param name="name"></param>
+        /// <param name="chipNumber"></param>
+        /// <param name="ownerIsResponsible"></param>
 
-            if (owner == null)
-                return Result.Failure<AnimalChip>(DomainErrors.AnimalChip.AnimalChipOwnerIsNull);
 
-            return new AnimalChip(id, owner, address);
+        public AnimalChip() : base(Guid.NewGuid()) { }
+        private AnimalChip(Guid id,
+            string name,
+            string chipNumber,
+            string ownerPersonalIdentifier,
+            bool ownerIsResponsible) : base(id)
+        {
+            Name = name;
+            ChipNumber = chipNumber;
+            OwnerPersonalIdentifier = ownerPersonalIdentifier;
+            OwnerIsResponsible = ownerIsResponsible;
         }
     }
 }

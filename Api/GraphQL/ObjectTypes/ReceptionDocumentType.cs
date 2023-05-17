@@ -17,7 +17,7 @@ public class ReceptionDocumentType : ObjectType<ReceptionDocument>
             .Type<NonNullType<BooleanType>>();
 
         descriptor.Field(f => f.HasChip)
-            .Type<BooleanType>();
+            .Type<NonNullType<BooleanType>>();
 
         descriptor.Field(f => f.Observations)
             .Type<StringType>();
@@ -29,9 +29,5 @@ public class ReceptionDocumentType : ObjectType<ReceptionDocument>
         //    .Type<NonNullType<DateType>>();
 
         descriptor.Ignore(f => f.IndividualProceeding);
-        descriptor.Ignore(f => f.Created);
-        descriptor.Ignore(f => f.CreatedBy);
-        descriptor.Ignore(f => f.LastModified);
-        descriptor.Ignore(f => f.LastModifiedBy);
     }
 }

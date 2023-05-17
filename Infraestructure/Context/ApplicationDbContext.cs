@@ -16,25 +16,30 @@ namespace Infraestructure.Context
         }
 
         // Tables
-        public DbSet<ReceptionDocument> ReceptionDocument { get; set; }
-        public DbSet<Animal> Animal { get; set; }
-        public DbSet<AnimalChip> AnimalChip { get; set; }
-        public DbSet<IndividualProceeding> IndividualProceeding { get; set; }
+        public DbSet<ReceptionDocument> ReceptionDocument { get; set; } = null!;
+        public DbSet<AnimalChip> AnimalChip { get; set; } = null!;
+        public DbSet<IndividualProceeding> IndividualProceeding { get; set; } = null!;
+        public DbSet<Person> Persons { get;  set; } = null!;
+        public DbSet<PersonBannedInformation> PersonBannedInformations { get; set;} = null!;
+
         
         // Support Tables
-        public DbSet<Sex> Sex { get; set; }
-        public DbSet<ProceedingStatus> ProceedingStatus { get; set; }
-        public DbSet<AnimalCategory> AnimalCategory { get; set; }
+        public DbSet<Sex> Sex { get; set; } = null!;
+        public DbSet<ProceedingStatus> ProceedingStatus { get; set; } = null!;
+        public DbSet<AnimalCategory> AnimalCategory { get; set; } = null!;
+        public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             new ReceptionDocumentTypeConfiguration().Configure(modelBuilder.Entity<ReceptionDocument>());
-            new AnimalTypeConfiguration().Configure(modelBuilder.Entity<Animal>());
             new AnimalChipTypeConfiguration().Configure(modelBuilder.Entity<AnimalChip>());
             new IndividualProceedingTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceeding>());
             new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());
             new AnimalCategoryTypeConfiguration().Configure(modelBuilder.Entity<AnimalCategory>());
             new ProceedingStatusTypeConfiguration().Configure(modelBuilder.Entity<ProceedingStatus>());
+            new AnimalZoneTypeConfiguration().Configure(modelBuilder.Entity<AnimalZone>());
+            new PersonTypeConfiguration().Configure(modelBuilder.Entity<Person>());
+            new PersonBannedInformationTypeConfiguration().Configure(modelBuilder.Entity<PersonBannedInformation>());
         }
     }
 }

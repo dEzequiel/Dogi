@@ -58,12 +58,12 @@ namespace Application.Features.ReceptionDocument.Queries
 
             Guard.Against.Null(request, nameof(request));
 
-            IEnumerable<Domain.Entities.ReceptionDocument> result = await _receptionDocumentReadService.GetAllFilterByChipAsync(request.HasChip,
+            IEnumerable<Domain.Entities.ReceptionDocument>? result = await _receptionDocumentReadService.GetAllFilterByChipAsync(request.HasChip,
                 cancellationToken);
-
+            
             _logger.LogInformation("GetAllReceptionDocumentsFilterByChipRequestHandler --> Handler --> End");
 
-            return new ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>(result);
+            return new ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>(result!);
         }
     }
 }

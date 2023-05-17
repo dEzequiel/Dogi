@@ -22,40 +22,30 @@ namespace Infraestructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Animal", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SexId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
-
-                    b.HasIndex("SexId");
-
-                    b.ToTable("Animal", "Dogi");
-                });
-
             modelBuilder.Entity("Domain.Entities.AnimalChip", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ChipNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -70,38 +60,59 @@ namespace Infraestructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AnimalChipId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AnimalId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("Age")
+                        .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("ReceptionDocumentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("SexId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ZoneId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
 
-                    b.HasIndex("AnimalChipId")
-                        .IsUnique()
-                        .HasFilter("[AnimalChipId] IS NOT NULL");
-
-                    b.HasIndex("AnimalId")
-                        .IsUnique();
-
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("ReceptionDocumentId")
                         .IsUnique();
 
+                    b.HasIndex("SexId");
+
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("ZoneId");
 
                     b.ToTable("IndividualProceeding", "Dogi");
                 });
@@ -112,14 +123,26 @@ namespace Infraestructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool?>("HasChip")
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasChip")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Observations")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("PickupDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("PickupLocation")
                         .HasColumnType("nvarchar(max)");
@@ -192,6 +215,77 @@ namespace Infraestructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Support.AnimalZone", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.ToTable("Zone", "Dogi");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dogs"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Cats"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Rabbits"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Rodents"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Birds"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Reptiles"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Exotic"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Farm"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Quarantine"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Cure"
+                        });
+                });
+
             modelBuilder.Entity("Domain.Support.ProceedingStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -259,54 +353,25 @@ namespace Infraestructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Animal", b =>
-                {
-                    b.HasOne("Domain.Support.Sex", "Sex")
-                        .WithMany("Animals")
-                        .HasForeignKey("SexId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Sex");
-                });
-
             modelBuilder.Entity("Domain.Entities.AnimalChip", b =>
                 {
-                    b.OwnsOne("Domain.ValueObjects.Address", "Address", b1 =>
-                        {
-                            b1.Property<Guid>("AnimalChipId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("City")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("City");
-
-                            b1.Property<string>("Street")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Street");
-
-                            b1.HasKey("AnimalChipId");
-
-                            b1.ToTable("AnimalChip", "Dogi");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AnimalChipId");
-                        });
-
                     b.OwnsOne("Domain.ValueObjects.AnimalChipOwner", "Owner", b1 =>
                         {
                             b1.Property<Guid>("AnimalChipId")
                                 .HasColumnType("uniqueidentifier");
 
+                            b1.Property<string>("Contact")
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("OwnerContact");
+
+                            b1.Property<bool>("IsResponsible")
+                                .HasColumnType("bit");
+
                             b1.Property<string>("Lastname")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("OwnerLastName");
 
                             b1.Property<string>("Name")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)")
                                 .HasColumnName("OwnerName");
 
@@ -316,10 +381,34 @@ namespace Infraestructure.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("AnimalChipId");
-                        });
 
-                    b.Navigation("Address")
-                        .IsRequired();
+                            b1.OwnsOne("Domain.ValueObjects.Address", "Address", b2 =>
+                                {
+                                    b2.Property<Guid>("AnimalChipOwnerAnimalChipId")
+                                        .HasColumnType("uniqueidentifier");
+
+                                    b2.Property<string>("City")
+                                        .HasColumnType("nvarchar(max)")
+                                        .HasColumnName("OwnerAddressCity");
+
+                                    b2.Property<string>("Street")
+                                        .HasColumnType("nvarchar(max)")
+                                        .HasColumnName("OwnerAddressStreet");
+
+                                    b2.Property<string>("ZipCode")
+                                        .HasColumnType("nvarchar(max)")
+                                        .HasColumnName("OwnerAddressZipCode");
+
+                                    b2.HasKey("AnimalChipOwnerAnimalChipId");
+
+                                    b2.ToTable("AnimalChip", "Dogi");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("AnimalChipOwnerAnimalChipId");
+                                });
+
+                            b1.Navigation("Address");
+                        });
 
                     b.Navigation("Owner")
                         .IsRequired();
@@ -327,17 +416,11 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.IndividualProceeding", b =>
                 {
-                    b.HasOne("Domain.Entities.AnimalChip", "AnimalChip")
-                        .WithOne("IndividualProceeding")
-                        .HasForeignKey("Domain.Entities.IndividualProceeding", "AnimalChipId");
-
-                    b.HasOne("Domain.Entities.Animal", "Animal")
-                        .WithOne("IndividualProceeding")
-                        .HasForeignKey("Domain.Entities.IndividualProceeding", "AnimalId");
-
                     b.HasOne("Domain.Support.AnimalCategory", "AnimalCategory")
-                        .WithMany("Processees")
-                        .HasForeignKey("CategoryId");
+                        .WithMany("IndividualProceedings")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.ReceptionDocument", "ReceptionDocument")
                         .WithOne("IndividualProceeding")
@@ -345,31 +428,31 @@ namespace Infraestructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Support.Sex", "Sex")
+                        .WithMany("IndividualProceedings")
+                        .HasForeignKey("SexId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Support.ProceedingStatus", "ProceedingStatus")
                         .WithMany("Processees")
                         .HasForeignKey("StatusId");
 
-                    b.Navigation("Animal");
+                    b.HasOne("Domain.Support.AnimalZone", "AnimalZone")
+                        .WithMany("IndividualProceedings")
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AnimalCategory");
 
-                    b.Navigation("AnimalChip");
+                    b.Navigation("AnimalZone");
 
                     b.Navigation("ProceedingStatus");
 
                     b.Navigation("ReceptionDocument");
-                });
 
-            modelBuilder.Entity("Domain.Entities.Animal", b =>
-                {
-                    b.Navigation("IndividualProceeding")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.AnimalChip", b =>
-                {
-                    b.Navigation("IndividualProceeding")
-                        .IsRequired();
+                    b.Navigation("Sex");
                 });
 
             modelBuilder.Entity("Domain.Entities.ReceptionDocument", b =>
@@ -379,7 +462,12 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.Support.AnimalCategory", b =>
                 {
-                    b.Navigation("Processees");
+                    b.Navigation("IndividualProceedings");
+                });
+
+            modelBuilder.Entity("Domain.Support.AnimalZone", b =>
+                {
+                    b.Navigation("IndividualProceedings");
                 });
 
             modelBuilder.Entity("Domain.Support.ProceedingStatus", b =>
@@ -389,7 +477,7 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.Support.Sex", b =>
                 {
-                    b.Navigation("Animals");
+                    b.Navigation("IndividualProceedings");
                 });
 #pragma warning restore 612, 618
         }

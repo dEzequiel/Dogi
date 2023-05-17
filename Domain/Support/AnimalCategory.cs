@@ -16,7 +16,7 @@ namespace Domain.Support
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public ICollection<IndividualProceeding> Processees { get; set; }
+        public ICollection<IndividualProceeding>? IndividualProceedings { get; set; }
 
         /// <summary>
         /// Constructor.

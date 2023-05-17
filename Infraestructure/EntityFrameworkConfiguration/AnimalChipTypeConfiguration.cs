@@ -1,11 +1,7 @@
-﻿using Domain.Entities;
+﻿
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.EntityFrameworkConfiguration
 {
@@ -18,16 +14,11 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.OwnsOne(vo => vo.Owner, o =>
-            {
-                o.Property(x => x.Name).HasColumnName("OwnerName");
-                o.Property(x => x.Lastname).HasColumnName("OwnerLastName");
-            });
-            builder.OwnsOne(vo => vo.Address, a =>
-            {
-                a.Property(x => x.City).HasColumnName("City");
-                a.Property(x => x.Street).HasColumnName("Street");
-            });
+            builder.HasOne<Person>(f => f.AnimalChipOwner)
+                .WithMany(r => r.AnimalChips)
+                .HasForeignKey(fk => fk.OwnerPersonalIdentifier);
+        
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Service.Interfaces;
+﻿using Application.Interfaces.Repositories;
+using Application.Service.Interfaces;
 using Infraestructure.Context;
 using Infraestructure.Persistence.Repositories;
 
@@ -15,6 +16,9 @@ namespace Infraestructure.Persistence.UnitOfWork
         /// Repositories under unit of work.
         /// </summary>
         public IReceptionDocumentRepository ReceptionDocumentRepository => new ReceptionDocumentRepository(_context);
+        public IIndividualProceedingRepository IndividualProceedingRepository => new IndividualProceedingRepository(_context);
+        public IAnimalChipRepository AnimalChipRepository => new AnimalChipRepository(_context);
+        public IAnimalZoneRepository AnimalZoneRepository => new AnimalZoneRepository(_context);
 
         /// <summary>
         /// Constructor.

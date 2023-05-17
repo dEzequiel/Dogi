@@ -1,79 +1,59 @@
 ﻿using Domain.Common;
-using Domain.Exceptions;
-using Domain.Exceptions.Result;
 using Domain.Support;
 
 namespace Domain.Entities
 {
-    public class IndividualProceeding : Entity
+    public class IndividualProceeding : AuditableEntity
     {
         /// <summary>
         /// Attributes.
         /// </summary>
-        public Guid AnimalId { get; private set; }
-        public Guid ReceptionDocumentId { get; private set; }
-        public int StatusId { get; private set; }
-        public int CategoryId { get; private set; }
-        public Guid? AnimalChipId { get; private set; }
+        public Guid ReceptionDocumentId { get; set; }
+        public string? Name { get; set; }
+        public int? Age { get; set; }
+        public string? Color {get; set;}
+        public int StatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
+        public int CategoryId { get; set; }
+        public int SexId { get; set; }
+        public int ZoneId { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual Animal Animal { get; set; } = null!;
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
-        public virtual AnimalCategory AnimalCategory { get; private set; } = null!;
-        public virtual AnimalChip? AnimalChip { get; private set; } = null!;
+        public virtual AnimalCategory AnimalCategory { get; set; } = null!;
+        public virtual Sex Sex { get; set; } = null!; 
+        public virtual AnimalZone AnimalZone { get; set; } = null!;
+
 
         public IndividualProceeding(Guid id) : base(id) { }
+        public IndividualProceeding() : base(Guid.NewGuid()) { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="receptionDocumentId"></param>
-        /// <param name="status"></param>
-        /// <param name="animalCategory"></param>
-        /// <param name="animallChipId"></param>
-        private IndividualProceeding(Guid id, Guid animalId, Guid receptionDocumentId, int status, int animalCategory, 
-                                     Guid? animalChipId) : base(id)
-        {
-            AnimalId = animalId;
-            ReceptionDocumentId = receptionDocumentId;
-            StatusId = status;
-            CategoryId = animalCategory;
-            AnimalChipId = animalChipId;
-        }
-
-        /// <summary>
-        /// Static Factory Pattern. Creates new IndividualProcess in valid state.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="animalId"></param>
-        /// <param name="receptionDocumentId"></param>
-        /// <param name="status"></param>
-        /// <param name="animalCategory"></param>
-        /// <param name="animalChipId"></param>
-        /// <returns></returns>
-        public static Result<IndividualProceeding> Create(
-            Guid id,
-            Guid animalId,
+        /// <param name="statusId"></param>
+        /// <param name="categoryId"></param>
+        /// <param name="sexId"></param>
+        /// <param name="zoneId"></param>
+        /// <param name="isDeleted"></param>
+        public IndividualProceeding(Guid id,
             Guid receptionDocumentId,
-            int status,
-            int animalCategory, 
-            Guid? animalChipId)
+            int statusId,
+            int categoryId,
+            int sexId,
+            int zoneId,
+            bool isDeleted) : base(id)
         {
-            if (id == Guid.Empty)
-                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
-                                                                            .IndividualProcessIdIsNullOrEmpty);
-
-            if(receptionDocumentId == Guid.Empty)
-                return Result.Failure<IndividualProceeding>(DomainErrors.IndividualProceeding
-                                                                            .IndividualProcessReceptionDocumentIdIsNullOrEmpty);
-
-            return new IndividualProceeding(id, animalId, receptionDocumentId, status, animalCategory, animalChipId);
-
+            StatusId = statusId;
+            CategoryId = categoryId;
+            SexId = sexId;
+            ZoneId = zoneId;
+            IsDeleted = isDeleted;
         }
     }
 }
