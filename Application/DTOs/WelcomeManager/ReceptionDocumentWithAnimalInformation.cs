@@ -6,7 +6,7 @@ namespace Application.DTOs.WelcomeManager
     {
         public ReceptionDocument ReceptionDocument { get; set; } = null!;
         public AnimalChip? AnimalChip { get; set; }
-        public IndividualProceeding? IndividualProceeding { get; set; }
+        public IndividualProceeding IndividualProceeding { get; set; }
 
         /// <summary>
         /// Constructor.
@@ -14,7 +14,7 @@ namespace Application.DTOs.WelcomeManager
         /// <param name="receptionDocument"></param>
         /// <param name="animalChip"></param>
         /// <param name="individualProceeding"></param>
-        public ReceptionDocumentWithAnimalInformation(ReceptionDocument receptionDocument, AnimalChip? animalChip, IndividualProceeding? individualProceeding)
+        public ReceptionDocumentWithAnimalInformation(ReceptionDocument receptionDocument, AnimalChip? animalChip, IndividualProceeding individualProceeding)
         {
             ReceptionDocument = receptionDocument;
             AnimalChip = animalChip;

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.WelcomeManager;
+using Application.Features.IndividualPro.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Abstraction;
 using Application.Service.Abstraction.Write;
@@ -9,12 +10,13 @@ using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Managers
 {
     public class WelcomeManager : IWelcomeManager
     {
-        private IReceptionDocumentWrite _receptionDocumentWrite;
+        private ILogger<WelcomeManager> _logger;
         private IAnimalChipWrite _animalChipWrite;
         private IIndividualProceedingWrite _individualProceedingWrite;
         private IMediator _mediator;
@@ -25,13 +27,13 @@ namespace Application.Managers
         /// <param name="animalChipOwnerWrite"></param>
         /// <param name="receptionDocumentWrite"></param>
         /// <param name="animalChipWrite"></param>
-        public WelcomeManager(IReceptionDocumentWrite receptionDocumentWrite, IAnimalChipWrite animalChipWrite, IIndividualProceedingWrite individualProceedingWrite, IMediator mediator ,IUnitOfWork unitOfWork)
+        public WelcomeManager(IAnimalChipWrite? animalChipWrite, IIndividualProceedingWrite individualProceedingWrite,IMediator mediator ,IUnitOfWork unitOfWork, ILogger<WelcomeManager> logger)
         {
-            _receptionDocumentWrite = receptionDocumentWrite;
             _animalChipWrite = animalChipWrite;
             _individualProceedingWrite = individualProceedingWrite;
             _mediator = mediator;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         /// <summary>
@@ -86,14 +88,24 @@ namespace Application.Managers
 
         private async Task<ReceptionDocumentWithAnimalInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
         {
-            var entity = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
-            var animalChipEntity = await _animalChipWrite.AddAsync(data.AnimalChip!, adminData);
-
-            return new ReceptionDocumentWithAnimalInformation()
+            try 
             {
-                ReceptionDocument = entity,
-                AnimalChip = animalChipEntity,
-            };
+                var receptionDocumentEntity = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+                var animalChipEntity = await _animalChipWrite.AddAsync(data.AnimalChip!, adminData);
+                var individualProceedingEntity = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+
+                return new ReceptionDocumentWithAnimalInformation()
+                {
+                    ReceptionDocument = receptionDocumentEntity.Data,
+                    AnimalChip = animalChipEntity,
+                    IndividualProceeding = individualProceedingEntity.Data
+                };
+
+            } catch(Exception ex) 
+            {
+                _logger.LogInformation("WelcomeManager --> AddReceptionDocumentWithAnimalChipOwnerInformation --> Catch Exception");
+                throw new DogiException("Something went wrong when registering new information");
+            }            
        }
     
         private void AssignQuarantineZoneToNewHost(ReceptionDocumentWithAnimalInformation data) {

@@ -51,7 +51,7 @@ namespace Application.Features.WelcomeManagerFeature.Command
             _unitOfWork = unitOfWork;
             _mediator = mediator;
 
-            welcomeManager = new WelcomeManager(_receptionDocumentWrite, _animalChipWrite, _individualProceedingWrite, _mediator,  _unitOfWork);
+            welcomeManager = new WelcomeManager(_animalChipWrite, _individualProceedingWrite, _mediator,  _unitOfWork);
         }
         public async Task<ApiResponse<RegisterInformation>> Handle(InsertReceptionDocumentWithAnimalOwnerInfoRequest request, CancellationToken cancellationToken)
         {
