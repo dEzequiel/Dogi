@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.WelcomeManager;
 using Application.Features.IndividualPro.Commands;
+using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Abstraction;
 using Application.Service.Abstraction.Write;
@@ -16,25 +17,24 @@ namespace Application.Managers
 {
     public class WelcomeManager : IWelcomeManager
     {
-        private ILogger<WelcomeManager> _logger;
-        private IAnimalChipWrite _animalChipWrite;
-        private IIndividualProceedingWrite _individualProceedingWrite;
-        private IMediator _mediator;
-        private IUnitOfWork _unitOfWork;
+        private readonly ILogger<WelcomeManager> _logger;
+        private readonly IMediator _mediator;
+        private readonly IUnitOfWork _unitOfWork;
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="animalChipOwnerWrite"></param>
-        /// <param name="receptionDocumentWrite"></param>
-        /// <param name="animalChipWrite"></param>
-        public WelcomeManager(IAnimalChipWrite? animalChipWrite, IIndividualProceedingWrite individualProceedingWrite,IMediator mediator ,IUnitOfWork unitOfWork, ILogger<WelcomeManager> logger)
+        /// <param name="mediator"></param>
+        /// <param name="unitOfWork"></param>
+        /// <param name="logger"></param>
+        public WelcomeManager(IMediator mediator ,IUnitOfWork unitOfWork, ILogger<WelcomeManager> logger)
         {
-            _animalChipWrite = animalChipWrite;
-            _individualProceedingWrite = individualProceedingWrite;
             _mediator = mediator;
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
+
+        public WelcomeManager() { }
 
         /// <summary>
         /// Add a new reception document taking into account whether the animal has a chip or not. With this condition you take one way or the other.
@@ -57,32 +57,18 @@ namespace Application.Managers
 
         private async Task<ReceptionDocumentWithIndividualProceeding> AddReceptionDocumentInformation(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
         {
-            //var receptionDocument = await _receptionDocumentWrite.AddAsync(data.ReceptionDocument, adminData);
             var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
-            if(!receptionDocumentRequest.Succeeded)
-            {
-                throw new DogiException("Error when trying to insert the reception document."); 
-            }
             
-            Guard.Against.Null(receptionDocumentRequest.Data, nameof(receptionDocumentRequest.Data));
-
-            var receptionDocument = receptionDocumentRequest.Data;
-            data.IndividualProceeding!.ReceptionDocumentId = receptionDocument.Id;
+            data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
             AssignQuarantineZoneToNewHost(data);
             
-            var individualProceeding = await _individualProceedingWrite.AddAsync(data.IndividualProceeding!, adminData);
-            // var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
-            // if(!individualProceeding.Succeeded)
-            // {
-            //     throw new DogiException("Error when trying to insert the individual proceeding."); 
-            // }
+            var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
 
             return new ReceptionDocumentWithIndividualProceeding()
             {
-                ReceptionDocument = receptionDocument,
-                //IndividualProceeding = individualProceeding.Data,
-                IndividualProceeding = individualProceeding,
+                ReceptionDocument = receptionDocumentRequest.Data,
+                IndividualProceeding = individualProceeding.Data,
             };
         }
 
@@ -91,13 +77,13 @@ namespace Application.Managers
             try 
             {
                 var receptionDocumentEntity = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
-                var animalChipEntity = await _animalChipWrite.AddAsync(data.AnimalChip!, adminData);
+                var animalChipEntity = await _mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
                 var individualProceedingEntity = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
 
                 return new ReceptionDocumentWithAnimalInformation()
                 {
                     ReceptionDocument = receptionDocumentEntity.Data,
-                    AnimalChip = animalChipEntity,
+                    AnimalChip = animalChipEntity.Data,
                     IndividualProceeding = individualProceedingEntity.Data
                 };
 
