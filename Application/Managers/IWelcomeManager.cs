@@ -7,11 +7,12 @@ namespace Application.Managers
     public interface IWelcomeManager : IApplicationServiceBase
     {
         /// <summary>
-        /// Add a new reception document taking into account whether the animal has a chip or not.
+        /// Register a new animal at the kennel. It is analyzed if the animal has a chip and the information 
+        /// of the chip and owner is stored. The animal is assigned to a zone depending on whether or not the owner has a chip.
         /// </summary>
         /// <param name="data"></param>
         /// <param name="adminData"></param>
-        /// <returns>Information about register. Includ ReceptionDocument, AnimalChip, Person and IndividualProceeding if process.</returns>
-        Task<RegisterInformation> AddAnimalWithOwnerInfo(ReceptionDocumentWithAnimalInformation data, AdminData adminData);
+        /// <returns>Information about register. Includ ReceptionDocument, AnimalChip and IndividualProceeding if process.</returns>
+        Task<RegisterInformation> RegisterAnimal(RegisterInformation data, AdminData adminData);
     }
 }

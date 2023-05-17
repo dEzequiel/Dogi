@@ -19,10 +19,10 @@ namespace Application.Features.WelcomeManagerFeature.Command
         /// <summary>
         /// Constructor
         /// </summary>
-        public ReceptionDocumentWithAnimalInformation Data { get; set; } = null!;
+        public RegisterInformation Data { get; set; } = null!;
         public AdminData AdminData { get; set; } = null!;
 
-        public InsertReceptionDocumentWithAnimalOwnerInfoRequest(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
+        public InsertReceptionDocumentWithAnimalOwnerInfoRequest(RegisterInformation data, AdminData adminData)
         {
             Data = data;
             AdminData = adminData;
@@ -51,7 +51,7 @@ namespace Application.Features.WelcomeManagerFeature.Command
             _unitOfWork = unitOfWork;
             _mediator = mediator;
 
-            welcomeManager = new WelcomeManager(_animalChipWrite, _individualProceedingWrite, _mediator,  _unitOfWork);
+            welcomeManager = new WelcomeManager();
         }
         public async Task<ApiResponse<RegisterInformation>> Handle(InsertReceptionDocumentWithAnimalOwnerInfoRequest request, CancellationToken cancellationToken)
         {
@@ -59,7 +59,7 @@ namespace Application.Features.WelcomeManagerFeature.Command
 
             Guard.Against.Null(request, nameof(request));
 
-            var result = await welcomeManager.AddAnimalWithOwnerInfo(request.Data, request.AdminData);
+            var result = await welcomeManager.RegisterAnimal(request.Data, request.AdminData);
 
             _logger.LogInformation("InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler --> AddAsync --> End");
 

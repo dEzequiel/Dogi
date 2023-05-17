@@ -42,49 +42,47 @@ namespace Application.Managers
         /// <param name="data"></param>
         /// <param name="adminData"></param>
         /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
-        public async Task<RegisterInformation> AddAnimalWithOwnerInfo(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
+        public async Task<RegisterInformation> RegisterAnimal(RegisterInformation data, AdminData adminData)
         {
             if(!data.ReceptionDocument.HasChip)
             {
-               var result = await AddReceptionDocumentInformation(data, adminData);
-               return new RegisterInformation(result.ReceptionDocument, result.IndividualProceeding);
+               return await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
             } else
             {
-                var result = await AddReceptionDocumentWithAnimalChipOwnerInformation(data, adminData);
-                return new RegisterInformation(result.ReceptionDocument, result.AnimalChip);
+                return await AddReceptionDocumentWithAnimalChipOwnerInformation(data, adminData);
             }
         }
 
-        private async Task<ReceptionDocumentWithIndividualProceeding> AddReceptionDocumentInformation(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
+        private async Task<RegisterInformation> AddReceptionDocumentWithIndividualProceedingAsync(RegisterInformation data, AdminData adminData)
         {
             var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
             
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
-            AssignQuarantineZoneToNewHost(data);
+            AssignQuarantineZoneToNewHost(data.IndividualProceeding);
             
             var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
 
-            return new ReceptionDocumentWithIndividualProceeding()
+            return new RegisterInformation()
             {
                 ReceptionDocument = receptionDocumentRequest.Data,
                 IndividualProceeding = individualProceeding.Data,
+                AnimalChip = null
             };
         }
 
-        private async Task<ReceptionDocumentWithAnimalInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(ReceptionDocumentWithAnimalInformation data, AdminData adminData)
+        private async Task<RegisterInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
         {
             try 
             {
-                var receptionDocumentEntity = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+                var receptionDocumentAndIndividualProceeding = await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
                 var animalChipEntity = await _mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
-                var individualProceedingEntity = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
 
-                return new ReceptionDocumentWithAnimalInformation()
+                return new RegisterInformation()
                 {
-                    ReceptionDocument = receptionDocumentEntity.Data,
-                    AnimalChip = animalChipEntity.Data,
-                    IndividualProceeding = individualProceedingEntity.Data
+                    ReceptionDocument = receptionDocumentAndIndividualProceeding.ReceptionDocument,
+                    IndividualProceeding = receptionDocumentAndIndividualProceeding.IndividualProceeding,
+                    AnimalChip = animalChipEntity.Data
                 };
 
             } catch(Exception ex) 
@@ -94,14 +92,14 @@ namespace Application.Managers
             }            
        }
     
-        private void AssignQuarantineZoneToNewHost(ReceptionDocumentWithAnimalInformation data) {
+        private void AssignQuarantineZoneToNewHost(IndividualProceeding individualProceeding) {
             
             var AnimalZoneRepository = _unitOfWork.AnimalZoneRepository.GetQueryableAsync();
 
             var animalZone =  AnimalZoneRepository.FirstOrDefault(x => x.Id == (int)AnimalZone.Quarantine);
 
-            data.IndividualProceeding!.ZoneId = ((int)AnimalZone.Quarantine);
-            data.IndividualProceeding!.AnimalZone = animalZone!;
+            individualProceeding.ZoneId = ((int)AnimalZone.Quarantine);
+            individualProceeding.AnimalZone = animalZone!;
         
         }
 

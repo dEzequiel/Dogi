@@ -17,7 +17,7 @@ namespace Test.Application.Features.WelcomeManagerTest
     {
         [Theory]
         [AutoMoqData]
-        internal void RequestShouldSetReceptionDocumentDataProperty(ReceptionDocumentWithAnimalInformation documentDataForAdd,
+        internal void RequestShouldSetReceptionDocumentDataProperty(RegisterInformation documentDataForAdd,
             AdminData adminData)
         {
             // Act
@@ -35,8 +35,8 @@ namespace Test.Application.Features.WelcomeManagerTest
             InsertReceptionDocumentWithAnimalOwnerInfoRequestHandler handler)
         {
             // Arrange
-            welcomeManagerWriteServiceMock.Setup(x => x.AddAnimalWithOwnerInfo(
-                It.IsAny<ReceptionDocumentWithAnimalInformation>(),
+            welcomeManagerWriteServiceMock.Setup(x => x.RegisterAnimal(
+                It.IsAny<RegisterInformation>(),
                 It.IsAny<AdminData>()))
                 .ReturnsAsync(registerInformationGet);
             
