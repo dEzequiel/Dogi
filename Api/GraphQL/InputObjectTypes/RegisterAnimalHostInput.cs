@@ -6,13 +6,12 @@ namespace Api.GraphQL.InputObjectTypes
     /// <summary>
     /// ReceptionDocumentWithAnimalChipOwnerInfoInput input type for graphql mutations.
     /// </summary>
-    public class ReceptionDocumentWithAnimalChipOwnerInfoInput : InputObjectType<ReceptionDocumentWithAnimalInformation>
+    public class RegisterAnimalHostInput : InputObjectType<RegisterInformation>
     {
-        protected override void Configure(IInputObjectTypeDescriptor<ReceptionDocumentWithAnimalInformation> descriptor)
+        protected override void Configure(IInputObjectTypeDescriptor<RegisterInformation> descriptor)
         {
             descriptor.Field(f => f.ReceptionDocument)
               .Type<ReceptionDocumentInput>();
-
 
             descriptor.Field(f => f.IndividualProceeding)
                 .Type<IndividualProceedingInput>();

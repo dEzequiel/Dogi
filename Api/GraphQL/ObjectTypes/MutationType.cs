@@ -13,8 +13,8 @@ namespace Api.GraphQL.Types
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
             descriptor.Field(f => f.RegiterNewAnimal)
-                    .Argument("input", arg => arg.Type<ReceptionDocumentWithAnimalChipOwnerInfoInput>())
-                    .ResolveWith<WelcomeManagerMutations>(q => q.AddReceptionDocumentWithAnimalChipOwnerInformation(default, default));
+                    .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
+                    .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default, default));
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                     .Argument("idToDelete", arg => arg.Type<UuidType>())
