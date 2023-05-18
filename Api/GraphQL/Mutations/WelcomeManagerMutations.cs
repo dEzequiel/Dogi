@@ -32,17 +32,21 @@ namespace Api.GraphQL.Mutations
         /// <param name="input"></param>
         /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
         /// <exception cref="DogiException"></exception>
-        public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender _mediator, 
+        public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender _mediator,
             RegisterInformation input)
         {
-            var result = await _mediator.Send(new InsertRegisterInformationRequest(input, 
-                GetAdminData()));
-
-            if (!result.Succeeded)
+            try
             {
-                throw new DogiException(result.Message);
+                var result = await _mediator.Send(new InsertRegisterInformationRequest(input, GetAdminData()));
+
+                return result.Data;
             }
-            return result.Data;
+            catch (Exception ex)
+            {
+                throw new DogiException(ex.Message);
+            }
+
+
         }
 
         /// <summary>
