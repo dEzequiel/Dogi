@@ -15,6 +15,9 @@ namespace Domain.Entities
         public virtual AnimalZone? AnimalZone { get; set; } = null!;
         public virtual IndividualProceeding? IndividualProceeding { get; set; }
 
+        public Cage(Guid id) : base(id) { }
+        public Cage() : base(Guid.NewGuid()) { }
+
         /// <summary>
         /// Constructor.
         /// </summary>

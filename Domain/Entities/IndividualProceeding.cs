@@ -16,7 +16,6 @@ namespace Domain.Entities
         //public Guid MedicalRecordId { get; private set; }
         public int CategoryId { get; set; }
         public int SexId { get; set; }
-        public int ZoneId { get; set; }
         public Guid CageId { get; set; }
         public bool IsDeleted { get; set; } = false;
 
@@ -40,7 +39,6 @@ namespace Domain.Entities
         /// <param name="statusId"></param>
         /// <param name="categoryId"></param>
         /// <param name="sexId"></param>
-        /// <param name="zoneId"></param>
         /// <param name="cageId"></param>
         /// <param name="isDeleted"></param>
         public IndividualProceeding(Guid id,
@@ -48,14 +46,12 @@ namespace Domain.Entities
             int statusId,
             int categoryId,
             int sexId,
-            int zoneId,
             bool isDeleted,
             Guid cageId) : base(id)
         {
             StatusId = statusId;
             CategoryId = categoryId;
             SexId = sexId;
-            ZoneId = zoneId;
             IsDeleted = isDeleted;
             CageId = cageId;
         }

@@ -27,10 +27,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithMany(r => r.IndividualProceedings)
                 .HasForeignKey(fk => fk.CategoryId);
 
-            builder.HasOne<AnimalZone>(f => f.AnimalZone)
-                .WithMany(r => r.IndividualProceedings)
-                .HasForeignKey(fk => fk.ZoneId);
-
             builder.HasOne<Cage>(f => f.Cage)
                 .WithOne(r => r.IndividualProceeding)
                 .HasForeignKey<IndividualProceeding>(rd => rd.CageId);
