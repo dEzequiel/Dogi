@@ -7,27 +7,29 @@ namespace Infraestructure.Context
     /// <summary>
     /// Application database context.
     /// </summary>
-    public class ApplicationDbContext :  DbContext
+    public class ApplicationDbContext : DbContext
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
 
         // Tables
         public DbSet<ReceptionDocument> ReceptionDocument { get; set; } = null!;
         public DbSet<AnimalChip> AnimalChip { get; set; } = null!;
         public DbSet<IndividualProceeding> IndividualProceeding { get; set; } = null!;
-        public DbSet<Person> Persons { get;  set; } = null!;
-        public DbSet<PersonBannedInformation> PersonBannedInformations { get; set;} = null!;
+        public DbSet<Person> Persons { get; set; } = null!;
+        public DbSet<PersonBannedInformation> PersonBannedInformations { get; set; } = null!;
+        public DbSet<Cage> Cages { get; set; } = null!;
 
-        
+
         // Support Tables
         public DbSet<Sex> Sex { get; set; } = null!;
         public DbSet<ProceedingStatus> ProceedingStatus { get; set; } = null!;
         public DbSet<AnimalCategory> AnimalCategory { get; set; } = null!;
         public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +42,7 @@ namespace Infraestructure.Context
             new AnimalZoneTypeConfiguration().Configure(modelBuilder.Entity<AnimalZone>());
             new PersonTypeConfiguration().Configure(modelBuilder.Entity<Person>());
             new PersonBannedInformationTypeConfiguration().Configure(modelBuilder.Entity<PersonBannedInformation>());
+            new CageTypeConfiguration().Configure(modelBuilder.Entity<Cage>());
         }
     }
 }

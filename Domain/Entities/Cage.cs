@@ -8,6 +8,7 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
+        public int Number { get; set; }
         public int? ZoneId { get; set; }
         public bool IsOccupied { get; set; } = false;
 
@@ -20,12 +21,11 @@ namespace Domain.Entities
         /// <param name="id"></param>
         /// <param name="zoneId"></param>
         /// <param name="isOccupied"></param>
-        public Cage(Guid id) : base(id) { }
-
-        public Cage(Guid id, int? zoneId, bool isOccupied) : base(id)
+        public Cage(Guid id, int? zoneId, int number, bool isOccupied) : base(id)
         {
             ZoneId = zoneId;
             IsOccupied = isOccupied;
+            Number = number;
         }
     }
 }
