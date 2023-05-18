@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Domain.Support;
 
 namespace Api.GraphQL.ObjectTypes
@@ -16,8 +12,8 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Field(f => f.Name)
                 .Type<NonNullType<StringType>>();
 
-            descriptor.Field(f => f.IndividualProceedings)
-                .Type<ListType<IndividualProceedingType>>();
+            descriptor.Field(f => f.Cages)
+                .Type<ListType<CageType>>();
         }
     }
 }

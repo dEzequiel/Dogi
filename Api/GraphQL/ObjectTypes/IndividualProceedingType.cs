@@ -14,7 +14,7 @@ namespace Api.GraphQL.ObjectTypes
 
             descriptor.Field(f => f.Name)
                 .Type<StringType>();
-            
+
             descriptor.Field(f => f.Age)
                 .Type<IntType>();
 
@@ -26,16 +26,16 @@ namespace Api.GraphQL.ObjectTypes
 
             descriptor.Field(f => f.StatusId)
                 .Type<NonNullType<IntType>>();
-            
+
             descriptor.Field(f => f.CategoryId)
                 .Type<NonNullType<IntType>>();
 
             descriptor.Field(f => f.SexId)
                 .Type<NonNullType<IntType>>();
-            
-            descriptor.Field(f => f.ZoneId)
-                .Type<NonNullType<IntType>>();
-            
+
+            descriptor.Field(f => f.CageId)
+                .Type<NonNullType<UuidType>>();
+
             descriptor.Ignore(f => f.ReceptionDocument);
             descriptor.Ignore(f => f.ProceedingStatus);
             descriptor.Ignore(f => f.AnimalCategory);
