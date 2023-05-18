@@ -37,6 +37,7 @@ namespace Application
             services.AddTransient<IWelcomeManager, WelcomeManager>();
 
             services.AddTransient<ICageWrite, CageWrite>();
+            services.AddTransient<ICageRead, CageRead>();
             services.AddTransient<Cage>();
 
             return services;

@@ -13,6 +13,7 @@ namespace Infraestructure.Persistence.Repositories
         /// Attributes.
         /// </summary>
         private const string CAGE_NOT_FOUND = "Cage with id {0} not found.";
+        private const string CAGE_IS_OCCUPIED = "Cage with id {0} is occupied.";
         protected DbSet<Cage> _cageAll;
 
         /// <summary>
@@ -54,8 +55,32 @@ namespace Infraestructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<Cage?> GetFreeCageByZoneAsync(int zoneId, CancellationToken ct = default)
+        {
+            return await _cageAll.FirstOrDefaultAsync(x => x.ZoneId == zoneId && !x.IsOccupied);
+        }
+
         /// <inheritdoc />
         public async Task UpdateOccupiedStatusAsync(Guid id, CancellationToken ct = default)
+        {
+            var isOccupied = await CheckIfOccupied(id);
+
+            if (isOccupied)
+            {
+                throw new DogiException(string.Format(CAGE_IS_OCCUPIED, id));
+            }
+
+            var entity = await _cageAll.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (entity == null)
+            {
+                throw new DogiException(string.Format(CAGE_NOT_FOUND, id));
+            }
+
+            entity.IsOccupied = !entity.IsOccupied;
+        }
+
+        private async Task<bool> CheckIfOccupied(Guid id)
         {
             var entity = await _cageAll.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -63,7 +88,13 @@ namespace Infraestructure.Persistence.Repositories
             {
                 throw new DogiException(string.Format(CAGE_NOT_FOUND, id));
             }
-            entity.IsOccupied = !entity.IsOccupied;
+
+            if (entity.IsOccupied)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

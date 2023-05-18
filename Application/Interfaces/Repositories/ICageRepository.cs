@@ -11,5 +11,14 @@ namespace Application.Interfaces.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         Task UpdateOccupiedStatusAsync(Guid id, CancellationToken ct = default);
+
+
+        /// <summary>
+        /// Get free cage by zone.
+        /// </summary>
+        /// <param name="zoneId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<Cage?> GetFreeCageByZoneAsync(int zoneId, CancellationToken ct = default);
     }
 }
