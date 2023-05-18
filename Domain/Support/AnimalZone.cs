@@ -14,6 +14,7 @@ namespace Domain.Support
         /// Navigation properties.
         ///</summary>
         public virtual ICollection<IndividualProceeding>? IndividualProceedings { get; set; }
+        public virtual ICollection<Cage>? Cages { get; set; }
 
         ///<summary>
         /// Constructor.

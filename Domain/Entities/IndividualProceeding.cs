@@ -11,12 +11,13 @@ namespace Domain.Entities
         public Guid ReceptionDocumentId { get; set; }
         public string? Name { get; set; }
         public int? Age { get; set; }
-        public string? Color {get; set;}
+        public string? Color { get; set; }
         public int StatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
         public int CategoryId { get; set; }
         public int SexId { get; set; }
         public int ZoneId { get; set; }
+        public Guid CageId { get; set; }
         public bool IsDeleted { get; set; } = false;
 
         /// <summary>
@@ -25,9 +26,9 @@ namespace Domain.Entities
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
         public virtual AnimalCategory AnimalCategory { get; set; } = null!;
-        public virtual Sex Sex { get; set; } = null!; 
+        public virtual Sex Sex { get; set; } = null!;
         public virtual AnimalZone AnimalZone { get; set; } = null!;
-
+        public virtual Cage Cage { get; set; } = null!;
 
         public IndividualProceeding(Guid id) : base(id) { }
         public IndividualProceeding() : base(Guid.NewGuid()) { }
@@ -40,6 +41,7 @@ namespace Domain.Entities
         /// <param name="categoryId"></param>
         /// <param name="sexId"></param>
         /// <param name="zoneId"></param>
+        /// <param name="cageId"></param>
         /// <param name="isDeleted"></param>
         public IndividualProceeding(Guid id,
             Guid receptionDocumentId,
@@ -47,13 +49,15 @@ namespace Domain.Entities
             int categoryId,
             int sexId,
             int zoneId,
-            bool isDeleted) : base(id)
+            bool isDeleted,
+            Guid cageId) : base(id)
         {
             StatusId = statusId;
             CategoryId = categoryId;
             SexId = sexId;
             ZoneId = zoneId;
             IsDeleted = isDeleted;
+            CageId = cageId;
         }
     }
 }
