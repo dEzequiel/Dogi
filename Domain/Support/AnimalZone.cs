@@ -13,7 +13,6 @@ namespace Domain.Support
         ///<summary>
         /// Navigation properties.
         ///</summary>
-        public virtual ICollection<IndividualProceeding>? IndividualProceedings { get; set; }
         public virtual ICollection<Cage>? Cages { get; set; }
 
         ///<summary>

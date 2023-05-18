@@ -26,7 +26,6 @@ namespace Domain.Entities
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
         public virtual AnimalCategory AnimalCategory { get; set; } = null!;
         public virtual Sex Sex { get; set; } = null!;
-        public virtual AnimalZone AnimalZone { get; set; } = null!;
         public virtual Cage Cage { get; set; } = null!;
 
         public IndividualProceeding(Guid id) : base(id) { }

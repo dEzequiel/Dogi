@@ -10,6 +10,7 @@ namespace Domain.Entities
         /// </summary>
         public int Number { get; set; }
         public int? ZoneId { get; set; }
+        public Guid? IndividualProceedingId { get; set; }
         public bool IsOccupied { get; set; } = false;
 
         public virtual AnimalZone? AnimalZone { get; set; } = null!;
@@ -24,9 +25,10 @@ namespace Domain.Entities
         /// <param name="id"></param>
         /// <param name="zoneId"></param>
         /// <param name="isOccupied"></param>
-        public Cage(Guid id, int? zoneId, int number, bool isOccupied) : base(id)
+        public Cage(Guid id, int? zoneId, Guid? individualProceeding, int number, bool isOccupied) : base(id)
         {
             ZoneId = zoneId;
+            IndividualProceedingId = individualProceeding;
             IsOccupied = isOccupied;
             Number = number;
         }

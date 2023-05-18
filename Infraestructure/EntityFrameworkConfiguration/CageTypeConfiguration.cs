@@ -18,6 +18,10 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithMany(r => r.Cages)
                 .HasForeignKey(fk => fk.ZoneId);
 
+            builder.HasOne<IndividualProceeding>(f => f.IndividualProceeding)
+                .WithOne(r => r.Cage)
+                .HasForeignKey<Cage>(fk => fk.IndividualProceedingId);
+
             int totalZones = 10;
 
             for (int zone = 1; zone < totalZones; zone++)
@@ -28,6 +32,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                         new Cage(
                             Guid.NewGuid(),
                             zone,
+                            null,
                             cage,
                             false)
                         );
