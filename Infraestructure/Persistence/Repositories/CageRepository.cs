@@ -77,7 +77,7 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException(string.Format(CAGE_NOT_FOUND, id));
             }
 
-            entity.IsOccupied = !entity.IsOccupied;
+            entity.IsOccupied = true;
         }
 
         private async Task<bool> CheckIfOccupied(Guid id)

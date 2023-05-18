@@ -5,7 +5,7 @@ namespace Domain.Enums
     /// </summary>
     public enum AnimalZone
     {
-        
+
         Dogs = 1,
         Cats = 2,
         Rabbits = 3,
@@ -15,6 +15,7 @@ namespace Domain.Enums
         Exotic = 7,
         Farm = 8,
         Quarantine = 9,
-        Cure = 10
+        Cure = 10,
+        WaitingForOwner = 11,
     }
 }

@@ -69,32 +69,56 @@ namespace Application.Managers
             };
         }
 
-        private async Task<RegisterInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
+        private async Task<RegisterInformation?> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
         {
-            try
+            if (data.AnimalChip.OwnerIsResponsible.Value)
             {
-                var receptionDocumentAndIndividualProceeding = await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
-                var animalChipEntity = await _mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
-
-                return new RegisterInformation()
+                try
                 {
-                    ReceptionDocument = receptionDocumentAndIndividualProceeding.ReceptionDocument,
-                    IndividualProceeding = receptionDocumentAndIndividualProceeding.IndividualProceeding,
-                    AnimalChip = animalChipEntity.Data
-                };
+                    var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+                    data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
+                    var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+                    await AssignCageForIndividualProceedingWithChipOwnerResponsible(individualProceeding.Data);
+
+                    var animalChipEntity = await _mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
+
+                    return new RegisterInformation()
+                    {
+                        ReceptionDocument = receptionDocumentRequest.Data,
+                        IndividualProceeding = individualProceeding.Data,
+                        AnimalChip = animalChipEntity.Data
+                    };
+
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogInformation("WelcomeManager --> AddReceptionDocumentWithAnimalChipOwnerInformation --> Catch Exception");
+                    throw new DogiException("Something went wrong when registering new information");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogInformation("WelcomeManager --> AddReceptionDocumentWithAnimalChipOwnerInformation --> Catch Exception");
-                throw new DogiException("Something went wrong when registering new information");
+                await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
             }
+
+            return null;
         }
 
 
         private async Task AssignCageToIndividualProceeding(IndividualProceeding individualProceeding)
         {
             var cage = await _mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.Quarantine)));
+
+            individualProceeding.CageId = cage.Data.Id;
+            individualProceeding.Cage = cage.Data;
+
+            await _mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+        }
+
+        private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(IndividualProceeding individualProceeding)
+        {
+            var cage = await _mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
 
             individualProceeding.CageId = cage.Data.Id;
             individualProceeding.Cage = cage.Data;
