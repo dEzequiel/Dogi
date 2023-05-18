@@ -5,12 +5,7 @@ using Domain.Entities;
 using Domain.Enums;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -39,6 +34,7 @@ namespace Infraestructure.Persistence.Repositories
             entity.Created = DateTime.UtcNow;
             entity.CreatedBy = admin.Email;
             entity.IsDeleted = false;
+            entity.StatusId = 2;
 
             await _individualProceedingsAll.AddAsync(entity, ct);
         }
