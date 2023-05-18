@@ -1,4 +1,6 @@
 ﻿using Application.DTOs.WelcomeManager;
+using Application.Features.Cage.Commands;
+using Application.Features.Cage.Queries;
 using Application.Features.IndividualPro.Commands;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
@@ -55,7 +57,7 @@ namespace Application.Managers
 
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
-            AssignQuarantineZoneToNewHost(data.IndividualProceeding);
+            await AssignCageToIndividualProceeding(data.IndividualProceeding);
 
             var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
 
@@ -89,16 +91,15 @@ namespace Application.Managers
             }
         }
 
-        private void AssignQuarantineZoneToNewHost(IndividualProceeding individualProceeding)
+
+        private async Task AssignCageToIndividualProceeding(IndividualProceeding individualProceeding)
         {
+            var cage = await _mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.Quarantine)));
 
-            var AnimalZoneRepository = _unitOfWork.AnimalZoneRepository.GetQueryableAsync();
+            individualProceeding.CageId = cage.Data.Id;
+            individualProceeding.Cage = cage.Data;
 
-            var animalZone = AnimalZoneRepository.FirstOrDefault(x => x.Id == (int)AnimalZone.Quarantine);
-
-            individualProceeding.ZoneId = ((int)AnimalZone.Quarantine);
-            individualProceeding.AnimalZone = animalZone!;
-
+            await _mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
 
         ///<inheritdoc />

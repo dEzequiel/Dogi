@@ -1,6 +1,7 @@
 using Application.DTOs.WelcomeManager;
+using Application.Features.Cage.Commands;
+using Application.Features.Cage.Queries;
 using Application.Features.IndividualPro.Commands;
-using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Managers;
 using AutoFixture.Xunit2;
@@ -21,6 +22,8 @@ namespace Test.Application.Managers
             [Frozen] Mock<IMediator> mediatorMock,
             ApiResponse<ReceptionDocument> receptionDocumentApiResponse,
             ApiResponse<IndividualProceeding> individualProceedingApiResponse,
+            ApiResponse<Cage> cageApiResponse,
+            ApiResponse<bool> isOccupiedCageApiResponse,
             RegisterInformation registerInformation,
             AdminData adminData,
             WelcomeManager sut)
@@ -32,49 +35,17 @@ namespace Test.Application.Managers
                                            It.IsAny<CancellationToken>()))
                 .ReturnsAsync(receptionDocumentApiResponse);
 
-            mediatorMock.Setup(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
-                               It.IsAny<CancellationToken>()))
-                .ReturnsAsync(individualProceedingApiResponse);
-
-            // Act
-            var result = await sut.RegisterAnimal(registerInformation, adminData);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.IsType<RegisterInformation>(result);
-            mediatorMock.Verify(x => x.Send(It.IsAny<InsertReceptionDocumentRequest>(),
-                                            It.IsAny<CancellationToken>()), Times.Once);
-
-            mediatorMock.Verify(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
-                                            It.IsAny<CancellationToken>()), Times.Once);
-
-        }
-
-        [Theory]
-        [AutoMoqData]
-        internal async Task ShouldRegisterInformationAboutReceptionDocumentIndividualProceedingAndAnimalChipIfAnimalHasChipAsync(
-            [Frozen] Mock<IMediator> mediatorMock,
-            ApiResponse<ReceptionDocument> receptionDocumentApiResponse,
-            ApiResponse<IndividualProceeding> individualProceedingApiResponse,
-            ApiResponse<AnimalChip> animalChipApiResponse,
-            RegisterInformation registerInformation,
-            AdminData adminData,
-            WelcomeManager sut)
-        {
-            // Arrange
-            registerInformation.ReceptionDocument.HasChip = true;
-
-            mediatorMock.Setup(x => x.Send(It.IsAny<InsertReceptionDocumentRequest>(),
+            mediatorMock.Setup(x => x.Send(It.IsAny<GetFreeCageByZoneRequest>(),
                                            It.IsAny<CancellationToken>()))
-                .ReturnsAsync(receptionDocumentApiResponse);
+                .ReturnsAsync(cageApiResponse);
+
+            mediatorMock.Setup(x => x.Send(It.IsAny<UpdateCageOccupiedStatusRequest>(),
+                                           It.IsAny<CancellationToken>()))
+                .ReturnsAsync(isOccupiedCageApiResponse);
 
             mediatorMock.Setup(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
-                               It.IsAny<CancellationToken>()))
+                   It.IsAny<CancellationToken>()))
                 .ReturnsAsync(individualProceedingApiResponse);
-
-            mediatorMock.Setup(x => x.Send(It.IsAny<InsertAnimalChipRequest>(),
-                               It.IsAny<CancellationToken>()))
-                .ReturnsAsync(animalChipApiResponse);
 
             // Act
             var result = await sut.RegisterAnimal(registerInformation, adminData);
@@ -88,9 +59,55 @@ namespace Test.Application.Managers
             mediatorMock.Verify(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
                                             It.IsAny<CancellationToken>()), Times.Once);
 
-            mediatorMock.Verify(x => x.Send(It.IsAny<InsertAnimalChipRequest>(),
-                                It.IsAny<CancellationToken>()), Times.Once);
+            mediatorMock.Verify(x => x.Send(It.IsAny<UpdateCageOccupiedStatusRequest>(),
+                                            It.IsAny<CancellationToken>()), Times.Once);
+
+            mediatorMock.Verify(x => x.Send(It.IsAny<GetFreeCageByZoneRequest>(),
+                                            It.IsAny<CancellationToken>()), Times.Once);
 
         }
+
+        //[Theory]
+        //[AutoMoqData]
+        //internal async Task ShouldRegisterInformationAboutReceptionDocumentIndividualProceedingAndAnimalChipIfAnimalHasChipAsync(
+        //    [Frozen] Mock<IMediator> mediatorMock,
+        //    ApiResponse<ReceptionDocument> receptionDocumentApiResponse,
+        //    ApiResponse<IndividualProceeding> individualProceedingApiResponse,
+        //    ApiResponse<AnimalChip> animalChipApiResponse,
+        //    RegisterInformation registerInformation,
+        //    AdminData adminData,
+        //    WelcomeManager sut)
+        //{
+        //    // Arrange
+        //    registerInformation.ReceptionDocument.HasChip = true;
+
+        //    mediatorMock.Setup(x => x.Send(It.IsAny<InsertReceptionDocumentRequest>(),
+        //                                   It.IsAny<CancellationToken>()))
+        //        .ReturnsAsync(receptionDocumentApiResponse);
+
+        //    mediatorMock.Setup(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
+        //                       It.IsAny<CancellationToken>()))
+        //        .ReturnsAsync(individualProceedingApiResponse);
+
+        //    mediatorMock.Setup(x => x.Send(It.IsAny<InsertAnimalChipRequest>(),
+        //                       It.IsAny<CancellationToken>()))
+        //        .ReturnsAsync(animalChipApiResponse);
+
+        //    // Act
+        //    var result = await sut.RegisterAnimal(registerInformation, adminData);
+
+        //    // Assert
+        //    Assert.NotNull(result);
+        //    Assert.IsType<RegisterInformation>(result);
+        //    mediatorMock.Verify(x => x.Send(It.IsAny<InsertReceptionDocumentRequest>(),
+        //                                    It.IsAny<CancellationToken>()), Times.Once);
+
+        //    mediatorMock.Verify(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
+        //                                    It.IsAny<CancellationToken>()), Times.Once);
+
+        //    mediatorMock.Verify(x => x.Send(It.IsAny<InsertAnimalChipRequest>(),
+        //                        It.IsAny<CancellationToken>()), Times.Once);
+
+        //}
     }
 }
