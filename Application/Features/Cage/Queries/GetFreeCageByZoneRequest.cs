@@ -24,6 +24,7 @@ namespace Application.Features.Cage.Queries
     {
         private readonly ILogger<GetFreeCageByZoneRequestHandler> _logger;
         private readonly ICageRead _cageRead;
+        private const string FREE_CAGE_NOT_FOUND = "Free cage not found in zone";
 
         /// <summary>
         /// Constructor.
@@ -44,6 +45,12 @@ namespace Application.Features.Cage.Queries
             Guard.Against.Null(request, nameof(request));
 
             Domain.Entities.Cage result = await _cageRead.GetFreeCageByZone(request.ZoneId, cancellationToken);
+
+            if (result is null)
+            {
+                _logger.LogError("GetFreeCageByZoneRequestHandler --> GetFreeCageByZone --> Error");
+                throw new NotFoundException(nameof(Domain.Entities.Cage), FREE_CAGE_NOT_FOUND);
+            }
 
             return new ApiResponse<Domain.Entities.Cage>(result);
         }
