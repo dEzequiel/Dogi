@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infraestructure.EntityFrameworkConfiguration
 {
-    public class ProceedingStatusTypeConfiguration : IEntityTypeConfiguration<ProceedingStatus>
+    public class IndividualProceedingStatusTypeConfiguration : IEntityTypeConfiguration<IndividualProceedingStatus>
     {
-        public void Configure(EntityTypeBuilder<ProceedingStatus> builder)
+        public void Configure(EntityTypeBuilder<IndividualProceedingStatus> builder)
         {
             builder
                 .ToTable("ProceedingStatus", "Dogi")

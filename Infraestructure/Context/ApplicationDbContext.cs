@@ -26,7 +26,7 @@ namespace Infraestructure.Context
 
         // Support Tables
         public DbSet<Sex> Sex { get; set; } = null!;
-        public DbSet<ProceedingStatus> ProceedingStatus { get; set; } = null!;
+        public DbSet<IndividualProceedingStatus> ProceedingStatus { get; set; } = null!;
         public DbSet<AnimalCategory> AnimalCategory { get; set; } = null!;
         public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
 
@@ -38,7 +38,7 @@ namespace Infraestructure.Context
             new IndividualProceedingTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceeding>());
             new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());
             new AnimalCategoryTypeConfiguration().Configure(modelBuilder.Entity<AnimalCategory>());
-            new ProceedingStatusTypeConfiguration().Configure(modelBuilder.Entity<ProceedingStatus>());
+            new IndividualProceedingStatusTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceedingStatus>());
             new AnimalZoneTypeConfiguration().Configure(modelBuilder.Entity<AnimalZone>());
             new PersonTypeConfiguration().Configure(modelBuilder.Entity<Person>());
             new PersonBannedInformationTypeConfiguration().Configure(modelBuilder.Entity<PersonBannedInformation>());

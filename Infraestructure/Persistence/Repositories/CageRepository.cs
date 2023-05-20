@@ -57,7 +57,7 @@ namespace Infraestructure.Persistence.Repositories
 
         public async Task<Cage?> GetFreeCageByZoneAsync(int zoneId, CancellationToken ct = default)
         {
-            return await _cageAll.FirstOrDefaultAsync(x => x.ZoneId == zoneId && !x.IsOccupied);
+            return await _cageAll.FirstOrDefaultAsync(x => x.AnimalZoneId == zoneId && !x.IsOccupied);
         }
 
         /// <inheritdoc />
