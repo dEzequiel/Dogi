@@ -6,6 +6,7 @@ using Application.Service.Implementation.Command;
 using Application.Service.Implementation.Read;
 using Application.Service.Implementation.Write;
 using Domain.Entities;
+using Domain.Support;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -39,6 +40,10 @@ namespace Application
             services.AddTransient<ICageWrite, CageWrite>();
             services.AddTransient<ICageRead, CageRead>();
             services.AddTransient<Cage>();
+
+            services.AddTransient<IIndividualProceedingStatusRead, IndividualProceedingStatusRead>();
+            services.AddTransient<IndividualProceedingStatus>();
+
 
             return services;
         }

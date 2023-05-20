@@ -2,6 +2,7 @@
 using Application.Features.Cage.Commands;
 using Application.Features.Cage.Queries;
 using Application.Features.IndividualPro.Commands;
+using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Interfaces;
@@ -18,7 +19,7 @@ namespace Application.Managers
     public class WelcomeManager : IWelcomeManager
     {
         private readonly ILogger<WelcomeManager> _logger;
-        private readonly IMediator _mediator;
+        private readonly IMediator Mediator;
         private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace Application.Managers
         /// <param name="logger"></param>
         public WelcomeManager(IMediator mediator, IUnitOfWork unitOfWork, ILogger<WelcomeManager> logger)
         {
-            _mediator = mediator;
+            Mediator = mediator;
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
@@ -54,16 +55,16 @@ namespace Application.Managers
 
         private async Task<RegisterInformation> AddReceptionDocumentWithIndividualProceedingAsync(RegisterInformation data, AdminData adminData)
         {
-            var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+            var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
 
 
             Guard.Against.Null(receptionDocumentRequest.Data);
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
-            AssignOpenStatusToIndividualProceeding(data.IndividualProceeding);
+            await AssignOpenStatusToIndividualProceeding(data.IndividualProceeding);
 
-            var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+            var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
             Guard.Against.Null(individualProceeding.Data);
 
             return new RegisterInformation()
@@ -80,15 +81,15 @@ namespace Application.Managers
             {
                 try
                 {
-                    var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+                    var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
                     Guard.Against.Null(receptionDocumentRequest.Data);
                     data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
-                    var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+                    var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
                     Guard.Against.Null(individualProceeding.Data);
                     await AssignCageForIndividualProceedingWithChipOwnerResponsible(individualProceeding.Data);
 
-                    var animalChipEntity = await _mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
+                    var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
 
                     return new RegisterInformation()
                     {
@@ -115,28 +116,32 @@ namespace Application.Managers
 
         private async Task AssignCageToIndividualProceeding(IndividualProceeding individualProceeding)
         {
-            var cage = await _mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.Quarantine)));
+            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.Quarantine)));
 
             Guard.Against.Null(cage.Data);
 
             individualProceeding.CageId = cage.Data.Id;
             cage.Data.IndividualProceedingId = individualProceeding.Id;
 
-            await _mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
 
-        private void AssignOpenStatusToIndividualProceeding(IndividualProceeding individualProceeding)
+        private async Task AssignOpenStatusToIndividualProceeding(IndividualProceeding individualProceeding)
         {
-            individualProceeding.IndividualProceedingStatusId = (int)IndividualProceedingStatus.Open;
+            var openStatus = await Mediator.Send(new GetIndividualProceedingStatusByIdRequest(((int)IndividualProceedingStatus.Open)));
+
+            Guard.Against.Null(openStatus.Data);
+
+            individualProceeding.IndividualProceedingStatusId = openStatus.Data.Id;
         }
 
         private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(IndividualProceeding individualProceeding)
         {
-            var cage = await _mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
+            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
 
             individualProceeding.CageId = cage.Data!.Id;
 
-            await _mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
 
         ///<inheritdoc />

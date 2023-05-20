@@ -26,7 +26,7 @@ namespace Infraestructure.Context
 
         // Support Tables
         public DbSet<Sex> Sex { get; set; } = null!;
-        public DbSet<IndividualProceedingStatus> ProceedingStatus { get; set; } = null!;
+        public DbSet<IndividualProceedingStatus> IndividualProceedingStatus { get; set; } = null!;
         public DbSet<AnimalCategory> AnimalCategory { get; set; } = null!;
         public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
 

@@ -13,6 +13,7 @@ namespace Application.Service.Interfaces
         IAnimalChipRepository AnimalChipRepository { get; }
         IAnimalZoneRepository AnimalZoneRepository { get; }
         ICageRepository CageRepository { get; }
+        IIndividualProceedingStatusRepository IndividualProceedingStatusRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>

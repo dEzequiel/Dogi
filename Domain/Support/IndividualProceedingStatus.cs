@@ -1,5 +1,4 @@
-﻿using Domain.Common;
-using Domain.Entities;
+﻿using Domain.Entities;
 
 namespace Domain.Support
 {
@@ -32,6 +31,8 @@ namespace Domain.Support
             Id = id;
             Status = status;
         }
+
+        public IndividualProceedingStatus() { }
 
     }
 }
