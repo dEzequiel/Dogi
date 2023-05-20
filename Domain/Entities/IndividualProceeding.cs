@@ -51,7 +51,7 @@ namespace Domain.Entities
         /// <summary>
         /// Animal status relationship.
         /// </summary>
-        public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
+        public virtual IndividualProceedingStatus ProceedingStatus { get; set; }
         /// <summary>
         /// Animal category relationship.
         /// </summary>
