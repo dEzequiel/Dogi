@@ -15,6 +15,7 @@ namespace Application.Service.Interfaces
         ICageRepository CageRepository { get; }
         IIndividualProceedingStatusRepository IndividualProceedingStatusRepository { get; }
         IAnimalCategoryRepository AnimalCategoryRepository { get; }
+        ISexRepository SexRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>
