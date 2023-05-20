@@ -5,11 +5,6 @@ using Crosscuting.Api.DTOs.Response;
 using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.IndividualPro.Commands
 {
@@ -30,7 +25,7 @@ namespace Application.Features.IndividualPro.Commands
         }
     }
 
-    public class InsertIndividualProceedingRequestHandler : IRequestHandler<InsertIndividualProceedingRequest, 
+    public class InsertIndividualProceedingRequestHandler : IRequestHandler<InsertIndividualProceedingRequest,
                                                          ApiResponse<IndividualProceeding>>
     {
         private readonly ILogger<InsertIndividualProceedingRequestHandler> _logger;
@@ -55,7 +50,7 @@ namespace Application.Features.IndividualPro.Commands
             Guard.Against.Null(request, nameof(request));
 
             IndividualProceeding result = await _individualProceedingWrite.AddAsync(request.IndividualProceedingData, request.AdminData);
-            
+
             return new ApiResponse<IndividualProceeding>(result);
         }
     }

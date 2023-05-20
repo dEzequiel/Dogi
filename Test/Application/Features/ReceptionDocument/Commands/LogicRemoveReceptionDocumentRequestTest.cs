@@ -4,11 +4,6 @@ using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test.Utils.Attributes;
 
 namespace Test.Application.Features.ReceptionDocument.Commands
@@ -28,14 +23,11 @@ namespace Test.Application.Features.ReceptionDocument.Commands
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] AdminData admin,
             [Frozen] Mock<IReceptionDocumentWrite> receptionDocumentWriteServiceMock,
             LogicRemoveReceptionDocumentRequest request,
             LogicRemoveReceptionDocumentRequestHandler handler)
         {
             // Arrange
-            var idToDelete = Guid.NewGuid();
-
             receptionDocumentWriteServiceMock.Setup(x => x.LogicRemoveAsync(It.IsAny<Guid>(), It.IsAny<AdminData>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 

@@ -13,11 +13,16 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasData(
-                Enum.GetValues(typeof(Domain.Enums.AnimalCategory))
-                .Cast<Domain.Enums.AnimalCategory>()
-                .Select(e => new { Id = (int)e, Type = e.ToString() })
-            );
+
+            var totalAnimalCategories = Enum.GetNames(typeof(Domain.Enums.AnimalCategory));
+
+            int id = 0;
+            foreach (var category in totalAnimalCategories)
+            {
+                id++;
+                builder.HasData(new AnimalCategory(id, category));
+            }
+
         }
     }
 }

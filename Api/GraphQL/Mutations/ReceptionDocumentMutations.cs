@@ -1,6 +1,4 @@
 ﻿using Application.Features.ReceptionDocument.Commands;
-using Ardalis.GuardClauses;
-using AutoMapper;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
@@ -11,18 +9,20 @@ namespace Api.GraphQL.Mutations
     /// <summary>
     /// ReceptionDocument entity public mutations.
     /// </summary>
-    [ExtendObjectType("Mutation")]
     public class ReceptionDocumentMutations
     {
-        public IMediator _mediator { get; set; }
+        public ILogger<ReceptionDocumentMutations> Logger { get; set; } = null!;
+        public IMediator Mediator { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="mediator"></param>
-        public ReceptionDocumentMutations(IMediator mediator, ILogger<ReceptionDocumentMutations> logger, IMapper mapper)
+        /// <param name="_mediator"></param>
+        /// <param name="_logger"></param>
+        public ReceptionDocumentMutations(IMediator _mediator, ILogger<ReceptionDocumentMutations> _logger)
         {
-            _mediator = Guard.Against.Null(mediator, nameof(mediator));
+            Mediator = _mediator;
+            Logger = _logger;
         }
 
         public ReceptionDocumentMutations()
@@ -30,26 +30,30 @@ namespace Api.GraphQL.Mutations
         }
 
 
-        public async Task<ReceptionDocument> AddReceptionDocumentAsync([Service] ISender _mediator, ReceptionDocument input)
+        public async Task<ReceptionDocument> AddReceptionDocumentAsync([Service] ISender Mediator, ReceptionDocument input)
         {
+            Logger.LogInformation("ReceptionDocumentMutations --> AddReceptionDocumentAsync --> Start");
 
-            var result = await _mediator.Send(new InsertReceptionDocumentRequest(input, GetAdminData()));
+            var result = await Mediator.Send(new InsertReceptionDocumentRequest(input, GetAdminData()));
 
-            if(!result.Succeeded)
+            if (result.Data is null)
             {
+                Logger.LogInformation("ReceptionDocumentMutations --> AddReceptionDocumentAsync --> Error");
 
                 throw new DogiException(result.Message);
             }
 
+            Logger.LogInformation("ReceptionDocumentMutations --> AddReceptionDocumentAsync --> End");
 
-            return result.Data;                                                                                                                        
+
+            return result.Data;
         }
 
         public async Task<bool> MarkReceptionDocumentAsRemovedAsync([Service] ISender _mediator, Guid idToDelete)
         {
             var result = await _mediator.Send(new LogicRemoveReceptionDocumentRequest(idToDelete, GetAdminData()));
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 throw new DogiException(result.Message);
             }
@@ -57,7 +61,7 @@ namespace Api.GraphQL.Mutations
             return result.Data;
         }
 
-        private AdminData GetAdminData()
+        private static AdminData GetAdminData()
         {
             return new AdminData()
             {

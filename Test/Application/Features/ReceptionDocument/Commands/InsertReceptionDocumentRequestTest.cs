@@ -3,7 +3,6 @@ using Application.Service.Abstraction;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
-using Domain.Entities;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -27,12 +26,11 @@ namespace Test.Application.Features.ReceptionDocument.Commands
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IReceptionDocumentWrite> receptionDocumentWriteServiceMock,
             Domain.Entities.ReceptionDocument documentDataForGet,
-            AdminData adminData,
             InsertReceptionDocumentRequest request,
             InsertReceptionDocumentRequestHandler handler)
         {
             // Arrange
-            receptionDocumentWriteServiceMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.ReceptionDocument>(), 
+            receptionDocumentWriteServiceMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.ReceptionDocument>(),
                                                                     It.IsAny<AdminData>(),
                                                                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(documentDataForGet);
@@ -42,6 +40,6 @@ namespace Test.Application.Features.ReceptionDocument.Commands
 
             // Assert
             Assert.IsType<ApiResponse<Domain.Entities.ReceptionDocument>>(result);
-        } 
+        }
     }
 }

@@ -1,31 +1,38 @@
-﻿using Domain.Common;
-using Domain.Entities;
+﻿using Domain.Entities;
 
 namespace Domain.Support
 {
     /// <summary>
     /// Support table representing records eqivalent to IndividualProceedingStatus domain enumerator.
     /// </summary>
-    public class ProceedingStatus : SupportTable
+    public class IndividualProceedingStatus
     {
         /// <summary>
-        /// Attributes.
+        /// Identifier.
         /// </summary>
-        public string Status { get; set; }
+        public int Id { get; set; }
+        /// <summary>
+        /// Status.
+        /// </summary>
+        public string Status { get; set; } = string.Empty;
 
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public ICollection<IndividualProceeding>? Processees { get; set; }
+        public virtual ICollection<IndividualProceeding>? IndivualProceedings { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="status"></param>
-        public ProceedingStatus(int id, string status) : base(id)
+        public IndividualProceedingStatus(int id, string status)
         {
+            Id = id;
             Status = status;
         }
+
+        public IndividualProceedingStatus() { }
+
     }
 }

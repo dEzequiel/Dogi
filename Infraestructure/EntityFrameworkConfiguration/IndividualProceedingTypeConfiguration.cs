@@ -18,18 +18,21 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithOne(r => r.IndividualProceeding)
                 .HasForeignKey<IndividualProceeding>(rd => rd.ReceptionDocumentId);
 
-            builder.HasOne<ProceedingStatus>(b => b.ProceedingStatus)
-                .WithMany(p => p.Processees)
-                .HasForeignKey(fk => fk.StatusId)
-                .IsRequired(false);
+            builder.HasOne<IndividualProceedingStatus>(b => b.IndividualProceedingStatus)
+                .WithMany(p => p.IndivualProceedings)
+                .HasForeignKey(fk => fk.IndividualProceedingStatusId);
 
             builder.HasOne<AnimalCategory>(f => f.AnimalCategory)
                 .WithMany(r => r.IndividualProceedings)
                 .HasForeignKey(fk => fk.CategoryId);
-            
-            builder.HasOne<AnimalZone>(f => f.AnimalZone)
+
+            builder.HasOne<Cage>(f => f.Cage)
+                .WithOne(r => r.IndividualProceeding)
+                .HasForeignKey<IndividualProceeding>(rd => rd.CageId);
+
+            builder.HasOne<Sex>(f => f.Sex)
                 .WithMany(r => r.IndividualProceedings)
-                .HasForeignKey(fk => fk.ZoneId);
+                .HasForeignKey(fk => fk.SexId);
         }
     }
 }

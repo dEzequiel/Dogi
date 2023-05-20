@@ -1,6 +1,5 @@
 ﻿using Application.DTOs.WelcomeManager;
 using Application.Features.WelcomeManagerFeature.Command;
-using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using MediatR;
@@ -12,44 +11,59 @@ namespace Api.GraphQL.Mutations
     /// </summary>
     public class WelcomeManagerMutations
     {
-        public IMediator _mediator { get; set; }
+        private readonly IMediator Mediator;
+        private readonly ILogger<WelcomeManagerMutations> Logger;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="mediator"></param>
-        public WelcomeManagerMutations(IMediator mediator)
+        /// <param name="_mediator"></param>
+        /// <param name="_logger"></param>
+        public WelcomeManagerMutations(IMediator _mediator, ILogger<WelcomeManagerMutations> _logger)
         {
-            _mediator = Guard.Against.Null(mediator, nameof(mediator));
+            Mediator = _mediator;
+            Logger = _logger;
         }
-
-        public WelcomeManagerMutations() { }
 
         /// <summary>
         /// Add a new reception document taking into account whether the animal has a chip or not. With this condition you take one way or the other.
         /// </summary>
-        /// <param name="_mediator"></param>
+        /// <param name="Mediator"></param>
         /// <param name="input"></param>
         /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
         /// <exception cref="DogiException"></exception>
-        public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender _mediator, 
+        public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender Mediator,
             RegisterInformation input)
         {
-            var result = await _mediator.Send(new InsertRegisterInformationRequest(input, 
-                GetAdminData()));
-
-            if (!result.Succeeded)
+            try
             {
-                throw new DogiException(result.Message);
+                Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> Start");
+
+                var result = await Mediator.Send(new InsertRegisterInformationRequest(input, GetAdminData()));
+
+                Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> End");
+
+                return result.Data!;
             }
-            return result.Data;
+            catch (DogiException ex)
+            {
+                Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> Error");
+                throw new DogiException(ex.Message);
+            }
+
         }
 
         /// <summary>
         /// Get current user information.
         /// </summary>
         /// <returns>Object representing user information.</returns>
-        private AdminData GetAdminData()
+        private static AdminData GetAdminData()
         {
             return new AdminData()
             {

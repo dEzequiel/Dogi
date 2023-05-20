@@ -4,7 +4,6 @@ using Application.Managers;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
-using MediatR;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -27,9 +26,7 @@ namespace Test.Application.Features.WelcomeManagerTest
         [AutoMoqData]
         internal async Task HandleShouldCallManagerServiceWhenAnimalHasNoChipAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IWelcomeManager> welcomeManagerWriteServiceMock,
-            [Frozen] Mock<IMediator> mediator,
             RegisterInformation registerInformationGet,
-            AdminData adminData,
             InsertRegisterInformationRequest request,
             InsertRegisterInformationRequestHandler handler)
         {

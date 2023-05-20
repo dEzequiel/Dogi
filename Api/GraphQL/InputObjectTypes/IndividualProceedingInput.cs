@@ -9,33 +9,24 @@ namespace Api.GraphQL.InputObjectTypes
     {
         protected override void Configure(IInputObjectTypeDescriptor<IndividualProceeding> descriptor)
         {
-            descriptor.Field(f => f.Name)
-                .Type<StringType>();
+            descriptor.Field(f => f.Name).Type<StringType>();
+            descriptor.Field(f => f.Age).Type<IntType>();
+            descriptor.Field(f => f.Color).Type<StringType>();
+            descriptor.Field(f => f.CategoryId).Type<NonNullType<IntType>>();
+            descriptor.Field(f => f.SexId).Type<NonNullType<IntType>>();
 
-            descriptor.Field(f => f.Age)
-                .Type<IntType>();
-            
-            descriptor.Field(f => f.Color)
-                .Type<StringType>();
-
-            descriptor.Field(f => f.StatusId)
-                .Type<NonNullType<IntType>>();
-            
-            descriptor.Field(f => f.CategoryId)
-                .Type<NonNullType<IntType>>();
-            
-            descriptor.Field(f => f.SexId)
-                .Type<NonNullType<IntType>>();
-            descriptor.Ignore(f => f.ZoneId);            
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.ReceptionDocumentId);
+            descriptor.Ignore(f => f.CageId);
+            descriptor.Ignore(f => f.IndividualProceedingStatusId);
             descriptor.Ignore(f => f.IsDeleted);
+
             descriptor.Ignore(f => f.ReceptionDocument);
-            descriptor.Ignore(f => f.ProceedingStatus);
+            descriptor.Ignore(f => f.IndividualProceedingStatus);
             descriptor.Ignore(f => f.AnimalCategory);
-            descriptor.Ignore(f => f.ZoneId);
-            descriptor.Ignore(f => f.AnimalZone);
             descriptor.Ignore(f => f.Sex);
+            descriptor.Ignore(f => f.Cage);
+
             descriptor.Ignore(f => f.Created);
             descriptor.Ignore(f => f.CreatedBy);
             descriptor.Ignore(f => f.LastModified);

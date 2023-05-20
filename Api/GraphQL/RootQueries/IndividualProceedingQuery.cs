@@ -8,8 +8,8 @@ namespace Api.GraphQL.GraphQLQueries
     public partial class Query
     {
         /// <summary>
-        /// Animal entity public queries.
+        /// Public IndividualProceeding queries.
         /// </summary>
-        public IndividualProceeding? IndividualProceeding { get; }
+        public IndividualProceeding? IndividualProceedingId { get; }
     }
 }

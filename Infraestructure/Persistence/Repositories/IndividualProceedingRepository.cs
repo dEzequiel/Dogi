@@ -5,12 +5,7 @@ using Domain.Entities;
 using Domain.Enums;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -77,7 +72,7 @@ namespace Infraestructure.Persistence.Repositories
         public async Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatus status, CancellationToken ct = default)
         {
             return await _individualProceedings.AsNoTracking()
-                                               .Where(x => x.StatusId == ((int)status))
+                                               .Where(x => x.IndividualProceedingStatusId == ((int)status))
                                                .ToListAsync();
 
         }
@@ -112,7 +107,7 @@ namespace Infraestructure.Persistence.Repositories
             individualProceeding.LastModified = DateTime.UtcNow;
             individualProceeding.LastModifiedBy = admin.Email;
 
-            individualProceeding.StatusId = ((int)status);
+            individualProceeding.IndividualProceedingStatusId = ((int)status);
         }
     }
 }

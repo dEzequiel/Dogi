@@ -3,31 +3,67 @@ using Domain.Support;
 
 namespace Domain.Entities
 {
+    /// <summary>
+    /// Represents an animal in the shelter.
+    /// </summary>
     public class IndividualProceeding : AuditableEntity
     {
         /// <summary>
-        /// Attributes.
+        /// Nested reception document when animal first arrives.  
         /// </summary>
         public Guid ReceptionDocumentId { get; set; }
+        /// <summary>
+        /// Animal name.
+        /// </summary>
         public string? Name { get; set; }
+        /// <summary>
+        /// Animal age.
+        /// </summary>
         public int? Age { get; set; }
-        public string? Color {get; set;}
-        public int StatusId { get; set; }
+        /// <summary>
+        /// Animal color.
+        /// </summary>
+        public string? Color { get; set; }
+        /// <summary>
+        /// Animal status id.
+        /// </summary>
+        public int IndividualProceedingStatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
+        /// <summary>
+        /// AnIMAL category id.
+        /// </summary>
         public int CategoryId { get; set; }
+        /// <summary>
+        /// Animal sex id.
+        /// </summary>
         public int SexId { get; set; }
-        public int ZoneId { get; set; }
+        /// <summary>
+        /// Animal cage id.
+        /// </summary>
+        public Guid CageId { get; set; }
         public bool IsDeleted { get; set; } = false;
 
+
         /// <summary>
-        /// Navigation properties.
+        /// Animal reception document relationship.
         /// </summary>
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
-        public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
+        /// <summary>
+        /// Animal status relationship.
+        /// </summary>
+        public virtual IndividualProceedingStatus IndividualProceedingStatus { get; set; } = null!;
+        /// <summary>
+        /// Animal category relationship.
+        /// </summary>
         public virtual AnimalCategory AnimalCategory { get; set; } = null!;
-        public virtual Sex Sex { get; set; } = null!; 
-        public virtual AnimalZone AnimalZone { get; set; } = null!;
-
+        /// <summary>
+        /// Animal sex relationship.
+        /// </summary>
+        public virtual Sex Sex { get; set; } = null!;
+        /// <summary>
+        /// Animal cage relationship.
+        /// </summary>
+        public virtual Cage Cage { get; set; } = null!;
 
         public IndividualProceeding(Guid id) : base(id) { }
         public IndividualProceeding() : base(Guid.NewGuid()) { }
@@ -35,25 +71,27 @@ namespace Domain.Entities
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="receptionDocumentId"></param>
         /// <param name="statusId"></param>
         /// <param name="categoryId"></param>
         /// <param name="sexId"></param>
-        /// <param name="zoneId"></param>
         /// <param name="isDeleted"></param>
+        /// <param name="cageId"></param>
         public IndividualProceeding(Guid id,
             Guid receptionDocumentId,
             int statusId,
             int categoryId,
             int sexId,
-            int zoneId,
-            bool isDeleted) : base(id)
+            bool isDeleted,
+            Guid cageId) : base(id)
         {
-            StatusId = statusId;
+            ReceptionDocumentId = receptionDocumentId;
+            IndividualProceedingStatusId = statusId;
             CategoryId = categoryId;
             SexId = sexId;
-            ZoneId = zoneId;
             IsDeleted = isDeleted;
+            CageId = cageId;
         }
     }
 }

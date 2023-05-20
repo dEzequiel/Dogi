@@ -1,8 +1,13 @@
 ﻿using Application.DTOs.WelcomeManager;
+using Application.Features.AnimalCategory.Queries;
+using Application.Features.Cage.Commands;
+using Application.Features.Cage.Queries;
 using Application.Features.IndividualPro.Commands;
+using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Interfaces;
+using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
@@ -15,7 +20,7 @@ namespace Application.Managers
     public class WelcomeManager : IWelcomeManager
     {
         private readonly ILogger<WelcomeManager> _logger;
-        private readonly IMediator _mediator;
+        private readonly IMediator Mediator;
         private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>
@@ -26,7 +31,7 @@ namespace Application.Managers
         /// <param name="logger"></param>
         public WelcomeManager(IMediator mediator, IUnitOfWork unitOfWork, ILogger<WelcomeManager> logger)
         {
-            _mediator = mediator;
+            Mediator = mediator;
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
@@ -51,13 +56,18 @@ namespace Application.Managers
 
         private async Task<RegisterInformation> AddReceptionDocumentWithIndividualProceedingAsync(RegisterInformation data, AdminData adminData)
         {
-            var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+            var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
 
+
+            Guard.Against.Null(receptionDocumentRequest.Data);
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
-            AssignQuarantineZoneToNewHost(data.IndividualProceeding);
+            await AssignCageToIndividualProceeding(data.IndividualProceeding);
+            await AssignOpenStatusToIndividualProceeding(data.IndividualProceeding);
+            await AssignCategoryToIndividualProceeding(data.IndividualProceeding);
 
-            var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+            var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+            Guard.Against.Null(individualProceeding.Data);
 
             return new RegisterInformation()
             {
@@ -67,38 +77,80 @@ namespace Application.Managers
             };
         }
 
-        private async Task<RegisterInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
+        private async Task<RegisterInformation?> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
         {
-            try
+            if (data.AnimalChip!.OwnerIsResponsible!.Value)
             {
-                var receptionDocumentAndIndividualProceeding = await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
-                var animalChipEntity = await _mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
-
-                return new RegisterInformation()
+                try
                 {
-                    ReceptionDocument = receptionDocumentAndIndividualProceeding.ReceptionDocument,
-                    IndividualProceeding = receptionDocumentAndIndividualProceeding.IndividualProceeding,
-                    AnimalChip = animalChipEntity.Data
-                };
+                    var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+                    Guard.Against.Null(receptionDocumentRequest.Data);
+                    data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
+                    var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+                    Guard.Against.Null(individualProceeding.Data);
+                    await AssignCageForIndividualProceedingWithChipOwnerResponsible(individualProceeding.Data);
+
+                    var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
+
+                    return new RegisterInformation()
+                    {
+                        ReceptionDocument = receptionDocumentRequest.Data,
+                        IndividualProceeding = individualProceeding.Data,
+                        AnimalChip = animalChipEntity.Data
+                    };
+
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogInformation("WelcomeManager --> AddReceptionDocumentWithAnimalChipOwnerInformation --> Catch Exception");
+                    throw new DogiException("Something went wrong when registering new information");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogInformation("WelcomeManager --> AddReceptionDocumentWithAnimalChipOwnerInformation --> Catch Exception");
-                throw new DogiException("Something went wrong when registering new information");
+                await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
             }
+
+            return null;
         }
 
-        private void AssignQuarantineZoneToNewHost(IndividualProceeding individualProceeding)
+
+        private async Task AssignCageToIndividualProceeding(IndividualProceeding individualProceeding)
         {
+            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.Quarantine)));
 
-            var AnimalZoneRepository = _unitOfWork.AnimalZoneRepository.GetQueryableAsync();
+            Guard.Against.Null(cage.Data);
 
-            var animalZone = AnimalZoneRepository.FirstOrDefault(x => x.Id == (int)AnimalZone.Quarantine);
+            individualProceeding.CageId = cage.Data.Id;
+            cage.Data.IndividualProceedingId = individualProceeding.Id;
 
-            individualProceeding.ZoneId = ((int)AnimalZone.Quarantine);
-            individualProceeding.AnimalZone = animalZone!;
+            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+        }
 
+        private async Task AssignOpenStatusToIndividualProceeding(IndividualProceeding individualProceeding)
+        {
+            var openStatus = await Mediator.Send(new GetIndividualProceedingStatusByIdRequest(((int)IndividualProceedingStatus.Open)));
+
+            Guard.Against.Null(openStatus.Data);
+
+            individualProceeding.IndividualProceedingStatusId = openStatus.Data.Id;
+        }
+
+        private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(IndividualProceeding individualProceeding)
+        {
+            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
+
+            individualProceeding.CageId = cage.Data!.Id;
+
+            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+        }
+
+        private async Task AssignCategoryToIndividualProceeding(IndividualProceeding individualProceeding)
+        {
+            var category = await Mediator.Send(new GetAnimalCategoryByIdRequest(individualProceeding.CategoryId));
+
+            individualProceeding.CategoryId = category.Data!.Id;
         }
 
         ///<inheritdoc />
