@@ -18,11 +18,11 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.ReceptionDocumentId);
             descriptor.Ignore(f => f.CageId);
-            descriptor.Ignore(f => f.StatusId);
+            descriptor.Ignore(f => f.IndividualProceedingStatusId);
             descriptor.Ignore(f => f.IsDeleted);
 
             descriptor.Ignore(f => f.ReceptionDocument);
-            descriptor.Ignore(f => f.ProceedingStatus);
+            descriptor.Ignore(f => f.IndividualProceedingStatus);
             descriptor.Ignore(f => f.AnimalCategory);
             descriptor.Ignore(f => f.Sex);
             descriptor.Ignore(f => f.Cage);

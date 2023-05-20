@@ -72,7 +72,7 @@ namespace Infraestructure.Persistence.Repositories
         public async Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatus status, CancellationToken ct = default)
         {
             return await _individualProceedings.AsNoTracking()
-                                               .Where(x => x.StatusId == ((int)status))
+                                               .Where(x => x.IndividualProceedingStatusId == ((int)status))
                                                .ToListAsync();
 
         }
@@ -107,7 +107,7 @@ namespace Infraestructure.Persistence.Repositories
             individualProceeding.LastModified = DateTime.UtcNow;
             individualProceeding.LastModifiedBy = admin.Email;
 
-            individualProceeding.StatusId = ((int)status);
+            individualProceeding.IndividualProceedingStatusId = ((int)status);
         }
     }
 }

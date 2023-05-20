@@ -18,7 +18,7 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Ignore(f => f.CageId);
             descriptor.Ignore(f => f.SexId);
             descriptor.Ignore(f => f.CategoryId);
-            descriptor.Ignore(f => f.StatusId);
+            descriptor.Ignore(f => f.IndividualProceedingStatusId);
             descriptor.Ignore(f => f.IsDeleted);
         }
     }

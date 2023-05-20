@@ -9,11 +9,11 @@ namespace Domain.Entities
         /// Attributes.
         /// </summary>
         public int Number { get; set; }
-        public int? ZoneId { get; set; }
+        public int? AnimalZoneId { get; set; }
         public Guid? IndividualProceedingId { get; set; }
         public bool IsOccupied { get; set; } = false;
 
-        public virtual AnimalZone? AnimalZone { get; set; } = null!;
+        public virtual AnimalZone? AnimalZone { get; set; }
         public virtual IndividualProceeding? IndividualProceeding { get; set; }
 
         public Cage(Guid id) : base(id) { }
@@ -27,7 +27,7 @@ namespace Domain.Entities
         /// <param name="isOccupied"></param>
         public Cage(Guid id, int? zoneId, Guid? individualProceeding, int number, bool isOccupied) : base(id)
         {
-            ZoneId = zoneId;
+            AnimalZoneId = zoneId;
             IndividualProceedingId = individualProceeding;
             IsOccupied = isOccupied;
             Number = number;

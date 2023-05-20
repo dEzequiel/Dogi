@@ -16,9 +16,7 @@ namespace Domain.Support
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public virtual ICollection<IndividualProceeding>? Processees { get; set; }
-        public virtual IndividualProceeding? IndividualProceeding { get; set; }
-
+        public virtual ICollection<IndividualProceeding>? IndivualProceedings { get; set; } = null!;
 
         /// <summary>
         /// Constructor.

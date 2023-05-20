@@ -20,7 +20,7 @@ namespace Test.Application.ReadServices
         {
             // Arrange
             freeCage.IsOccupied = false;
-            freeCage.ZoneId = ((int)AnimalZone.Dogs);
+            freeCage.AnimalZoneId = ((int)AnimalZone.Dogs);
 
             unitOfWorkMock.Setup(u => u.CageRepository).Returns(cageRepositoryMock.Object);
 
@@ -35,7 +35,7 @@ namespace Test.Application.ReadServices
             Assert.NotNull(result);
             Assert.IsType<Domain.Entities.Cage>(result);
             Assert.Equal(expected: freeCage.IsOccupied, actual: result.IsOccupied);
-            Assert.Equal(expected: freeCage.ZoneId, actual: result.ZoneId);
+            Assert.Equal(expected: freeCage.AnimalZoneId, actual: result.AnimalZoneId);
 
             unitOfWorkMock.Verify(u => u.CageRepository, Times.Once);
             cageRepositoryMock.Verify(r => r.GetFreeCageByZoneAsync(It.IsAny<int>(),

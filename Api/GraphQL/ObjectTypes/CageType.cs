@@ -12,7 +12,7 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Field(f => f.Number)
                 .Type<NonNullType<IntType>>();
 
-            descriptor.Field(f => f.ZoneId)
+            descriptor.Field(f => f.AnimalZoneId)
                 .Type<NonNullType<StringType>>();
 
             descriptor.Field(f => f.AnimalZone)

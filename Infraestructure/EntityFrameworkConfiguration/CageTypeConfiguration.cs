@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,13 +13,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasOne<AnimalZone>(f => f.AnimalZone)
-                .WithMany(r => r.Cages)
-                .HasForeignKey(fk => fk.ZoneId);
-
-            builder.HasOne<IndividualProceeding>(f => f.IndividualProceeding)
-                .WithOne(r => r.Cage)
-                .HasForeignKey<Cage>(fk => fk.IndividualProceedingId);
 
             int totalZones = 10;
 

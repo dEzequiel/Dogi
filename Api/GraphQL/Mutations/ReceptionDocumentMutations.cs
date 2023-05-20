@@ -9,7 +9,6 @@ namespace Api.GraphQL.Mutations
     /// <summary>
     /// ReceptionDocument entity public mutations.
     /// </summary>
-    [ExtendObjectType("Mutation")]
     public class ReceptionDocumentMutations
     {
         public ILogger<ReceptionDocumentMutations> Logger { get; set; } = null!;

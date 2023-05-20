@@ -9,7 +9,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<IndividualProceedingStatus> builder)
         {
             builder
-                .ToTable("ProceedingStatus", "Dogi")
+                .ToTable("IndividualProceedingStatus", "Dogi")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 

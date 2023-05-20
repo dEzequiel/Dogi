@@ -27,7 +27,7 @@ namespace Domain.Entities
         /// <summary>
         /// Animal status id.
         /// </summary>
-        public int StatusId { get; set; }
+        public int IndividualProceedingStatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
         /// <summary>
         /// AnIMAL category id.
@@ -51,7 +51,7 @@ namespace Domain.Entities
         /// <summary>
         /// Animal status relationship.
         /// </summary>
-        public virtual IndividualProceedingStatus ProceedingStatus { get; set; }
+        public virtual IndividualProceedingStatus IndividualProceedingStatus { get; set; } = null!;
         /// <summary>
         /// Animal category relationship.
         /// </summary>
@@ -87,7 +87,7 @@ namespace Domain.Entities
             Guid cageId) : base(id)
         {
             ReceptionDocumentId = receptionDocumentId;
-            StatusId = statusId;
+            IndividualProceedingStatusId = statusId;
             CategoryId = categoryId;
             SexId = sexId;
             IsDeleted = isDeleted;
