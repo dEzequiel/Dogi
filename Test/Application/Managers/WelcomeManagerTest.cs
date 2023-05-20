@@ -82,8 +82,8 @@ namespace Test.Application.Managers
             WelcomeManager sut)
         {
             // Arrange
-            registerInformation.ReceptionDocument.HasChip = true;
-            registerInformation.AnimalChip.OwnerIsResponsible = true;
+            registerInformation.ReceptionDocument!.HasChip = true;
+            registerInformation.AnimalChip!.OwnerIsResponsible = true;
 
             mediatorMock.Setup(x => x.Send(It.IsAny<InsertReceptionDocumentRequest>(),
                                            It.IsAny<CancellationToken>()))

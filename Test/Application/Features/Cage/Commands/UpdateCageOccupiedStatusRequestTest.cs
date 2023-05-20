@@ -23,7 +23,6 @@ namespace Test.Application.Features.Cage.Commands
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<ICageWrite> cageWriteServiceMock,
-            Guid cageIdToOccupe,
             UpdateCageOccupiedStatusRequest request,
             UpdateCageOccupiedStatusRequestHandler handler)
         {

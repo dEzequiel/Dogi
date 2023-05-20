@@ -30,7 +30,6 @@ namespace Test.Application.WriteServices
             var result = await sut.UpdateOccupiedStatusAsync(cageIdToSetOccupiedToFalse, default);
 
             // Assert
-            Assert.NotNull(result);
             Assert.True(result);
 
             unitOfWorkMock.Verify(u => u.CageRepository, Times.Once);
