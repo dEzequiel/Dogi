@@ -29,6 +29,7 @@ namespace Domain.Support
         /// <param name="status"></param>
         public IndividualProceedingStatus(int id, string status)
         {
+            Id = id;
             Status = status;
         }
 

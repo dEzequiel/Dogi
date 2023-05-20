@@ -13,12 +13,13 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-
             var totalProceedingStatusTypes = Enum.GetNames(typeof(Domain.Enums.IndividualProceedingStatus));
 
-            for (int id = 1; id < totalProceedingStatusTypes.Length; id++)
+            int id = 0;
+            foreach (var status in totalProceedingStatusTypes)
             {
-                builder.HasData(new IndividualProceedingStatus(id, totalProceedingStatusTypes[id]));
+                id++;
+                builder.HasData(new IndividualProceedingStatus(id, status));
             }
         }
     }
