@@ -44,6 +44,8 @@ namespace Application
             services.AddTransient<IIndividualProceedingStatusRead, IndividualProceedingStatusRead>();
             services.AddTransient<IndividualProceedingStatus>();
 
+            services.AddTransient<IAnimalCategoryRead, AnimalCategoryRead>();
+            services.AddTransient<AnimalCategory>();
 
             return services;
         }

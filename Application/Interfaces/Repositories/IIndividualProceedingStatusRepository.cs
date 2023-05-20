@@ -9,7 +9,7 @@ namespace Application.Interfaces.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IndividualProceedingStatus> GetAsync(int id);
+        Task<IndividualProceedingStatus?> GetAsync(int id);
 
         /// <summary>
         /// Get all individual proceeding possible status.

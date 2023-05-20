@@ -21,6 +21,7 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IAnimalZoneRepository AnimalZoneRepository => new AnimalZoneRepository(_context);
         public ICageRepository CageRepository => new CageRepository(_context);
         public IIndividualProceedingStatusRepository IndividualProceedingStatusRepository => new IndividualProceedingStatusRepository(_context);
+        public IAnimalCategoryRepository AnimalCategoryRepository => new AnimalCategoryRepository(_context);
         /// <summary>
         /// Constructor.
         /// </summary>
