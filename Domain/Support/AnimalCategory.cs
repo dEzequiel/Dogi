@@ -1,5 +1,4 @@
-﻿using Domain.Common;
-using Domain.Entities;
+﻿using Domain.Entities;
 
 namespace Domain.Support
 {
@@ -16,7 +15,7 @@ namespace Domain.Support
         /// <summary>
         /// Category type.
         /// </summary>
-        public string Type { get; set; }
+        public string Type { get; set; } = null!;
 
         /// <summary>
         /// Navigation properties.
