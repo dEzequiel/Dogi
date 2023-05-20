@@ -61,6 +61,7 @@ namespace Application.Managers
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
+            AssignOpenStatusToIndividualProceeding(data.IndividualProceeding);
 
             var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
             Guard.Against.Null(individualProceeding.Data);
@@ -121,6 +122,11 @@ namespace Application.Managers
             individualProceeding.CageId = cage.Data.Id;
 
             await _mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+        }
+
+        private void AssignOpenStatusToIndividualProceeding(IndividualProceeding individualProceeding)
+        {
+            individualProceeding.StatusId = (int)IndividualProceedingStatus.Open;
         }
 
         private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(IndividualProceeding individualProceeding)
