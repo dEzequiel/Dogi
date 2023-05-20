@@ -11,8 +11,8 @@ namespace Api.GraphQL.Mutations
     /// </summary>
     public class WelcomeManagerMutations
     {
-        public IMediator Mediator { get; set; } = null!;
-        public ILogger<WelcomeManagerMutations> Logger { get; set; } = null!;
+        private readonly IMediator Mediator;
+        private readonly ILogger<WelcomeManagerMutations> Logger;
 
         /// <summary>
         /// Constructor.
@@ -24,8 +24,6 @@ namespace Api.GraphQL.Mutations
             Mediator = _mediator;
             Logger = _logger;
         }
-
-        public WelcomeManagerMutations() { }
 
         /// <summary>
         /// Add a new reception document taking into account whether the animal has a chip or not. With this condition you take one way or the other.

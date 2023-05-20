@@ -121,7 +121,6 @@ namespace Application.Managers
             var cage = await _mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
 
             individualProceeding.CageId = cage.Data.Id;
-            individualProceeding.Cage = cage.Data;
 
             await _mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
