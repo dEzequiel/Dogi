@@ -19,6 +19,16 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .Cast<Domain.Enums.Sex>()
                 .Select(e => new { Id = (int)e, Type = e.ToString() })
             );
+
+
+            var totalSexTypes = Enum.GetNames(typeof(Domain.Enums.Sex));
+
+            int id = 0;
+            foreach (var type in totalSexTypes)
+            {
+                id++;
+                builder.HasData(new Sex(id, type));
+            }
         }
     }
 }
