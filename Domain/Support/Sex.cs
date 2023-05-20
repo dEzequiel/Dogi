@@ -15,7 +15,7 @@ namespace Domain.Support
         /// <summary>
         /// Sex type.
         /// </summary>
-        public string Type { get; set; }
+        public string Type { get; set; } = null!;
 
         /// <summary>
         /// Navigation properties.
@@ -32,5 +32,7 @@ namespace Domain.Support
             Id = id;
             Type = type;
         }
+
+        public Sex() { }
     }
 }
