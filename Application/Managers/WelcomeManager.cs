@@ -6,6 +6,7 @@ using Application.Features.IndividualPro.Commands;
 using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
+using Application.Features.Sex.Queries;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
@@ -65,6 +66,7 @@ namespace Application.Managers
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
             await AssignOpenStatusToIndividualProceeding(data.IndividualProceeding);
             await AssignCategoryToIndividualProceeding(data.IndividualProceeding);
+            await AssignSexToIndividualProceeding(data.IndividualProceeding);
 
             var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
             Guard.Against.Null(individualProceeding.Data);
@@ -141,7 +143,9 @@ namespace Application.Managers
         {
             var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
 
-            individualProceeding.CageId = cage.Data!.Id;
+            Guard.Against.Null(cage.Data, nameof(cage.Data));
+
+            individualProceeding.CageId = cage.Data.Id;
 
             await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
@@ -150,7 +154,18 @@ namespace Application.Managers
         {
             var category = await Mediator.Send(new GetAnimalCategoryByIdRequest(individualProceeding.CategoryId));
 
-            individualProceeding.CategoryId = category.Data!.Id;
+            Guard.Against.Null(category.Data, nameof(category.Data));
+
+            individualProceeding.CategoryId = category.Data.Id;
+        }
+
+        private async Task AssignSexToIndividualProceeding(IndividualProceeding individualProceeding)
+        {
+            var sex = await Mediator.Send(new GetSexByIdRequest(individualProceeding.SexId));
+
+            Guard.Against.Null(sex.Data, nameof(sex.Data));
+
+            individualProceeding.SexId = sex.Data.Id;
         }
 
         ///<inheritdoc />

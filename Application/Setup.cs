@@ -47,6 +47,9 @@ namespace Application
             services.AddTransient<IAnimalCategoryRead, AnimalCategoryRead>();
             services.AddTransient<AnimalCategory>();
 
+            services.AddTransient<ISexRead, SexRead>();
+            services.AddTransient<Sex>();
+
             return services;
         }
     }
