@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.WelcomeManager;
+using Application.Features.AnimalCategory.Queries;
 using Application.Features.Cage.Commands;
 using Application.Features.Cage.Queries;
 using Application.Features.IndividualPro.Commands;
@@ -63,6 +64,7 @@ namespace Application.Managers
 
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
             await AssignOpenStatusToIndividualProceeding(data.IndividualProceeding);
+            await AssignCategoryToIndividualProceeding(data.IndividualProceeding);
 
             var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
             Guard.Against.Null(individualProceeding.Data);
@@ -142,6 +144,13 @@ namespace Application.Managers
             individualProceeding.CageId = cage.Data!.Id;
 
             await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+        }
+
+        private async Task AssignCategoryToIndividualProceeding(IndividualProceeding individualProceeding)
+        {
+            var category = await Mediator.Send(new GetAnimalCategoryByIdRequest(individualProceeding.CategoryId));
+
+            individualProceeding.CategoryId = category.Data!.Id;
         }
 
         ///<inheritdoc />
