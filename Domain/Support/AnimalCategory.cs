@@ -34,5 +34,7 @@ namespace Domain.Support
             Type = type;
         }
 
+        public AnimalCategory() { }
+
     }
 }
