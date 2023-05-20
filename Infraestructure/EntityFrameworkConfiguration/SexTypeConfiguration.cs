@@ -14,12 +14,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasData(
-                Enum.GetValues(typeof(Domain.Enums.Sex))
-                .Cast<Domain.Enums.Sex>()
-                .Select(e => new { Id = (int)e, Type = e.ToString() })
-            );
-
 
             var totalSexTypes = Enum.GetNames(typeof(Domain.Enums.Sex));
 
