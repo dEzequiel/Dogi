@@ -5,6 +5,7 @@ using Application.Features.IndividualPro.Commands;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Service.Interfaces;
+using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
@@ -55,11 +56,14 @@ namespace Application.Managers
         {
             var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
 
+
+            Guard.Against.Null(receptionDocumentRequest.Data);
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
 
             var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+            Guard.Against.Null(individualProceeding.Data);
 
             return new RegisterInformation()
             {
@@ -71,14 +75,16 @@ namespace Application.Managers
 
         private async Task<RegisterInformation?> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
         {
-            if (data.AnimalChip.OwnerIsResponsible.Value)
+            if (data.AnimalChip!.OwnerIsResponsible!.Value)
             {
                 try
                 {
                     var receptionDocumentRequest = await _mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+                    Guard.Against.Null(receptionDocumentRequest.Data);
                     data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
                     var individualProceeding = await _mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+                    Guard.Against.Null(individualProceeding.Data);
                     await AssignCageForIndividualProceedingWithChipOwnerResponsible(individualProceeding.Data);
 
                     var animalChipEntity = await _mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
@@ -110,8 +116,9 @@ namespace Application.Managers
         {
             var cage = await _mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.Quarantine)));
 
+            Guard.Against.Null(cage.Data);
+
             individualProceeding.CageId = cage.Data.Id;
-            individualProceeding.Cage = cage.Data;
 
             await _mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
