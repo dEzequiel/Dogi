@@ -1,5 +1,4 @@
 ﻿using Domain.Common;
-using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
@@ -14,34 +13,33 @@ namespace Domain.Entities
         public string OwnerPersonalIdentifier { get; set; } = null!;
         public string? Name { get; set; }
         public string ChipNumber { get; set; } = null!;
+        public string OwnerContact { get; set; } = null!;
         public bool? OwnerIsResponsible { get; set; }
-
-        /// <summary>
-        /// Navigation properties.
-        /// </summary>
-        public virtual Person? AnimalChipOwner { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="chipNumber"></param>
+        /// <param name="ownerPersonalIdentifier"></param>
+        /// <param name="ownerContact"></param>
         /// <param name="ownerIsResponsible"></param>
-
-
-        public AnimalChip() : base(Guid.NewGuid()) { }
         private AnimalChip(Guid id,
             string name,
             string chipNumber,
             string ownerPersonalIdentifier,
+            string ownerContact,
             bool ownerIsResponsible) : base(id)
         {
             Name = name;
             ChipNumber = chipNumber;
             OwnerPersonalIdentifier = ownerPersonalIdentifier;
+            OwnerContact = ownerContact;
             OwnerIsResponsible = ownerIsResponsible;
         }
+
+        public AnimalChip() : base(Guid.NewGuid()) { }
+
     }
 }
