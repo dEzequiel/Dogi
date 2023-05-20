@@ -25,46 +25,43 @@ namespace Domain.Entities
         /// </summary>
         public string? Color { get; set; }
         /// <summary>
-        /// Animal status.
+        /// Animal status id.
         /// </summary>
         public int StatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
         /// <summary>
-        /// AnIMAL category.
+        /// AnIMAL category id.
         /// </summary>
         public int CategoryId { get; set; }
         /// <summary>
-        /// Animal sex.
+        /// Animal sex id.
         /// </summary>
         public int SexId { get; set; }
         /// <summary>
-        /// Animal cage.
+        /// Animal cage id.
         /// </summary>
         public Guid CageId { get; set; }
         public bool IsDeleted { get; set; } = false;
 
-        /// <summary>
-        /// Navigation properties.
-        /// </summary>
 
         /// <summary>
-        /// Animal reception document.
+        /// Animal reception document relationship.
         /// </summary>
         public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
         /// <summary>
-        /// Animal status.
+        /// Animal status relationship.
         /// </summary>
         public virtual ProceedingStatus ProceedingStatus { get; set; } = null!;
         /// <summary>
-        /// Animal category.
+        /// Animal category relationship.
         /// </summary>
         public virtual AnimalCategory AnimalCategory { get; set; } = null!;
         /// <summary>
-        /// Animal sex.
+        /// Animal sex relationship.
         /// </summary>
         public virtual Sex Sex { get; set; } = null!;
         /// <summary>
-        /// Animal cage.
+        /// Animal cage relationship.
         /// </summary>
         public virtual Cage Cage { get; set; } = null!;
 
@@ -88,6 +85,7 @@ namespace Domain.Entities
             bool isDeleted,
             Guid cageId) : base(id)
         {
+            ReceptionDocumentId = receptionDocumentId;
             StatusId = statusId;
             CategoryId = categoryId;
             SexId = sexId;
