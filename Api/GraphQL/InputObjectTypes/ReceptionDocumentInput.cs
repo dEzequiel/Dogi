@@ -9,18 +9,9 @@ namespace Api.GraphQL.InputObjectTypes
     {
         protected override void Configure(IInputObjectTypeDescriptor<ReceptionDocument> descriptor)
         {
-            descriptor.Field(f => f.HasChip)
-                .Type<NonNullType<BooleanType>>();
-
-            descriptor.Field(f => f.Observations)
-                .Type<StringType>();
-
-            descriptor.Field(f => f.PickupLocation)
-                .Type<NonNullType<StringType>>();
-
-            //descriptor.Field(f => f.PickupDate)
-            //    .Type<NonNullType<DateType>>()
-            //    .DefaultValue(DateTimeOffset.Now);
+            descriptor.Field(f => f.HasChip).Type<NonNullType<BooleanType>>();
+            descriptor.Field(f => f.Observations).Type<StringType>();
+            descriptor.Field(f => f.PickupLocation).Type<StringType>();
 
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.IsDeleted);

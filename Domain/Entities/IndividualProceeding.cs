@@ -71,12 +71,13 @@ namespace Domain.Entities
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="receptionDocumentId"></param>
         /// <param name="statusId"></param>
         /// <param name="categoryId"></param>
         /// <param name="sexId"></param>
-        /// <param name="cageId"></param>
         /// <param name="isDeleted"></param>
+        /// <param name="cageId"></param>
         public IndividualProceeding(Guid id,
             Guid receptionDocumentId,
             int statusId,
