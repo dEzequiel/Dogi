@@ -15,14 +15,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
 
                 builder.Property(p => p.PersonIdentifier)
                 .ValueGeneratedNever();
-
-                builder.HasMany<AnimalChip>(f => f.AnimalChips)
-                    .WithOne(r => r.AnimalChipOwner)
-                    .HasForeignKey(fk => fk.OwnerPersonalIdentifier);
                 
-                builder.HasMany<PersonBannedInformation>(f => f.Bans)
-                    .WithOne(b => b.Person)
-                    .HasForeignKey(fk => fk.PersonIdentifierId);
 
                 builder.OwnsOne(z => z.Address, address =>
                     {

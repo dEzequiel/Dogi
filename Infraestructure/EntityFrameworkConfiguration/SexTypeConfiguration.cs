@@ -14,10 +14,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasMany<IndividualProceeding>(f => f.IndividualProceedings)
-                .WithOne(r => r.Sex)
-                .HasForeignKey(r => r.SexId);
-
             builder.HasData(
                 Enum.GetValues(typeof(Domain.Enums.Sex))
                 .Cast<Domain.Enums.Sex>()
