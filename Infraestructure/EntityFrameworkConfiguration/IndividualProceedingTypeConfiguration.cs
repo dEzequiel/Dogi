@@ -30,6 +30,10 @@ namespace Infraestructure.EntityFrameworkConfiguration
             builder.HasOne<Cage>(f => f.Cage)
                 .WithOne(r => r.IndividualProceeding)
                 .HasForeignKey<IndividualProceeding>(rd => rd.CageId);
+
+            builder.HasOne<Sex>(f => f.Sex)
+                .WithMany(r => r.IndividualProceedings)
+                .HasForeignKey(fk => fk.SexId);
         }
     }
 }

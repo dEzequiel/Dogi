@@ -1,4 +1,5 @@
-﻿using Domain.Support;
+﻿using Domain.Entities;
+using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,6 +13,10 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .ToTable("AnimalCategory", "Dogi")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
+
+            builder.HasMany<IndividualProceeding>(f => f.IndividualProceedings)
+                   .WithOne(r => r.AnimalCategory)
+                   .HasForeignKey(r => r.CategoryId);
 
             builder.HasData(
                 Enum.GetValues(typeof(Domain.Enums.AnimalCategory))
