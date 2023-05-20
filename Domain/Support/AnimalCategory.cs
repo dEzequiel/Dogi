@@ -11,12 +11,12 @@ namespace Domain.Support
         /// <summary>
         /// Attributes.
         /// </summary>
-        public string Type { get ; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public ICollection<IndividualProceeding>? IndividualProceedings { get; set; }
+        public ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
