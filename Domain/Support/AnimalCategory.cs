@@ -6,10 +6,15 @@ namespace Domain.Support
     /// <summary>
     /// Support table representing records equivalent to AnimalCategory domain enumerator.
     /// </summary>
-    public class AnimalCategory : SupportTable
+    public class AnimalCategory
     {
         /// <summary>
-        /// Attributes.
+        /// Identifier.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Category type.
         /// </summary>
         public string Type { get; set; }
 
@@ -23,9 +28,11 @@ namespace Domain.Support
         /// </summary>
         /// <param name="id"></param>
         /// <param name="type"></param>
-        public AnimalCategory(int id, string type) : base(id)
+        public AnimalCategory(int id, string type)
         {
+            Id = id;
             Type = type;
         }
+
     }
 }

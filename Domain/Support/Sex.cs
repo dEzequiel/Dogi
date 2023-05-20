@@ -20,13 +20,13 @@ namespace Domain.Support
         /// <summary>
         /// Navigation properties.
         /// </summary>
-        public ICollection<IndividualProceeding> IndividualProceedings { get; set; }
+        public ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="name"></param>
+        /// <param name="type"></param>
         public Sex(int id, string type)
         {
             Id = id;

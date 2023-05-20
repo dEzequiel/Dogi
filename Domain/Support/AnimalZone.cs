@@ -3,10 +3,15 @@ using Domain.Entities;
 
 namespace Domain.Support
 {
-    public class AnimalZone : SupportTable
+    public class AnimalZone
     {
+        /// <summary>
+        /// Identifier.
+        /// </summary>
+        public int Id { get; set; }
+
         ///<summary>
-        /// Attributes.
+        /// Zone name.
         ///</summary>
         public string Name { get; set; }
 
@@ -20,8 +25,9 @@ namespace Domain.Support
         ///</summary>
         ///<param name="id"></param>
         ///<param name="name"></param>
-        public AnimalZone(int id, string name) : base(id)
+        public AnimalZone(int id, string name) 
         {
+            Id = id;
             Name = name;
         }
     }
