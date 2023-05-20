@@ -13,7 +13,7 @@ namespace Domain.Entities
         public Guid? IndividualProceedingId { get; set; }
         public bool IsOccupied { get; set; } = false;
 
-        public virtual AnimalZone? AnimalZone { get; set; }
+        public virtual AnimalZone? AnimalZone { get; set; } = null!;
         public virtual IndividualProceeding? IndividualProceeding { get; set; }
 
         public Cage(Guid id) : base(id) { }
