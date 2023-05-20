@@ -14,8 +14,8 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasMany<Cage>(f => f.Cages)
-                .WithOne(r => r.AnimalZone)
+            builder.HasMany<Cage>(m => m.Cages)
+                .WithOne(o => o.AnimalZone)
                 .HasForeignKey(fk => fk.AnimalZoneId);
 
             builder.HasData(

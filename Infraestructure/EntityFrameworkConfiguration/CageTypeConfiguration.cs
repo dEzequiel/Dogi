@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,6 +13,10 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .ToTable("Cage", "Dogi")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
+
+            builder.HasOne<AnimalZone>(r => r.AnimalZone)
+                .WithMany(p => p.Cages)
+                .HasForeignKey(fk => fk.AnimalZoneId);
 
 
             int totalZones = 10;
