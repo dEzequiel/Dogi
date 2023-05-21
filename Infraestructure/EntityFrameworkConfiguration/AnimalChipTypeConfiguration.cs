@@ -13,10 +13,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .ToTable("AnimalChip", "Dogi")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
-
-            builder.HasOne<Person>(f => f.AnimalChipOwner)
-                .WithMany(r => r.AnimalChips)
-                .HasForeignKey(fk => fk.OwnerPersonalIdentifier);
         
 
         }

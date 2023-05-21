@@ -15,11 +15,6 @@ namespace Domain.Entities
         public Address? Address { get; set; }
         public bool IsBan { get; set; }
 
-        /// <summary>
-        /// Navigation properties.
-        /// </summary>
-        public virtual ICollection<AnimalChip>? AnimalChips { get; set; }
-
         public virtual ICollection<PersonBannedInformation>? Bans { get; set; }
 
         /// <summary>
