@@ -10,9 +10,9 @@ namespace Domain.Entities
         /// <summary>
         /// Attributes.
         /// </summary>
-        public string OwnerPersonalIdentifier { get; set; } = null!;
-        public string? Name { get; set; }
         public string ChipNumber { get; set; } = null!;
+        public string? Name { get; set; }
+        public string OwnerIdentifier { get; set; } = null!;
         public string OwnerContact { get; set; } = null!;
         public bool? OwnerIsResponsible { get; set; }
 
@@ -34,7 +34,7 @@ namespace Domain.Entities
         {
             Name = name;
             ChipNumber = chipNumber;
-            OwnerPersonalIdentifier = ownerPersonalIdentifier;
+            OwnerIdentifier = ownerPersonalIdentifier;
             OwnerContact = ownerContact;
             OwnerIsResponsible = ownerIsResponsible;
         }

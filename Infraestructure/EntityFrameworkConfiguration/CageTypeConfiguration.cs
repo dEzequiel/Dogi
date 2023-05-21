@@ -19,11 +19,11 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasForeignKey(fk => fk.AnimalZoneId);
 
 
-            int totalZones = 10;
+            var totalAnimalZones = Enum.GetNames(typeof(Domain.Enums.AnimalZone));
 
-            for (int zone = 1; zone < totalZones; zone++)
+            for (int zone = 1; zone <= totalAnimalZones.Length; zone++)
             {
-                for (int cage = 0; cage < 50; cage++)
+                for (int cage = 0; cage <= 50; cage++)
                 {
                     builder.HasData(
                         new Cage(
