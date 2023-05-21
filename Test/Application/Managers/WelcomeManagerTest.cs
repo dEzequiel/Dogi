@@ -6,6 +6,7 @@ using Application.Features.IndividualPro.Commands;
 using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
+using Application.Features.Sex.Queries;
 using Application.Managers;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
@@ -30,6 +31,7 @@ namespace Test.Application.Managers
             ApiResponse<bool> isOccupiedCageApiResponse,
             ApiResponse<IndividualProceedingStatus> individualProceedingStatusApiResponse,
             ApiResponse<AnimalCategory> animalCategoryApiResponse,
+            ApiResponse<Sex> sexApiResponse,
             RegisterInformation registerInformation,
             AdminData adminData,
             WelcomeManager sut)
@@ -57,6 +59,10 @@ namespace Test.Application.Managers
                                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(animalCategoryApiResponse);
 
+            mediatorMock.Setup(x => x.Send(It.IsAny<GetSexByIdRequest>(), 
+                                           It.IsAny<CancellationToken>()))
+                .ReturnsAsync(sexApiResponse);
+
             mediatorMock.Setup(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(individualProceedingApiResponse);
@@ -79,6 +85,12 @@ namespace Test.Application.Managers
             mediatorMock.Verify(x => x.Send(It.IsAny<GetFreeCageByZoneRequest>(),
                                             It.IsAny<CancellationToken>()), Times.Once);
 
+            mediatorMock.Verify(x => x.Send(It.IsAny<GetSexByIdRequest>(),
+                                It.IsAny<CancellationToken>()), Times.Once);
+
+            mediatorMock.Verify(x => x.Send(It.IsAny<GetIndividualProceedingStatusByIdRequest>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+
         }
 
         [Theory]
@@ -90,6 +102,9 @@ namespace Test.Application.Managers
             ApiResponse<Cage> cageApiResponse,
             ApiResponse<bool> isOccupiedCageApiResponse,
             ApiResponse<AnimalChip> animalChipApiResponse,
+            ApiResponse<AnimalCategory> animalCategoryApiResponse,
+            ApiResponse<Sex> sexApiResponse,
+            ApiResponse<IndividualProceedingStatus> individualProceedingStatusApiResponse,
             RegisterInformation registerInformation,
             AdminData adminData,
             WelcomeManager sut)
@@ -118,6 +133,18 @@ namespace Test.Application.Managers
                                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(animalChipApiResponse);
 
+            mediatorMock.Setup(x => x.Send(It.IsAny<GetAnimalCategoryByIdRequest>(),
+                                            It.IsAny<CancellationToken>()))
+                .ReturnsAsync(animalCategoryApiResponse);
+
+            mediatorMock.Setup(x => x.Send(It.IsAny<GetSexByIdRequest>(),
+                               It.IsAny<CancellationToken>()))
+                .ReturnsAsync(sexApiResponse);
+
+            mediatorMock.Setup(x => x.Send(It.IsAny<GetIndividualProceedingStatusByIdRequest>(),
+                               It.IsAny<CancellationToken>()))
+                .ReturnsAsync(individualProceedingStatusApiResponse);
+
 
             // Act
             var result = await sut.RegisterAnimal(registerInformation, adminData);
@@ -137,8 +164,11 @@ namespace Test.Application.Managers
             mediatorMock.Verify(x => x.Send(It.IsAny<GetFreeCageByZoneRequest>(),
                                             It.IsAny<CancellationToken>()), Times.Once);
 
-            mediatorMock.Verify(x => x.Send(It.IsAny<InsertAnimalChipRequest>(),
-                                            It.IsAny<CancellationToken>()), Times.Once);
+            mediatorMock.Verify(x => x.Send(It.IsAny<GetSexByIdRequest>(),
+                                It.IsAny<CancellationToken>()), Times.Once);
+
+            mediatorMock.Verify(x => x.Send(It.IsAny<GetIndividualProceedingStatusByIdRequest>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }
