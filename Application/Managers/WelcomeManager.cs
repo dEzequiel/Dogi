@@ -64,9 +64,7 @@ namespace Application.Managers
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
-            await AssignOpenStatusToIndividualProceeding(data.IndividualProceeding);
-            await AssignCategoryToIndividualProceeding(data.IndividualProceeding);
-            await AssignSexToIndividualProceeding(data.IndividualProceeding);
+            await RelationshipAssignments(data.IndividualProceeding);
 
             var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
             Guard.Against.Null(individualProceeding.Data);
@@ -79,42 +77,38 @@ namespace Application.Managers
             };
         }
 
-        private async Task<RegisterInformation?> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
+        private async Task<RegisterInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
         {
-            if (data.AnimalChip!.OwnerIsResponsible!.Value)
+            Guard.Against.Null(data.AnimalChip);
+
+            var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
+            Guard.Against.Null(receptionDocumentRequest.Data);
+            data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
+
+            await AssignCageForIndividualProceedingWithChipOwnerResponsible(data.IndividualProceeding);
+            await RelationshipAssignments(data.IndividualProceeding);
+            data.IndividualProceeding.Name = string.IsNullOrEmpty(data.AnimalChip.Name) ? data.IndividualProceeding.Name : data.AnimalChip.Name;
+            var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+            Guard.Against.Null(individualProceeding.Data);
+
+            var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
+
+            if(!data.AnimalChip.OwnerIsResponsible.Value)
             {
-                try
+                return new RegisterInformation() 
                 {
-                    var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
-                    Guard.Against.Null(receptionDocumentRequest.Data);
-                    data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
-
-                    var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
-                    Guard.Against.Null(individualProceeding.Data);
-                    await AssignCageForIndividualProceedingWithChipOwnerResponsible(individualProceeding.Data);
-
-                    var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
-
-                    return new RegisterInformation()
-                    {
-                        ReceptionDocument = receptionDocumentRequest.Data,
-                        IndividualProceeding = individualProceeding.Data,
-                        AnimalChip = animalChipEntity.Data
-                    };
-
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogInformation("WelcomeManager --> AddReceptionDocumentWithAnimalChipOwnerInformation --> Catch Exception");
-                    throw new DogiException("Something went wrong when registering new information");
-                }
-            }
-            else
-            {
-                await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
+                    ReceptionDocument = receptionDocumentRequest.Data,
+                    IndividualProceeding = individualProceeding.Data,
+                    AnimalChip = null
+                };
             }
 
-            return null;
+            return new RegisterInformation()
+            {
+                ReceptionDocument = receptionDocumentRequest.Data,
+                IndividualProceeding = individualProceeding.Data,
+                AnimalChip = animalChipEntity.Data
+            };
         }
 
 
@@ -166,6 +160,13 @@ namespace Application.Managers
             Guard.Against.Null(sex.Data, nameof(sex.Data));
 
             individualProceeding.SexId = sex.Data.Id;
+        }
+
+        private async Task RelationshipAssignments(IndividualProceeding individualProceeding)
+        {
+            await AssignOpenStatusToIndividualProceeding(individualProceeding);
+            await AssignCategoryToIndividualProceeding(individualProceeding);
+            await AssignSexToIndividualProceeding(individualProceeding);
         }
 
         ///<inheritdoc />
