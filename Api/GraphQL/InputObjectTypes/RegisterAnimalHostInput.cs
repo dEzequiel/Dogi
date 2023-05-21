@@ -11,10 +11,10 @@ namespace Api.GraphQL.InputObjectTypes
         protected override void Configure(IInputObjectTypeDescriptor<RegisterInformation> descriptor)
         {
             descriptor.Field(f => f.ReceptionDocument)
-              .Type<ReceptionDocumentInput>();
+              .Type<NonNullType<ReceptionDocumentInput>>();
 
             descriptor.Field(f => f.IndividualProceeding)
-                .Type<IndividualProceedingInput>();
+                .Type<NonNullType<IndividualProceedingInput>>();
 
             descriptor.Field(f => f.AnimalChip)
                 .Type<AnimalChipInput>();
