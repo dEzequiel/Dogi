@@ -30,7 +30,7 @@ namespace Domain.Entities
         public int IndividualProceedingStatusId { get; set; }
         //public Guid MedicalRecordId { get; private set; }
         /// <summary>
-        /// AnIMAL category id.
+        /// Animal category id.
         /// </summary>
         public int CategoryId { get; set; }
         /// <summary>
