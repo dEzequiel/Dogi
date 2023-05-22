@@ -45,7 +45,14 @@ namespace Domain.Entities
             Observations = observations;
             PickupLocation = pickupLocation;
         }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="id"></param>
         public ReceptionDocument(Guid id) : base(id) { }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ReceptionDocument() : base(Guid.NewGuid()) { }
 
 

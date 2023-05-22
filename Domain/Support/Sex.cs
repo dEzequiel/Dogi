@@ -10,7 +10,7 @@ namespace Domain.Support
         /// <summary>
         /// Identifier.
         /// </summary>
-        public int Id { get; set;  }
+        public int Id { get; set; }
 
         /// <summary>
         /// Sex type.
@@ -18,7 +18,7 @@ namespace Domain.Support
         public string Type { get; set; } = null!;
 
         /// <summary>
-        /// Navigation properties.
+        /// Collection of Individual proceeding relationships.
         /// </summary>
         public ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
 
@@ -32,7 +32,9 @@ namespace Domain.Support
             Id = id;
             Type = type;
         }
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Sex() { }
     }
 }

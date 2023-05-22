@@ -2,6 +2,9 @@ using Domain.Entities;
 
 namespace Domain.Support
 {
+    /// <summary>
+    /// Support table representing records equivalent to AnimalZone domain enumerator.
+    /// </summary>
     public class AnimalZone
     {
         /// <summary>
@@ -15,7 +18,7 @@ namespace Domain.Support
         public string Name { get; set; }
 
         ///<summary>
-        /// Navigation properties.
+        /// Collection of Cages relationships.
         ///</summary>
         public virtual ICollection<Cage>? Cages { get; set; }
 
