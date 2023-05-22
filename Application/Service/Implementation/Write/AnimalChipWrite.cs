@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
 {
-    public class AnimalChipWrite : IAnimalChipWrite
+    public class AnimalChipWrite : IAnimalChipWriteService
     {
         private readonly ILogger<AnimalChipWrite> _logger;
         private readonly IUnitOfWork _unitOfWork;

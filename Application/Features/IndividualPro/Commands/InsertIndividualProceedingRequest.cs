@@ -29,14 +29,14 @@ namespace Application.Features.IndividualPro.Commands
                                                          ApiResponse<IndividualProceeding>>
     {
         private readonly ILogger<InsertIndividualProceedingRequestHandler> _logger;
-        private readonly IIndividualProceedingWrite _individualProceedingWrite;
+        private readonly IIndividualProceedingWriteService _individualProceedingWrite;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="individualProceedingWrite"></param>
-        public InsertIndividualProceedingRequestHandler(ILogger<InsertIndividualProceedingRequestHandler> logger, IIndividualProceedingWrite individualProceedingWrite)
+        public InsertIndividualProceedingRequestHandler(ILogger<InsertIndividualProceedingRequestHandler> logger, IIndividualProceedingWriteService individualProceedingWrite)
         {
             _logger = logger;
             _individualProceedingWrite = individualProceedingWrite;

@@ -24,7 +24,7 @@ namespace Test.Application.Features.ReceptionDocument.Commands
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] Mock<IReceptionDocumentWrite> receptionDocumentWriteServiceMock,
+            [Frozen] Mock<IReceptionDocumentWriteService> receptionDocumentWriteServiceMock,
             Domain.Entities.ReceptionDocument documentDataForGet,
             InsertReceptionDocumentRequest request,
             InsertReceptionDocumentRequestHandler handler)

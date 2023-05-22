@@ -29,7 +29,7 @@ namespace Test.Application.Features.AnimalChip.Command
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] Mock<IAnimalChipWrite> animalChipWriteMock,
+            [Frozen] Mock<IAnimalChipWriteService> animalChipWriteMock,
             Domain.Entities.AnimalChip animalChipForGet,
             InsertAnimalChipRequest request,
             InsertAnimalChipRequestHandler handler)

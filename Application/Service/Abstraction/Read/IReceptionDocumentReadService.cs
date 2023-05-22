@@ -7,7 +7,7 @@ namespace Application.Service.Abstraction.Read;
 /// <summary>
 /// ReceptionDocument Read Service Definition.
 /// </summary>
-public interface IReceptionDocumentRead : IApplicationServiceBase
+public interface IReceptionDocumentReadService : IApplicationServiceBase
 {
     /// <summary>
     /// Obtain ReceptionDocument by its identifier.

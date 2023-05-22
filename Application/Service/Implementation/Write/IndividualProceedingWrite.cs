@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
 {
-    public class IndividualProceedingWrite : IIndividualProceedingWrite
+    public class IndividualProceedingWrite : IIndividualProceedingWriteService
     {
         private readonly ILogger<IndividualProceedingWrite> _logger;
         private readonly IUnitOfWork _unitOfWork;

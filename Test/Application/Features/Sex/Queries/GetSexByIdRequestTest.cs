@@ -22,7 +22,7 @@ namespace Test.Application.Features.Sex.Queries
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] Mock<ISexRead> sexReadMock,
+            [Frozen] Mock<ISexReadService> sexReadMock,
             Domain.Support.Sex sexForGet,
             GetSexByIdRequest request,
             GetSexByIdRequestHandler handler)

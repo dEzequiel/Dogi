@@ -12,7 +12,7 @@ namespace Application.Service.Implementation.Read;
 /// <summary>
 /// ReceptionDocument Read Service Implementation.
 /// </summary>
-public class ReceptionDocumentRead : IReceptionDocumentRead
+public class ReceptionDocumentRead : IReceptionDocumentReadService
 {
     private readonly ILogger<ReceptionDocumentWrite> _logger;
     private readonly IUnitOfWork _unitOfWork;

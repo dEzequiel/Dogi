@@ -23,7 +23,7 @@ namespace Application.Features.ReceptionDocument.Queries
         ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>
     {
         private readonly ILogger<GetReceptionDocumentByIdRequestHandler> _logger;
-        private readonly IReceptionDocumentRead _receptionDocumentReadService;
+        private readonly IReceptionDocumentReadService _receptionDocumentReadService;
 
         /// <summary>
         /// Constructor.
@@ -31,7 +31,7 @@ namespace Application.Features.ReceptionDocument.Queries
         /// <param name="logger"></param>
         /// <param name="receptionDocumentReadService"></param>
         public GetAllReceptionDocumentsRequestHandler(ILogger<GetReceptionDocumentByIdRequestHandler> logger, 
-            IReceptionDocumentRead receptionDocumentReadService)
+            IReceptionDocumentReadService receptionDocumentReadService)
         {
             _logger = Guard.Against.Null(logger, nameof(logger));
             _receptionDocumentReadService = Guard.Against.Null(receptionDocumentReadService, nameof(receptionDocumentReadService));

@@ -22,7 +22,7 @@ public class GetReceptionDocumentByIdRequestTest
     [Theory]
     [AutoMoqData]
     internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-        [Frozen] Mock<IReceptionDocumentRead> receptionDocumentReadServiceMock,
+        [Frozen] Mock<IReceptionDocumentReadService> receptionDocumentReadServiceMock,
         Domain.Entities.ReceptionDocument documentForGet,
         GetReceptionDocumentByIdRequest request,
         GetReceptionDocumentByIdRequestHandler handler)

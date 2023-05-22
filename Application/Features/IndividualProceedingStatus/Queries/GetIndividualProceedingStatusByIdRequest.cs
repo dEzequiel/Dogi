@@ -27,7 +27,7 @@ namespace Application.Features.IndividualProceedingStatus.Queries
         ApiResponse<Domain.Support.IndividualProceedingStatus>>
     {
         private readonly ILogger<GetIndividualProceedingStatusByIdRequestHandler> Logger;
-        private readonly IIndividualProceedingStatusRead IndividualProceedingStatusRead;
+        private readonly IIndividualProceedingStatusReadService IndividualProceedingStatusRead;
         private const string INDIVIDUAL_PROCEEDING_STATUS_NOT_FOUND = "IndividualProceedingStatus with id {0} not found.";
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Application.Features.IndividualProceedingStatus.Queries
         /// <param name="logger"></param>
         /// <param name="individualProceedingStatusRead"></param>
         public GetIndividualProceedingStatusByIdRequestHandler(ILogger<GetIndividualProceedingStatusByIdRequestHandler> logger, 
-            IIndividualProceedingStatusRead individualProceedingStatusRead)
+            IIndividualProceedingStatusReadService individualProceedingStatusRead)
         {
             Logger = logger;
             IndividualProceedingStatusRead = individualProceedingStatusRead;

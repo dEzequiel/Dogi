@@ -8,7 +8,7 @@ namespace Application.Service.Abstraction.Write
     /// <summary>
     /// IndividualProceeding Write Service Definition.
     /// </summary>
-    public interface IIndividualProceedingWrite : IApplicationServiceBase
+    public interface IIndividualProceedingWriteService : IApplicationServiceBase
     {
         /// <summary>
         /// Add new IndividualProceeding.

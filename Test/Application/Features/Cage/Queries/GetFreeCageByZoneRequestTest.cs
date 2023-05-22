@@ -22,7 +22,7 @@ namespace Test.Application.Features.Cage.Queries
         [Theory]
         [AutoMoqData]
         internal async Task HandleShoudlCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] Mock<ICageRead> cageReadServiceMock,
+            [Frozen] Mock<ICageReadService> cageReadServiceMock,
             Domain.Entities.Cage cageForGet,
             GetFreeCageByZoneRequest request,
             GetFreeCageByZoneRequestHandler handler)

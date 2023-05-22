@@ -7,7 +7,7 @@ namespace Application.Service.Abstraction
     /// <summary>
     /// ReceptionDocument Write Service Definition.
     /// </summary>
-    public interface IReceptionDocumentWrite : IApplicationServiceBase
+    public interface IReceptionDocumentWriteService : IApplicationServiceBase
     {
         /// <summary>
         /// Add new ReceptionDocument.

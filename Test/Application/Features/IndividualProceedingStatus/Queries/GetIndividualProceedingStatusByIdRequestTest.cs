@@ -28,7 +28,7 @@ namespace Test.Application.Features.IndividualProceedingStatus.Queries
         [AutoMoqData]
 
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] Mock<IIndividualProceedingStatusRead> individualProceedingStatusReadMock,
+            [Frozen] Mock<IIndividualProceedingStatusReadService> individualProceedingStatusReadMock,
             Domain.Support.IndividualProceedingStatus statusForGet,
             GetIndividualProceedingStatusByIdRequest request,
             GetIndividualProceedingStatusByIdRequestHandler handler)

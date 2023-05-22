@@ -14,7 +14,7 @@ namespace Application.Service.Implementation.Read
     /// <summary>
     /// IndividualProceedingStatus Read Service Implementation.
     /// </summary>
-    public class IndividualProceedingStatusRead : IIndividualProceedingStatusRead
+    public class IndividualProceedingStatusRead : IIndividualProceedingStatusReadService
     {
         private readonly ILogger<IndividualProceedingStatusRead> Logger;
         private readonly IUnitOfWork UnitOfWork;

@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Service.Abstraction.Write
 {
-    public interface IAnimalChipWrite : IApplicationServiceBase
+    public interface IAnimalChipWriteService : IApplicationServiceBase
     {
         /// <summary>
         /// Add new AnimalChip.

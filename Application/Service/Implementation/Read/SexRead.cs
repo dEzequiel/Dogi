@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Service.Implementation.Read
 {
-    public class SexRead : ISexRead
+    public class SexRead : ISexReadService
     {
         private readonly ILogger<SexRead> Logger;
         private readonly IUnitOfWork UnitOfWork;

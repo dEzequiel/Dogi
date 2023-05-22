@@ -35,7 +35,7 @@ namespace Application.Features.ReceptionDocument.Commands
                                                          ApiResponse<Domain.Entities.ReceptionDocument>>
     {
         private readonly ILogger<InsertReceptionDocumentRequestHandler> _logger;
-        private readonly IReceptionDocumentWrite _receptionDocumentWriteService;
+        private readonly IReceptionDocumentWriteService _receptionDocumentWriteService;
 
         /// <summary>
         /// Constructor.
@@ -43,7 +43,7 @@ namespace Application.Features.ReceptionDocument.Commands
         /// <param name="logger"></param>
         /// <param name="receptionDocumentWriteService"></param>
         public InsertReceptionDocumentRequestHandler(ILogger<InsertReceptionDocumentRequestHandler> logger, 
-            IReceptionDocumentWrite receptionDocumentWriteService)
+            IReceptionDocumentWriteService receptionDocumentWriteService)
         {
             _logger = Guard.Against.Null(logger, nameof(logger));
             _receptionDocumentWriteService = Guard.Against.Null(receptionDocumentWriteService);
