@@ -7,6 +7,7 @@ using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Features.Sex.Queries;
+using Application.Managers.Abstraction;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;

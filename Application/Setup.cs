@@ -1,4 +1,5 @@
 ﻿using Application.Managers;
+using Application.Managers.Abstraction;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.WelcomeManager;
-using Application.Managers;
+using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;

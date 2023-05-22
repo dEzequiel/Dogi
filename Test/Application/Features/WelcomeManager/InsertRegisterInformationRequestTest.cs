@@ -1,6 +1,6 @@
 using Application.DTOs.WelcomeManager;
 using Application.Features.WelcomeManagerFeature.Command;
-using Application.Managers;
+using Application.Managers.Abstraction;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
