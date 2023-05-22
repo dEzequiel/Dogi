@@ -45,9 +45,29 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public Task<MedicalRecord> CloseRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CloseRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var entity = await GetAsync(id);
+
+            if (entity is null)
+            {
+                throw new DogiException($"MedicalRecord with id {id} not found");
+            }
+
+            if (entity.IndividualProceeding is null)
+            {
+                throw new ArgumentNullException("The medical record does not correspond to any individual proceeding.");
+            }
+
+            if (entity.IndividualProceeding.Cage!.AnimalZone.Id != ((int)AnimalZone.Cure))
+            {
+                throw new ArgumentNullException("The cage is not in the medical cure area.");
+            }
+
+            entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.AnimalCategory.Id;
+            entity.MedicalStatusId = ((int)MedicalRecordStatus.Close);
+
+            return entity;
         }
 
         /// <inheritdoc/>
@@ -67,7 +87,7 @@ namespace Infraestructure.Persistence.Repositories
 
             if (entity.IndividualProceeding.Cage!.AnimalZone.Id != ((int)AnimalZone.WaitingForMedicalRevision))
             {
-                throw new ArgumentNullException("The cage is not in the medical examination area.");
+                throw new ArgumentNullException("The cage is not in the medical waiting area.");
             }
 
             entity.IndividualProceeding.Cage.AnimalZoneId = ((int)AnimalZone.Cure);
@@ -111,7 +131,7 @@ namespace Infraestructure.Persistence.Repositories
 
             if (entity.IndividualProceeding.Cage!.AnimalZone.Id != ((int)AnimalZone.Quarantine))
             {
-                throw new ArgumentNullException("The cage is not in the medical examination area.");
+                throw new ArgumentNullException("The cage is not in the medical quarantine area.");
             }
 
             entity.MedicalStatusId = ((int)MedicalRecordStatus.Waiting);
