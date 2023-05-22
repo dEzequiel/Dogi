@@ -5,7 +5,7 @@ namespace Domain.Entities
     /// <summary>
     /// Represents the electronic chip of an animal.
     /// </summary>
-    public class AnimalChip : AuditableEntity
+    public class AnimalChip : Entity
     {
         /// <summary>
         /// Animal chip number.

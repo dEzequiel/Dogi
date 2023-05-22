@@ -6,7 +6,7 @@ namespace Domain.Entities
     /// <summary>
     /// Represents the cage where the animal is located.
     /// </summary>
-    public class Cage : Entity
+    public class Cage : AuditableEntity
     {
         /// <summary>
         /// Cage number.

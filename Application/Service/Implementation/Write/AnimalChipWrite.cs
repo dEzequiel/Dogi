@@ -31,7 +31,7 @@ namespace Application.Service.Implementation.Write
 
             var repository = _unitOfWork.AnimalChipRepository;
 
-            await repository.AddAsync(entity, admin, ct);
+            await repository.AddAsync(entity, ct);
 
             await _unitOfWork.CompleteAsync(ct);
 

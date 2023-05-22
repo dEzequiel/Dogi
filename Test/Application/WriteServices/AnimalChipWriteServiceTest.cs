@@ -23,13 +23,12 @@ namespace Test.Application.WriteServices
             // Arrange
             unitOfWorkMock.Setup(u => u.AnimalChipRepository)
                 .Returns(repositoryMock.Object);
-            
+
             repositoryMock.Setup(r => r.AddAsync(
                 It.IsAny<AnimalChip>(),
-                It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
-            
+
             // act
             var result = await sut.AddAsync(animalChipAdd, admin);
 
@@ -40,7 +39,6 @@ namespace Test.Application.WriteServices
             unitOfWorkMock.Verify(u => u.AnimalChipRepository, Times.Once);
             repositoryMock.Verify(r => r.AddAsync(
                 It.IsAny<AnimalChip>(),
-                It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
@@ -58,13 +56,12 @@ namespace Test.Application.WriteServices
 
             unitOfWorkMock.Setup(u => u.AnimalChipRepository)
                 .Returns(repositoryMock.Object);
-            
+
             repositoryMock.Setup(r => r.AddAsync(
                 It.IsAny<AnimalChip>(),
-                It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
-            
+
             // act & assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.AddAsync(animalChipAdd, admin));
         }
@@ -82,13 +79,12 @@ namespace Test.Application.WriteServices
 
             unitOfWorkMock.Setup(u => u.AnimalChipRepository)
                 .Returns(repositoryMock.Object);
-            
+
             repositoryMock.Setup(r => r.AddAsync(
                 It.IsAny<AnimalChip>(),
-                It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
-            
+
             // act & assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.AddAsync(animalChipAdd, admin));
         }
