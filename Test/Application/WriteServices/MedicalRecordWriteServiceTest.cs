@@ -112,5 +112,42 @@ namespace Test.Application.WriteServices
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
+
+        [Theory]
+        [AutoMoqData]
+        internal async Task ShouldUpdateMedicalRecordStringFieldsAsync([Frozen] Mock<IUnitOfWork> unitOfWorkMock,
+            [Frozen] Mock<IMedicalRecordRepository> repositoryMock,
+            [Frozen] AdminData adminDataMock,
+            Domain.Entities.MedicalRecord medicalRecordUpdate,
+            MedicalRecordWrite sut)
+        {
+            // Arrange
+            var medicalRecordToUpdate = Guid.NewGuid();
+
+            unitOfWorkMock.Setup(u => u.MedicalRecordRepository)
+                .Returns(repositoryMock.Object);
+
+            repositoryMock.Setup(r => r.UpdateAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<Domain.Entities.MedicalRecord>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()))
+                .ReturnsAsync(medicalRecordUpdate);
+
+            // Act
+            var result = await sut.UpdateAsync(medicalRecordToUpdate, medicalRecordUpdate, adminDataMock);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<Domain.Entities.MedicalRecord>(result);
+
+            unitOfWorkMock.Verify(u => u.MedicalRecordRepository, Times.Once);
+            repositoryMock.Verify(r => r.UpdateAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<Domain.Entities.MedicalRecord>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+            unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
+        }
     }
 }

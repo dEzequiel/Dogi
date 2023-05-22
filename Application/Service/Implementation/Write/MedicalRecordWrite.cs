@@ -86,9 +86,23 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public Task<MedicalRecord> UpdateAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            Logger.LogInformation("MedicalRecordWrite --> CloseAsync --> Start");
+
+            Guard.Against.NullOrEmpty(id);
+            Guard.Against.NullOrEmpty(admin.Id);
+            Guard.Against.NullOrEmpty(admin.Email);
+
+            var repository = UnitOfWork.MedicalRecordRepository;
+
+            var entity = await repository.UpdateAsync(id, newEntity, admin, ct);
+
+            await UnitOfWork.CompleteAsync(ct);
+
+            Logger.LogInformation("MedicalRecordWrite --> CloseAsync --> End");
+
+            return entity;
         }
 
         ///<inheritdoc />

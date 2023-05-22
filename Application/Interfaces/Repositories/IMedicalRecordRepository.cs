@@ -41,6 +41,6 @@ namespace Application.Interfaces.Repositories
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord entity, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, CancellationToken ct = default);
     }
 }

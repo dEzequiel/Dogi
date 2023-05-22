@@ -92,6 +92,8 @@ namespace Infraestructure.Persistence.Repositories
 
             entity.IndividualProceeding.Cage.AnimalZoneId = ((int)AnimalZone.Cure);
             entity.MedicalStatusId = ((int)MedicalRecordStatus.Checked);
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = admin.Email;
 
             return entity;
         }
@@ -135,12 +137,26 @@ namespace Infraestructure.Persistence.Repositories
             }
 
             entity.MedicalStatusId = ((int)MedicalRecordStatus.Waiting);
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = admin.Email;
         }
 
         /// <inheritdoc/>
-        public Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord entity, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var entity = await GetAsync(id);
+
+            if (entity is null)
+            {
+                throw new DogiException($"MedicalRecord with id {id} not found");
+            }
+
+            entity.Observations = newEntity.Observations;
+            entity.Conclusions = newEntity.Conclusions;
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = admin.Email;
+
+            return entity;
         }
     }
 }

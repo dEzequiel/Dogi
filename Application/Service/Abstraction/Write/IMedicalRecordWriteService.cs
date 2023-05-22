@@ -40,6 +40,6 @@ namespace Application.Service.Abstraction.Write
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> UpdateAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, CancellationToken ct = default);
     }
 }
