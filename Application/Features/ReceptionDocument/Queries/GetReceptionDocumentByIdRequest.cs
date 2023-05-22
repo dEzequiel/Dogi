@@ -27,7 +27,7 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
     ApiResponse<Domain.Entities.ReceptionDocument>>
 {
     private readonly ILogger<GetReceptionDocumentByIdRequestHandler> _logger;
-    private readonly IReceptionDocumentRead _receptionDocumentReadService;
+    private readonly IReceptionDocumentReadService _receptionDocumentReadService;
     private const string RECEPTION_DOCUMENT_NOT_FOUND = "ReceptionDocument with id {0} not found.";
 
     /// <summary>
@@ -36,7 +36,7 @@ public class GetReceptionDocumentByIdRequestHandler : IRequestHandler<GetRecepti
     /// <param name="logger"></param>
     /// <param name="receptionDocumentReadService"></param>
     public GetReceptionDocumentByIdRequestHandler(ILogger<GetReceptionDocumentByIdRequestHandler> logger, 
-        IReceptionDocumentRead receptionDocumentReadService)
+        IReceptionDocumentReadService receptionDocumentReadService)
     {
         _logger = Guard.Against.Null(logger, nameof(logger));
         _receptionDocumentReadService = Guard.Against.Null(receptionDocumentReadService, nameof(receptionDocumentReadService));

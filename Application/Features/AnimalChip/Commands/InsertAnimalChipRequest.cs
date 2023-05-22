@@ -35,7 +35,7 @@ namespace Application.Features.InsertAnimalChipRequest.Commands
                                                    ApiResponse<AnimalChip>>
     {
         private readonly ILogger<InsertAnimalChipRequestHandler> _logger;
-        private readonly IAnimalChipWrite _animalChipWrite;
+        private readonly IAnimalChipWriteService _animalChipWrite;
 
         /// <summary>
         /// Constructor.
@@ -43,7 +43,7 @@ namespace Application.Features.InsertAnimalChipRequest.Commands
         /// <param name="logger"></param>
         /// <param name="animalChipOwnerWriteService"></param>
         public InsertAnimalChipRequestHandler(ILogger<InsertAnimalChipRequestHandler> logger, 
-            IAnimalChipWrite animalChipWrite)
+            IAnimalChipWriteService animalChipWrite)
         {
             _logger = Guard.Against.Null(logger, nameof(logger));
             _animalChipWrite = animalChipWrite;

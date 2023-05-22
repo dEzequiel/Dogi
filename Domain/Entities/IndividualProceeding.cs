@@ -65,9 +65,6 @@ namespace Domain.Entities
         /// </summary>
         public virtual Cage Cage { get; set; } = null!;
 
-        public IndividualProceeding(Guid id) : base(id) { }
-        public IndividualProceeding() : base(Guid.NewGuid()) { }
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -93,5 +90,14 @@ namespace Domain.Entities
             IsDeleted = isDeleted;
             CageId = cageId;
         }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="id"></param>
+        public IndividualProceeding(Guid id) : base(id) { }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public IndividualProceeding() : base(Guid.NewGuid()) { }
     }
 }

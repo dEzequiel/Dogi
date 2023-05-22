@@ -5,16 +5,35 @@ namespace Domain.Entities
     /// <summary>
     /// Represents the electronic chip of an animal.
     /// </summary>
-    public class AnimalChip : AuditableEntity
+    public class AnimalChip : Entity
     {
         /// <summary>
-        /// Attributes.
+        /// Animal chip number.
         /// </summary>
         public string ChipNumber { get; set; } = null!;
+        /// <summary>
+        /// Name appearing on chip.
+        /// </summary>
         public string? Name { get; set; }
-        public string OwnerIdentifier { get; set; } = null!;
-        public string OwnerContact { get; set; } = null!;
+        /// <summary>
+        /// Owner person identifier.
+        /// </summary>
+        public string PersonIdentifierId { get; set; } = null!;
+        public Guid ReceptionDocumentId { get; set; }
+        /// <summary>
+        /// Status if the owner is responsible for the animal.
+        /// </summary>
         public bool? OwnerIsResponsible { get; set; }
+
+        /// <summary>
+        /// Chip Person owner relationship.
+        /// </summary>
+        public virtual Person Person { get; set; } = null!;
+
+        /// <summary>
+        /// Reception document relationship.
+        /// </summary>
+        public virtual ReceptionDocument ReceptionDocument { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
@@ -22,23 +41,23 @@ namespace Domain.Entities
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="chipNumber"></param>
-        /// <param name="ownerPersonalIdentifier"></param>
-        /// <param name="ownerContact"></param>
+        /// <param name="personIdentifierId"></param>
         /// <param name="ownerIsResponsible"></param>
-        private AnimalChip(Guid id,
+        public AnimalChip(Guid id,
             string name,
             string chipNumber,
-            string ownerPersonalIdentifier,
-            string ownerContact,
+            string personIdentifierId,
             bool ownerIsResponsible) : base(id)
         {
             Name = name;
             ChipNumber = chipNumber;
-            OwnerIdentifier = ownerPersonalIdentifier;
-            OwnerContact = ownerContact;
+            PersonIdentifierId = personIdentifierId;
             OwnerIsResponsible = ownerIsResponsible;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public AnimalChip() : base(Guid.NewGuid()) { }
 
     }

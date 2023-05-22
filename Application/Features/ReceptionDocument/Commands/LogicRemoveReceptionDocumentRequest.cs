@@ -38,7 +38,7 @@ namespace Application.Features.ReceptionDocument.Commands
     public class LogicRemoveReceptionDocumentRequestHandler : IRequestHandler<LogicRemoveReceptionDocumentRequest, ApiResponse<bool>>
     {
         private readonly ILogger<LogicRemoveReceptionDocumentRequestHandler> _logger;
-        private readonly IReceptionDocumentWrite _receptionDocumentWriteService;
+        private readonly IReceptionDocumentWriteService _receptionDocumentWriteService;
 
         /// <summary>
         /// Constructor
@@ -46,7 +46,7 @@ namespace Application.Features.ReceptionDocument.Commands
         /// <param name="logger"></param>
         /// <param name="receptionDocumentWriteService"></param>
         public LogicRemoveReceptionDocumentRequestHandler(ILogger<LogicRemoveReceptionDocumentRequestHandler> logger, 
-            IReceptionDocumentWrite receptionDocumentWriteService)
+            IReceptionDocumentWriteService receptionDocumentWriteService)
         {
             _logger = Guard.Against.Null(logger, nameof(logger));
             _receptionDocumentWriteService = Guard.Against.Null(receptionDocumentWriteService);

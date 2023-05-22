@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
 {
-    public class CageWrite : ICageWrite
+    public class CageWrite : ICageWriteService
     {
         private readonly ILogger<CageWrite> _logger;
         private readonly IUnitOfWork _unitOfWork;

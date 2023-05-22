@@ -28,6 +28,11 @@ namespace Domain.Entities
         public virtual IndividualProceeding? IndividualProceeding { get; set; }
 
         /// <summary>
+        /// Animal chip relationship.
+        /// </summary>
+        public virtual AnimalChip? AnimalChip { get; set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
@@ -40,7 +45,14 @@ namespace Domain.Entities
             Observations = observations;
             PickupLocation = pickupLocation;
         }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="id"></param>
         public ReceptionDocument(Guid id) : base(id) { }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ReceptionDocument() : base(Guid.NewGuid()) { }
 
 

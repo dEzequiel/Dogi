@@ -8,31 +8,43 @@ namespace Domain.ValueObjects
     public class Address : ValueObject
     {
         /// <summary>
-        /// Attributes
+        /// Street name.
         /// </summary>
         public string? Street { get; }
-        public string? City { get; }
-        public string? ZipCode { get; }
         /// <summary>
-        /// Constructor
+        /// City name.
+        /// </summary>
+        public string? City { get; }
+        /// <summary>
+        /// Zip code.
+        /// </summary>
+        public string? ZipCode { get; }
+
+        /// <summary>
+        /// Constructor.
         /// </summary>
         /// <param name="street"></param>
         /// <param name="city"></param>
-        public Address() { }
-        private Address(string street, string city, string zipCode)
+        /// <param name="zipCode"></param>
+        public Address(string street, string city, string zipCode)
         {
             Street = street;
             City = city;
             ZipCode = zipCode;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public Address() { }
+
 
         /// <inheritdoc/>
         protected override IEnumerable<object> GetAtomicValues()
         {
-            yield return Street?? string.Empty;
-            yield return City?? string.Empty;
-            yield return ZipCode?? string.Empty;
+            yield return Street ?? string.Empty;
+            yield return City ?? string.Empty;
+            yield return ZipCode ?? string.Empty;
         }
     }
 }

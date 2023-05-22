@@ -2,38 +2,61 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
+    /// <summary>
+    /// Person Entity representing an external person from shelter.
+    /// </summary>
     public class Person
     {
-
         /// <summary>
-        /// Attributes.
+        /// Person Identifier.
         /// </summary>
         public string PersonIdentifier { get; set; } = null!;
+        /// <summary>
+        /// Person Name/
+        /// </summary>
         public string? Name { get; set; }
+        /// <summary>
+        /// Person Lastname.
+        /// </summary>
         public string? Lastname { get; set; }
+        /// <summary>
+        /// Person contact.
+        /// </summary>
         public string? Contact { get; set; }
-        public Address? Address { get; set; }
+        /// <summary>
+        /// Person Address.
+        /// </summary>
+        public Address Address { get; set; } = null!;
+        /// <summary>
+        /// Person ban status.
+        /// </summary>
         public bool IsBan { get; set; }
 
+        /// <summary>
+        /// Navigation properties.
+        /// </summary>
         public virtual ICollection<PersonBannedInformation>? Bans { get; set; }
 
         /// <summary>
-        /// Constructor
+        /// Animal chip relationship.
         /// </summary>
-        /// <param name="personIdentifier"></param>
+        public virtual AnimalChip? AnimalChip { get; set; }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="personalIdentifier"></param>
         /// <param name="name"></param>
         /// <param name="lastname"></param>
         /// <param name="contact"></param>
         /// <param name="address"></param>
-         public Person()
-        {
-        }
+        /// <param name="isBan"></param>
         public Person(string personalIdentifier,
             string? name,
             string? lastname,
             string? contact,
             Address? address,
-            bool isBan) 
+            bool isBan)
         {
             PersonIdentifier = personalIdentifier;
             Name = name;
@@ -43,6 +66,10 @@ namespace Domain.Entities
             IsBan = isBan;
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public Person() { }
 
     }
 }

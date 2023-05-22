@@ -1,14 +1,8 @@
 ﻿using Application.Interfaces.Repositories;
-using Crosscuting.Api.DTOs;
 using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -59,11 +53,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc />
-        public async Task AddAsync(AnimalChip entity, AdminData admin, CancellationToken ct = default)
+        public async Task AddAsync(AnimalChip entity, CancellationToken ct = default)
         {
-            entity.Created = DateTime.Now;
-            entity.CreatedBy = admin.Email;
-
             await _animalChipSet.AddAsync(entity, ct);
         }
     }

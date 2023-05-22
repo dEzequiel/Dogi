@@ -25,13 +25,13 @@ namespace Application.Features.Cage.Commands
                                                             ApiResponse<bool>>
     {
         private readonly ILogger<UpdateCageOccupiedStatusRequestHandler> _logger;
-        private readonly ICageWrite _cageWrite;
+        private readonly ICageWriteService _cageWrite;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="logger"></param>
-        public UpdateCageOccupiedStatusRequestHandler(ILogger<UpdateCageOccupiedStatusRequestHandler> logger, ICageWrite cageWrite)
+        public UpdateCageOccupiedStatusRequestHandler(ILogger<UpdateCageOccupiedStatusRequestHandler> logger, ICageWriteService cageWrite)
         {
             _logger = logger;
             _cageWrite = cageWrite;

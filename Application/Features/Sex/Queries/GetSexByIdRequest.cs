@@ -25,10 +25,10 @@ namespace Application.Features.Sex.Queries
     public class GetSexByIdRequestHandler : IRequestHandler<GetSexByIdRequest, ApiResponse<Domain.Support.Sex>>
     {
         private readonly ILogger<GetSexByIdRequestHandler> Logger;
-        private readonly ISexRead SexRead;
+        private readonly ISexReadService SexRead;
         private const string SEX_NOT_FOUND = "Sex with id {0} not found.";
 
-        public GetSexByIdRequestHandler(ILogger<GetSexByIdRequestHandler> logger, ISexRead sexRead)
+        public GetSexByIdRequestHandler(ILogger<GetSexByIdRequestHandler> logger, ISexReadService sexRead)
         {
             Logger = Guard.Against.Null(logger, nameof(logger));
             SexRead = Guard.Against.Null(sexRead, nameof(sexRead));

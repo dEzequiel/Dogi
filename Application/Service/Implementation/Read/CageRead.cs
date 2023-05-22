@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Read
 {
-    public class CageRead : ICageRead
+    public class CageRead : ICageReadService
     {
         private readonly ILogger<CageRead> _logger;
         private readonly IUnitOfWork _unitOfWork;

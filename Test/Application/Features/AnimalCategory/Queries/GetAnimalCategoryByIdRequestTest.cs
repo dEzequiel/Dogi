@@ -27,7 +27,7 @@ namespace Test.Application.Features.AnimalCategory.Queries
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] Mock<IAnimalCategoryRead> animalCategoryReadMock,
+            [Frozen] Mock<IAnimalCategoryReadService> animalCategoryReadMock,
             Domain.Support.AnimalCategory animalCategoryForGet,
             GetAnimalCategoryByIdRequest request,
             GetAnimalCategoryByIdRequestHandler handler)

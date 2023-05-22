@@ -3,13 +3,13 @@ using Domain.Support;
 
 namespace Application.Service.Abstraction.Read
 {
-    public interface IAnimalCategoryRead : IApplicationServiceBase
+    public interface ISexReadService : IApplicationServiceBase
     {
         /// <summary>
-        /// Get animal category by id.
+        /// Get sex by its identifier.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<AnimalCategory?> GetByIdAsync(int id);
+        Task<Sex?> GetByIdAsync(int id);
     }
 }

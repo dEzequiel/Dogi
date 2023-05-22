@@ -2,7 +2,7 @@
 
 namespace Application.Service.Abstraction.Write
 {
-    public interface ICageWrite : IApplicationServiceBase
+    public interface ICageWriteService : IApplicationServiceBase
     {
         /// <summary>
         /// Update the occupied status of the cage.

@@ -17,7 +17,7 @@ namespace Domain.Support
         public string Status { get; set; } = string.Empty;
 
         /// <summary>
-        /// Navigation properties.
+        /// Collection of Individual proceeding relationships.
         /// </summary>
         public virtual ICollection<IndividualProceeding>? IndivualProceedings { get; set; } = null!;
 
@@ -31,7 +31,9 @@ namespace Domain.Support
             Id = id;
             Status = status;
         }
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public IndividualProceedingStatus() { }
 
     }

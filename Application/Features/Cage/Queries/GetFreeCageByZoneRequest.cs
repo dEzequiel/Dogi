@@ -23,7 +23,7 @@ namespace Application.Features.Cage.Queries
     public class GetFreeCageByZoneRequestHandler : IRequestHandler<GetFreeCageByZoneRequest, ApiResponse<Domain.Entities.Cage>>
     {
         private readonly ILogger<GetFreeCageByZoneRequestHandler> _logger;
-        private readonly ICageRead _cageRead;
+        private readonly ICageReadService _cageRead;
         private const string FREE_CAGE_NOT_FOUND = "Free cage not found in zone";
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Application.Features.Cage.Queries
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="cageRead"></param>
-        public GetFreeCageByZoneRequestHandler(ILogger<GetFreeCageByZoneRequestHandler> logger, ICageRead cageRead)
+        public GetFreeCageByZoneRequestHandler(ILogger<GetFreeCageByZoneRequestHandler> logger, ICageReadService cageRead)
         {
             _logger = logger;
             _cageRead = cageRead;

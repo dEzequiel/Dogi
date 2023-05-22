@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Command
 {
-    public class ReceptionDocumentWrite : IReceptionDocumentWrite
+    public class ReceptionDocumentWrite : IReceptionDocumentWriteService
     {
         private readonly ILogger<ReceptionDocumentWrite> _logger;
         private readonly IUnitOfWork _unitOfWork;

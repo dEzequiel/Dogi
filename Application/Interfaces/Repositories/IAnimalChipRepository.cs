@@ -1,5 +1,4 @@
 ﻿using Application.Service.Interfaces;
-using Crosscuting.Api.DTOs;
 using Domain.Entities;
 
 namespace Application.Interfaces.Repositories
@@ -12,6 +11,6 @@ namespace Application.Interfaces.Repositories
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task AddAsync(AnimalChip entity, AdminData admin, CancellationToken ct = default);
+        Task AddAsync(AnimalChip entity, CancellationToken ct = default);
     }
 }

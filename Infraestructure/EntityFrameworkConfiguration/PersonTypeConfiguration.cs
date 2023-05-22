@@ -13,16 +13,20 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.PersonIdentifier)
                 .IsClustered(false);
 
-                builder.Property(p => p.PersonIdentifier)
-                .ValueGeneratedNever();
-                
+            builder.Property(p => p.PersonIdentifier)
+            .ValueGeneratedNever();
 
-                builder.OwnsOne(z => z.Address, address =>
+            builder.HasMany(p => p.Bans)
+                .WithOne(p => p.Person)
+                .HasForeignKey(p => p.PersonIdentifierId);
+
+            builder.OwnsOne(person => person.Address, address =>
                     {
-                        address.Property(x => x.Street).HasColumnName("OwnerAddressStreet");
-                        address.Property(x => x.City).HasColumnName("OwnerAddressCity");
-                        address.Property(x => x.ZipCode).HasColumnName("OwnerAddressZipCode");
+                        address.Property(x => x.Street).HasColumnName("AddressStreet");
+                        address.Property(x => x.City).HasColumnName("AddressCity");
+                        address.Property(x => x.ZipCode).HasColumnName("AddressZipCode");
                     });
+
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Application.Service.Abstraction.Read
     /// <summary>
     /// IndividualProceedingStatus Read Service Definition.
     /// </summary>
-    public interface IIndividualProceedingStatusRead : IApplicationServiceBase
+    public interface IIndividualProceedingStatusReadService : IApplicationServiceBase
     {
         /// <summary>
         /// Get individual proceeding status by id.

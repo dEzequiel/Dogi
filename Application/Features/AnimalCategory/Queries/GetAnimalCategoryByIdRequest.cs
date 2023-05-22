@@ -31,7 +31,7 @@ namespace Application.Features.AnimalCategory.Queries
         ApiResponse<Domain.Support.AnimalCategory>>
     {
         private readonly ILogger<GetAnimalCategoryByIdRequestHandler> Logger;
-        private readonly IAnimalCategoryRead AnimalCategoryRead;
+        private readonly IAnimalCategoryReadService AnimalCategoryRead;
         private const string ANIMAL_CATEGORY_NOT_FOUND = "AnimalCategory with id {0} not found.";
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Application.Features.AnimalCategory.Queries
         /// <param name="logger"></param>
         /// <param name="animalCategoryRead"></param>
         public GetAnimalCategoryByIdRequestHandler(ILogger<GetAnimalCategoryByIdRequestHandler> logger,
-            IAnimalCategoryRead animalCategoryRead)
+            IAnimalCategoryReadService animalCategoryRead)
         {
             Logger = logger;
             AnimalCategoryRead = animalCategoryRead;

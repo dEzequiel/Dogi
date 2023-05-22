@@ -4,15 +4,10 @@ using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Service.Implementation.Write
 {
-    public class AnimalChipWrite : IAnimalChipWrite
+    public class AnimalChipWrite : IAnimalChipWriteService
     {
         private readonly ILogger<AnimalChipWrite> _logger;
         private readonly IUnitOfWork _unitOfWork;
@@ -30,20 +25,25 @@ namespace Application.Service.Implementation.Write
 
             Guard.Against.Null(entity, nameof(entity));
             Guard.Against.Null(entity.ChipNumber, nameof(entity.ChipNumber));
-            Guard.Against.NullOrEmpty(entity.OwnerIdentifier, nameof(entity.OwnerIdentifier));
             Guard.Against.Null(admin, nameof(admin));
             Guard.Against.NullOrEmpty(admin.Id, nameof(admin.Id));
             Guard.Against.NullOrEmpty(admin.Email, nameof(admin.Email));
-            
+
             var repository = _unitOfWork.AnimalChipRepository;
 
-            await repository.AddAsync(entity, admin, ct);
+            await repository.AddAsync(entity, ct);
 
             await _unitOfWork.CompleteAsync(ct);
 
             _logger.LogInformation("AnimalChipWrite --> AddAsync --> End");
 
             return entity;
+        }
+
+        ///<inheritdoc/>
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
         }
     }
 }

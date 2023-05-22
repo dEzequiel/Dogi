@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Read
 {
-    public class AnimalCategoryRead : IAnimalCategoryRead
+    public class AnimalCategoryRead : IAnimalCategoryReadService
     {
         private readonly ILogger<AnimalCategoryRead> Logger;
         private readonly IUnitOfWork UnitOfWork;

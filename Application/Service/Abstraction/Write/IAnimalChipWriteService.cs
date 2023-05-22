@@ -1,9 +1,10 @@
 ﻿using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Interfaces;
 using Domain.Entities;
 
 namespace Application.Service.Abstraction.Write
 {
-    public interface IAnimalChipWrite
+    public interface IAnimalChipWriteService : IApplicationServiceBase
     {
         /// <summary>
         /// Add new AnimalChip.

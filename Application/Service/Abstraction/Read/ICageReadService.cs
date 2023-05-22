@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Service.Abstraction.Read
 {
-    public interface ICageRead : IApplicationServiceBase
+    public interface ICageReadService : IApplicationServiceBase
     {
         /// <summary>
         /// Obtain free random cage by zone.

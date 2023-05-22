@@ -24,7 +24,7 @@ namespace Test.Application.Features.IndividualProceeding.Command
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-            [Frozen] Mock<IIndividualProceedingWrite> individualProceedingWriteServiceMock,
+            [Frozen] Mock<IIndividualProceedingWriteService> individualProceedingWriteServiceMock,
             Domain.Entities.IndividualProceeding individualProceedingForGet,
             InsertIndividualProceedingRequest request,
             InsertIndividualProceedingRequestHandler handler)
