@@ -21,7 +21,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
             {
                 id++;
                 builder.HasData(new AnimalZone(id, zone));
-            };
+            }
         }
     }
 }

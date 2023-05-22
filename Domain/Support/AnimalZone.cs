@@ -1,4 +1,3 @@
-using Domain.Common;
 using Domain.Entities;
 
 namespace Domain.Support
@@ -25,7 +24,7 @@ namespace Domain.Support
         ///</summary>
         ///<param name="id"></param>
         ///<param name="name"></param>
-        public AnimalZone(int id, string name) 
+        public AnimalZone(int id, string name)
         {
             Id = id;
             Name = name;

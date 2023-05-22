@@ -1,7 +1,7 @@
 
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain.Entities;
 
 namespace Infraestructure.EntityFrameworkConfiguration
 {
@@ -14,10 +14,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-
-                builder.HasOne<Person>(f => f.Person)
-                    .WithMany(r => r.Bans)
-                    .HasForeignKey(fk => fk.PersonIdentifierId);
         }
     }
 }

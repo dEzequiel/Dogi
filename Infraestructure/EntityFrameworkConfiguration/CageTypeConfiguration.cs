@@ -26,13 +26,8 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 for (int cage = 0; cage <= 50; cage++)
                 {
                     builder.HasData(
-                        new Cage(
-                            Guid.NewGuid(),
-                            zone,
-                            null,
-                            cage,
-                            false)
-                        );
+                        new Cage(Guid.NewGuid(), zone, null, cage, false)
+                    );
                 }
             }
 

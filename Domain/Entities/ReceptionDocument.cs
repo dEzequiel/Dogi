@@ -28,6 +28,11 @@ namespace Domain.Entities
         public virtual IndividualProceeding? IndividualProceeding { get; set; }
 
         /// <summary>
+        /// Animal chip relationship.
+        /// </summary>
+        public virtual AnimalChip? AnimalChip { get; set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>

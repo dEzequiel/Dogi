@@ -10,7 +10,6 @@ using Application.Features.Sex.Queries;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
-using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -93,9 +92,9 @@ namespace Application.Managers
 
             var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
 
-            if(!data.AnimalChip.OwnerIsResponsible.Value)
+            if (!data.AnimalChip.OwnerIsResponsible.Value)
             {
-                return new RegisterInformation() 
+                return new RegisterInformation()
                 {
                     ReceptionDocument = receptionDocumentRequest.Data,
                     IndividualProceeding = individualProceeding.Data,
@@ -119,7 +118,6 @@ namespace Application.Managers
             Guard.Against.Null(cage.Data);
 
             individualProceeding.CageId = cage.Data.Id;
-            cage.Data.IndividualProceedingId = individualProceeding.Id;
 
             await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
