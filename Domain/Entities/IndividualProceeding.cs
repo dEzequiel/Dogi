@@ -41,6 +41,7 @@ namespace Domain.Entities
         /// Animal cage id.
         /// </summary>
         public Guid CageId { get; set; }
+
         public bool IsDeleted { get; set; } = false;
 
 
@@ -64,6 +65,10 @@ namespace Domain.Entities
         /// Animal cage relationship.
         /// </summary>
         public virtual Cage Cage { get; set; } = null!;
+        /// <summary>
+        /// Animal medical record relationship.
+        /// </summary>
+        public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = null!;
 
         /// <summary>
         /// Constructor.

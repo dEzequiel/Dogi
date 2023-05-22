@@ -22,6 +22,7 @@ namespace Infraestructure.Context
         public DbSet<Person> Persons { get; set; } = null!;
         public DbSet<PersonBannedInformation> PersonBannedInformations { get; set; } = null!;
         public DbSet<Cage> Cages { get; set; } = null!;
+        public DbSet<MedicalRecord> MedicalRecords { get; set; } = null!;
 
 
         // Support Tables
@@ -29,6 +30,7 @@ namespace Infraestructure.Context
         public DbSet<IndividualProceedingStatus> IndividualProceedingStatus { get; set; } = null!;
         public DbSet<AnimalCategory> AnimalCategory { get; set; } = null!;
         public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
+        public DbSet<MedicalRecordStatus> MedicalRecordStatuses { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,6 +45,8 @@ namespace Infraestructure.Context
             new PersonTypeConfiguration().Configure(modelBuilder.Entity<Person>());
             new PersonBannedInformationTypeConfiguration().Configure(modelBuilder.Entity<PersonBannedInformation>());
             new CageTypeConfiguration().Configure(modelBuilder.Entity<Cage>());
+            new MedicalRecordTypeConfiguration().Configure(modelBuilder.Entity<MedicalRecord>());
+            new MedicalRecordStatusTypeConfiguration().Configure(modelBuilder.Entity<MedicalRecordStatus>());
         }
     }
 }

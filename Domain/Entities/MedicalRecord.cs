@@ -1,5 +1,5 @@
 ﻿using Domain.Common;
-
+using Domain.Support;
 
 namespace Domain.Entities
 {
@@ -29,7 +29,7 @@ namespace Domain.Entities
         /// <summary>
         /// MedicalRecordStatus relationship.
         /// </summary>
-        // public virtual MedicalRecordStatus MedicalRecordStatus { get; set; }
+        public virtual MedicalRecordStatus MedicalRecordStatus { get; set; } = null!;
 
         /// <summary>
         /// Constructor.

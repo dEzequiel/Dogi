@@ -33,6 +33,13 @@ namespace Infraestructure.EntityFrameworkConfiguration
             builder.HasOne<Sex>(f => f.Sex)
                 .WithMany(r => r.IndividualProceedings)
                 .HasForeignKey(fk => fk.SexId);
+
+
+            builder.HasMany(p => p.MedicalRecords)
+                .WithOne(p => p.IndividualProceeding)
+                .HasForeignKey(p => p.IndividualProceedingId);
+
+
         }
     }
 }
