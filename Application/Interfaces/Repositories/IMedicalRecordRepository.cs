@@ -16,15 +16,6 @@ namespace Application.Interfaces.Repositories
         Task AddAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
-        /// Mark as waiting existing MedicalRecord.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="admin"></param>
-        /// <param name="ct"></param>
-        /// <returns></returns>
-        Task<MedicalRecord> SendForRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default);
-
-        /// <summary>
         /// Mark as checked existing MedicalRecord.
         /// </summary>
         /// <param name="id"></param>

@@ -46,13 +46,27 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public Task<MedicalRecord> MarkAsCheckedAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CheckAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            Logger.LogInformation("MedicalRecordWrite --> AddAsync --> Start");
+
+            Guard.Against.NullOrEmpty(id);
+            Guard.Against.NullOrEmpty(admin.Id);
+            Guard.Against.NullOrEmpty(admin.Email);
+
+            var repository = UnitOfWork.MedicalRecordRepository;
+
+            var entity = await repository.CompleteRevisionAsync(id, admin, ct);
+
+            await UnitOfWork.CompleteAsync(ct);
+
+            Logger.LogInformation("MedicalRecordWrite --> AddAsync --> End");
+
+            return entity;
         }
 
         ///<inheritdoc />
-        public Task<MedicalRecord> MarkAsCloseAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public Task<MedicalRecord> CloseAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }

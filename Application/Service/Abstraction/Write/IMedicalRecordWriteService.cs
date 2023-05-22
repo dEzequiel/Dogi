@@ -22,7 +22,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> MarkAsCheckedAsync(Guid id, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> CheckAsync(Guid id, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Mark as close existing MedicalRecord.
@@ -31,7 +31,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> MarkAsCloseAsync(Guid id, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> CloseAsync(Guid id, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Update existing MedicalRecord.
