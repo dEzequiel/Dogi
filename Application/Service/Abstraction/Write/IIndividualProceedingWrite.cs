@@ -1,4 +1,5 @@
 ﻿using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Interfaces;
 using Domain.Entities;
 using Domain.Enums;
 
@@ -7,7 +8,7 @@ namespace Application.Service.Abstraction.Write
     /// <summary>
     /// IndividualProceeding Write Service Definition.
     /// </summary>
-    public interface IIndividualProceedingWrite
+    public interface IIndividualProceedingWrite : IApplicationServiceBase
     {
         /// <summary>
         /// Add new IndividualProceeding.

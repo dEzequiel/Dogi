@@ -39,5 +39,11 @@ namespace Application.Service.Implementation.Write
 
             return entity;
         }
+
+        ///<inheritdoc/>
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
+        }
     }
 }

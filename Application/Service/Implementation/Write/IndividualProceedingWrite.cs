@@ -54,5 +54,11 @@ namespace Application.Service.Implementation.Write
         {
             throw new NotImplementedException();
         }
+
+        ///<inheritdoc/>
+        public void Dispose()
+        {
+            _unitOfWork.Dispose();
+        }
     }
 }
