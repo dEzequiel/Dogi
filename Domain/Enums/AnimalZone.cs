@@ -17,5 +17,6 @@ namespace Domain.Enums
         Quarantine = 9,
         Cure = 10,
         WaitingForOwner = 11,
+        WaitingForMedicalRevision = 12
     }
 }
