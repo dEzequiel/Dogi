@@ -29,7 +29,6 @@ namespace Infraestructure.Persistence.Repositories
             entity.CreatedBy = admin.Email;
 
             await MedicalRecords.AddAsync(entity, ct);
-            await SendForRevisionAsync(entity.Id, admin, ct);
         }
 
         /// <inheritdoc/>
@@ -117,7 +116,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        private async Task SendForRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> SendRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
             var entity = await GetAsync(id);
 
@@ -126,19 +125,12 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException($"MedicalRecord with id {id} not found");
             }
 
-            if (entity.IndividualProceeding is null)
-            {
-                throw new ArgumentNullException("The medical record does not correspond to any individual proceeding.");
-            }
-
-            if (entity.IndividualProceeding.Cage!.AnimalZone.Id != ((int)AnimalZone.Quarantine))
-            {
-                throw new ArgumentNullException("The cage is not in the medical quarantine area.");
-            }
 
             entity.MedicalStatusId = ((int)MedicalRecordStatus.Waiting);
             entity.LastModified = DateTime.UtcNow;
             entity.LastModifiedBy = admin.Email;
+
+            return entity;
         }
 
         /// <inheritdoc/>

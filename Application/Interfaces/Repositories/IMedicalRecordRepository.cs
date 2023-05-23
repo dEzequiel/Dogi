@@ -15,6 +15,16 @@ namespace Application.Interfaces.Repositories
         /// <returns></returns>
         Task AddAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default);
 
+
+        /// <summary>
+        /// Mark MedicalRecord for revision..
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="admin"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<MedicalRecord> SendRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default);
+
         /// <summary>
         /// Mark as checked existing MedicalRecord.
         /// </summary>
