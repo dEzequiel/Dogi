@@ -26,6 +26,7 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Ignore(f => f.AnimalCategory);
             descriptor.Ignore(f => f.Sex);
             descriptor.Ignore(f => f.Cage);
+            descriptor.Ignore(f => f.MedicalRecords);
 
             descriptor.Ignore(f => f.Created);
             descriptor.Ignore(f => f.CreatedBy);

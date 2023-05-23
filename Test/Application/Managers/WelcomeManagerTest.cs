@@ -5,6 +5,7 @@ using Application.Features.Cage.Queries;
 using Application.Features.IndividualPro.Commands;
 using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
+using Application.Features.MedicalRecord.Comamnds;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Features.Sex.Queries;
 using Application.Managers;
@@ -32,6 +33,7 @@ namespace Test.Application.Managers
             ApiResponse<IndividualProceedingStatus> individualProceedingStatusApiResponse,
             ApiResponse<AnimalCategory> animalCategoryApiResponse,
             ApiResponse<Sex> sexApiResponse,
+            ApiResponse<MedicalRecord> medicalRecordResponse,
             RegisterInformation registerInformation,
             AdminData adminData,
             WelcomeManager sut)
@@ -59,13 +61,17 @@ namespace Test.Application.Managers
                                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(animalCategoryApiResponse);
 
-            mediatorMock.Setup(x => x.Send(It.IsAny<GetSexByIdRequest>(), 
+            mediatorMock.Setup(x => x.Send(It.IsAny<GetSexByIdRequest>(),
                                            It.IsAny<CancellationToken>()))
                 .ReturnsAsync(sexApiResponse);
 
             mediatorMock.Setup(x => x.Send(It.IsAny<InsertIndividualProceedingRequest>(),
                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(individualProceedingApiResponse);
+
+            mediatorMock.Setup(x => x.Send(It.IsAny<InsertMedicalRecordRequest>(),
+                   It.IsAny<CancellationToken>()))
+                .ReturnsAsync(medicalRecordResponse);
 
             // Act
             var result = await sut.RegisterAnimal(registerInformation, adminData);
@@ -89,6 +95,10 @@ namespace Test.Application.Managers
                                 It.IsAny<CancellationToken>()), Times.Once);
 
             mediatorMock.Verify(x => x.Send(It.IsAny<GetIndividualProceedingStatusByIdRequest>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+
+
+            mediatorMock.Verify(x => x.Send(It.IsAny<InsertMedicalRecordRequest>(),
                     It.IsAny<CancellationToken>()), Times.Once);
 
         }
@@ -134,7 +144,7 @@ namespace Test.Application.Managers
                 .ReturnsAsync(animalChipApiResponse);
 
             mediatorMock.Setup(x => x.Send(It.IsAny<GetAnimalCategoryByIdRequest>(),
-                                            It.IsAny<CancellationToken>()))
+                                           It.IsAny<CancellationToken>()))
                 .ReturnsAsync(animalCategoryApiResponse);
 
             mediatorMock.Setup(x => x.Send(It.IsAny<GetSexByIdRequest>(),
@@ -168,7 +178,8 @@ namespace Test.Application.Managers
                                 It.IsAny<CancellationToken>()), Times.Once);
 
             mediatorMock.Verify(x => x.Send(It.IsAny<GetIndividualProceedingStatusByIdRequest>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
+                                            It.IsAny<CancellationToken>()), Times.Once);
+
         }
     }
 }

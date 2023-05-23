@@ -5,6 +5,7 @@ using Application.Features.Cage.Queries;
 using Application.Features.IndividualPro.Commands;
 using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
+using Application.Features.MedicalRecord.Comamnds;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Features.Sex.Queries;
 using Application.Managers.Abstraction;
@@ -59,20 +60,22 @@ namespace Application.Managers
         {
             var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
 
-
             Guard.Against.Null(receptionDocumentRequest.Data);
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
             await RelationshipAssignments(data.IndividualProceeding);
 
-            var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
-            Guard.Against.Null(individualProceeding.Data);
+            var individualProceedingRequest = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+
+            Guard.Against.Null(individualProceedingRequest.Data);
+            await CreateMedicalRecordForIndividualProceedingAsync(individualProceedingRequest.Data, adminData);
+
 
             return new RegisterInformation()
             {
                 ReceptionDocument = receptionDocumentRequest.Data,
-                IndividualProceeding = individualProceeding.Data,
+                IndividualProceeding = individualProceedingRequest.Data,
                 AnimalChip = null
             };
         }
@@ -121,6 +124,18 @@ namespace Application.Managers
             individualProceeding.CageId = cage.Data.Id;
 
             await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+        }
+
+
+        private async Task CreateMedicalRecordForIndividualProceedingAsync(IndividualProceeding individualProceeding, AdminData adminData)
+        {
+            var medicalRecord = new MedicalRecord(id: Guid.NewGuid(),
+                                                  medicalStatusId: ((int)MedicalRecordStatus.Waiting),
+                                                  individualProceedingId: individualProceeding.Id,
+                                                  observations: individualProceeding.ReceptionDocument.Observations,
+                                                  conclusions: string.Empty);
+
+            await Mediator.Send(new InsertMedicalRecordRequest(medicalRecord, adminData));
         }
 
         private async Task AssignOpenStatusToIndividualProceeding(IndividualProceeding individualProceeding)
