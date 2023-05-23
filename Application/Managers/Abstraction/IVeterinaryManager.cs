@@ -1,4 +1,7 @@
-﻿using Crosscuting.Base.Interfaces;
+﻿using Application.DTOs.VeterinaryManager;
+using Crosscuting.Api.DTOs;
+
+using Crosscuting.Base.Interfaces;
 using Domain.Entities;
 
 namespace Application.Managers.Abstraction
@@ -11,5 +14,13 @@ namespace Application.Managers.Abstraction
         /// </summary>
         /// <returns></returns>
         Task SetForMedicalRevision(IndividualProceeding individualProceeding);
+
+        /// <summary>
+        /// Mark as 'checked' the current medical record of the animal. This means the entry into the 
+        /// animal area of the animal's category.
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid individualProceedingId, Guid medicalRecordId, AdminData adminData, CancellationToken ct = default);
     }
 }
