@@ -17,6 +17,8 @@ namespace Application
             });
 
             services.AddTransient<IWelcomeManager, WelcomeManager>();
+            services.AddTransient<IVeterinaryManager, VeterinaryManager>();
+
             services.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
             return services;
