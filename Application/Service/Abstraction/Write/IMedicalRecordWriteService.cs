@@ -24,6 +24,16 @@ namespace Application.Service.Abstraction.Write
         /// <returns></returns>
         Task<MedicalRecord> CheckAsync(Guid id, AdminData admin, CancellationToken ct = default);
 
+
+        /// <summary>
+        /// Send for revision existing MedicalRecord.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="admin"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<MedicalRecord> RevisionAsync(Guid id, AdminData admin, CancellationToken ct = default);
+
         /// <summary>
         /// Mark as close existing MedicalRecord.
         /// </summary>

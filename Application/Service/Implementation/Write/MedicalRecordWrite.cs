@@ -30,7 +30,7 @@ namespace Application.Service.Implementation.Write
 
             Guard.Against.Null(entity);
             Guard.Against.NullOrEmpty(entity.IndividualProceedingId);
-            Guard.Against.Null(entity.MedicalRecordStatus);
+            Guard.Against.Null(entity.MedicalStatusId);
             Guard.Against.NullOrEmpty(admin.Id);
             Guard.Against.NullOrEmpty(admin.Email);
 
@@ -41,6 +41,26 @@ namespace Application.Service.Implementation.Write
             await UnitOfWork.CompleteAsync(ct);
 
             Logger.LogInformation("MedicalRecordWrite --> AddAsync --> End");
+
+            return entity;
+        }
+
+        ///<inheritdoc />
+        public async Task<MedicalRecord> SendRevision(Guid id, AdminData admin, CancellationToken ct = default)
+        {
+            Logger.LogInformation("MedicalRecordWrite --> SendRevision --> Start");
+
+            Guard.Against.NullOrEmpty(id);
+            Guard.Against.NullOrEmpty(admin.Id);
+            Guard.Against.NullOrEmpty(admin.Email);
+
+            var repository = UnitOfWork.MedicalRecordRepository;
+
+            var entity = await repository.SendRevisionAsync(id, admin, ct);
+
+            await UnitOfWork.CompleteAsync(ct);
+
+            Logger.LogInformation("MedicalRecordWrite --> SendRevision --> End");
 
             return entity;
         }
@@ -109,6 +129,11 @@ namespace Application.Service.Implementation.Write
         public void Dispose()
         {
             UnitOfWork.Dispose();
+        }
+
+        public Task<MedicalRecord> RevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }
