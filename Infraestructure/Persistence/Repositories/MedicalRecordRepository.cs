@@ -70,24 +70,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CompleteRevisionAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default)
         {
-            var entity = await GetAsync(id);
-
-            if (entity is null)
-            {
-                throw new DogiException($"MedicalRecord with id {id} not found");
-            }
-
-            if (entity.IndividualProceeding is null)
-            {
-                throw new ArgumentNullException("The medical record does not correspond to any individual proceeding.");
-            }
-
-            if (entity.IndividualProceeding.Cage!.AnimalZone.Id != ((int)AnimalZone.WaitingForMedicalRevision))
-            {
-                throw new ArgumentNullException("The cage is not in the medical waiting area.");
-            }
 
             entity.IndividualProceeding.Cage.AnimalZoneId = ((int)AnimalZone.Cure);
             entity.MedicalStatusId = ((int)MedicalRecordStatus.Checked);

@@ -3,6 +3,7 @@ using Application.Service.Implementation.Write;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
+using Domain.Entities;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -52,19 +53,18 @@ namespace Test.Application.WriteServices
             MedicalRecordWrite sut)
         {
             // Arrange
-            var medicalRecordToCheck = Guid.NewGuid();
 
             unitOfWorkMock.Setup(u => u.MedicalRecordRepository)
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.CompleteRevisionAsync(
-                It.IsAny<Guid>(),
+                It.IsAny<MedicalRecord>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(medicalRecordAdd);
 
             // Act
-            var result = await sut.CheckAsync(medicalRecordToCheck, adminDataMock);
+            var result = await sut.CheckAsync(medicalRecordAdd, adminDataMock);
 
             // Assert
             Assert.NotNull(result);
@@ -72,7 +72,7 @@ namespace Test.Application.WriteServices
 
             unitOfWorkMock.Verify(u => u.MedicalRecordRepository, Times.Once);
             repositoryMock.Verify(r => r.CompleteRevisionAsync(
-                It.IsAny<Guid>(),
+                It.IsAny<MedicalRecord>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);

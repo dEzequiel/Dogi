@@ -32,7 +32,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> CompleteRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> CompleteRevisionAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Mark as close existing MedicalRecord.

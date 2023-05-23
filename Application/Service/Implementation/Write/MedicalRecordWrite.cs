@@ -66,17 +66,18 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<MedicalRecord> CheckAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CheckAsync(MedicalRecord record, AdminData admin, CancellationToken ct = default)
         {
             Logger.LogInformation("MedicalRecordWrite --> CheckAsync --> Start");
 
-            Guard.Against.NullOrEmpty(id);
+            Guard.Against.Null(record);
+            Guard.Against.Null(record.IndividualProceedingId);
             Guard.Against.NullOrEmpty(admin.Id);
             Guard.Against.NullOrEmpty(admin.Email);
 
             var repository = UnitOfWork.MedicalRecordRepository;
 
-            var entity = await repository.CompleteRevisionAsync(id, admin, ct);
+            var entity = await repository.CompleteRevisionAsync(record, admin, ct);
 
             await UnitOfWork.CompleteAsync(ct);
 
