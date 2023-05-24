@@ -2,7 +2,7 @@ using Application.DTOs.WelcomeManager;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Interfaces;
 
-namespace Application.Managers
+namespace Application.Managers.Abstraction
 {
     public interface IWelcomeManager : IApplicationServiceBase
     {

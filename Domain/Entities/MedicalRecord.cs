@@ -25,7 +25,7 @@ namespace Domain.Entities
         /// <summary>
         /// Individual relationship.
         /// </summary>
-        public virtual IndividualProceeding? IndividualProceeding { get; set; }
+        public virtual IndividualProceeding IndividualProceeding { get; set; } = null!;
         /// <summary>
         /// MedicalRecordStatus relationship.
         /// </summary>

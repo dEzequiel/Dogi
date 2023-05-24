@@ -1,4 +1,5 @@
 ﻿using Application.Managers;
+using Application.Managers.Abstraction;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -16,6 +17,8 @@ namespace Application
             });
 
             services.AddTransient<IWelcomeManager, WelcomeManager>();
+            services.AddTransient<IVeterinaryManager, VeterinaryManager>();
+
             services.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
             return services;
