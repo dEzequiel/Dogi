@@ -16,6 +16,10 @@ namespace Domain.Entities
         /// Vaccines collection relationship. 
         /// </summary>
         public List<Vaccine> Vaccines { get; } = new();
+        /// <summary>
+        /// IndividualProceeding relationship.
+        /// </summary>
+        public IndividualProceeding IndividualProceeding { get; set; } = null!;
 
         /// <summary>
         /// Constructor.

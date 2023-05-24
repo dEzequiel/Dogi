@@ -13,6 +13,10 @@ namespace Domain.Entities
         /// </summary>
         public Guid ReceptionDocumentId { get; set; }
         /// <summary>
+        /// Vaccination card id.
+        /// </summary>
+        public Guid VaccinationCardId { get; set; }
+        /// <summary>
         /// Animal name.
         /// </summary>
         public string? Name { get; set; }
@@ -69,6 +73,10 @@ namespace Domain.Entities
         /// Animal medical record relationship.
         /// </summary>
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; } = null!;
+        /// <summary>
+        /// Vaccination card relationship.
+        /// </summary>
+        public virtual VaccinationCard VaccinationCard { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
@@ -82,6 +90,7 @@ namespace Domain.Entities
         /// <param name="cageId"></param>
         public IndividualProceeding(Guid id,
             Guid receptionDocumentId,
+            Guid vaccinationCardId,
             int statusId,
             int categoryId,
             int sexId,
@@ -89,6 +98,7 @@ namespace Domain.Entities
             Guid cageId) : base(id)
         {
             ReceptionDocumentId = receptionDocumentId;
+            VaccinationCardId = vaccinationCardId;
             IndividualProceedingStatusId = statusId;
             CategoryId = categoryId;
             SexId = sexId;
