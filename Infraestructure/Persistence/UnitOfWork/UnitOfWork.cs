@@ -24,6 +24,7 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IAnimalCategoryRepository AnimalCategoryRepository => new AnimalCategoryRepository(_context);
         public ISexRepository SexRepository => new SexRepository(_context);
         public IMedicalRecordRepository MedicalRecordRepository => new MedicalRecordRepository(_context);
+        public IVaccinationCardRepository VaccinationCardRepository => new VaccinationCardRepository(_context);
         /// <summary>
         /// Constructor.
         /// </summary>
