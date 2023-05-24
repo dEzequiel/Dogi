@@ -21,6 +21,10 @@ namespace Domain.Support
         /// Collection of Individual proceeding relationships.
         /// </summary>
         public ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
+        /// <summary>
+        /// Collection of Vaccine relationships.
+        /// </summary>
+        public ICollection<Vaccine> Vaccines { get; set; } = null!;
 
         /// <summary>
         /// Constructor.
