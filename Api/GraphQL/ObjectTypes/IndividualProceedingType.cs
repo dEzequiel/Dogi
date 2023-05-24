@@ -15,6 +15,7 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Field(f => f.Color).Type<StringType>();
 
             descriptor.Ignore(f => f.ReceptionDocumentId);
+            descriptor.Ignore(f => f.VaccinationCardId);
             descriptor.Ignore(f => f.CageId);
             descriptor.Ignore(f => f.SexId);
             descriptor.Ignore(f => f.CategoryId);
