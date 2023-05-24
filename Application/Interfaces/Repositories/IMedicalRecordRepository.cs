@@ -32,7 +32,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> CompleteRevisionAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> CompleteRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Mark as close existing MedicalRecord.
@@ -52,5 +52,11 @@ namespace Application.Interfaces.Repositories
         /// <param name="ct"></param>
         /// <returns></returns>
         Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, CancellationToken ct = default);
+
+        /// <summary>
+        /// Queryable.
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<MedicalRecord> GetQueryable();
     }
 }

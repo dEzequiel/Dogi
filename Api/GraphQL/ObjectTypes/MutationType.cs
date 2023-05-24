@@ -1,6 +1,4 @@
-﻿using Api.GraphQL.GraphQLQueries;
-using Api.GraphQL.GraphQLTypes;
-using Api.GraphQL.InputObjectTypes;
+﻿using Api.GraphQL.InputObjectTypes;
 using Api.GraphQL.Mutations;
 using Api.GraphQL.RootMutations;
 
@@ -15,6 +13,10 @@ namespace Api.GraphQL.Types
             descriptor.Field(f => f.RegiterNewAnimal)
                     .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                     .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default, default));
+
+            descriptor.Field(f => f.CheckMedicalRecord)
+                .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
+                .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default));
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                     .Argument("idToDelete", arg => arg.Type<UuidType>())

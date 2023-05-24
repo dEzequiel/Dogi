@@ -70,8 +70,12 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CompleteRevisionAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
+            var entity = await MedicalRecords.Include(i => i.IndividualProceeding)
+                .ThenInclude(th => th.Cage)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
 
             entity.IndividualProceeding.Cage.AnimalZoneId = ((int)AnimalZone.Cure);
             entity.MedicalStatusId = ((int)MedicalRecordStatus.Checked);
@@ -96,7 +100,14 @@ namespace Infraestructure.Persistence.Repositories
         /// <inheritdoc/>
         public async Task<MedicalRecord?> GetAsync(Guid id)
         {
-            return await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (entity is null)
+            {
+                throw new DogiException($"MedicalRecord with id {id} not found");
+            }
+
+            return entity;
         }
 
         /// <inheritdoc/>
@@ -133,6 +144,14 @@ namespace Infraestructure.Persistence.Repositories
             entity.LastModifiedBy = admin.Email;
 
             return entity;
+        }
+
+        /// <inheritdoc/>
+        public IQueryable<MedicalRecord> GetQueryable()
+        {
+            return MedicalRecords
+                .AsQueryable()
+                .AsNoTracking();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> CheckAsync(MedicalRecord record, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> CheckAsync(Guid id, AdminData admin, CancellationToken ct = default);
 
 
         /// <summary>

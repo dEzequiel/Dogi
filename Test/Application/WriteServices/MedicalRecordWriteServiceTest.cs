@@ -3,7 +3,6 @@ using Application.Service.Implementation.Write;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -49,7 +48,8 @@ namespace Test.Application.WriteServices
         internal async Task ShouldSetAsCheckedMedicalRecordStatusAsync([Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IMedicalRecordRepository> repositoryMock,
             [Frozen] AdminData adminDataMock,
-            Domain.Entities.MedicalRecord medicalRecordAdd,
+            Guid medicalRecordAdd,
+            Domain.Entities.MedicalRecord medicalRecordReturn,
             MedicalRecordWrite sut)
         {
             // Arrange
@@ -58,10 +58,10 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.CompleteRevisionAsync(
-                It.IsAny<MedicalRecord>(),
+                It.IsAny<Guid>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()))
-                .ReturnsAsync(medicalRecordAdd);
+                .ReturnsAsync(medicalRecordReturn);
 
             // Act
             var result = await sut.CheckAsync(medicalRecordAdd, adminDataMock);
@@ -72,7 +72,7 @@ namespace Test.Application.WriteServices
 
             unitOfWorkMock.Verify(u => u.MedicalRecordRepository, Times.Once);
             repositoryMock.Verify(r => r.CompleteRevisionAsync(
-                It.IsAny<MedicalRecord>(),
+                It.IsAny<Guid>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);

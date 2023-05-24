@@ -21,6 +21,6 @@ namespace Application.Managers.Abstraction
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid individualProceedingId, Guid medicalRecordId, AdminData adminData, CancellationToken ct = default);
+        Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, AdminData adminData, CancellationToken ct = default);
     }
 }

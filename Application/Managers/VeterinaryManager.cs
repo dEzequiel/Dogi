@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.VeterinaryManager;
-using Application.Features.IndividualPro.Queries;
 using Application.Features.MedicalRecord.Commands;
 using Application.Managers.Abstraction;
 using Application.Service.Interfaces;
@@ -37,24 +36,20 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public async Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid individualProceedingId,
-            Guid medicalRecordId,
+        public async Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId,
             AdminData adminData,
             CancellationToken ct = default)
         {
-            var individualProceeding = await Mediator.Send(new GetIndividualProceedingByIdRequest(individualProceedingId), ct);
-
-            Guard.Against.Null(individualProceeding.Data);
-            var currentMedicalRecord = individualProceeding.Data.MedicalRecords.FirstOrDefault(x => x.Id == medicalRecordId);
-
-            Guard.Against.Null(currentMedicalRecord);
-            var checkedMedicalRecord = await Mediator.Send(new CheckMedicalRecordRequest(currentMedicalRecord, adminData), ct);
+            //TODO
+            // Las entidades no vienen mapeadas, MedicalRecords esta vacio. Deberias de hacer la consulta
+            // a medical records.
+            var checkedMedicalRecord = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, adminData), ct);
 
             Guard.Against.Null(checkedMedicalRecord.Data);
 
             return new InvidiualProceedingWithMedicalRecord()
             {
-                IndividualProceeding = individualProceeding.Data,
+                IndividualProceeding = checkedMedicalRecord.Data.IndividualProceeding,
                 MedicalRecord = checkedMedicalRecord.Data
             };
         }

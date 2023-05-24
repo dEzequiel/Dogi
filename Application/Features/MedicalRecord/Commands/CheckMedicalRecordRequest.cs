@@ -12,17 +12,17 @@ namespace Application.Features.MedicalRecord.Commands
     /// </summary>
     public class CheckMedicalRecordRequest : IRequest<ApiResponse<Domain.Entities.MedicalRecord>>
     {
-        public Domain.Entities.MedicalRecord MedicalRecordData { get; private set; } = null!;
-        public AdminData AdminData { get; private set; } = null!;
+        public Guid Id { get; private set; }
+        public AdminData AdminData { get; private set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="medicalRecordData"></param>
         /// <param name="adminData"></param>
-        public CheckMedicalRecordRequest(Domain.Entities.MedicalRecord medicalRecordData, AdminData adminData)
+        public CheckMedicalRecordRequest(Guid id, AdminData adminData)
         {
-            MedicalRecordData = medicalRecordData;
+            Id = id;
             AdminData = adminData;
         }
     }
@@ -53,7 +53,7 @@ namespace Application.Features.MedicalRecord.Commands
 
             Guard.Against.Null(request, nameof(request));
 
-            Domain.Entities.MedicalRecord result = await MedicalRecordWriteService.CheckAsync(request.MedicalRecordData, request.AdminData, cancellationToken);
+            Domain.Entities.MedicalRecord result = await MedicalRecordWriteService.CheckAsync(request.Id, request.AdminData, cancellationToken);
 
             Logger.LogInformation("CheckMedicalRecordRequestHandler --> CheckAsync --> End");
 
