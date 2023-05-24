@@ -72,7 +72,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
-        public async Task<VaccinationCardVaccine> VaccineAsync(Guid vaccineCardId, Guid vaccineId, CancellationToken cancellationToken = default)
+        public async Task<VaccinationCardVaccine> VaccineAsync(Guid vaccineCardId, Guid vaccineId, AdminData admin, CancellationToken cancellationToken = default)
         {
             var entity = await VaccinationCardVaccines.FirstOrDefaultAsync(x => x.VaccinationCardId == vaccineCardId && x.VaccineId == vaccineId, cancellationToken);
 
@@ -81,7 +81,14 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND, vaccineId, vaccineCardId));
             }
 
+            if (entity.VaccineStatusId == (int)VaccineStatus.Done)
+            {
+                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_DONE, entity.Id));
+            }
+
             entity.VaccineStatusId = ((int)VaccineStatus.Done);
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = admin.Email;
 
             return entity;
         }

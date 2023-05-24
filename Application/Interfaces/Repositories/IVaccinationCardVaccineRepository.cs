@@ -22,6 +22,6 @@ namespace Application.Interfaces.Repositories
         /// <param name="vaccineId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<VaccinationCardVaccine> VaccineAsync(Guid vaccineCardId, Guid vaccineId, CancellationToken cancellationToken = default);
+        Task<VaccinationCardVaccine> VaccineAsync(Guid vaccineCardId, Guid vaccineId, AdminData admin, CancellationToken cancellationToken = default);
     }
 }
