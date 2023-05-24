@@ -23,6 +23,9 @@ namespace Infraestructure.Context
         public DbSet<PersonBannedInformation> PersonBannedInformations { get; set; } = null!;
         public DbSet<Cage> Cages { get; set; } = null!;
         public DbSet<MedicalRecord> MedicalRecords { get; set; } = null!;
+        public DbSet<Vaccine> Vaccines { get; set; } = null!;
+        public DbSet<VaccinationCard> VaccinationCards { get; set; } = null!;
+        public DbSet<VaccinationCardVaccine> VaccinationCardVaccines { get; set; } = null!;
 
 
         // Support Tables
@@ -31,6 +34,7 @@ namespace Infraestructure.Context
         public DbSet<AnimalCategory> AnimalCategory { get; set; } = null!;
         public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
         public DbSet<MedicalRecordStatus> MedicalRecordStatuses { get; set; } = null!;
+        public DbSet<VaccineStatus> VaccineStatuses { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,6 +51,10 @@ namespace Infraestructure.Context
             new CageTypeConfiguration().Configure(modelBuilder.Entity<Cage>());
             new MedicalRecordTypeConfiguration().Configure(modelBuilder.Entity<MedicalRecord>());
             new MedicalRecordStatusTypeConfiguration().Configure(modelBuilder.Entity<MedicalRecordStatus>());
+            new VaccineStatusTypeConfiguration().Configure(modelBuilder.Entity<VaccineStatus>());
+            new VaccineTypeConfiguration().Configure(modelBuilder.Entity<Vaccine>());
+            new VaccinationCardVaccineTypeConfiguration().Configure(modelBuilder.Entity<VaccinationCardVaccine>());
+            new VaccinationCardTypeConfiguration().Configure(modelBuilder.Entity<VaccinationCard>());
         }
     }
 }
