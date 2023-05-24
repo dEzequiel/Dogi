@@ -8,6 +8,7 @@ using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.MedicalRecord.Comamnds;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Features.Sex.Queries;
+using Application.Features.VaccinationCard.Commands;
 using Application.Managers;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
@@ -34,6 +35,7 @@ namespace Test.Application.Managers
             ApiResponse<AnimalCategory> animalCategoryApiResponse,
             ApiResponse<Sex> sexApiResponse,
             ApiResponse<MedicalRecord> medicalRecordResponse,
+            ApiResponse<VaccinationCard> vaccinationCardResponse,
             RegisterInformation registerInformation,
             AdminData adminData,
             WelcomeManager sut)
@@ -73,6 +75,10 @@ namespace Test.Application.Managers
                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(medicalRecordResponse);
 
+            mediatorMock.Setup(x => x.Send(It.IsAny<InsertVaccinationCardRequest>(),
+                   It.IsAny<CancellationToken>()))
+                .ReturnsAsync(vaccinationCardResponse);
+
             // Act
             var result = await sut.RegisterAnimal(registerInformation, adminData);
 
@@ -99,6 +105,9 @@ namespace Test.Application.Managers
 
 
             mediatorMock.Verify(x => x.Send(It.IsAny<InsertMedicalRecordRequest>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
+
+            mediatorMock.Verify(x => x.Send(It.IsAny<InsertVaccinationCardRequest>(),
                     It.IsAny<CancellationToken>()), Times.Once);
 
         }

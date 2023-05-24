@@ -15,7 +15,7 @@ namespace Domain.Entities
         /// <summary>
         /// Vaccines collection relationship. 
         /// </summary>
-        public List<Vaccine> Vaccines { get; } = new();
+        public virtual ICollection<Vaccine>? Vaccines { get; set; }
         /// <summary>
         /// IndividualProceeding relationship.
         /// </summary>
@@ -34,8 +34,21 @@ namespace Domain.Entities
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
-        public VaccinationCard(Guid id) : base(id)
+        /// <param name="observations"></param>
+        /// <param name="vaccines"></param>
+        public VaccinationCard(Guid id, string? observations, List<Vaccine> vaccines) : base(id)
         {
+            Observations = observations;
+            Vaccines = vaccines;
         }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="id"></param>
+        public VaccinationCard(Guid id) : base(id) { }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public VaccinationCard() : base(Guid.NewGuid()) { }
     }
 }

@@ -26,7 +26,7 @@ namespace Domain.Entities
         /// <summary>
         /// VaccinationCards collection relationship.
         /// </summary>
-        public List<VaccinationCard> VaccinationCards { get; } = new();
+        public virtual ICollection<VaccinationCard>? VaccinationCards { get; set; }
 
         /// <summary>
         /// Constructor.

@@ -41,7 +41,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
 
             builder.HasOne<VaccinationCard>(f => f.VaccinationCard)
                 .WithOne(r => r.IndividualProceeding)
-                .HasForeignKey<IndividualProceeding>(rd => rd.VaccinationCardId);
+                .HasForeignKey<IndividualProceeding>(fk => fk.VaccinationCardId);
 
 
 
