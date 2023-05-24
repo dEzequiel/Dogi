@@ -19,6 +19,7 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Ignore(f => f.ReceptionDocumentId);
             descriptor.Ignore(f => f.CageId);
             descriptor.Ignore(f => f.IndividualProceedingStatusId);
+            descriptor.Ignore(f => f.VaccinationCardId);
             descriptor.Ignore(f => f.IsDeleted);
 
             descriptor.Ignore(f => f.ReceptionDocument);
@@ -27,6 +28,7 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Ignore(f => f.Sex);
             descriptor.Ignore(f => f.Cage);
             descriptor.Ignore(f => f.MedicalRecords);
+            descriptor.Ignore(f => f.VaccinationCard);
 
             descriptor.Ignore(f => f.Created);
             descriptor.Ignore(f => f.CreatedBy);

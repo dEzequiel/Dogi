@@ -8,6 +8,7 @@ using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.MedicalRecord.Comamnds;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Features.Sex.Queries;
+using Application.Features.VaccinationCard.Commands;
 using Application.Managers.Abstraction;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
@@ -65,6 +66,9 @@ namespace Application.Managers
 
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
             await RelationshipAssignments(data.IndividualProceeding);
+
+            var vaccinationCard = await CreateVaccinationCardForIndividualProceedingAsync(adminData);
+            data.IndividualProceeding.VaccinationCardId = vaccinationCard.Id;
 
             var individualProceedingRequest = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
 
@@ -136,6 +140,17 @@ namespace Application.Managers
                                                   conclusions: string.Empty);
 
             await Mediator.Send(new InsertMedicalRecordRequest(medicalRecord, adminData));
+        }
+
+        private async Task<VaccinationCard> CreateVaccinationCardForIndividualProceedingAsync(AdminData adminData)
+        {
+            var vaccinationCard = new VaccinationCard(id: Guid.NewGuid(),
+                                                      observations: string.Empty);
+
+            var addedCard = await Mediator.Send(new InsertVaccinationCardRequest(vaccinationCard, adminData));
+
+            Guard.Against.Null(addedCard.Data);
+            return addedCard.Data;
         }
 
         private async Task AssignOpenStatusToIndividualProceeding(IndividualProceeding individualProceeding)
