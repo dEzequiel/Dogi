@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.VeterinaryManager;
+using Domain.Entities;
 
 namespace Api.GraphQL.RootMutations
 {
@@ -13,5 +14,9 @@ namespace Api.GraphQL.RootMutations
         /// 
         /// </summary>
         public IndividualProceedingWithVaccinationCard AssignVaccine { get; set; } = null!;
+        /// <summary>
+        /// 
+        /// </summary>
+        public VaccinationCardVaccine Vaccine { get; set; } = null!;
     }
 }

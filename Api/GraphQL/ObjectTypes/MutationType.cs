@@ -29,6 +29,10 @@ namespace Api.GraphQL.Types
                 .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
                 .ResolveWith<VeterinaryManagerMutations>(v => v.AssignVaccine(default, default));
 
+            descriptor.Field(f => f.Vaccine)
+                .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
+                .ResolveWith<VeterinaryManagerMutations>(v => v.Vaccine(default, default));
+
             #endregion
 
             #region "VACCINE MUTATIONS"

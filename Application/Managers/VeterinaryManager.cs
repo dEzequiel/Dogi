@@ -79,7 +79,16 @@ namespace Application.Managers
                 IndividualProceeding = currentVaccinationCardVaccine.VaccinationCard.IndividualProceeding,
                 VaccinationCard = currentVaccinationCardVaccine.VaccinationCard
             };
+        }
 
+        ///<inheritdoc />
+        public async Task<VaccinationCardVaccine> Vaccine(Guid vaccinationCardId, Guid vaccineId, AdminData adminData, CancellationToken ct = default)
+        {
+            var response = await Mediator.Send(new VaccineExistingVaccinationCardVaccineVaccineRequest(vaccinationCardId, vaccineId, adminData), ct);
+
+            Guard.Against.Null(response.Data);
+
+            return response.Data;
         }
 
 

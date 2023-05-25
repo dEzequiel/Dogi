@@ -105,6 +105,8 @@ namespace Infraestructure.Persistence.Repositories
             entity.VaccineStatusId = ((int)VaccineStatus.Done);
             entity.LastModified = DateTime.UtcNow;
             entity.LastModifiedBy = admin.Email;
+            entity.VaccineStart = DateTime.UtcNow;
+            entity.VaccineEnd = entity.VaccineStart.Value.AddDays(365);
 
             return entity;
         }
