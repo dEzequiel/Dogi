@@ -1,10 +1,13 @@
 ﻿using Application.DTOs.VeterinaryManager;
 using Application.Features.MedicalRecord.Commands;
+using Application.Features.VaccinationCardVaccine.Commands;
 using Application.Managers.Abstraction;
+using Application.Service.Abstraction.Read;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
+using Domain.Enums;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -14,6 +17,7 @@ namespace Application.Managers
     {
         private readonly ILogger<VeterinaryManager> Logger;
         private readonly IMediator Mediator;
+        private readonly IVaccinationCardVaccineReadService VaccinationCardVaccineReadService;
         private readonly IUnitOfWork UnitOfWork;
 
         /// <summary>
@@ -22,11 +26,12 @@ namespace Application.Managers
         /// <param name="logger"></param>
         /// <param name="mediator"></param>
         /// <param name="unitOfWork"></param>
-        public VeterinaryManager(ILogger<VeterinaryManager> logger, IMediator mediator, IUnitOfWork unitOfWork)
+        public VeterinaryManager(ILogger<VeterinaryManager> logger, IMediator mediator, IUnitOfWork unitOfWork, IVaccinationCardVaccineReadService vaccinationCardVaccineReadService)
         {
             Logger = logger;
             Mediator = mediator;
             UnitOfWork = unitOfWork;
+            VaccinationCardVaccineReadService = vaccinationCardVaccineReadService;
         }
 
         ///<inheritdoc />
@@ -40,9 +45,6 @@ namespace Application.Managers
             AdminData adminData,
             CancellationToken ct = default)
         {
-            //TODO
-            // Las entidades no vienen mapeadas, MedicalRecords esta vacio. Deberias de hacer la consulta
-            // a medical records.
             var checkedMedicalRecord = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, adminData), ct);
 
             Guard.Against.Null(checkedMedicalRecord.Data);
@@ -54,9 +56,38 @@ namespace Application.Managers
             };
         }
 
+        ///<inheritdoc />
+        public async Task<IndividualProceedingWithVaccinationCard> AssignPendingVaccine(Guid vaccinationCardId, Guid vaccineId, AdminData adminData, CancellationToken ct = default)
+        {
+            var vaccinationCardVaccine = new VaccinationCardVaccine()
+            {
+                VaccinationCardId = vaccinationCardId,
+                VaccineId = vaccineId,
+                VaccineStatusId = (int)VaccineStatus.Pending,
+                VaccineStart = null,
+                VaccineEnd = null,
+            };
+
+            var response = await Mediator.Send(new InsertVaccinationCardVaccineVaccineRequest(vaccinationCardVaccine, adminData), ct);
+
+            Guard.Against.Null(response.Data);
+            var currentVaccinationCardVaccine = await VaccinationCardVaccineReadService.GetByIdLoadedAsync(response.Data.Id);
+            Guard.Against.Null(currentVaccinationCardVaccine);
+
+            return new IndividualProceedingWithVaccinationCard()
+            {
+                IndividualProceeding = currentVaccinationCardVaccine.VaccinationCard.IndividualProceeding,
+                VaccinationCard = currentVaccinationCardVaccine.VaccinationCard
+            };
+
+        }
+
+
         public void Dispose()
         {
             UnitOfWork.Dispose();
         }
+
+
     }
 }

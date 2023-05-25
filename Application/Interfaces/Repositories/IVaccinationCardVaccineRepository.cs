@@ -23,5 +23,13 @@ namespace Application.Interfaces.Repositories
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<VaccinationCardVaccine> VaccineAsync(Guid vaccineCardId, Guid vaccineId, AdminData admin, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get VaccinationCardVaccine by id with loaded data.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<VaccinationCardVaccine> GetLoadedAsync(Guid id, CancellationToken ct = default);
     }
 }

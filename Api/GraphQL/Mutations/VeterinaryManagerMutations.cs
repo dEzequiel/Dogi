@@ -48,6 +48,33 @@ namespace Api.GraphQL.Mutations
             }
         }
 
+        public async Task<IndividualProceedingWithVaccinationCard> AssignVaccine([Service] ISender Mediator,
+            VaccinationCardWithVaccineCredentials input)
+        {
+            try
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> Start");
+
+                var result = await Mediator.Send(new AssignVaccineRequest(input.VaccinationCardId, input.VaccineId, GetAdminData()));
+
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> End");
+
+                return result.Data!;
+            }
+            catch (DogiException ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+        }
+
         /// <summary>
         /// Get current user information.
         /// </summary>
