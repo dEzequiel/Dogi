@@ -22,5 +22,14 @@ namespace Application.Managers.Abstraction
         /// <param name="record"></param>
         /// <returns></returns>
         Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, AdminData adminData, CancellationToken ct = default);
+
+        /// <summary>
+        /// Assign a vaccine to an individual file. This marks the vaccine as pending in the vaccine card.
+        /// </summary>
+        /// <param name="individualProceedingId"></param>
+        /// <param name="adminData"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IndividualProceedingWithVaccinationCard> AssignPendingVaccine(Guid vaccinationCardId, Guid vaccineId, AdminData adminData, CancellationToken ct = default);
     }
 }

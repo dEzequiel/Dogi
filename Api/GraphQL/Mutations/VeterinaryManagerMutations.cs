@@ -1,7 +1,9 @@
 ﻿using Application.DTOs.VeterinaryManager;
+using Application.Features.VaccinationCardVaccine.Commands;
 using Application.Features.VeterinaryManager.Command;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
+using Domain.Entities;
 using MediatR;
 
 namespace Api.GraphQL.Mutations
@@ -44,6 +46,63 @@ namespace Api.GraphQL.Mutations
             catch (Exception ex)
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> CheckMedicalRecord --> Error");
+                throw new DogiException(ex.Message);
+            }
+        }
+
+        public async Task<IndividualProceedingWithVaccinationCard> AssignVaccine([Service] ISender Mediator,
+            VaccinationCardWithVaccineCredentials input)
+        {
+            try
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> Start");
+
+                var result = await Mediator.Send(new AssignVaccineRequest(input.VaccinationCardId,
+                                                                          input.VaccineId,
+                                                                          GetAdminData()));
+
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> End");
+
+                return result.Data!;
+            }
+            catch (DogiException ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> AssignVaccine --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+        }
+
+        public async Task<VaccinationCardVaccine> Vaccine([Service] ISender Mediator, VaccinationCardWithVaccineCredentials input)
+        {
+            try
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> Vaccine --> Start");
+
+                var result = await Mediator.Send(new VaccineExistingVaccinationCardVaccineVaccineRequest(input.VaccinationCardId,
+                                                                                                         input.VaccineId,
+                                                                                                         GetAdminData()));
+
+                Logger.LogInformation("VeterinaryManagerMutations --> Vaccine --> End");
+
+                return result.Data!;
+            }
+            catch (DogiException ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> Vaccine --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> Vaccine --> Error");
+
                 throw new DogiException(ex.Message);
             }
         }
