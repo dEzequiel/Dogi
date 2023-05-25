@@ -13,6 +13,12 @@ namespace Api.GraphQL.RootMutations
         /// <summary>
         /// 
         /// </summary>
+        public IndividualProceedingWithMedicalRecord CloseMedicalRecord { get; set; } = null!;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public IndividualProceedingWithVaccinationCard AssignVaccine { get; set; } = null!;
         /// <summary>
         /// 

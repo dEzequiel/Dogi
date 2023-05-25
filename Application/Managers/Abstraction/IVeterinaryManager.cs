@@ -16,12 +16,22 @@ namespace Application.Managers.Abstraction
         Task SetForMedicalRevision(IndividualProceeding individualProceeding);
 
         /// <summary>
-        /// Mark as 'checked' the current medical record of the animal. This means the entry into the 
+        /// Mark as 'checked' the current medical record of the animal. This means the first step for the entry into the 
         /// animal area of the animal's category.
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, AdminData adminData, CancellationToken ct = default);
+        Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, AdminData adminData, CancellationToken ct = default);
+
+        /// <summary>
+        /// Mark as 'closed' the current medical record of the animal. This means the entry
+        /// into the animal area of the animal's category.
+        /// </summary>
+        /// <param name="medicalRecordId"></param>
+        /// <param name="AdminData"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IndividualProceedingWithMedicalRecord> CloseMedicalRecord(Guid medicalRecordId, AdminData AdminData, CancellationToken ct = default);
 
         /// <summary>
         /// Assign a vaccine to an individual file. This marks the vaccine as pending in the vaccine card.

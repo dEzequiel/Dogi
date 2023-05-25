@@ -25,6 +25,14 @@ namespace Api.GraphQL.Types
 
             #region "VETERINARY MANAGER MUTATIONS"
 
+            //descriptor.Field(f => f.CheckMedicalRecord)
+            //    .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
+            //    .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default));
+
+            descriptor.Field(f => f.CloseMedicalRecord)
+                .Argument("medicalRecordIdToClose", arg => arg.Type<NonNullType<UuidType>>())
+                .ResolveWith<VeterinaryManagerMutations>(q => q.CloseMedicalRecord(default, default));
+
             descriptor.Field(f => f.AssignVaccine)
                 .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
                 .ResolveWith<VeterinaryManagerMutations>(v => v.AssignVaccine(default, default));
