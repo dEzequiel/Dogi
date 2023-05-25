@@ -19,6 +19,7 @@ namespace Application.Service.Interfaces
         IMedicalRecordRepository MedicalRecordRepository { get; }
         IVaccinationCardRepository VaccinationCardRepository { get; }
         IVaccinationCardVaccineRepository VaccinationCardVaccineRepository { get; }
+        IVaccineRepository VaccineRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>
