@@ -21,6 +21,14 @@ namespace Api.GraphQL.Types
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                     .Argument("idToDelete", arg => arg.Type<UuidType>())
                     .ResolveWith<ReceptionDocumentMutations>(q => q.MarkReceptionDocumentAsRemovedAsync(default, default));
+
+            #region "VACCINE MUTATIONS"
+
+            descriptor.Field(f => f.AddVaccine)
+                .Argument("input", arg => arg.Type<ListType<VaccineInput>>())
+                .ResolveWith<VaccineMutations>(q => q.AddVaccine(default, default));
+
+            #endregion
         }
     }
 }

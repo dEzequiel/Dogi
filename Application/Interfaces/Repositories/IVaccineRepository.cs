@@ -12,5 +12,13 @@ namespace Application.Interfaces.Repositories
         /// <param name="ct"></param>
         /// <returns></returns>
         Task AddAsync(Vaccine entity, CancellationToken ct = default);
+
+        /// <summary>
+        /// Add collection of Vaccine.
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task AddRangeAsync(IEnumerable<Vaccine> entities, CancellationToken ct = default);
     }
 }

@@ -31,9 +31,16 @@ namespace Infraestructure.Persistence.Repositories
             await Vaccines.AddAsync(entity);
         }
 
-        public Task AddRangeAsync(IEnumerable<Vaccine> entities)
+        ///<inheritdoc />
+        public async Task AddRangeAsync(IEnumerable<Vaccine> entities)
         {
-            throw new NotImplementedException();
+            await Vaccines.AddRangeAsync(entities);
+        }
+
+        ///<inheritdoc />
+        public async Task AddRangeAsync(IEnumerable<Vaccine> entities, CancellationToken ct = default)
+        {
+            await Vaccines.AddRangeAsync(entities, ct);
         }
 
         public Task<IEnumerable<Vaccine>> FindAsync(Expression<Func<Vaccine, bool>> predicate)

@@ -45,8 +45,10 @@ namespace Domain.Entities
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
-        public Vaccine(Guid id) : base(id)
-        {
-        }
+        public Vaccine(Guid id) : base(id) { }
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public Vaccine() : base(Guid.NewGuid()) { }
     }
 }
