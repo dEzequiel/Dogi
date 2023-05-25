@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.VaccinationCardVaccine.Commands
 {
+    /// <summary>
+    /// Insert VaccinationCardVaccine request implementation.
+    /// </summary>
     public class InsertVaccinationCardVaccineVaccineRequest : IRequest<ApiResponse<Domain.Entities.VaccinationCardVaccine>>
     {
         public Domain.Entities.VaccinationCardVaccine Vaccine { get; set; }
@@ -24,6 +27,9 @@ namespace Application.Features.VaccinationCardVaccine.Commands
         }
     }
 
+    /// <summary>
+    /// Insert VaccinationCardVaccine handler implementation.
+    /// </summary>
     public class InsertVaccineCardVaccineVaccineRequestHandler : IRequestHandler<InsertVaccinationCardVaccineVaccineRequest,
                                                                     ApiResponse<Domain.Entities.VaccinationCardVaccine>>
     {
