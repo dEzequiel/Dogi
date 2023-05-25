@@ -30,12 +30,12 @@ namespace Infraestructure.Persistence.Repositories
         ///<inheritdoc />
         public async Task AddAsync(VaccinationCardVaccine entity, AdminData admin, CancellationToken ct = default)
         {
-            var vaccineAlreadyAssigned = await VaccinationCardVaccines.FirstOrDefaultAsync(x => x.VaccineId == entity.VaccineId && x.VaccinationCardId == entity.VaccinationCardId);
+            //var vaccineAlreadyAssigned = VaccinationCardVaccines.AsNoTracking().Where(x => x.VaccineId == entity.VaccineId && x.VaccinationCardId == entity.VaccinationCardId);
 
-            if (vaccineAlreadyAssigned != null)
-            {
-                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_ADDED, entity.VaccineId, entity.VaccinationCardId));
-            }
+            //if (vaccineAlreadyAssigned != null)
+            //{
+            //    throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_ADDED, entity.VaccineId, entity.VaccinationCardId));
+            //}
 
             entity.Created = DateTime.UtcNow;
             entity.CreatedBy = admin.Email;
@@ -69,6 +69,22 @@ namespace Infraestructure.Persistence.Repositories
         public Task<Domain.Entities.VaccinationCardVaccine?> GetAsync(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        ///<inheritdoc />
+        public async Task<VaccinationCardVaccine> GetLoadedAsync(Guid id, CancellationToken ct = default)
+        {
+            var entity = await VaccinationCardVaccines
+                            .Include(r => r.VaccinationCard)
+                                .ThenInclude(r => r.IndividualProceeding)
+                            .FirstOrDefaultAsync(x => x.Id == id, ct);
+
+            if (entity is null)
+            {
+                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_NOT_FOUND, id));
+            }
+
+            return entity;
         }
 
         ///<inheritdoc />
