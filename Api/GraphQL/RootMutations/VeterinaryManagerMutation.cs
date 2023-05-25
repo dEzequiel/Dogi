@@ -8,7 +8,7 @@ namespace Api.GraphQL.RootMutations
         /// <summary>
         /// 
         /// </summary>
-        public InvidiualProceedingWithMedicalRecord CheckMedicalRecord { get; set; } = null!;
+        public IndividualProceedingWithMedicalRecord CheckMedicalRecord { get; set; } = null!;
 
         /// <summary>
         /// 

@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.VeterinaryManager
 {
-    public class InvidiualProceedingWithMedicalRecord
+    public class IndividualProceedingWithMedicalRecord
     {
         public IndividualProceeding IndividualProceeding { get; set; } = null!;
         public MedicalRecord MedicalRecord { get; set; } = null!;
@@ -12,13 +12,13 @@ namespace Application.DTOs.VeterinaryManager
         /// </summary>
         /// <param name="individualProceeding"></param>
         /// <param name="medicalRecord"></param>
-        public InvidiualProceedingWithMedicalRecord(IndividualProceeding individualProceeding, MedicalRecord medicalRecord)
+        public IndividualProceedingWithMedicalRecord(IndividualProceeding individualProceeding, MedicalRecord medicalRecord)
         {
             IndividualProceeding = individualProceeding;
             MedicalRecord = medicalRecord;
         }
 
-        public InvidiualProceedingWithMedicalRecord()
+        public IndividualProceedingWithMedicalRecord()
         {
         }
     }

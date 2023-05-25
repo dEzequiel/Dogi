@@ -24,7 +24,7 @@ namespace Api.GraphQL.Mutations
             Logger = logger;
         }
 
-        public async Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord([Service] ISender Mediator,
+        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord([Service] ISender Mediator,
             Guid medicalRecordId)
         {
             try
