@@ -46,7 +46,9 @@ namespace Infraestructure.Persistence.Repositories
         /// <inheritdoc/>
         public async Task<MedicalRecord> CloseRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
         {
-            var entity = await GetAsync(id);
+            var entity = await MedicalRecords.Include(i => i.IndividualProceeding)
+                .ThenInclude(th => th.Cage)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity is null)
             {
@@ -58,13 +60,14 @@ namespace Infraestructure.Persistence.Repositories
                 throw new ArgumentNullException("The medical record does not correspond to any individual proceeding.");
             }
 
-            if (entity.IndividualProceeding.Cage!.AnimalZone.Id != ((int)AnimalZone.Cure))
+            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZone.Cure))
             {
                 throw new ArgumentNullException("The cage is not in the medical cure area.");
             }
 
-            entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.AnimalCategory.Id;
+            entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.CategoryId;
             entity.MedicalStatusId = ((int)MedicalRecordStatus.Close);
+            entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.CategoryId;
 
             return entity;
         }

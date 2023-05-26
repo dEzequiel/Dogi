@@ -24,7 +24,7 @@ namespace Api.GraphQL.Mutations
             Logger = logger;
         }
 
-        public async Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord([Service] ISender Mediator,
+        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord([Service] ISender Mediator,
             Guid medicalRecordId)
         {
             try
@@ -46,6 +46,33 @@ namespace Api.GraphQL.Mutations
             catch (Exception ex)
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> CheckMedicalRecord --> Error");
+                throw new DogiException(ex.Message);
+            }
+        }
+
+        public async Task<IndividualProceedingWithMedicalRecord> CloseMedicalRecord([Service] ISender Mediator,
+            Guid medicalRecordIdToClose)
+        {
+            try
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> Start");
+
+                var result = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordIdToClose, GetAdminData()));
+
+                Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> End");
+
+                return result.Data!;
+            }
+            catch (DogiException ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> Error");
+
                 throw new DogiException(ex.Message);
             }
         }

@@ -41,7 +41,7 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public async Task<InvidiualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId,
+        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId,
             AdminData adminData,
             CancellationToken ct = default)
         {
@@ -49,10 +49,31 @@ namespace Application.Managers
 
             Guard.Against.Null(checkedMedicalRecord.Data);
 
-            return new InvidiualProceedingWithMedicalRecord()
+            return new IndividualProceedingWithMedicalRecord()
             {
                 IndividualProceeding = checkedMedicalRecord.Data.IndividualProceeding,
                 MedicalRecord = checkedMedicalRecord.Data
+            };
+        }
+
+        ///<inheritdoc />
+        public async Task<IndividualProceedingWithMedicalRecord> CloseMedicalRecord(
+            Guid medicalRecordId,
+            AdminData AdminData,
+            CancellationToken ct = default)
+        {
+            Logger.LogInformation("VeterinaryManager --> CloseMedicalRecord --> Start");
+
+            var closedMedicalRecord = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordId, AdminData), ct);
+
+            Guard.Against.Null(closedMedicalRecord.Data);
+
+            Logger.LogInformation("VeterinaryManager --> CloseMedicalRecord --> End");
+
+            return new IndividualProceedingWithMedicalRecord()
+            {
+                IndividualProceeding = closedMedicalRecord.Data.IndividualProceeding,
+                MedicalRecord = closedMedicalRecord.Data
             };
         }
 

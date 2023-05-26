@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.VeterinaryManager.Command
 {
-    public class CheckMedicalRecordRequest : IRequest<ApiResponse<InvidiualProceedingWithMedicalRecord>>
+    public class CheckMedicalRecordRequest : IRequest<ApiResponse<IndividualProceedingWithMedicalRecord>>
     {
         public Guid MedicalRecordId { get; private set; }
         public AdminData AdminData { get; private set; }
@@ -26,7 +26,7 @@ namespace Application.Features.VeterinaryManager.Command
 
     }
 
-    public class CheckMedicalRecordRequestHandler : IRequestHandler<CheckMedicalRecordRequest, ApiResponse<InvidiualProceedingWithMedicalRecord>>
+    public class CheckMedicalRecordRequestHandler : IRequestHandler<CheckMedicalRecordRequest, ApiResponse<IndividualProceedingWithMedicalRecord>>
     {
         private readonly ILogger<CheckMedicalRecordRequestHandler> Logger;
         private readonly IVeterinaryManager VeteriyaryManager;
@@ -43,7 +43,7 @@ namespace Application.Features.VeterinaryManager.Command
         }
 
         ///<inheritdoc />
-        public async Task<ApiResponse<InvidiualProceedingWithMedicalRecord>> Handle(CheckMedicalRecordRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<IndividualProceedingWithMedicalRecord>> Handle(CheckMedicalRecordRequest request, CancellationToken cancellationToken)
         {
             Logger.LogInformation("CheckMedicalRecordRequestHandler --> CheckAsync --> Start");
 
@@ -53,7 +53,7 @@ namespace Application.Features.VeterinaryManager.Command
 
             Logger.LogInformation("CheckMedicalRecordRequestHandler --> CheckAsync --> End");
 
-            return new ApiResponse<InvidiualProceedingWithMedicalRecord>(result);
+            return new ApiResponse<IndividualProceedingWithMedicalRecord>(result);
         }
     }
 }
