@@ -20,7 +20,7 @@ namespace Domain.Support
         /// <summary>
         /// Collection of Individual proceeding relationships.
         /// </summary>
-        public ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
+        public virtual ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
 
         /// <summary>
         /// Constructor.

@@ -20,11 +20,11 @@ namespace Domain.Support
         /// <summary>
         /// Collection of Individual proceeding relationships.
         /// </summary>
-        public ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
+        public virtual ICollection<IndividualProceeding> IndividualProceedings { get; set; } = null!;
         /// <summary>
         /// Collection of Vaccine relationships.
         /// </summary>
-        public ICollection<Vaccine> Vaccines { get; set; } = null!;
+        public virtual ICollection<Vaccine> Vaccines { get; set; } = null!;
 
         /// <summary>
         /// Constructor.

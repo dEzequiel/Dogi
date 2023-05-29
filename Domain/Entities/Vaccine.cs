@@ -21,7 +21,7 @@ namespace Domain.Entities
         /// <summary>
         /// Animal category relationship.
         /// </summary>
-        public AnimalCategory AnimalCategory { get; set; } = null!;
+        public virtual AnimalCategory AnimalCategory { get; set; } = null!;
 
         /// <summary>
         /// VaccinationCards collection relationship.
