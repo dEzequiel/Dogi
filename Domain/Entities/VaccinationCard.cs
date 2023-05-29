@@ -19,7 +19,7 @@ namespace Domain.Entities
         /// <summary>
         /// IndividualProceeding relationship.
         /// </summary>
-        public virtual IndividualProceeding IndividualProceeding { get; set; } = null!;
+        public virtual IndividualProceeding? IndividualProceeding { get; set; } = null!;
 
         /// <summary>
         /// Constructor.

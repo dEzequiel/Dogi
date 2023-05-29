@@ -14,7 +14,7 @@ namespace Domain.Entities
         /// <summary>
         /// Person Name/
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Person Lastname.
         /// </summary>
@@ -22,11 +22,11 @@ namespace Domain.Entities
         /// <summary>
         /// Person contact.
         /// </summary>
-        public string? Contact { get; set; }
+        public string Contact { get; set; }
         /// <summary>
         /// Person Address.
         /// </summary>
-        public Address Address { get; set; } = null!;
+        public Address? Address { get; set; } = null!;
         /// <summary>
         /// Person ban status.
         /// </summary>

@@ -15,7 +15,7 @@ namespace Domain.Entities
         /// <summary>
         /// Vaccination card id.
         /// </summary>
-        public Guid VaccinationCardId { get; set; }
+        public Guid? VaccinationCardId { get; set; }
         /// <summary>
         /// Animal name.
         /// </summary>
@@ -76,7 +76,7 @@ namespace Domain.Entities
         /// <summary>
         /// Vaccination card relationship.
         /// </summary>
-        public virtual VaccinationCard VaccinationCard { get; set; } = null!;
+        public virtual VaccinationCard? VaccinationCard { get; set; }
 
         /// <summary>
         /// Constructor.
