@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Domain.Entities;
 
 namespace Api.GraphQL.ObjectTypes
@@ -25,11 +21,15 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.
                 Field(f => f.Contact)
                 .Type<StringType>();
-            
+
             descriptor.
                 Field(f => f.Address)
                 .Type<AddressType>();
-            
+
+            descriptor
+                .Field(f => f.Bans)
+                .Type<ListType<PersonBannedInformationType>>();
+
         }
     }
 }

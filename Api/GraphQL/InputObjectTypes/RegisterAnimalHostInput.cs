@@ -1,5 +1,4 @@
-﻿using Api.GraphQL.ObjectTypes;
-using Application.DTOs.WelcomeManager;
+﻿using Application.DTOs.WelcomeManager;
 
 namespace Api.GraphQL.InputObjectTypes
 {
@@ -18,6 +17,9 @@ namespace Api.GraphQL.InputObjectTypes
 
             descriptor.Field(f => f.AnimalChip)
                 .Type<AnimalChipInput>();
+
+            descriptor.Field(f => f.Person)
+                .Type<PersonInput>();
 
 
 

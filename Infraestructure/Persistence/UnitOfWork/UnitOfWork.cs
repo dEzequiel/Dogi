@@ -27,6 +27,8 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IVaccinationCardRepository VaccinationCardRepository => new VaccinationCardRepository(_context);
         public IVaccinationCardVaccineRepository VaccinationCardVaccineRepository => new VaccinationCardVaccineRepository(_context);
         public IVaccineRepository VaccineRepository => new VaccineRepository(_context);
+        public IPersonRepository PersonRepository => new PersonRepository(_context);
+        public IPersonBannedInformationRepository PersonBannedInformationRepository => new PersonBannedInformationRepository(_context);
         /// <summary>
         /// Constructor.
         /// </summary>

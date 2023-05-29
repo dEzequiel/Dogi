@@ -11,6 +11,9 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Field(f => f.ChipNumber).Type<NonNullType<StringType>>();
             descriptor.Field(f => f.OwnerIsResponsible).Type<NonNullType<StringType>>();
 
+            descriptor.Ignore(f => f.PersonIdentifierId);
+            descriptor.Ignore(f => f.ReceptionDocumentId);
+
         }
     }
 }

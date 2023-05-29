@@ -11,7 +11,7 @@ namespace Api.GraphQL.Types
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
-            descriptor.Field(f => f.RegiterNewAnimal)
+            descriptor.Field(f => f.RegisterAnimal)
                     .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                     .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default, default));
 

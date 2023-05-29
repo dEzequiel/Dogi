@@ -20,6 +20,8 @@ namespace Application.Service.Interfaces
         IVaccinationCardRepository VaccinationCardRepository { get; }
         IVaccinationCardVaccineRepository VaccinationCardVaccineRepository { get; }
         IVaccineRepository VaccineRepository { get; }
+        IPersonRepository PersonRepository { get; }
+        IPersonBannedInformationRepository PersonBannedInformationRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>

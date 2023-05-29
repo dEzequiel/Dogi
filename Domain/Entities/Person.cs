@@ -14,7 +14,7 @@ namespace Domain.Entities
         /// <summary>
         /// Person Name/
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Person Lastname.
         /// </summary>
@@ -22,15 +22,25 @@ namespace Domain.Entities
         /// <summary>
         /// Person contact.
         /// </summary>
-        public string? Contact { get; set; }
+        public string Contact { get; set; }
         /// <summary>
         /// Person Address.
         /// </summary>
-        public Address Address { get; set; } = null!;
+        public Address? Address { get; set; } = null!;
         /// <summary>
         /// Person ban status.
         /// </summary>
         public bool IsBan { get; set; }
+
+        /// <summary>
+        /// Creation date.
+        /// </summary>
+        public DateTime Created { get; set; }
+
+        /// <summary>
+        /// Last modification date.
+        /// </summary>
+        public DateTime? LastModified { get; set; }
 
         /// <summary>
         /// Navigation properties.
@@ -56,7 +66,9 @@ namespace Domain.Entities
             string? lastname,
             string? contact,
             Address? address,
-            bool isBan)
+            bool isBan,
+            DateTime created,
+            DateTime? lastModified)
         {
             PersonIdentifier = personalIdentifier;
             Name = name;
@@ -64,6 +76,8 @@ namespace Domain.Entities
             Contact = contact;
             Address = address;
             IsBan = isBan;
+            Created = created;
+            LastModified = lastModified;
         }
 
         /// <summary>
