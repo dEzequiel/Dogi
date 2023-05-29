@@ -33,6 +33,16 @@ namespace Domain.Entities
         public bool IsBan { get; set; }
 
         /// <summary>
+        /// Creation date.
+        /// </summary>
+        public DateTime Created { get; set; }
+
+        /// <summary>
+        /// Last modification date.
+        /// </summary>
+        public DateTime? LastModified { get; set; }
+
+        /// <summary>
         /// Navigation properties.
         /// </summary>
         public virtual ICollection<PersonBannedInformation>? Bans { get; set; }
@@ -56,7 +66,9 @@ namespace Domain.Entities
             string? lastname,
             string? contact,
             Address? address,
-            bool isBan)
+            bool isBan,
+            DateTime created,
+            DateTime? lastModified)
         {
             PersonIdentifier = personalIdentifier;
             Name = name;
@@ -64,6 +76,8 @@ namespace Domain.Entities
             Contact = contact;
             Address = address;
             IsBan = isBan;
+            Created = created;
+            LastModified = lastModified;
         }
 
         /// <summary>
