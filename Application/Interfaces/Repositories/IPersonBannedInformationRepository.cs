@@ -1,4 +1,5 @@
 ﻿using Application.Service.Interfaces;
+using Crosscuting.Api.DTOs;
 using Domain.Entities;
 
 namespace Application.Interfaces.Repositories
@@ -11,6 +12,6 @@ namespace Application.Interfaces.Repositories
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task AddAsync(PersonBannedInformation entity, CancellationToken ct = default);
+        Task AddAsync(PersonBannedInformation entity, AdminData adminData, CancellationToken ct = default);
     }
 }

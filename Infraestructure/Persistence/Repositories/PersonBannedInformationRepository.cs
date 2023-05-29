@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
+using Crosscuting.Api.DTOs;
 using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,11 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
-        public async Task AddAsync(PersonBannedInformation entity, CancellationToken ct = default)
+        public async Task AddAsync(PersonBannedInformation entity, AdminData adminData, CancellationToken ct = default)
         {
+            entity.Created = DateTime.UtcNow;
+            entity.CreatedBy = adminData.Email;
+
             await Bans.AddAsync(entity, ct);
         }
 
