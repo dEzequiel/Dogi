@@ -11,6 +11,10 @@ namespace Api.GraphQL.InputObjectTypes
             descriptor.Field(f => f.OwnerIsResponsible).Type<NonNullType<BooleanType>>();
 
             descriptor.Ignore(f => f.Id);
+            descriptor.Ignore(f => f.PersonIdentifierId);
+            descriptor.Ignore(f => f.ReceptionDocumentId);
+            descriptor.Ignore(f => f.Person);
+            descriptor.Ignore(f => f.ReceptionDocument);
         }
     }
 }

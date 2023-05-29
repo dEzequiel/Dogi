@@ -8,11 +8,11 @@ namespace Api.GraphQL.InputObjectTypes
         {
             descriptor
                 .Field(f => f.PersonIdentifier)
-                .Type<NonNullType<StringType>>();
+                .Type<StringType>();
 
             descriptor
                 .Field(f => f.Name)
-                .Type<StringType>();
+                .Type<NonNullType<StringType>>();
 
             descriptor
                 .Field(f => f.Lastname)
@@ -20,13 +20,15 @@ namespace Api.GraphQL.InputObjectTypes
 
             descriptor
                 .Field(f => f.Contact)
-                .Type<StringType>();
+                .Type<NonNullType<StringType>>();
 
             descriptor
                 .Field(f => f.Address)
                 .Type<AddressInput>();
 
             descriptor.Ignore(f => f.IsBan);
+            descriptor.Ignore(f => f.Created);
+            descriptor.Ignore(f => f.LastModified);
 
         }
     }
