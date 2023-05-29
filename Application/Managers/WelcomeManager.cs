@@ -6,6 +6,8 @@ using Application.Features.IndividualPro.Commands;
 using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.MedicalRecord.Comamnds;
+using Application.Features.Person.Commands;
+using Application.Features.PersonBannedInformation.Commands;
 using Application.Features.ReceptionDocument.Commands;
 using Application.Features.Sex.Queries;
 using Application.Features.VaccinationCard.Commands;
@@ -22,6 +24,8 @@ namespace Application.Managers
 {
     public class WelcomeManager : IWelcomeManager
     {
+        private const string OWNER_NOT_RESPONSIBLE = "The owner is not responsible for the animal.";
+
         private readonly ILogger<WelcomeManager> _logger;
         private readonly IMediator Mediator;
         private readonly IUnitOfWork _unitOfWork;
@@ -49,15 +53,15 @@ namespace Application.Managers
         {
             if (!data.ReceptionDocument.HasChip)
             {
-                return await AddReceptionDocumentWithIndividualProceedingAsync(data, adminData);
+                return await RegisterAnimalEntryAsync(data, adminData);
             }
             else
             {
-                return await AddReceptionDocumentWithAnimalChipOwnerInformation(data, adminData);
+                return await RegisterAnimalChipDataOrEntryAsync(data, adminData);
             }
         }
 
-        private async Task<RegisterInformation> AddReceptionDocumentWithIndividualProceedingAsync(RegisterInformation data, AdminData adminData)
+        private async Task<RegisterInformation> RegisterAnimalEntryAsync(RegisterInformation data, AdminData adminData)
         {
             var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
 
@@ -84,40 +88,58 @@ namespace Application.Managers
             };
         }
 
-        private async Task<RegisterInformation> AddReceptionDocumentWithAnimalChipOwnerInformation(RegisterInformation data, AdminData adminData)
+        private async Task<RegisterInformation> RegisterAnimalChipDataOrEntryAsync(RegisterInformation data, AdminData adminData)
         {
+            Guard.Against.Null(data.ReceptionDocument);
+            Guard.Against.Null(data.IndividualProceeding);
             Guard.Against.Null(data.AnimalChip);
+            Guard.Against.Null(data.Person);
 
             var receptionDocumentRequest = await Mediator.Send(new InsertReceptionDocumentRequest(data.ReceptionDocument, adminData));
-            Guard.Against.Null(receptionDocumentRequest.Data);
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
-            await AssignCageForIndividualProceedingWithChipOwnerResponsible(data.IndividualProceeding);
-            await RelationshipAssignments(data.IndividualProceeding);
-            data.IndividualProceeding.Name = string.IsNullOrEmpty(data.AnimalChip.Name) ? data.IndividualProceeding.Name : data.AnimalChip.Name;
-            var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
-            Guard.Against.Null(individualProceeding.Data);
-
-            var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
+            var personRequest = await Mediator.Send(new InsertPersonRequest(data.Person));
 
             if (!data.AnimalChip.OwnerIsResponsible.Value)
             {
-                return new RegisterInformation()
-                {
-                    ReceptionDocument = receptionDocumentRequest.Data,
-                    IndividualProceeding = individualProceeding.Data,
-                    AnimalChip = null
-                };
+                await BanPerson(data.Person, adminData);
+                data.AnimalChip.PersonIdentifierId = personRequest.Data.PersonIdentifier;
+                await AssignCageToIndividualProceeding(data.IndividualProceeding);
             }
+            else
+            {
+                await AssignCageForIndividualProceedingWithChipOwnerResponsible(data.IndividualProceeding);
+            }
+
+            data.AnimalChip.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
+            var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
+
+            await RelationshipAssignments(data.IndividualProceeding);
+
+            data.IndividualProceeding.Name = string.IsNullOrEmpty(data.AnimalChip.Name) ? data.IndividualProceeding.Name : data.AnimalChip.Name;
+
+            var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
+            Guard.Against.Null(individualProceeding.Data);
 
             return new RegisterInformation()
             {
                 ReceptionDocument = receptionDocumentRequest.Data,
                 IndividualProceeding = individualProceeding.Data,
-                AnimalChip = animalChipEntity.Data
+                AnimalChip = animalChipEntity.Data,
+                Person = personRequest.Data
             };
         }
 
+        private async Task BanPerson(Person person, AdminData admin)
+        {
+            var ban = new PersonBannedInformation(
+                id: Guid.NewGuid(),
+                personIdentifierId: person.PersonIdentifier,
+                observations: OWNER_NOT_RESPONSIBLE);
+
+            await Mediator.Send(new InsertPersonBannedInformationRequest(ban, admin));
+            await Mediator.Send(new BanPersonRequest(person.PersonIdentifier));
+        }
 
         private async Task AssignCageToIndividualProceeding(IndividualProceeding individualProceeding)
         {
