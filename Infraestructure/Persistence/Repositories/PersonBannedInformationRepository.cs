@@ -50,6 +50,8 @@ namespace Infraestructure.Persistence.Repositories
         ///<inheritdoc />
         public async Task AddAsync(PersonBannedInformation entity)
         {
+
+
             await Bans.AddAsync(entity);
         }
 
