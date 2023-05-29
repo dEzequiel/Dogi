@@ -14,6 +14,9 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Field(f => f.Age).Type<IntType>();
             descriptor.Field(f => f.Color).Type<StringType>();
 
+            descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordType>>();
+            descriptor.Field(f => f.VaccinationCard).Type<VaccinationCardType>();
+
             descriptor.Ignore(f => f.ReceptionDocumentId);
             descriptor.Ignore(f => f.VaccinationCardId);
             descriptor.Ignore(f => f.CageId);

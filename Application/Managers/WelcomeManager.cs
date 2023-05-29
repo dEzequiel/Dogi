@@ -71,21 +71,27 @@ namespace Application.Managers
             await AssignCageToIndividualProceeding(data.IndividualProceeding);
             await RelationshipAssignments(data.IndividualProceeding);
 
-            var vaccinationCard = await CreateVaccinationCardForIndividualProceedingAsync(adminData);
-            data.IndividualProceeding.VaccinationCardId = vaccinationCard.Id;
-
-            var individualProceedingRequest = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
-
-            Guard.Against.Null(individualProceedingRequest.Data);
-            await CreateMedicalRecordForIndividualProceedingAsync(individualProceedingRequest.Data, adminData);
-
+            var individualProceedingRequest = await CreateIndividualProceedingWithVaccinationCardMedicalRecordAsync(data.IndividualProceeding, adminData);
 
             return new RegisterInformation()
             {
                 ReceptionDocument = receptionDocumentRequest.Data,
-                IndividualProceeding = individualProceedingRequest.Data,
+                IndividualProceeding = individualProceedingRequest,
                 AnimalChip = null
             };
+        }
+
+        private async Task<IndividualProceeding> CreateIndividualProceedingWithVaccinationCardMedicalRecordAsync(IndividualProceeding proceeding, AdminData adminData)
+        {
+            var vaccinationCard = await CreateVaccinationCardForIndividualProceedingAsync(adminData);
+
+            proceeding.VaccinationCardId = vaccinationCard.Id;
+            var individualProceedingRequest = await Mediator.Send(new InsertIndividualProceedingRequest(proceeding, adminData));
+
+            Guard.Against.Null(individualProceedingRequest.Data);
+            await CreateMedicalRecordForIndividualProceedingAsync(individualProceedingRequest.Data, adminData);
+
+            return individualProceedingRequest.Data;
         }
 
         private async Task<RegisterInformation> RegisterAnimalChipDataOrEntryAsync(RegisterInformation data, AdminData adminData)
@@ -100,6 +106,7 @@ namespace Application.Managers
 
             var personRequest = await Mediator.Send(new InsertPersonRequest(data.Person));
 
+            AnimalChip animalChipEntity = null;
             if (!data.AnimalChip.OwnerIsResponsible.Value)
             {
                 await BanPerson(data.Person, adminData);
@@ -108,26 +115,34 @@ namespace Application.Managers
             }
             else
             {
-                await AssignCageForIndividualProceedingWithChipOwnerResponsible(data.IndividualProceeding);
-            }
+                data.AnimalChip.PersonIdentifierId = personRequest.Data.PersonIdentifier;
+                data.AnimalChip.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
+                animalChipEntity = await RegisterResponsibleOwnerAnimalChipAsync(data.IndividualProceeding, data.AnimalChip, adminData);
 
-            data.AnimalChip.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
-            var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(data.AnimalChip!, adminData));
+            }
 
             await RelationshipAssignments(data.IndividualProceeding);
 
             data.IndividualProceeding.Name = string.IsNullOrEmpty(data.AnimalChip.Name) ? data.IndividualProceeding.Name : data.AnimalChip.Name;
-
             var individualProceeding = await Mediator.Send(new InsertIndividualProceedingRequest(data.IndividualProceeding, adminData));
-            Guard.Against.Null(individualProceeding.Data);
 
             return new RegisterInformation()
             {
                 ReceptionDocument = receptionDocumentRequest.Data,
                 IndividualProceeding = individualProceeding.Data,
-                AnimalChip = animalChipEntity.Data,
+                AnimalChip = animalChipEntity,
                 Person = personRequest.Data
             };
+        }
+
+        private async Task<AnimalChip> RegisterResponsibleOwnerAnimalChipAsync(IndividualProceeding proceeding, AnimalChip animalChip, AdminData adminData)
+        {
+            await AssignCageForIndividualProceedingWithChipOwnerResponsible(proceeding);
+
+            var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(animalChip, adminData));
+
+            return animalChipEntity.Data;
+
         }
 
         private async Task BanPerson(Person person, AdminData admin)
@@ -152,6 +167,16 @@ namespace Application.Managers
             await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
 
+        private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(IndividualProceeding individualProceeding)
+        {
+            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
+
+            Guard.Against.Null(cage.Data, nameof(cage.Data));
+
+            individualProceeding.CageId = cage.Data.Id;
+
+            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+        }
 
         private async Task CreateMedicalRecordForIndividualProceedingAsync(IndividualProceeding individualProceeding, AdminData adminData)
         {
@@ -182,17 +207,6 @@ namespace Application.Managers
             Guard.Against.Null(openStatus.Data);
 
             individualProceeding.IndividualProceedingStatusId = openStatus.Data.Id;
-        }
-
-        private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(IndividualProceeding individualProceeding)
-        {
-            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
-
-            Guard.Against.Null(cage.Data, nameof(cage.Data));
-
-            individualProceeding.CageId = cage.Data.Id;
-
-            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
         }
 
         private async Task AssignCategoryToIndividualProceeding(IndividualProceeding individualProceeding)
