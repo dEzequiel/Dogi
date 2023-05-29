@@ -1,9 +1,9 @@
-﻿using Application.Service.Interfaces;
+﻿using Crosscuting.Base.Interfaces;
 using Domain.Entities;
 
-namespace Application.Interfaces.Repositories
+namespace Application.Service.Abstraction.Write
 {
-    public interface IPersonRepository : IRepository<Person>
+    public interface IPersonWriteService : IApplicationServiceBase
     {
         /// <summary>
         /// Add new Person.
@@ -11,7 +11,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task AddAsync(Person entity, CancellationToken ct = default);
+        Task<Person> AddAsync(Person entity, CancellationToken ct = default);
 
         /// <summary>
         /// Update Person ban status.

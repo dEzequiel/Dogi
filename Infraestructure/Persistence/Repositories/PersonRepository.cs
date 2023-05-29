@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
+using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,20 @@ namespace Infraestructure.Persistence.Repositories
         public Task AddRangeAsync(IEnumerable<Person> entities)
         {
             throw new NotImplementedException();
+        }
+
+        ///<inheritdoc />
+        public async Task<Person> BanAsync(string id, CancellationToken ct = default)
+        {
+            var person = await Persons.FirstOrDefaultAsync(x => x.PersonIdentifier == id, ct);
+
+            if (person is null)
+                throw new DogiException($"Person with id {id} not found.");
+
+            person.IsBan = true;
+
+            return person;
+
         }
 
         ///<inheritdoc />
