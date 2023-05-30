@@ -46,6 +46,29 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
+        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData admin, CancellationToken ct = default)
+        {
+            var entities = new List<VaccinationCardVaccine>();
+
+            foreach (var vaccine in vaccinesId)
+            {
+                var entity = new VaccinationCardVaccine
+                {
+                    VaccinationCardId = vaccinationCardId,
+                    VaccineId = vaccine,
+                    VaccineStatusId = ((int)VaccineStatus.Pending),
+                    Created = DateTime.UtcNow,
+                    CreatedBy = admin.Email
+
+                };
+                await AddAsync(entity, admin, ct);
+                entities.Add(entity);
+            }
+
+            return entities;
+        }
+
+        ///<inheritdoc />
         public async Task AddAsync(VaccinationCardVaccine entity)
         {
             await VaccinationCardVaccines.AddAsync(entity);
