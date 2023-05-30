@@ -30,6 +30,10 @@ namespace Domain.Entities
         /// MedicalRecordStatus relationship.
         /// </summary>
         public virtual MedicalRecordStatus MedicalRecordStatus { get; set; } = null!;
+        /// <summary>
+        /// Vaccines relationship.
+        /// </summary>
+        public virtual ICollection<Vaccine>? Vaccines { get; set; }
 
         /// <summary>
         /// Constructor.
