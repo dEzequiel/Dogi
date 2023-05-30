@@ -51,13 +51,13 @@ namespace Api.GraphQL.Mutations
         }
 
         public async Task<IndividualProceedingWithMedicalRecord> CloseMedicalRecord([Service] ISender Mediator,
-            Guid medicalRecordIdToClose)
+            Guid medicalRecordId, string conclusions)
         {
             try
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> Start");
 
-                var result = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordIdToClose, GetAdminData()));
+                var result = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordId, conclusions, GetAdminData()));
 
                 Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> End");
 

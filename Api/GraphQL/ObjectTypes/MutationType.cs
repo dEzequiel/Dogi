@@ -15,10 +15,7 @@ namespace Api.GraphQL.Types
                     .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                     .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default, default));
 
-            descriptor.Field(f => f.CheckMedicalRecord)
-                .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
-                .Argument("observations", arg => arg.Type<StringType>())
-                .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default, default));
+
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                     .Argument("idToDelete", arg => arg.Type<UuidType>())
@@ -26,13 +23,15 @@ namespace Api.GraphQL.Types
 
             #region "VETERINARY MANAGER MUTATIONS"
 
-            //descriptor.Field(f => f.CheckMedicalRecord)
-            //    .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
-            //    .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default));
+            descriptor.Field(f => f.CheckMedicalRecord)
+                .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
+                .Argument("observations", arg => arg.Type<StringType>())
+                .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default, default));
 
             descriptor.Field(f => f.CloseMedicalRecord)
-                .Argument("medicalRecordIdToClose", arg => arg.Type<NonNullType<UuidType>>())
-                .ResolveWith<VeterinaryManagerMutations>(q => q.CloseMedicalRecord(default, default));
+                .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
+                .Argument("conclusions", arg => arg.Type<NonNullType<StringType>>())
+                .ResolveWith<VeterinaryManagerMutations>(q => q.CloseMedicalRecord(default, default, default));
 
             descriptor.Field(f => f.AssignVaccine)
                 .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())

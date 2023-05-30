@@ -59,12 +59,13 @@ namespace Application.Managers
         ///<inheritdoc />
         public async Task<IndividualProceedingWithMedicalRecord> CloseMedicalRecord(
             Guid medicalRecordId,
+            string conclusions,
             AdminData AdminData,
             CancellationToken ct = default)
         {
             Logger.LogInformation("VeterinaryManager --> CloseMedicalRecord --> Start");
 
-            var closedMedicalRecord = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordId, AdminData), ct);
+            var closedMedicalRecord = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordId, conclusions, AdminData), ct);
 
             Guard.Against.Null(closedMedicalRecord.Data);
 

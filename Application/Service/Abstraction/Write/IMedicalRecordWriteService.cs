@@ -41,7 +41,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> CloseAsync(Guid id, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> CloseAsync(Guid id, string conclusions, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Update existing MedicalRecord.

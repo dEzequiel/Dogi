@@ -86,7 +86,7 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<MedicalRecord> CloseAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CloseAsync(Guid id, string conclusions, AdminData admin, CancellationToken ct = default)
         {
             Logger.LogInformation("MedicalRecordWrite --> CloseAsync --> Start");
 
@@ -96,7 +96,7 @@ namespace Application.Service.Implementation.Write
 
             var repository = UnitOfWork.MedicalRecordRepository;
 
-            var entity = await repository.CloseRevisionAsync(id, admin, ct);
+            var entity = await repository.CloseRevisionAsync(id, conclusions, admin, ct);
 
             await UnitOfWork.CompleteAsync(ct);
 

@@ -14,16 +14,20 @@ namespace Application.Features.VeterinaryManager.Command
     public class CloseMedicalRecordRequest : IRequest<ApiResponse<IndividualProceedingWithMedicalRecord>>
     {
         public Guid MedicalRecordId { get; private set; }
+        public string Conclusions { get; private set; }
+
         public AdminData AdminData { get; private set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="medicalRecordId"></param>
+        /// <param name="conclusions"></param>
         /// <param name="adminData"></param>
-        public CloseMedicalRecordRequest(Guid medicalRecordId, AdminData adminData)
+        public CloseMedicalRecordRequest(Guid medicalRecordId, string conclusions, AdminData adminData)
         {
             MedicalRecordId = medicalRecordId;
+            Conclusions = conclusions;
             AdminData = adminData;
         }
     }
@@ -54,7 +58,7 @@ namespace Application.Features.VeterinaryManager.Command
 
             Guard.Against.Null(request, nameof(request));
 
-            var result = await VeterinaryManager.CloseMedicalRecord(request.MedicalRecordId, request.AdminData, cancellationToken);
+            var result = await VeterinaryManager.CloseMedicalRecord(request.MedicalRecordId, request.Conclusions, request.AdminData, cancellationToken);
 
             Logger.LogInformation($"CloseMedicalRecordRequestHandler --> Handle --> End");
 
