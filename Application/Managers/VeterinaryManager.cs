@@ -41,11 +41,11 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId,
+        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, string? observations,
             AdminData adminData,
             CancellationToken ct = default)
         {
-            var checkedMedicalRecord = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, adminData), ct);
+            var checkedMedicalRecord = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, observations, adminData), ct);
 
             Guard.Against.Null(checkedMedicalRecord.Data);
 

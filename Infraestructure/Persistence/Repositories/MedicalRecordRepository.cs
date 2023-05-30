@@ -73,12 +73,11 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, string? observations, AdminData admin, CancellationToken ct = default)
         {
-            var entity = await MedicalRecords.Include(i => i.IndividualProceeding)
-                .ThenInclude(th => th.Cage)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
 
+            entity.Observations = entity.Observations + " " + observations;
 
             entity.IndividualProceeding.Cage.AnimalZoneId = ((int)AnimalZones.Cure);
             entity.MedicalStatusId = ((int)MedicalRecordStatuses.Checked);

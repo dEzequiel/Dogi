@@ -25,13 +25,13 @@ namespace Api.GraphQL.Mutations
         }
 
         public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord([Service] ISender Mediator,
-            Guid medicalRecordId)
+            Guid medicalRecordId, string? observations)
         {
             try
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> CheckMedicalRecord --> Start");
 
-                var result = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, GetAdminData()));
+                var result = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, observations, GetAdminData()));
 
                 Logger.LogInformation("VeterinaryManagerMutations --> CheckMedicalRecord --> End");
 

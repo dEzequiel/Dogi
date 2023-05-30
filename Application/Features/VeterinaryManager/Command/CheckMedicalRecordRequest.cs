@@ -11,17 +11,21 @@ namespace Application.Features.VeterinaryManager.Command
     public class CheckMedicalRecordRequest : IRequest<ApiResponse<IndividualProceedingWithMedicalRecord>>
     {
         public Guid MedicalRecordId { get; private set; }
+        public string? Observations { get; private set; }
         public AdminData AdminData { get; private set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="individualProceedingId"></param>
         /// <param name="medicalRecordId"></param>
-        public CheckMedicalRecordRequest(Guid medicalRecordId, AdminData adminData)
+        /// <param name="observations"></param>
+        /// <param name="adminData"></param>
+        public CheckMedicalRecordRequest(Guid medicalRecordId, string? observations, AdminData adminData)
         {
             MedicalRecordId = medicalRecordId;
+            Observations = observations;
             AdminData = adminData;
+
         }
 
     }
@@ -49,7 +53,7 @@ namespace Application.Features.VeterinaryManager.Command
 
             Guard.Against.Null(request, nameof(request));
 
-            var result = await VeteriyaryManager.CheckMedicalRecord(request.MedicalRecordId, request.AdminData, cancellationToken);
+            var result = await VeteriyaryManager.CheckMedicalRecord(request.MedicalRecordId, request.Observations, request.AdminData, cancellationToken);
 
             Logger.LogInformation("CheckMedicalRecordRequestHandler --> CheckAsync --> End");
 

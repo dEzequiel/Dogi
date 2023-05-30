@@ -21,7 +21,7 @@ namespace Application.Managers.Abstraction
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, AdminData adminData, CancellationToken ct = default);
+        Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, string? observations, AdminData adminData, CancellationToken ct = default);
 
         /// <summary>
         /// Mark as 'closed' the current medical record of the animal. This means the entry

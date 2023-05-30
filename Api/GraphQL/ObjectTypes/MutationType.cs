@@ -17,7 +17,8 @@ namespace Api.GraphQL.Types
 
             descriptor.Field(f => f.CheckMedicalRecord)
                 .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
-                .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default));
+                .Argument("observations", arg => arg.Type<StringType>())
+                .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default, default));
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                     .Argument("idToDelete", arg => arg.Type<UuidType>())
