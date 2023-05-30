@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.VeterinaryManager;
+using Application.Features.MedicalRecord.Comamnds;
 using Application.Features.MedicalRecord.Commands;
 using Application.Features.VaccinationCardVaccine.Commands;
 using Application.Managers.Abstraction;
@@ -6,6 +7,7 @@ using Application.Service.Abstraction.Read;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -35,13 +37,48 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public Task SetForMedicalRevision(IndividualProceeding individualProceeding)
+        public async Task<IndividualProceedingWithMedicalRecord> CreateMedicalRecord(
+            Guid individualProceedingId,
+            MedicalRecord medicalRecord,
+            IEnumerable<Guid>? vaccinesIds,
+            AdminData adminData,
+            CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            medicalRecord.IndividualProceedingId = individualProceedingId;
+
+            var createdMedicalRecord = await Mediator.Send(new InsertMedicalRecordRequest(medicalRecord, adminData), ct);
+            Guard.Against.Null(createdMedicalRecord.Data);
+
+            if (!vaccinesIds.Any())
+            {
+                return new IndividualProceedingWithMedicalRecord()
+                {
+                    IndividualProceeding = createdMedicalRecord.Data.IndividualProceeding,
+                    MedicalRecord = createdMedicalRecord.Data
+                };
+            }
+
+            var individualProceeding = createdMedicalRecord.Data.IndividualProceeding;
+
+            if (!individualProceeding.VaccinationCardId.HasValue)
+            {
+                throw new DogiException($"No vaccination card found for individual proceeding with id: ({individualProceeding.Id})");
+            }
+
+            await Mediator.Send(new InsertCollectionVaccinationCardVaccineVaccinesRequest(individualProceeding.VaccinationCardId.Value, vaccinesIds, adminData));
+
+
+            return new IndividualProceedingWithMedicalRecord()
+            {
+                IndividualProceeding = createdMedicalRecord.Data.IndividualProceeding,
+                MedicalRecord = createdMedicalRecord.Data
+            };
         }
 
         ///<inheritdoc />
-        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, string? observations,
+        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(
+            Guid medicalRecordId,
+            string? observations,
             AdminData adminData,
             CancellationToken ct = default)
         {

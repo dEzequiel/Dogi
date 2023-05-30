@@ -14,6 +14,10 @@ namespace Domain.Entities
         /// </summary>
         public int MedicalStatusId { get; set; }
         /// <summary>
+        /// Medical record causes.
+        /// </summary>
+        public string Causes { get; set; }
+        /// <summary>
         /// Medical record observations.
         /// </summary>
         public string? Observations { get; set; }
@@ -46,11 +50,13 @@ namespace Domain.Entities
         public MedicalRecord(Guid id,
             Guid individualProceedingId,
             int medicalStatusId,
+            string causes,
             string? observations,
             string? conclusions) : base(id)
         {
             IndividualProceedingId = individualProceedingId;
             MedicalStatusId = medicalStatusId;
+            Causes = causes;
             Observations = observations;
             Conclusions = conclusions;
         }
