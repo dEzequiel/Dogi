@@ -106,7 +106,6 @@ namespace Application.Managers
             data.IndividualProceeding!.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
 
             var personRequest = await Mediator.Send(new InsertPersonRequest(data.Person));
-            data.AnimalChip.PersonIdentifierId = personRequest.Data.PersonIdentifier;
 
             data.AnimalChip.PersonIdentifierId = personRequest.Data.PersonIdentifier;
             data.AnimalChip.ReceptionDocumentId = receptionDocumentRequest.Data.Id;
