@@ -3,7 +3,7 @@ namespace Domain.Enums
     /// <summary>
     /// Options representing the animal zones.
     /// </summary>
-    public enum AnimalZone
+    public enum AnimalZones
     {
 
         Dogs = 1,

@@ -69,7 +69,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatus status, CancellationToken ct = default)
+        public async Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatuses status, CancellationToken ct = default)
         {
             return await _individualProceedings.AsNoTracking()
                                                .Where(x => x.IndividualProceedingStatusId == ((int)status))
@@ -97,7 +97,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task UpdateAsync(Guid id, IndividualProceedingStatus status, AdminData admin, CancellationToken ct = default)
+        public async Task UpdateAsync(Guid id, IndividualProceedingStatuses status, AdminData admin, CancellationToken ct = default)
         {
             var individualProceeding = await _individualProceedings.FirstOrDefaultAsync(x => x.Id == id);
 

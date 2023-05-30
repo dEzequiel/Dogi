@@ -29,7 +29,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="status"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatus status, CancellationToken ct = default);
+        Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatuses status, CancellationToken ct = default);
 
         /// <summary>
         /// Mark IndividualProceeding as deleted.
@@ -48,6 +48,6 @@ namespace Application.Interfaces.Repositories
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task UpdateAsync(Guid id, IndividualProceedingStatus entity, AdminData admin, CancellationToken ct = default);
+        Task UpdateAsync(Guid id, IndividualProceedingStatuses entity, AdminData admin, CancellationToken ct = default);
     }
 }

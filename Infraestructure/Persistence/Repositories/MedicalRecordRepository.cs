@@ -60,13 +60,13 @@ namespace Infraestructure.Persistence.Repositories
                 throw new ArgumentNullException("The medical record does not correspond to any individual proceeding.");
             }
 
-            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZone.Cure))
+            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.Cure))
             {
                 throw new ArgumentNullException("The cage is not in the medical cure area.");
             }
 
             entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.CategoryId;
-            entity.MedicalStatusId = ((int)MedicalRecordStatus.Close);
+            entity.MedicalStatusId = ((int)MedicalRecordStatuses.Close);
             entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.CategoryId;
 
             return entity;
@@ -80,8 +80,8 @@ namespace Infraestructure.Persistence.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
 
 
-            entity.IndividualProceeding.Cage.AnimalZoneId = ((int)AnimalZone.Cure);
-            entity.MedicalStatusId = ((int)MedicalRecordStatus.Checked);
+            entity.IndividualProceeding.Cage.AnimalZoneId = ((int)AnimalZones.Cure);
+            entity.MedicalStatusId = ((int)MedicalRecordStatuses.Checked);
             entity.LastModified = DateTime.UtcNow;
             entity.LastModifiedBy = admin.Email;
 
@@ -124,7 +124,7 @@ namespace Infraestructure.Persistence.Repositories
             }
 
 
-            entity.MedicalStatusId = ((int)MedicalRecordStatus.Waiting);
+            entity.MedicalStatusId = ((int)MedicalRecordStatuses.Waiting);
             entity.LastModified = DateTime.UtcNow;
             entity.LastModifiedBy = admin.Email;
 

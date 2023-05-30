@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -19,7 +20,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasForeignKey(fk => fk.AnimalZoneId);
 
 
-            var totalAnimalZones = Enum.GetNames(typeof(Domain.Enums.AnimalZone));
+            var totalAnimalZones = Enum.GetNames(typeof(AnimalZones));
 
             for (int zone = 1; zone <= totalAnimalZones.Length; zone++)
             {

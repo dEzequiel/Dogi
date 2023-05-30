@@ -3,7 +3,7 @@
     /// <summary>
     /// Options representing the animal medical record status
     /// </summary>
-    public enum MedicalRecordStatus
+    public enum MedicalRecordStatuses
     {
         Waiting = 1,
         Checked = 2,

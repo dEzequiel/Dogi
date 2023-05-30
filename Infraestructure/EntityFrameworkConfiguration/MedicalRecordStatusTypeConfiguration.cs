@@ -1,4 +1,5 @@
-﻿using Domain.Support;
+﻿using Domain.Enums;
+using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,8 +15,8 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .IsClustered(false);
 
 
-            builder.HasData(Enum.GetValues(typeof(Domain.Enums.MedicalRecordStatus))
-                .Cast<Domain.Enums.MedicalRecordStatus>()
+            builder.HasData(Enum.GetValues(typeof(MedicalRecordStatuses))
+                .Cast<Domain.Enums.MedicalRecordStatuses>()
                 .Select(e => new MedicalRecordStatus
                 {
                     Id = (int)e,
