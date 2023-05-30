@@ -15,6 +15,9 @@ namespace Api.GraphQL.InputObjectTypes
 
             descriptor.Field(f => f.Observations).Type<StringType>();
             descriptor.Field(f => f.Conclusions).Type<StringType>();
+            descriptor.Field(f => f.Causes).Type<StringType>();
+
+            descriptor.Field("Vaccines").Type<ListType<UuidType>>();
 
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.IndividualProceeding);

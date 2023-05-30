@@ -23,6 +23,10 @@ namespace Api.GraphQL.Types
 
             #region "VETERINARY MANAGER MUTATIONS"
 
+            //descriptor.Field(f => f.CreateMedicalRecord)
+            //    .Argument("input", arg => arg.Type<MedicalRecordInput>())
+            //    .ResolveWith<VeterinaryManagerMutations>(q => q.CreateMedicalRecord(default, default));
+
             descriptor.Field(f => f.CheckMedicalRecord)
                 .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
                 .Argument("observations", arg => arg.Type<StringType>())
