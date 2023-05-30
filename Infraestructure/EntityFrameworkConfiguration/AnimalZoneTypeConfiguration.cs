@@ -1,3 +1,4 @@
+using Domain.Enums;
 using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,7 +15,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .IsClustered(false);
 
 
-            var totalAnimalZones = Enum.GetNames(typeof(Domain.Enums.AnimalZone));
+            var totalAnimalZones = Enum.GetNames(typeof(AnimalZones));
 
             int id = 0;
             foreach (var zone in totalAnimalZones)

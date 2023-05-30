@@ -1,4 +1,5 @@
-﻿using Domain.Support;
+﻿using Domain.Enums;
+using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,14 +14,15 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            var totalProceedingStatusTypes = Enum.GetNames(typeof(Domain.Enums.IndividualProceedingStatus));
 
-            int id = 0;
-            foreach (var status in totalProceedingStatusTypes)
-            {
-                id++;
-                builder.HasData(new IndividualProceedingStatus(id, status));
-            }
+            builder.HasData(Enum.GetValues(typeof(IndividualProceedingStatuses))
+                .Cast<IndividualProceedingStatuses>()
+                .Select(e => new IndividualProceedingStatus
+                {
+                    Id = (int)e,
+                    Status = e.ToString()
+                })
+             );
         }
     }
 }

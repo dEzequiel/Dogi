@@ -1,4 +1,5 @@
-﻿using Domain.Support;
+﻿using Domain.Enums;
+using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,14 +14,15 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            var totalMedicalStatusTypes = Enum.GetNames(typeof(Domain.Enums.MedicalRecordStatus));
 
-            int id = 0;
-            foreach (var status in totalMedicalStatusTypes)
-            {
-                id++;
-                builder.HasData(new MedicalRecordStatus(id, status));
-            }
+            builder.HasData(Enum.GetValues(typeof(MedicalRecordStatuses))
+                .Cast<Domain.Enums.MedicalRecordStatuses>()
+                .Select(e => new MedicalRecordStatus
+                {
+                    Id = (int)e,
+                    Status = e.ToString()
+                })
+             );
         }
     }
 }

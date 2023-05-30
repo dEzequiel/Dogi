@@ -20,7 +20,7 @@ namespace Test.Application.ReadServices
         {
             // Arrange
             freeCage.IsOccupied = false;
-            freeCage.AnimalZoneId = ((int)AnimalZone.Dogs);
+            freeCage.AnimalZoneId = ((int)AnimalZones.Dogs);
 
             unitOfWorkMock.Setup(u => u.CageRepository).Returns(cageRepositoryMock.Object);
 
@@ -29,7 +29,7 @@ namespace Test.Application.ReadServices
                 .ReturnsAsync(freeCage);
 
             // Act
-            var result = await sut.GetFreeCageByZone(((int)AnimalZone.Dogs));
+            var result = await sut.GetFreeCageByZone(((int)AnimalZones.Dogs));
 
             // Assert
             Assert.NotNull(result);

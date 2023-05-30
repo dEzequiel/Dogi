@@ -50,7 +50,7 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<IndividualProceeding> UpdateAsync(Guid id, IndividualProceedingStatus status, AdminData admin, CancellationToken ct = default)
+        public async Task<IndividualProceeding> UpdateAsync(Guid id, IndividualProceedingStatuses status, AdminData admin, CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }
