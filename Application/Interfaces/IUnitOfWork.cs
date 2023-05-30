@@ -22,6 +22,7 @@ namespace Application.Service.Interfaces
         IVaccineRepository VaccineRepository { get; }
         IPersonRepository PersonRepository { get; }
         IPersonBannedInformationRepository PersonBannedInformationRepository { get; }
+        IMedicalRecordStatusRepository MedicalRecordStatusRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>
