@@ -44,30 +44,23 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CloseRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CloseRevisionAsync(Guid id, string conclusions, AdminData admin, CancellationToken ct = default)
         {
-            var entity = await MedicalRecords.Include(i => i.IndividualProceeding)
-                .ThenInclude(th => th.Cage)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity is null)
             {
                 throw new DogiException($"MedicalRecord with id {id} not found");
             }
 
-            if (entity.IndividualProceeding is null)
+            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.Cure) && entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.WaitingForMedicalRevision))
             {
-                throw new ArgumentNullException("The medical record does not correspond to any individual proceeding.");
+                throw new DogiException("The cage is not in the cure area.");
             }
 
-            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.Cure))
-            {
-                throw new ArgumentNullException("The cage is not in the medical cure area.");
-            }
-
+            entity.Conclusions = conclusions;
             entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.CategoryId;
             entity.MedicalStatusId = ((int)MedicalRecordStatuses.Close);
-            entity.IndividualProceeding.Cage.AnimalZoneId = entity.IndividualProceeding.CategoryId;
 
             return entity;
         }

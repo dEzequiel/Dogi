@@ -41,7 +41,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<MedicalRecord> CloseRevisionAsync(Guid id, AdminData admin, CancellationToken ct = default);
+        Task<MedicalRecord> CloseRevisionAsync(Guid id, string conclusions, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Update existing MedicalRecord.

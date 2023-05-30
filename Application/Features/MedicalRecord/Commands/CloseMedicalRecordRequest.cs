@@ -10,16 +10,19 @@ namespace Application.Features.MedicalRecord.Commands
     public class CloseMedicalRecordRequest : IRequest<ApiResponse<Domain.Entities.MedicalRecord>>
     {
         public Guid Id { get; private set; }
+        public string Conclusions { get; private set; }
         public AdminData AdminData { get; private set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="conclusions"></param>
         /// <param name="adminData"></param>
-        public CloseMedicalRecordRequest(Guid id, AdminData adminData)
+        public CloseMedicalRecordRequest(Guid id, string conclusions, AdminData adminData)
         {
             Id = id;
+            Conclusions = conclusions;
             AdminData = adminData;
         }
     }
@@ -49,7 +52,7 @@ namespace Application.Features.MedicalRecord.Commands
 
             Guard.Against.Null(request, nameof(request));
 
-            Domain.Entities.MedicalRecord result = await MedicalRecordWriteService.CloseAsync(request.Id, request.AdminData, cancellationToken);
+            Domain.Entities.MedicalRecord result = await MedicalRecordWriteService.CloseAsync(request.Id, request.Conclusions, request.AdminData, cancellationToken);
 
             Logger.LogInformation("CloseMedicalRecordRequestHandler --> CloseAsync --> End");
 

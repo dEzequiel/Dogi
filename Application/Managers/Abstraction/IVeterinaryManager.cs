@@ -31,7 +31,7 @@ namespace Application.Managers.Abstraction
         /// <param name="AdminData"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IndividualProceedingWithMedicalRecord> CloseMedicalRecord(Guid medicalRecordId, AdminData AdminData, CancellationToken ct = default);
+        Task<IndividualProceedingWithMedicalRecord> CloseMedicalRecord(Guid medicalRecordId, string conclusions, AdminData AdminData, CancellationToken ct = default);
 
         /// <summary>
         /// Assign a vaccine to an individual file. This marks the vaccine as pending in the vaccine card.
