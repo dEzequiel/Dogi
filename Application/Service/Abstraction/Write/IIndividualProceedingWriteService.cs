@@ -36,7 +36,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IndividualProceeding> UpdateAsync(Guid id, IndividualProceedingStatus status, AdminData admin, CancellationToken ct = default);
+        Task<IndividualProceeding> UpdateAsync(Guid id, IndividualProceedingStatuses status, AdminData admin, CancellationToken ct = default);
 
     }
 }

@@ -11,7 +11,7 @@ namespace Api.GraphQL.InputObjectTypes
 
             descriptor.Field(f => f.MedicalStatusId)
                 .Type<NonNullType<IntType>>()
-                .DefaultValue(((int)MedicalRecordStatus.Waiting));
+                .DefaultValue(((int)MedicalRecordStatuses.Waiting));
 
             descriptor.Field(f => f.Observations).Type<StringType>();
             descriptor.Field(f => f.Conclusions).Type<StringType>();

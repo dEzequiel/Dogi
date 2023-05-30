@@ -6,6 +6,7 @@ using Application.Features.IndividualPro.Commands;
 using Application.Features.IndividualProceedingStatus.Queries;
 using Application.Features.InsertAnimalChipRequest.Commands;
 using Application.Features.MedicalRecord.Comamnds;
+using Application.Features.MedicalRecordStatus.Queries;
 using Application.Features.Person.Commands;
 using Application.Features.PersonBannedInformation.Commands;
 using Application.Features.ReceptionDocument.Commands;
@@ -176,7 +177,7 @@ namespace Application.Managers
 
         private async Task AssignCageToIndividualProceeding(IndividualProceeding individualProceeding)
         {
-            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.Quarantine)));
+            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZones.Quarantine)));
 
             Guard.Against.Null(cage.Data);
 
@@ -187,7 +188,7 @@ namespace Application.Managers
 
         private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(IndividualProceeding individualProceeding)
         {
-            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZone.WaitingForOwner)));
+            var cage = await Mediator.Send(new GetFreeCageByZoneRequest(((int)AnimalZones.WaitingForOwner)));
 
             Guard.Against.Null(cage.Data, nameof(cage.Data));
 
@@ -198,8 +199,12 @@ namespace Application.Managers
 
         private async Task CreateMedicalRecordForIndividualProceedingAsync(IndividualProceeding individualProceeding, AdminData adminData)
         {
+            // Coger edicalRecordStatusId de la tabla MedicalRecordStatus
+            var medicalRecordStatus = await Mediator.Send(new GetMedicalRecordStatusByIdRequest((int)MedicalRecordStatuses.Waiting));
+            Guard.Against.Null(medicalRecordStatus.Data);
+
             var medicalRecord = new MedicalRecord(id: Guid.NewGuid(),
-                                                  medicalStatusId: ((int)MedicalRecordStatus.Waiting),
+                                                  medicalStatusId: medicalRecordStatus.Data.Id,
                                                   individualProceedingId: individualProceeding.Id,
                                                   observations: individualProceeding.ReceptionDocument.Observations,
                                                   conclusions: string.Empty);
@@ -220,7 +225,7 @@ namespace Application.Managers
 
         private async Task AssignOpenStatusToIndividualProceeding(IndividualProceeding individualProceeding)
         {
-            var openStatus = await Mediator.Send(new GetIndividualProceedingStatusByIdRequest(((int)IndividualProceedingStatus.Open)));
+            var openStatus = await Mediator.Send(new GetIndividualProceedingStatusByIdRequest(((int)IndividualProceedingStatuses.Open)));
 
             Guard.Against.Null(openStatus.Data);
 

@@ -11,6 +11,7 @@ namespace Api.GraphQL.ObjectTypes
             descriptor.Ignore(f => f.IndividualProceedingId);
             descriptor.Ignore(f => f.MedicalStatusId);
 
+
         }
     }
 }
