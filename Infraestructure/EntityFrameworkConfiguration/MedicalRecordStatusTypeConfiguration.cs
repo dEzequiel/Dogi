@@ -13,14 +13,15 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            var totalMedicalStatusTypes = Enum.GetNames(typeof(Domain.Enums.MedicalRecordStatus));
 
-            int id = 0;
-            foreach (var status in totalMedicalStatusTypes)
-            {
-                id++;
-                builder.HasData(new MedicalRecordStatus(id, status));
-            }
+            builder.HasData(Enum.GetValues(typeof(Domain.Enums.MedicalRecordStatus))
+                .Cast<Domain.Enums.MedicalRecordStatus>()
+                .Select(e => new MedicalRecordStatus
+                {
+                    Id = (int)e,
+                    Status = e.ToString()
+                })
+             );
         }
     }
 }
