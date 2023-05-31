@@ -39,14 +39,14 @@ namespace Infraestructure.Persistence.Repositories
 
             entity.Created = DateTime.UtcNow;
             entity.CreatedBy = admin.Email;
-            entity.VaccineStatusId = ((int)VaccineStatus.Pending);
+            entity.VaccineStatusId = ((int)VaccineStatuses.Pending);
 
             await VaccinationCardVaccines.AddAsync(entity, ct);
 
         }
 
         ///<inheritdoc />
-        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData admin, CancellationToken ct = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, int vaccineStatusId, AdminData admin, CancellationToken ct = default)
         {
             var entities = new List<VaccinationCardVaccine>();
 
@@ -56,7 +56,7 @@ namespace Infraestructure.Persistence.Repositories
                 {
                     VaccinationCardId = vaccinationCardId,
                     VaccineId = vaccine,
-                    VaccineStatusId = ((int)VaccineStatus.Pending),
+                    VaccineStatusId = vaccineStatusId,
                     Created = DateTime.UtcNow,
                     CreatedBy = admin.Email
 
@@ -120,12 +120,12 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND, vaccineId, vaccineCardId));
             }
 
-            if (entity.VaccineStatusId == (int)VaccineStatus.Done)
+            if (entity.VaccineStatusId == (int)VaccineStatuses.Done)
             {
                 throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_DONE, entity.Id));
             }
 
-            entity.VaccineStatusId = ((int)VaccineStatus.Done);
+            entity.VaccineStatusId = ((int)VaccineStatuses.Done);
             entity.LastModified = DateTime.UtcNow;
             entity.LastModifiedBy = admin.Email;
             entity.VaccineStart = DateTime.UtcNow;

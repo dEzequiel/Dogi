@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Application.Interfaces.Repositories;
+using Crosscuting.Base.Exceptions;
 using Domain.Support;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -12,48 +8,34 @@ namespace Infraestructure.Persistence.Repositories
 {
     public class AnimalZoneRepository : IAnimalZoneRepository
     {
-        private const string ANIMAL_ZONE_NOT_FOUND = "AnimalZone with id {0} not found.";
-        protected DbSet<AnimalZone> _animalZonesAll;
+        protected DbSet<AnimalZone> AnimalZones;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="context"></param>
         public AnimalZoneRepository(ApplicationDbContext context)
         {
-            _animalZonesAll = context.Set<AnimalZone>();
+            AnimalZones = context.Set<AnimalZone>();
         }
 
-        public Task AddAsync(AnimalZone entity)
+        /// <inheritdoc />
+        public async Task<AnimalZone> GetAsync(int id, CancellationToken ct = default)
         {
-            throw new NotImplementedException();
-        }
+            var entity = await AnimalZones.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-        public Task AddRangeAsync(IEnumerable<AnimalZone> entities)
-        {
-            throw new NotImplementedException();
-        }
+            if (entity is null)
+            {
+                throw new DogiException($"AnimalZone with id ({id}) not found.");
+            }
 
-        public Task<IEnumerable<AnimalZone>> FindAsync(Expression<Func<AnimalZone, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<AnimalZone>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<AnimalZone?> GetAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<AnimalZone> GetAsync(int id, CancellationToken ct = default)
-        {
-            throw new NotImplementedException();
+            return entity;
         }
 
         /// <inheritdoc />
         public IQueryable<AnimalZone> GetQueryableAsync(CancellationToken ct = default)
         {
-            return _animalZonesAll.AsQueryable();
+            return AnimalZones.AsQueryable();
         }
     }
 }

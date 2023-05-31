@@ -18,9 +18,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithMany(m => m.MedicalRecords)
                 .HasForeignKey(fk => fk.MedicalStatusId);
 
-            builder.HasMany(p => p.Vaccines)
-                .WithMany(m => m.MedicalRecords)
-                .UsingEntity<MedicalRecordVaccines>();
+
         }
     }
 }

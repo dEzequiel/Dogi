@@ -13,9 +13,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.HasMany(p => p.Vaccines)
-                .WithMany(m => m.VaccinationCards)
-                .UsingEntity<VaccinationCardVaccine>();
         }
     }
 }
