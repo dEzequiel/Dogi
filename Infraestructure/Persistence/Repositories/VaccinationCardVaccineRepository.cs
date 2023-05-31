@@ -15,7 +15,7 @@ namespace Infraestructure.Persistence.Repositories
         private const string VACCINATION_CARD_VACCINE_ALREADY_DONE = "VaccinationCardVaccine with id {0} already done.";
         private const string VACCINATION_CARD_VACCINE_ALREADY_ASSIGNED = "VaccinationCardVaccine with id {0} already assgined.";
         private const string VACCINATION_CARD_VACCINE_ALREADY_ADDED = "Vaccine with id {0} already added in VaccinationCard with id {1}.";
-        private const string VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND = "Vaccine with id {0} and VaccinationCard with id {1} not found.";
+        private const string VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND = "VaccinationCard with id {1} not found.";
 
         protected DbSet<VaccinationCardVaccine> VaccinationCardVaccines;
 
@@ -125,25 +125,26 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
-        public async Task<VaccinationCardVaccine> VaccineAsync(Guid vaccineCardId, Guid vaccineId, AdminData admin, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccineCardId, IEnumerable<Guid> vaccinesIds, AdminData admin, CancellationToken cancellationToken = default)
         {
-            var entity = await VaccinationCardVaccines.FirstOrDefaultAsync(x => x.VaccinationCardId == vaccineCardId && x.VaccineId == vaccineId, cancellationToken);
+            var entity = await VaccinationCardVaccines.Where(x => x.VaccinationCardId == vaccineCardId).ToListAsync();
 
             if (entity is null)
             {
-                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND, vaccineId, vaccineCardId));
+                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND, vaccineCardId));
             }
 
-            if (entity.VaccineStatusId == (int)VaccineStatuses.Done)
+            foreach (var vaccine in entity)
             {
-                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_DONE, entity.Id));
+                if (vaccinesIds.Contains(vaccine.VaccineId))
+                {
+                    vaccine.VaccineStatusId = ((int)VaccineStatuses.Done);
+                    vaccine.LastModified = DateTime.UtcNow;
+                    vaccine.LastModifiedBy = admin.Email;
+                    vaccine.VaccineStart = DateTime.UtcNow;
+                    vaccine.VaccineEnd = vaccine.VaccineStart.Value.AddDays(365);
+                }
             }
-
-            entity.VaccineStatusId = ((int)VaccineStatuses.Done);
-            entity.LastModified = DateTime.UtcNow;
-            entity.LastModifiedBy = admin.Email;
-            entity.VaccineStart = DateTime.UtcNow;
-            entity.VaccineEnd = entity.VaccineStart.Value.AddDays(365);
 
             return entity;
         }
