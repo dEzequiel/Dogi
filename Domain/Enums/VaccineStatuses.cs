@@ -3,7 +3,7 @@
     /// <summary>
     /// Options representing the vaccine status.
     /// </summary>
-    public enum VaccineStatus
+    public enum VaccineStatuses
     {
         Pending = 1,
         Done = 2,

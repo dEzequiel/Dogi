@@ -19,7 +19,7 @@ namespace Domain.Entities
         /// <summary>
         /// Vaccine status identifier.
         /// </summary>
-        public int? VaccineStatusId { get; set; }
+        public int VaccineStatusId { get; set; }
         /// <summary>
         /// Vaccine start date.
         /// </summary>
@@ -56,7 +56,7 @@ namespace Domain.Entities
         /// <param name="vaccineStatusId"></param>
         /// <param name="vaccineStart"></param>
         /// <param name="vaccineEnd"></param>
-        public VaccinationCardVaccine(Guid id, Guid vaccineId, Guid vaccinationCardId, int? vaccineStatusId, DateTime? vaccineStart, DateTime? vaccineEnd) : base(id)
+        public VaccinationCardVaccine(Guid id, Guid vaccineId, Guid vaccinationCardId, int vaccineStatusId, DateTime? vaccineStart, DateTime? vaccineEnd) : base(id)
         {
             VaccinationCardId = vaccinationCardId;
             VaccineStatusId = vaccineStatusId;
