@@ -46,9 +46,11 @@ public class UserManager : IUserManager
     }
 
     ///<inheritdoc />
-    public Task<bool> Login(UserData user, CancellationToken ct = default)
+    public async Task<bool> Login(UserData user, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var result = await Mediator.Send(new LoginUserRequest(user), ct);
+
+        return result.Data;
     }
     
     public void Dispose()

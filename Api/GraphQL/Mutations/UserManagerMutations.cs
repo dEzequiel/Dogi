@@ -54,4 +54,28 @@ public class UserManagerMutations
             throw new DogiException(ex.Message);
         }
     }
+
+    public async Task<bool> Login([Service] ISender Mediator, UserData credentials)
+    {
+        try
+        {
+            Logger.LogInformation("UserManagerMutations --> Login --> Start");
+
+            var result = await Mediator.Send(new LoginUserRequest(credentials));
+            
+            return result.Data;
+        }
+        catch (DogiException ex)
+        {
+            Logger.LogInformation("UserManagerMutations --> Login --> Error");
+
+            throw new DogiException(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogInformation("UserManagerMutations --> Login --> Error");
+
+            throw new DogiException(ex.Message);
+        }
+    }
 }

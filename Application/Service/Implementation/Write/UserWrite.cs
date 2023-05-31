@@ -67,7 +67,7 @@ public class UserWrite : IUserWriteService
         var repository = UnitOfWork.UserRepository;
 
         var user = await repository.GetAsync(entity.Username, ct);
-        if (user == null)
+        if (user is null)
         {
             // El usuario no existe en la base de datos
             Logger.LogInformation("UserWrite --> LoginAsync --> User not found");
