@@ -24,6 +24,33 @@ namespace Api.GraphQL.Mutations
             Logger = logger;
         }
 
+        public async Task<IndividualProceedingWithMedicalRecord> CreateMedicalRecord([Service] ISender Mediator,
+            Guid individualProceedingId, MedicalRecord medicalRecord, IEnumerable<Guid> vaccinesIds)
+        {
+            try
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> CreateMedicalRecord --> Start");
+
+                var result = await Mediator.Send(new CreateMedicalRecordRequest(individualProceedingId, medicalRecord, vaccinesIds, GetAdminData()));
+
+                Logger.LogInformation("VeterinaryManagerMutations --> CreateMedicalRecord --> End");
+
+                return result.Data!;
+
+            }
+            catch (DogiException ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> CreateMedicalRecord --> Error");
+
+                throw new DogiException(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogInformation("VeterinaryManagerMutations --> CreateMedicalRecord --> Error");
+                throw new DogiException(ex.Message);
+            }
+        }
+
         public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord([Service] ISender Mediator,
             Guid medicalRecordId, string? observations)
         {

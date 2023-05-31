@@ -24,9 +24,9 @@ namespace Domain.Entities
         public virtual AnimalCategory AnimalCategory { get; set; } = null!;
 
         /// <summary>
-        /// VaccinationCards collection relationship.
+        /// VaccinationCardVaccine collection relationship.
         /// </summary>
-        public virtual ICollection<VaccinationCard>? VaccinationCards { get; set; }
+        public virtual ICollection<VaccinationCardVaccine>? VaccinationCardVaccines { get; set; }
 
         /// <summary>
         /// Constructor.

@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Infraestructure.Context;
@@ -14,7 +15,7 @@ namespace Infraestructure.Persistence.Repositories
         /// </summary>
         private const string CAGE_NOT_FOUND = "Cage with id {0} not found.";
         private const string CAGE_IS_OCCUPIED = "Cage with id {0} is occupied.";
-        protected DbSet<Cage> _cageAll;
+        protected DbSet<Cage> Cages;
 
         /// <summary>
         /// Constructor.
@@ -22,7 +23,7 @@ namespace Infraestructure.Persistence.Repositories
         /// <param name="context"></param>
         public CageRepository(ApplicationDbContext context)
         {
-            _cageAll = context.Set<Cage>();
+            Cages = context.Set<Cage>();
         }
 
         /// <inheritdoc/>
@@ -57,9 +58,26 @@ namespace Infraestructure.Persistence.Repositories
 
         public async Task<Cage?> GetFreeCageByZoneAsync(int zoneId, CancellationToken ct = default)
         {
-            return await _cageAll
+            return await Cages
                 .Include(r => r.AnimalZone)
                 .FirstOrDefaultAsync(x => x.AnimalZoneId == zoneId && !x.IsOccupied);
+        }
+
+        /// <inheritdoc />
+        public async Task<Cage> UpdateAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin, CancellationToken ct = default)
+        {
+            var entity = await Cages.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (entity == null)
+            {
+                throw new DogiException(string.Format(CAGE_NOT_FOUND, id));
+            }
+
+            entity.AnimalZoneId = animalZoneId;
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = admin.Email;
+
+            return entity;
         }
 
         /// <inheritdoc />
@@ -72,7 +90,7 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException(string.Format(CAGE_IS_OCCUPIED, id));
             }
 
-            var entity = await _cageAll.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await Cages.FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity == null)
             {
@@ -84,7 +102,7 @@ namespace Infraestructure.Persistence.Repositories
 
         private async Task<bool> CheckIfOccupied(Guid id)
         {
-            var entity = await _cageAll.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await Cages.FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity == null)
             {

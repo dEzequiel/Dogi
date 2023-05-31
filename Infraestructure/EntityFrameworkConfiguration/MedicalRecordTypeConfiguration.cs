@@ -18,7 +18,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithMany(m => m.MedicalRecords)
                 .HasForeignKey(fk => fk.MedicalStatusId);
 
-            builder.Property(e => e.MedicalStatusId).HasConversion<int>();
+
         }
     }
 }

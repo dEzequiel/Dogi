@@ -1,4 +1,6 @@
-﻿namespace Domain.Support
+﻿using Domain.Entities;
+
+namespace Domain.Support
 {
     /// <summary>
     /// Support table representing records equivalent to VaccineStatus domain enumerator.
@@ -18,7 +20,7 @@
         /// <summary>
         /// Collection of VaccinationCardVaccine relationships.
         /// </summary>
-        //public virtual ICollection<VaccinationCardVaccine> VaccinationCardVaccines { get; set; }
+        public virtual ICollection<VaccinationCardVaccine> VaccinationCardVaccines { get; set; }
 
         /// <summary>
         /// Constructor.

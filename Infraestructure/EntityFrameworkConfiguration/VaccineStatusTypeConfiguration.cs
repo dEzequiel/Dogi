@@ -13,7 +13,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
-            var totalVaccineStatusTypes = Enum.GetNames(typeof(Domain.Enums.VaccineStatus));
+            var totalVaccineStatusTypes = Enum.GetNames(typeof(Domain.Enums.VaccineStatuses));
 
             int id = 0;
             foreach (var status in totalVaccineStatusTypes)

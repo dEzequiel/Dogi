@@ -1,9 +1,8 @@
-using Application.Service.Interfaces;
 using Domain.Support;
 
 namespace Application.Interfaces.Repositories
 {
-    public interface IAnimalZoneRepository : IRepository<AnimalZone>
+    public interface IAnimalZoneRepository
     {
         /// <summary>
         /// Get AnimalZone by id.
@@ -11,7 +10,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="id"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<AnimalZone> GetAsync (int id, CancellationToken ct = default);
+        Task<AnimalZone> GetAsync(int id, CancellationToken ct = default);
 
         /// <summary>
         /// Get AnimalZone queryable.

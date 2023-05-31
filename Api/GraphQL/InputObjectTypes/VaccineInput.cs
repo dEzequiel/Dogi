@@ -8,7 +8,7 @@ namespace Api.GraphQL.InputObjectTypes
         {
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.AnimalCategory);
-            descriptor.Ignore(f => f.VaccinationCards);
+            //descriptor.Ignore(f => f.VaccinationCards);
         }
     }
 }

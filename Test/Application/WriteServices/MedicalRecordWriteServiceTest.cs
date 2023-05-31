@@ -49,22 +49,26 @@ namespace Test.Application.WriteServices
             [Frozen] Mock<IMedicalRecordRepository> repositoryMock,
             [Frozen] AdminData adminDataMock,
             Guid medicalRecordAdd,
+            string observations,
             Domain.Entities.MedicalRecord medicalRecordReturn,
+            AdminData admin,
             MedicalRecordWrite sut)
         {
             // Arrange
+            Guid id = Guid.NewGuid();
 
             unitOfWorkMock.Setup(u => u.MedicalRecordRepository)
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.CompleteRevisionAsync(
                 It.IsAny<Guid>(),
+                It.IsAny<string>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(medicalRecordReturn);
 
             // Act
-            var result = await sut.CheckAsync(medicalRecordAdd, adminDataMock);
+            var result = await sut.CheckAsync(id, observations, admin);
 
             // Assert
             Assert.NotNull(result);
@@ -73,6 +77,7 @@ namespace Test.Application.WriteServices
             unitOfWorkMock.Verify(u => u.MedicalRecordRepository, Times.Once);
             repositoryMock.Verify(r => r.CompleteRevisionAsync(
                 It.IsAny<Guid>(),
+                It.IsAny<string>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
@@ -84,6 +89,7 @@ namespace Test.Application.WriteServices
             [Frozen] Mock<IMedicalRecordRepository> repositoryMock,
             [Frozen] AdminData adminDataMock,
             Domain.Entities.MedicalRecord medicalRecordAdd,
+            string conclusions,
             MedicalRecordWrite sut)
         {
             // Arrange
@@ -94,12 +100,13 @@ namespace Test.Application.WriteServices
 
             repositoryMock.Setup(r => r.CloseRevisionAsync(
                 It.IsAny<Guid>(),
+                It.IsAny<string>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()))
                 .ReturnsAsync(medicalRecordAdd);
 
             // Act
-            var result = await sut.CloseAsync(medicalRecordToClose, adminDataMock);
+            var result = await sut.CloseAsync(medicalRecordToClose, conclusions, adminDataMock);
 
             // Assert
             Assert.NotNull(result);
@@ -108,6 +115,7 @@ namespace Test.Application.WriteServices
             unitOfWorkMock.Verify(u => u.MedicalRecordRepository, Times.Once);
             repositoryMock.Verify(r => r.CloseRevisionAsync(
                 It.IsAny<Guid>(),
+                It.IsAny<string>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);

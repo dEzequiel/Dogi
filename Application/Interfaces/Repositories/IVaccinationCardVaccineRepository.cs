@@ -16,6 +16,16 @@ namespace Application.Interfaces.Repositories
         Task AddAsync(VaccinationCardVaccine entity, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
+        /// Add collection of VaccinationCardVaccine.
+        /// </summary>
+        /// <param name="vaccinationCardId"></param>
+        /// <param name="vaccinesId"></param>
+        /// <param name=""></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, int vaccineStatusId, AdminData admin, CancellationToken ct = default);
+
+        /// <summary>
         /// Apply vaccine and update status..
         /// </summary>
         /// <param name="vaccineCardId"></param>

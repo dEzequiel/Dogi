@@ -3,6 +3,7 @@ using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
@@ -48,6 +49,30 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
+        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData admin, CancellationToken ct = default)
+        {
+            Logger.LogInformation("VaccinationCardVaccine --> AddRangeAsync --> Start");
+
+            Guard.Against.NullOrEmpty(vaccinationCardId, nameof(vaccinationCardId));
+            Guard.Against.NullOrEmpty(vaccinesId, nameof(vaccinesId));
+            Guard.Against.NullOrEmpty(admin.Id, nameof(admin.Id));
+            Guard.Against.NullOrEmpty(admin.Email, nameof(admin.Email));
+
+            var repository = UnitOfWork.VaccinationCardVaccineRepository;
+            var vaccineStatusRepository = UnitOfWork.VaccineStatusRepository;
+
+            var vaccineStatus = await vaccineStatusRepository.GetAsync(((int)VaccineStatuses.Pending), ct);
+
+            var entities = await repository.AddRangeAsync(vaccinationCardId, vaccinesId, vaccineStatus.Id, admin, ct);
+
+            await UnitOfWork.CompleteAsync(ct);
+
+            Logger.LogInformation("VaccinationCardVaccine --> AddRangeAsync --> Start");
+
+            return entities;
+        }
+
+        ///<inheritdoc />
         public Task<VaccinationCardVaccine> UpdateAsync(Guid id, VaccinationCardVaccine newEntity, AdminData admin, CancellationToken ct = default)
         {
             throw new NotImplementedException();
@@ -81,5 +106,6 @@ namespace Application.Service.Implementation.Write
         {
             UnitOfWork.Dispose();
         }
+
     }
 }

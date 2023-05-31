@@ -16,6 +16,16 @@ namespace Application.Service.Abstraction.Write
         Task<VaccinationCardVaccine> AddAsync(VaccinationCardVaccine entity, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
+        /// Add collection of VaccinationCardVaccine.
+        /// </summary>
+        /// <param name="vaccinationCardId"></param>
+        /// <param name="vaccinesId"></param>
+        /// <param name=""></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData admin, CancellationToken ct = default);
+
+        /// <summary>
         /// Set VaccinationCardVaccine vaccine as done.
         /// </summary>
         /// <param name="vaccinationCardId"></param>

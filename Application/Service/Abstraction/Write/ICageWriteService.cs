@@ -1,4 +1,6 @@
-﻿using Crosscuting.Base.Interfaces;
+﻿using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Interfaces;
+using Domain.Entities;
 
 namespace Application.Service.Abstraction.Write
 {
@@ -10,5 +12,14 @@ namespace Application.Service.Abstraction.Write
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<bool> UpdateOccupiedStatusAsync(Guid id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Move cage animal zone.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="animalZoneId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Cage> MoveCageAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin, CancellationToken cancellationToken);
     }
 }

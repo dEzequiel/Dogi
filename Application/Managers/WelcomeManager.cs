@@ -26,6 +26,7 @@ namespace Application.Managers
     public class WelcomeManager : IWelcomeManager
     {
         private const string OWNER_NOT_RESPONSIBLE = "The owner is not responsible for the animal.";
+        private const string CAUSE_FIRST_ENTRY = "The animal has just arrived at the center, a general check-up is needed.";
 
         private readonly ILogger<WelcomeManager> _logger;
         private readonly IMediator Mediator;
@@ -204,6 +205,7 @@ namespace Application.Managers
 
             var medicalRecord = new MedicalRecord(id: Guid.NewGuid(),
                                                   medicalStatusId: medicalRecordStatus.Data.Id,
+                                                  causes: CAUSE_FIRST_ENTRY,
                                                   individualProceedingId: individualProceeding.Id,
                                                   observations: individualProceeding.ReceptionDocument.Observations,
                                                   conclusions: string.Empty);

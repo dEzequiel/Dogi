@@ -1,11 +1,16 @@
 ﻿using Application.DTOs.VeterinaryManager;
+using Application.Features.Cage.Commands;
+using Application.Features.IndividualPro.Queries;
+using Application.Features.MedicalRecord.Comamnds;
 using Application.Features.MedicalRecord.Commands;
+using Application.Features.MedicalRecordStatus.Queries;
 using Application.Features.VaccinationCardVaccine.Commands;
 using Application.Managers.Abstraction;
 using Application.Service.Abstraction.Read;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -35,13 +40,58 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public Task SetForMedicalRevision(IndividualProceeding individualProceeding)
+        public async Task<IndividualProceedingWithMedicalRecord> CreateMedicalRecord(
+            Guid individualProceedingId,
+            MedicalRecord medicalRecord,
+            IEnumerable<Guid>? vaccinesIds,
+            AdminData adminData,
+            CancellationToken ct = default)
         {
-            throw new NotImplementedException();
+            var individualProceeding = await Mediator.Send(new GetIndividualProceedingByIdRequest(individualProceedingId), ct);
+            Guard.Against.Null(individualProceeding.Data);
+
+            await Mediator.Send(new MoveCageAnimalZoneRequest(individualProceeding.Data.CageId, ((int)AnimalZones.WaitingForMedicalRevision), adminData));
+
+            var medicalRecordStatus = await Mediator.Send(new GetMedicalRecordStatusByIdRequest((int)MedicalRecordStatuses.Waiting), ct);
+            Guard.Against.Null(medicalRecordStatus.Data);
+
+
+
+            medicalRecord.IndividualProceedingId = individualProceeding.Data.Id;
+            medicalRecord.MedicalStatusId = medicalRecordStatus.Data.Id;
+
+            var createdMedicalRecord = await Mediator.Send(new InsertMedicalRecordRequest(medicalRecord, adminData), ct);
+            Guard.Against.Null(createdMedicalRecord.Data);
+
+            if (!vaccinesIds.Any())
+            {
+                return new IndividualProceedingWithMedicalRecord()
+                {
+                    IndividualProceeding = individualProceeding.Data,
+                    MedicalRecord = createdMedicalRecord.Data
+                };
+            }
+
+
+            if (!individualProceeding.Data.VaccinationCardId.HasValue)
+            {
+                throw new DogiException($"No vaccination card found for individual proceeding with id: ({individualProceeding.Data.Id})");
+            }
+
+            await Mediator.Send(new InsertCollectionVaccinationCardVaccineVaccinesRequest(individualProceeding.Data.VaccinationCardId.Value, vaccinesIds, adminData));
+
+
+            return new IndividualProceedingWithMedicalRecord()
+            {
+                IndividualProceeding = createdMedicalRecord.Data.IndividualProceeding,
+                MedicalRecord = createdMedicalRecord.Data
+            };
         }
 
         ///<inheritdoc />
-        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(Guid medicalRecordId, string? observations,
+        public async Task<IndividualProceedingWithMedicalRecord> CheckMedicalRecord(
+            Guid medicalRecordId,
+            string? observations,
             AdminData adminData,
             CancellationToken ct = default)
         {
@@ -85,7 +135,7 @@ namespace Application.Managers
             {
                 VaccinationCardId = vaccinationCardId,
                 VaccineId = vaccineId,
-                VaccineStatusId = (int)VaccineStatus.Pending,
+                VaccineStatusId = (int)VaccineStatuses.Pending,
                 VaccineStart = null,
                 VaccineEnd = null,
             };
