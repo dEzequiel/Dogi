@@ -23,7 +23,7 @@ namespace Application.Interfaces.Repositories
         /// <param name=""></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData , CancellationToken ct = default);
+        Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, int vaccineStatusId, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Apply vaccine and update status..

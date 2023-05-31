@@ -20,6 +20,8 @@ namespace Application.Service.Interfaces
         IVaccinationCardRepository VaccinationCardRepository { get; }
         IVaccinationCardVaccineRepository VaccinationCardVaccineRepository { get; }
         IVaccineRepository VaccineRepository { get; }
+        IVaccineStatusRepository VaccineStatusRepository { get; }
+
         IPersonRepository PersonRepository { get; }
         IPersonBannedInformationRepository PersonBannedInformationRepository { get; }
         IMedicalRecordStatusRepository MedicalRecordStatusRepository { get; }

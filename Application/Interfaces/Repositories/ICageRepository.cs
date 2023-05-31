@@ -1,4 +1,5 @@
 ﻿using Application.Service.Interfaces;
+using Crosscuting.Api.DTOs;
 using Domain.Entities;
 
 namespace Application.Interfaces.Repositories
@@ -20,5 +21,14 @@ namespace Application.Interfaces.Repositories
         /// <param name="ct"></param>
         /// <returns></returns>
         Task<Cage?> GetFreeCageByZoneAsync(int zoneId, CancellationToken ct = default);
+
+        /// <summary>
+        /// Update cage.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cage"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<Cage> UpdateAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin, CancellationToken ct = default);
     }
 }
