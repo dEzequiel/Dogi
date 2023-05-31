@@ -27,8 +27,8 @@ public class UserRepository : IUserRepository
     }
 
     ///<inheritdoc />
-    public Task<User> GetAsync(string username, CancellationToken ct = default)
+    public async Task<User> GetAsync(string username, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        return await Users.FirstOrDefaultAsync(x => x.Username == username);
     }
 }

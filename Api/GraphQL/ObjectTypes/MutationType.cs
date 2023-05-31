@@ -56,6 +56,13 @@ namespace Api.GraphQL.Types
                 .ResolveWith<VaccineMutations>(q => q.AddVaccine(default, default));
 
             #endregion
+            
+            #region "USER MUTATIONS"
+            descriptor.Field("RegisterUser")
+                .Argument("credentials", arg => arg.Type<UserInput>())
+                .ResolveWith<UserManagerMutations>(v => v.Register(default, default));
+            #endregion
+
         }
     }
 }

@@ -31,7 +31,8 @@ namespace Api.GraphQL.Mutations
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> CreateMedicalRecord --> Start");
 
-                var result = await Mediator.Send(new CreateMedicalRecordRequest(individualProceedingId, medicalRecord, vaccinesIds, GetAdminData()));
+                var result = await Mediator.Send(
+                    new CreateMedicalRecordRequest(individualProceedingId, medicalRecord, vaccinesIds, GetAdminData()));
 
                 Logger.LogInformation("VeterinaryManagerMutations --> CreateMedicalRecord --> End");
 
@@ -58,7 +59,8 @@ namespace Api.GraphQL.Mutations
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> CheckMedicalRecord --> Start");
 
-                var result = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, observations, GetAdminData()));
+                var result = await Mediator.Send(
+                    new CheckMedicalRecordRequest(medicalRecordId, observations, GetAdminData()));
 
                 Logger.LogInformation("VeterinaryManagerMutations --> CheckMedicalRecord --> End");
 
@@ -84,7 +86,8 @@ namespace Api.GraphQL.Mutations
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> Start");
 
-                var result = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordId, conclusions, GetAdminData()));
+                var result = await Mediator.Send(new CloseMedicalRecordRequest
+                    (medicalRecordId, conclusions, GetAdminData()));
 
                 Logger.LogInformation("VeterinaryManagerMutations --> CloseMedicalRecord --> End");
 
@@ -104,13 +107,15 @@ namespace Api.GraphQL.Mutations
             }
         }
 
-        public async Task<IEnumerable<VaccinationCardVaccine>> Vaccine([Service] ISender Mediator, VaccinationCardWithVaccineCredentials input)
+        public async Task<IEnumerable<VaccinationCardVaccine>> Vaccine([Service] ISender Mediator, 
+            VaccinationCardWithVaccineCredentials input)
         {
             try
             {
                 Logger.LogInformation("VeterinaryManagerMutations --> Vaccine --> Start");
 
-                var result = await Mediator.Send(new VaccinationCardVaccineVaccineRequest(input.VaccinationCardId, input.VaccinesToComplishIds, GetAdminData()));
+                var result = await Mediator.Send(new VaccinationCardVaccineVaccineRequest
+                    (input.VaccinationCardId, input.VaccinesToComplishIds, GetAdminData()));
 
                 Logger.LogInformation("VeterinaryManagerMutations --> Vaccine --> End");
 
