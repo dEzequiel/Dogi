@@ -154,9 +154,9 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public async Task<VaccinationCardVaccine> Vaccine(Guid vaccinationCardId, Guid vaccineId, AdminData adminData, CancellationToken ct = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> Vaccine(Guid vaccinationCardId,  VaccinesToComplish vaccinesIds, AdminData adminData, CancellationToken ct = default)
         {
-            var response = await Mediator.Send(new VaccineExistingVaccinationCardVaccineVaccineRequest(vaccinationCardId, vaccineId, adminData), ct);
+            var response = await Mediator.Send(new VaccinationCardVaccineVaccineRequest(vaccinationCardId, vaccinesIds, adminData), ct);
 
             Guard.Against.Null(response.Data);
 

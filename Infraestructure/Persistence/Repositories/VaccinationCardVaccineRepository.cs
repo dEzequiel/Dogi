@@ -6,6 +6,7 @@ using Domain.Enums;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using Application.DTOs.VeterinaryManager;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -125,7 +126,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
-        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccineCardId, IEnumerable<Guid> vaccinesIds, AdminData admin, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccineCardId, VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken cancellationToken = default)
         {
             var entity = await VaccinationCardVaccines.Where(x => x.VaccinationCardId == vaccineCardId).ToListAsync();
 
@@ -133,16 +134,25 @@ namespace Infraestructure.Persistence.Repositories
             {
                 throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND, vaccineCardId));
             }
-
+            
             foreach (var vaccine in entity)
             {
-                if (vaccinesIds.Contains(vaccine.VaccineId))
+                if (vaccinesIds.Needed.Contains(vaccine.VaccineId))
                 {
                     vaccine.VaccineStatusId = ((int)VaccineStatuses.Done);
                     vaccine.LastModified = DateTime.UtcNow;
                     vaccine.LastModifiedBy = admin.Email;
                     vaccine.VaccineStart = DateTime.UtcNow;
                     vaccine.VaccineEnd = vaccine.VaccineStart.Value.AddDays(365);
+                }
+                
+                if (vaccinesIds.NotNeeded.Contains(vaccine.VaccineId))
+                {
+                    vaccine.VaccineStatusId = ((int)VaccineStatuses.NotNeeded);
+                    vaccine.LastModified = DateTime.UtcNow;
+                    vaccine.LastModifiedBy = admin.Email;
+                    vaccine.VaccineStart = null;
+                    vaccine.VaccineEnd = null;
                 }
             }
 

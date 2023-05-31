@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.DTOs.VeterinaryManager;
+using Application.Interfaces.Repositories;
 using Application.Service.Implementation.Write;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
@@ -45,30 +46,30 @@ namespace Test.Application.WriteServices
         internal async Task ShouldDoneVaccinationCardVaccineAsync([Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IVaccinationCardVaccineRepository> repositoryMock,
             [Frozen] AdminData admin,
-            Domain.Entities.VaccinationCardVaccine vaccinationCardVaccineAdd,
+            IEnumerable<Domain.Entities.VaccinationCardVaccine> vaccinationCardVaccineAdd,
+            VaccinesToComplish vaccinesIds,
             VaccinationCardVaccineWrite sut)
         {
             // Arrange
             var vaccineId = Guid.NewGuid();
-            var vaccineCardId = Guid.NewGuid();
 
             unitOfWorkMock.Setup(x => x.VaccinationCardVaccineRepository)
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(x => x.VaccineAsync(It.IsAny<Guid>(),
-            It.IsAny<Guid>(),
+            It.IsAny<VaccinesToComplish>(),
             It.IsAny<AdminData>(),
             It.IsAny<CancellationToken>()))
                 .ReturnsAsync(vaccinationCardVaccineAdd);
 
             // Act
-            var result = await sut.VaccineAsync(vaccineId, vaccineCardId, admin);
+            var result = await sut.VaccineAsync(vaccineId, vaccinesIds, admin);
 
             // Assert
             Assert.NotNull(result);
             Assert.IsType<Domain.Entities.VaccinationCardVaccine>(result);
             repositoryMock.Verify(r => r.VaccineAsync(It.IsAny<Guid>(),
-                It.IsAny<Guid>(),
+                It.IsAny<VaccinesToComplish>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);

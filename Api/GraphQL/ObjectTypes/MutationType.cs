@@ -39,9 +39,9 @@ namespace Api.GraphQL.Types
                 .Argument("conclusions", arg => arg.Type<NonNullType<StringType>>())
                 .ResolveWith<VeterinaryManagerMutations>(q => q.CloseMedicalRecord(default, default, default));
 
-            descriptor.Field(f => f.AssignVaccine)
-                .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
-                .ResolveWith<VeterinaryManagerMutations>(v => v.AssignVaccine(default, default));
+            //descriptor.Field(f => f.AssignVaccine)
+            //    .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
+            //    .ResolveWith<VeterinaryManagerMutations>(v => v.AssignVaccine(default, default));
 
             descriptor.Field(f => f.Vaccine)
                 .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
