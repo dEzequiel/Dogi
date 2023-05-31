@@ -8,7 +8,7 @@ namespace Api.GraphQL.ObjectTypes
         {
             descriptor.Field(f => f.Id).Type<NonNullType<UuidType>>();
             descriptor.Field(f => f.Observations).Type<StringType>();
-            descriptor.Field(f => f.Vaccines).Type<ListType<VaccineType>>();
+            //descriptor.Field(f => f.VaccinationCardVaccines).Type<ListType<VaccinationCardVaccine>>();
             descriptor.Field(f => f.IndividualProceeding).Type<IndividualProceedingType>();
 
         }

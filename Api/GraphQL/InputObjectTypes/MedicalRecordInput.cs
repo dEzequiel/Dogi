@@ -7,21 +7,30 @@ namespace Api.GraphQL.InputObjectTypes
     {
         protected override void Configure(IInputObjectTypeDescriptor<MedicalRecord> descriptor)
         {
-            descriptor.Field(f => f.IndividualProceedingId).Type<NonNullType<UuidType>>();
+            descriptor.Field(f => f.IndividualProceedingId)
+                .Type<NonNullType<UuidType>>()
+                .Ignore();
 
             descriptor.Field(f => f.MedicalStatusId)
                 .Type<NonNullType<IntType>>()
-                .DefaultValue(((int)MedicalRecordStatuses.Waiting));
+                .DefaultValue(((int)MedicalRecordStatuses.Waiting))
+                .Ignore();
 
             descriptor.Field(f => f.Observations).Type<StringType>();
-            descriptor.Field(f => f.Conclusions).Type<StringType>();
             descriptor.Field(f => f.Causes).Type<StringType>();
-
-            descriptor.Field("Vaccines").Type<ListType<UuidType>>();
 
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.IndividualProceeding);
+
             descriptor.Ignore(f => f.MedicalRecordStatus);
+            descriptor.Ignore(f => f.Conclusions);
+            descriptor.Ignore(f => f.Created);
+            descriptor.Ignore(f => f.CreatedBy);
+            descriptor.Ignore(f => f.LastModified);
+            descriptor.Ignore(f => f.LastModifiedBy);
+
+
+
         }
     }
 }

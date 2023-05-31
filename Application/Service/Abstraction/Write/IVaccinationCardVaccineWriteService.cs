@@ -23,7 +23,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name=""></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData, CancellationToken ct = default);
+        Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Set VaccinationCardVaccine vaccine as done.
