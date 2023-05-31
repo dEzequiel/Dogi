@@ -25,7 +25,7 @@ namespace Infraestructure.Persistence.Repositories
         /// <inheritdoc/>
         public async Task<IEnumerable<MedicalRecord>> GetAllByStatusAsync(int statusId, CancellationToken ct = default)
         {
-            return await MedicalRecords.AsNoTracking().Where(x => x.MedicalStatusId == statusId).ToListAsync(ct);
+            return await MedicalRecords.Where(x => x.MedicalStatusId == statusId).ToListAsync(ct);
         }
 
         /// <inheritdoc/>
@@ -98,7 +98,7 @@ namespace Infraestructure.Persistence.Repositories
         /// <inheritdoc/>
         public async Task<IEnumerable<MedicalRecord>> GetAllAsync()
         {
-            return await MedicalRecords.AsNoTracking().ToListAsync();
+            return await MedicalRecords.ToListAsync();
         }
 
         /// <inheritdoc/>
