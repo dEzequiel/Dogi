@@ -31,6 +31,7 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IPersonRepository PersonRepository => new PersonRepository(_context);
         public IPersonBannedInformationRepository PersonBannedInformationRepository => new PersonBannedInformationRepository(_context);
         public IMedicalRecordStatusRepository MedicalRecordStatusRepository => new MedicalRecordStatusRepository(_context);
+        public IUserRepository UserRepository => new UserRepository(_context);
         /// <summary>
         /// Constructor.
         /// </summary>

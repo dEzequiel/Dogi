@@ -21,10 +21,10 @@ namespace Application.Service.Interfaces
         IVaccinationCardVaccineRepository VaccinationCardVaccineRepository { get; }
         IVaccineRepository VaccineRepository { get; }
         IVaccineStatusRepository VaccineStatusRepository { get; }
-
         IPersonRepository PersonRepository { get; }
         IPersonBannedInformationRepository PersonBannedInformationRepository { get; }
         IMedicalRecordStatusRepository MedicalRecordStatusRepository { get; }
+        IUserRepository UserRepository { get; }
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>
