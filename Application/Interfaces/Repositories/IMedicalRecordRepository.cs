@@ -7,6 +7,14 @@ namespace Application.Interfaces.Repositories
     public interface IMedicalRecordRepository : IRepository<MedicalRecord>
     {
         /// <summary>
+        /// Get all MedicalRecords filter by status.
+        /// </summary>
+        /// <param name="statusId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IEnumerable<MedicalRecord>> GetAllByStatusAsync(int statusId, CancellationToken ct = default);
+
+        /// <summary>
         /// Add new MedicalRecord.
         /// </summary>
         /// <param name="entity"></param>
