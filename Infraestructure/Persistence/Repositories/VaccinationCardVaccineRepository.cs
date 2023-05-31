@@ -13,6 +13,7 @@ namespace Infraestructure.Persistence.Repositories
     {
         private const string VACCINATION_CARD_VACCINE_NOT_FOUND = "VaccinationCardVaccine with id {0} not found.";
         private const string VACCINATION_CARD_VACCINE_ALREADY_DONE = "VaccinationCardVaccine with id {0} already done.";
+        private const string VACCINATION_CARD_VACCINE_ALREADY_ASSIGNED = "VaccinationCardVaccine with id {0} already assgined.";
         private const string VACCINATION_CARD_VACCINE_ALREADY_ADDED = "Vaccine with id {0} already added in VaccinationCard with id {1}.";
         private const string VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND = "Vaccine with id {0} and VaccinationCard with id {1} not found.";
 
@@ -50,6 +51,8 @@ namespace Infraestructure.Persistence.Repositories
         {
             var entities = new List<VaccinationCardVaccine>();
 
+            await CheckIfPendingVaccineExistAsync(vaccinesId);
+
             foreach (var vaccine in vaccinesId)
             {
                 var entity = new VaccinationCardVaccine
@@ -67,6 +70,17 @@ namespace Infraestructure.Persistence.Repositories
 
             return entities;
         }
+
+        private async Task CheckIfPendingVaccineExistAsync(IEnumerable<Guid> vaccinesIds)
+        {
+            var pendingVaccines = await VaccinationCardVaccines.AsNoTracking().Where(x => vaccinesIds.Contains(x.VaccineId) && x.VaccineStatusId == (int)VaccineStatuses.Pending).ToListAsync();
+
+            if (pendingVaccines.Any())
+            {
+                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_ASSIGNED, pendingVaccines.FirstOrDefault().Id));
+            }
+        }
+
 
         ///<inheritdoc />
         public async Task AddAsync(VaccinationCardVaccine entity)
