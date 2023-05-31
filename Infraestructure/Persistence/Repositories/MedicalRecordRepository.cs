@@ -23,6 +23,12 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
+        public async Task<IEnumerable<MedicalRecord>> GetAllByStatusAsync(int statusId, CancellationToken ct = default)
+        {
+            return await MedicalRecords.Where(x => x.MedicalStatusId == statusId).ToListAsync(ct);
+        }
+
+        /// <inheritdoc/>
         public async Task AddAsync(MedicalRecord entity, AdminData admin, CancellationToken ct = default)
         {
             entity.Created = DateTime.UtcNow;
@@ -44,7 +50,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CloseRevisionAsync(Guid id, string conclusions, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CloseRevisionAsync(Guid id, string conclusions, AdminData admin, 
+            CancellationToken ct = default)
         {
             var entity = await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -53,7 +60,8 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException($"MedicalRecord with id {id} not found");
             }
 
-            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.Cure) && entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.WaitingForMedicalRevision))
+            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.Cure) && 
+                entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.WaitingForMedicalRevision))
             {
                 throw new DogiException("The cage is not in the cure area.");
             }
@@ -66,7 +74,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, string? observations, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, string? observations, AdminData admin, 
+            CancellationToken ct = default)
         {
             var entity = await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -87,9 +96,9 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public Task<IEnumerable<MedicalRecord>> GetAllAsync()
+        public async Task<IEnumerable<MedicalRecord>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await MedicalRecords.ToListAsync();
         }
 
         /// <inheritdoc/>
@@ -124,7 +133,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, 
+            CancellationToken ct = default)
         {
             var entity = await GetAsync(id);
 

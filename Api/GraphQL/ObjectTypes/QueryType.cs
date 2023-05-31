@@ -1,4 +1,6 @@
-﻿using Api.GraphQL.GraphQLQueries;
+﻿using System.Diagnostics;
+using Api.GraphQL.GraphQLQueries;
+using Api.GraphQL.ObjectTypes;
 using HotChocolate.Types.Pagination;
 
 namespace Api.GraphQL.GraphQLTypes
@@ -12,6 +14,17 @@ namespace Api.GraphQL.GraphQLTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
+            descriptor.Field("GetAllMedicalRecordByStatus")
+                .Type<ListType<MedicalRecordType>>()
+                .Argument("status", a => a.Type<NonNullType<IntType>>())
+                .ResolveWith<VeterinaryManagerQueries>(q => 
+                    q.GetAllByStatus(default, default, default));
+            
+            descriptor.Field("GetAllMedicalRecord")
+                .Type<ListType<MedicalRecordType>>()
+                .ResolveWith<VeterinaryManagerQueries>(q => 
+                    q.GetAllAsync(default, default));
+            
             descriptor.Field(q => q.ReceptionDocumentId)
                 .Type<ReceptionDocumentType>()
                 .Argument("id", a => a.Type<NonNullType<UuidType>>())
