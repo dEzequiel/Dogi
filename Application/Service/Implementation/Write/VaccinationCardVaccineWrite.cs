@@ -1,4 +1,5 @@
-﻿using Application.Service.Abstraction.Write;
+﻿using Application.DTOs.VeterinaryManager;
+using Application.Service.Abstraction.Write;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
@@ -79,24 +80,23 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<VaccinationCardVaccine> VaccineAsync(Guid vaccinationCardId, Guid vaccineId, AdminData admin, CancellationToken ct = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccinationCardId, VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken ct = default)
         {
             Logger.LogInformation("VaccinationCardVaccine --> VaccineAsync --> Start");
 
             Guard.Against.Null(admin, nameof(admin));
             Guard.Against.NullOrEmpty(vaccinationCardId, nameof(vaccinationCardId));
-            Guard.Against.NullOrEmpty(vaccineId, nameof(vaccineId));
+            Guard.Against.Null(vaccinesIds, nameof(vaccinesIds));
             Guard.Against.NullOrEmpty(admin.Id, nameof(admin.Id));
             Guard.Against.NullOrEmpty(admin.Email, nameof(admin.Email));
 
             var repository = UnitOfWork.VaccinationCardVaccineRepository;
 
-            var entity = await repository.VaccineAsync(vaccinationCardId, vaccineId, admin, ct);
+            var entity = await repository.VaccineAsync(vaccinationCardId, vaccinesIds, admin, ct);
 
             await UnitOfWork.CompleteAsync(ct);
 
             Logger.LogInformation("VaccinationCardVaccine --> VaccineAsync --> Start");
-
 
             return entity;
         }

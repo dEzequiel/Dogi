@@ -1,4 +1,5 @@
-﻿using Application.Service.Interfaces;
+﻿using Application.DTOs.VeterinaryManager;
+using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
 
@@ -32,7 +33,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="vaccineId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<VaccinationCardVaccine> VaccineAsync(Guid vaccineCardId, IEnumerable<Guid> vaccinesIds, AdminData admin, CancellationToken cancellationToken = default);
+        Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccineCardId, VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get VaccinationCardVaccine by id with loaded data.

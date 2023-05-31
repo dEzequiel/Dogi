@@ -1,4 +1,5 @@
-﻿using Application.DTOs.VeterinaryManager;
+﻿using Api.GraphQL.ObjectTypes;
+using Application.DTOs.VeterinaryManager;
 
 namespace Api.GraphQL.InputObjectTypes.VeterinaryObjects
 {
@@ -10,9 +11,7 @@ namespace Api.GraphQL.InputObjectTypes.VeterinaryObjects
                 .Field(f => f.VaccinationCardId)
                 .Type<NonNullType<UuidType>>();
 
-            descriptor
-                .Field(f => f.VaccineId)
-                .Type<NonNullType<UuidType>>();
+
         }
     }
 }

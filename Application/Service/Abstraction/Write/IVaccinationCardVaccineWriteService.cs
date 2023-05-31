@@ -1,4 +1,5 @@
-﻿using Crosscuting.Api.DTOs;
+﻿using Application.DTOs.VeterinaryManager;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Interfaces;
 using Domain.Entities;
 
@@ -33,7 +34,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name="admin"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<VaccinationCardVaccine> VaccineAsync(Guid vaccinationCardId, Guid vaccineId, AdminData admin, CancellationToken ct = default);
+        Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccinationCardId, VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken ct = default);
 
         /// <summary>
         /// Update existing VaccinationCardVaccine.

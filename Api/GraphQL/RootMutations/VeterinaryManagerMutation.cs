@@ -28,6 +28,6 @@ namespace Api.GraphQL.RootMutations
         /// <summary>
         /// 
         /// </summary>
-        public VaccinationCardVaccine Vaccine { get; set; } = null!;
+        public IEnumerable<VaccinationCardVaccine> Vaccine { get; set; } = null!;
     }
 }

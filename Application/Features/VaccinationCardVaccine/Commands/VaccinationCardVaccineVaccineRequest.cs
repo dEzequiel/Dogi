@@ -1,4 +1,5 @@
-﻿using Application.Service.Abstraction.Write;
+﻿using Application.DTOs.VeterinaryManager;
+using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
@@ -13,7 +14,7 @@ namespace Application.Features.VaccinationCardVaccine.Commands
     public class VaccinationCardVaccineVaccineRequest : IRequest<ApiResponse<IEnumerable<Domain.Entities.VaccinationCardVaccine>>>
     {
         public Guid VaccinationCardId { get; private set; }
-        public IEnumerable<Guid> VaccinesIds { get; private set; }
+        public VaccinesToComplish VaccinesIds { get; private set; }
         public AdminData AdminData { get; private set; }
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace Application.Features.VaccinationCardVaccine.Commands
         /// <param name="vaccinationCardId"></param>
         /// <param name="vaccineId"></param>
         /// <param name="adminData"></param>
-        public VaccinationCardVaccineVaccineRequest(Guid vaccinationCardId, IEnumerable<Guid> vaccinesIds, AdminData adminData)
+        public VaccinationCardVaccineVaccineRequest(Guid vaccinationCardId, VaccinesToComplish vaccinesIds, AdminData adminData)
         {
             VaccinationCardId = vaccinationCardId;
             VaccinesIds = vaccinesIds;
