@@ -6,15 +6,15 @@ using Microsoft.Extensions.Logging;
 
 public class AuthenticateUserRequest : IRequest<string>
 {
-    public UserData UserData { get; private set; }
+    public UserDataRegister UserDataRegister { get; private set; }
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="userData"></param>
-    public AuthenticateUserRequest(UserData userData)
+    /// <param name="userDataRegister"></param>
+    public AuthenticateUserRequest(UserDataRegister userDataRegister)
     {
-        UserData = userData;
+        UserDataRegister = userDataRegister;
     }
 }
 
@@ -31,7 +31,8 @@ public class AuthenticateUserRequestHandler : IRequestHandler<AuthenticateUserRe
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="userReadService"></param>
-    public AuthenticateUserRequestHandler(ILogger<AuthenticateUserRequestHandler> logger, IUserReadService userReadService)
+    public AuthenticateUserRequestHandler(ILogger<AuthenticateUserRequestHandler> logger,
+        IUserReadService userReadService)
     {
         Logger = logger;
         _userReadService = userReadService;
@@ -41,11 +42,11 @@ public class AuthenticateUserRequestHandler : IRequestHandler<AuthenticateUserRe
     public async Task<string> Handle(AuthenticateUserRequest request, CancellationToken cancellationToken)
     {
         Logger.LogInformation("LoginUserRequestHandler --> AddAsync --> Start");
-        
+
         Guard.Against.Null(request, nameof(request));
 
-        var result = await _userReadService.Authenticate(request.UserData, cancellationToken);
-        
+        var result = await _userReadService.Authenticate(request.UserDataRegister, cancellationToken);
+
         Logger.LogInformation("LoginUserRequestHandler --> AddAsync --> End");
 
         return result;

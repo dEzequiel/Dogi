@@ -2,7 +2,6 @@
 using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
 using Api.GraphQL.Mutations;
 using Api.GraphQL.RootMutations;
-using Infraestructure.Helpers;
 
 namespace Api.GraphQL.Types
 {
@@ -10,19 +9,17 @@ namespace Api.GraphQL.Types
     public class MutationType : ObjectType<Mutation>
     {
         ///<inheritdoc/>
-        [Authorize]
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
             descriptor.Field(f => f.RegisterAnimal)
-                    .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
-                    .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default, 
-                        default, default));
-
+                .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
+                .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default,
+                    default, default));
 
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
-                    .Argument("idToDelete", arg => arg.Type<UuidType>())
-                    .ResolveWith<ReceptionDocumentMutations>(q => q.MarkReceptionDocumentAsRemovedAsync(default, default));
+                .Argument("idToDelete", arg => arg.Type<UuidType>())
+                .ResolveWith<ReceptionDocumentMutations>(q => q.MarkReceptionDocumentAsRemovedAsync(default, default));
 
             #region "VETERINARY MANAGER MUTATIONS"
 
@@ -30,7 +27,8 @@ namespace Api.GraphQL.Types
                 .Argument("individualProceedingId", arg => arg.Type<NonNullType<UuidType>>())
                 .Argument("medicalRecord", arg => arg.Type<NonNullType<MedicalRecordInput>>())
                 .Argument("vaccinesIds", arg => arg.Type<ListType<UuidType>>())
-                .ResolveWith<VeterinaryManagerMutations>(q => q.CreateMedicalRecord(default, default, default, default));
+                .ResolveWith<VeterinaryManagerMutations>(q =>
+                    q.CreateMedicalRecord(default, default, default, default));
 
             descriptor.Field(f => f.CheckMedicalRecord)
                 .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
@@ -59,9 +57,9 @@ namespace Api.GraphQL.Types
                 .ResolveWith<VaccineMutations>(q => q.AddVaccine(default, default));
 
             #endregion
-            
+
             #region "USER MUTATIONS"
-            
+
             descriptor.Field("RegisterUser")
                 .Argument("credentials", arg => arg.Type<UserInput>())
                 .ResolveWith<UserManagerMutations>(v => v.Register(default, default));
@@ -71,7 +69,6 @@ namespace Api.GraphQL.Types
                 .ResolveWith<UserManagerMutations>(v => v.Authenticate(default, default));
 
             #endregion
-
         }
     }
 }
