@@ -12,15 +12,15 @@ namespace Application.Features.UserManager.Commands;
 /// </summary>
 public class RegisterUserRequest : IRequest<ApiResponse<Domain.Entities.User>>
 {
-    public UserData UserData { get; private set; }
+    public UserDataRegister UserDataRegister { get; private set; }
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="userData"></param>
-    public RegisterUserRequest(UserData userData)
+    public RegisterUserRequest(UserDataRegister userDataRegister)
     {
-        UserData = userData;
+        UserDataRegister = userDataRegister;
     }
 }
 
@@ -43,14 +43,15 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, A
         UserManager = userManager;
     }
 
-    public async Task<ApiResponse<Domain.Entities.User>> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<Domain.Entities.User>> Handle(RegisterUserRequest request,
+        CancellationToken cancellationToken)
     {
         Logger.LogInformation("RegisterUserRequestHandler --> Handle --> Start");
 
         Guard.Against.Null(request, nameof(request));
 
-        var result = await UserManager.Register(request.UserData, cancellationToken);
-        
+        var result = await UserManager.Register(request.UserDataRegister, cancellationToken);
+
         Logger.LogInformation("RegisterUserRequestHandler --> Handle --> End");
 
         return new ApiResponse<Domain.Entities.User>(result);

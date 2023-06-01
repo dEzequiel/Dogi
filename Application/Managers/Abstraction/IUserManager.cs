@@ -12,13 +12,13 @@ public interface IUserManager : IApplicationServiceBase
     /// <param name="user"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<User> Register(UserData user, CancellationToken ct = default);
-    
+    Task<User> Register(UserDataRegister user, CancellationToken ct = default);
+
     /// <summary>
     /// Login user.
     /// </summary>
     /// <param name="user"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<string> Authenticate(UserData user, CancellationToken ct = default);
+    Task<string> Authenticate(UserDataRegister user, CancellationToken ct = default);
 }

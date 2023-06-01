@@ -1,7 +1,6 @@
 ﻿using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
-using Crosscuting.Api.DTOs.Response;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -12,15 +11,15 @@ namespace Application.Features.UserManager.Commands;
 /// </summary>
 public class LoginUserRequest : IRequest<string>
 {
-    public UserData UserData { get; private set; }
+    public UserDataRegister UserDataRegister { get; private set; }
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="userData"></param>
-    public LoginUserRequest(UserData userData)
+    /// <param name="userDataRegister"></param>
+    public LoginUserRequest(UserDataRegister userDataRegister)
     {
-        UserData = userData;
+        UserDataRegister = userDataRegister;
     }
 }
 
@@ -47,11 +46,11 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, string>
     public async Task<string> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         Logger.LogInformation("LoginUserRequestHandler --> Handle --> Start");
-        
+
         Guard.Against.Null(request, nameof(request));
 
-        var result = await UserManager.Authenticate(request.UserData, cancellationToken);
-        
+        var result = await UserManager.Authenticate(request.UserDataRegister, cancellationToken);
+
         Logger.LogInformation("LoginUserRequestHandler --> Handle --> End");
 
         return result;

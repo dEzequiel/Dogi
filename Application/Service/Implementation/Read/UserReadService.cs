@@ -15,13 +15,13 @@ public class UserReadService : IUserReadService
     private readonly IUnitOfWork UnitOfWork;
     private readonly IJsonWebTokenProvider JsonWebTokenProvider;
 
-    
+
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="unitOfWork"></param>
-    public UserReadService(ILogger<UserReadService> logger, IUnitOfWork unitOfWork, IJsonWebTokenProvider 
+    public UserReadService(ILogger<UserReadService> logger, IUnitOfWork unitOfWork, IJsonWebTokenProvider
         jsonWebTokenProvider)
     {
         Logger = logger;
@@ -44,19 +44,19 @@ public class UserReadService : IUserReadService
 
         return entity;
     }
-    
+
     ///<inheritdoc />
-    public async Task<string> Authenticate(UserData entity, CancellationToken ct = default)
+    public async Task<string> Authenticate(UserDataRegister entity, CancellationToken ct = default)
     {
         Logger.LogInformation("UserWrite --> LoginAsync --> Start");
 
         Guard.Against.Null(entity, nameof(entity));
-        Guard.Against.NullOrEmpty(entity.Username, nameof(entity.Username));
+        Guard.Against.NullOrEmpty(entity.Email, nameof(entity.Email));
         Guard.Against.NullOrEmpty(entity.Password, nameof(entity.Password));
 
         var repository = UnitOfWork.UserRepository;
 
-        var user = await repository.GetAsync(entity.Username, ct);
+        var user = await repository.GetAsync(entity.Email, ct);
         if (user is null)
         {
             Logger.LogInformation("UserWrite --> LoginAsync --> User not found");
@@ -70,12 +70,12 @@ public class UserReadService : IUserReadService
         }
 
         Logger.LogInformation("UserWrite --> LoginAsync --> End");
-        
+
         string token = JsonWebTokenProvider.Generate(user);
-        
+
         return token;
     }
-    
+
     private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
     {
         using (var hmac = new HMACSHA512(storedSalt))
@@ -89,10 +89,10 @@ public class UserReadService : IUserReadService
                 }
             }
         }
-        
+
         return true;
     }
-    
+
     ///<inheritdoc />
     public void Dispose()
     {

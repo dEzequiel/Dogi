@@ -3,9 +3,7 @@ using Application.Service.Abstraction.Write;
 using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
-using Crosscuting.Base.Exceptions;
 using Domain.Entities;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write;
@@ -27,31 +25,31 @@ public class UserRead : IUserWriteService
         UnitOfWork = unitOfWork;
         JsonWebTokenProvider = jsonWebTokenProvider;
     }
-    
+
     ///<inheritdoc />
-    public async Task<User> Register(UserData entity, CancellationToken ct = default)
+    public async Task<User> Register(UserDataRegister entity, CancellationToken ct = default)
     {
         Logger.LogInformation("UserWrite --> AddAsync --> Start");
 
         Guard.Against.Null(entity, nameof(entity));
-        Guard.Against.NullOrEmpty(entity.Username, nameof(entity.Username));
+        Guard.Against.NullOrEmpty(entity.Email, nameof(entity.Email));
         Guard.Against.NullOrEmpty(entity.Password, nameof(entity.Password));
 
         var repository = UnitOfWork.UserRepository;
-        
+
         HashPassword(entity.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
         var user = new User()
         {
-            Username = entity.Username,
+            Email = entity.Email,
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt
         };
-        
+
         await repository.AddAsync(user, ct);
 
         await UnitOfWork.CompleteAsync(ct);
-        
+
         Logger.LogInformation("UserWrite --> AddAsync --> End");
 
         return user;

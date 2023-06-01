@@ -12,7 +12,5 @@ public interface IUserWriteService : IApplicationServiceBase
     /// <param name="entity"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<User> Register(UserData entity, CancellationToken ct = default);
-
-    
+    Task<User> Register(UserDataRegister entity, CancellationToken ct = default);
 }

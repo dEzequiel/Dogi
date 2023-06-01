@@ -15,7 +15,7 @@ public class UserManager : IUserManager
     private readonly ILogger<UserManager> Logger;
     private readonly IMediator Mediator;
     private readonly IUnitOfWork UnitOfWork;
-    
+
     /// <summary>
     /// Constructor.
     /// </summary>
@@ -30,10 +30,10 @@ public class UserManager : IUserManager
     }
 
     ///<inheritdoc />
-    public async Task<User> Register(UserData user, CancellationToken ct = default)
+    public async Task<User> Register(UserDataRegister user, CancellationToken ct = default)
     {
         var userRepository = UnitOfWork.UserRepository;
-        var userExist = await userRepository.GetAsync(user.Username);
+        var userExist = await userRepository.GetAsync(user.Email);
         if (userExist is not null)
         {
             throw new DogiException("User with username already exist.");
@@ -41,18 +41,18 @@ public class UserManager : IUserManager
 
         var createdUser = await Mediator.Send(new RegisterUserRequest(user), ct);
         Guard.Against.Null(createdUser.Data);
-        
+
         return createdUser.Data;
     }
 
     ///<inheritdoc />
-    public async Task<string> Authenticate(UserData user, CancellationToken ct = default)
+    public async Task<string> Authenticate(UserDataRegister user, CancellationToken ct = default)
     {
         var result = await Mediator.Send(new AuthenticateUserRequest(user), ct);
 
         return result;
     }
-    
+
     public void Dispose()
     {
         UnitOfWork.Dispose();

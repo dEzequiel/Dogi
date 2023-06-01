@@ -8,13 +8,15 @@ namespace Domain.Entities;
 public class User : Entity
 {
     /// <summary>
-    /// Username.
+    /// Email
     /// </summary>
-    public string Username { get; set; }
+    public string Email { get; set; }
+
     /// <summary>
     /// Stores the hashed value of the user's password.
     /// </summary>
     public byte[] PasswordHash { get; set; }
+
     /// <summary>
     /// Added text.
     /// </summary>
@@ -27,20 +29,25 @@ public class User : Entity
     /// <param name="username"></param>
     /// <param name="passwordHash"></param>
     /// <param name="passwordSalt"></param>
-    public User(Guid id, string username, byte[] passwordHash, byte[] passwordSalt) : base(id)
+    public User(Guid id, string email, byte[] passwordHash, byte[] passwordSalt) : base(id)
     {
-        Username = username;
+        Email = email;
         PasswordHash = passwordHash;
         PasswordSalt = passwordSalt;
     }
+
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="id"></param>
-    public User(Guid id) : base(id) { }
+    public User(Guid id) : base(id)
+    {
+    }
+
     /// <summary>
     /// Constructor.
     /// </summary>
-    public User() : base(Guid.NewGuid()) { }
-
+    public User() : base(Guid.NewGuid())
+    {
+    }
 }

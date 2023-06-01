@@ -1,7 +1,4 @@
-﻿
-
-using Application.Service.Abstraction.Read;
-using Application.Service.Abstraction.Write;
+﻿using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Api.DTOs.Response;
@@ -15,15 +12,15 @@ namespace Application.Features.User.Commands;
 /// </summary>
 public class RegisterUserRequest : IRequest<ApiResponse<Domain.Entities.User>>
 {
-    public UserData UserData { get; private set; }
+    public UserDataRegister UserDataRegister { get; private set; }
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="userData"></param>
-    public RegisterUserRequest(UserData userData)
+    /// <param name="userDataRegister"></param>
+    public RegisterUserRequest(UserDataRegister userDataRegister)
     {
-        UserData = userData;
+        UserDataRegister = userDataRegister;
     }
 }
 
@@ -47,17 +44,18 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, A
     }
 
     ///<inheritdoc />
-    public async Task<ApiResponse<Domain.Entities.User>> Handle(RegisterUserRequest request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<Domain.Entities.User>> Handle(RegisterUserRequest request,
+        CancellationToken cancellationToken)
     {
         Logger.LogInformation("RegisterUserRequestHandler --> AddAsync --> Start");
-        
-        Guard.Against.Null(request, nameof(request));
-        Guard.Against.Null(request.UserData, nameof(request.UserData));
-        Guard.Against.Null(request.UserData.Password, nameof(request.UserData.Password));
-        Guard.Against.Null(request.UserData.Username, nameof(request.UserData.Username));
 
-        var result = await _userWriteService.Register(request.UserData, cancellationToken);
-        
+        Guard.Against.Null(request, nameof(request));
+        Guard.Against.Null(request.UserDataRegister, nameof(request.UserDataRegister));
+        Guard.Against.Null(request.UserDataRegister.Password, nameof(request.UserDataRegister.Password));
+        Guard.Against.Null(request.UserDataRegister.Email, nameof(request.UserDataRegister.Email));
+
+        var result = await _userWriteService.Register(request.UserDataRegister, cancellationToken);
+
         Logger.LogInformation("RegisterUserRequestHandler --> AddAsync --> End");
 
         return new ApiResponse<Domain.Entities.User>(result);

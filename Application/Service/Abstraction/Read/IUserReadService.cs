@@ -20,6 +20,5 @@ public interface IUserReadService : IApplicationServiceBase
     /// <param name="entity"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<string> Authenticate(UserData entity, CancellationToken ct = default);
+    Task<string> Authenticate(UserDataRegister entity, CancellationToken ct = default);
 }
-

@@ -3,12 +3,13 @@
 /// <summary>
 /// Represents user register data.
 /// </summary>
-public class UserData
+public class UserDataRegister
 {
     /// <summary>
     /// Username
     /// </summary>
-    public string Username { get; set; }
+    public string Email { get; set; }
+
     /// <summary>
     /// Password
     /// </summary>

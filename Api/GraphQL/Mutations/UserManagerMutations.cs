@@ -13,7 +13,7 @@ public class UserManagerMutations
 {
     private readonly IMediator Mediator;
     private readonly ILogger<UserManagerMutations> Logger;
-    
+
     /// <summary>
     /// Constructor.
     /// </summary>
@@ -24,8 +24,8 @@ public class UserManagerMutations
         Logger = logger;
         Mediator = mediator;
     }
-    
-    public async Task<User> Register([Service] ISender Mediator, UserData credentials)
+
+    public async Task<User> Register([Service] ISender Mediator, UserDataRegister credentials)
     {
         try
         {
@@ -39,7 +39,7 @@ public class UserManagerMutations
 
                 throw new DogiException(result.Message);
             }
-        
+
             Logger.LogInformation("UserManagerMutations --> Register --> End");
 
             return result.Data;
@@ -57,8 +57,8 @@ public class UserManagerMutations
             throw new DogiException(ex.Message);
         }
     }
-    
-    public async Task<UserWithJsonWebToken> Authenticate([Service] ISender Mediator, UserData credentials)
+
+    public async Task<UserWithJsonWebToken> Authenticate([Service] ISender Mediator, UserDataRegister credentials)
     {
         try
         {
@@ -68,7 +68,7 @@ public class UserManagerMutations
 
             return new UserWithJsonWebToken()
             {
-                Username = credentials.Username,
+                Username = credentials.Email,
                 Token = result
             };
         }

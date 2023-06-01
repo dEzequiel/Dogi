@@ -2,9 +2,9 @@
 
 namespace Api.GraphQL.InputObjectTypes;
 
-public class UserInput : InputObjectType<UserData>
+public class UserInput : InputObjectType<UserDataRegister>
 {
-    protected override void Configure(IInputObjectTypeDescriptor<UserData> descriptor)
+    protected override void Configure(IInputObjectTypeDescriptor<UserDataRegister> descriptor)
     {
     }
 }
