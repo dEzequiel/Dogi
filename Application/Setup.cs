@@ -23,7 +23,8 @@ namespace Application
             
 
             services.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-
+        
+            
             return services;
         }
     }

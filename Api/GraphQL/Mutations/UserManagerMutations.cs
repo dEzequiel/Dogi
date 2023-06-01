@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Api.GraphQL.Mutations;
 
+[AllowAnonymous]
 public class UserManagerMutations
 {
     private readonly IMediator Mediator;
@@ -23,8 +24,7 @@ public class UserManagerMutations
         Logger = logger;
         Mediator = mediator;
     }
-
-    [AllowAnonymous]
+    
     public async Task<User> Register([Service] ISender Mediator, UserData credentials)
     {
         try
@@ -57,7 +57,7 @@ public class UserManagerMutations
             throw new DogiException(ex.Message);
         }
     }
-
+    
     public async Task<UserWithJsonWebToken> Authenticate([Service] ISender Mediator, UserData credentials)
     {
         try

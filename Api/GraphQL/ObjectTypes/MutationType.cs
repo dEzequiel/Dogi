@@ -15,7 +15,8 @@ namespace Api.GraphQL.Types
         {
             descriptor.Field(f => f.RegisterAnimal)
                     .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
-                    .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default, default));
+                    .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default, 
+                        default, default));
 
 
 

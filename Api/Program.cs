@@ -40,6 +40,11 @@ builder.Services
     .AddMutationType<MutationType>();
 //.AddErrorFilter<ErrorFilter>();
 
+//////<summary>
+/// GraphQL Setup.
+/// </summary>
+builder.Services.AddHttpContextAccessor();
+
 // Database SqlServer connetion.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
