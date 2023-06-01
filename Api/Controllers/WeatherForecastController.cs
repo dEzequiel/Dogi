@@ -1,7 +1,10 @@
+using Infraestructure.Helpers;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -17,7 +20,7 @@ namespace Api.Controllers
         {
             _logger = logger;
         }
-
+        
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

@@ -3,6 +3,8 @@ using Api.GraphQL.Types;
 using Application;
 using Infraestructure;
 using Infraestructure.Context;
+using Infraestructure.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -17,6 +19,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 ///<summary>
+/// Layers configuration.
+/// </summary>
+builder.Services
+    .InitInfrastructure()
+    .InitApplication(builder.Configuration);
+
+//builder.Services.AddAuthorization();
+
+///<summary>
 /// GraphQL Setup.
 /// </summary>
 builder.Services
@@ -28,14 +39,6 @@ builder.Services
     .AddMutationType<MutationType>();
 //.AddErrorFilter<ErrorFilter>();
 
-
-///<summary>
-/// Layers configuration.
-/// </summary>
-builder.Services
-        .InitInfrastructure()
-        .InitApplication(builder.Configuration);
-
 // Database SqlServer connetion.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -46,7 +49,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
            .EnableDetailedErrors();
 });
 
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -54,7 +56,6 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
 }
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -65,9 +66,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+/// <summary>
+/// Call JWT Token validator for requests.
+/// <summary>
+app.UseMiddleware<JwtMiddleware>();
+
 app.MapControllers();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
