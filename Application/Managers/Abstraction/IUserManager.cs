@@ -20,5 +20,5 @@ public interface IUserManager : IApplicationServiceBase
     /// <param name="user"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<bool> Login(UserData user, CancellationToken ct = default);
+    Task<string> Authenticate(UserData user, CancellationToken ct = default);
 }

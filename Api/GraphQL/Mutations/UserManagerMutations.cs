@@ -1,4 +1,5 @@
-﻿using Application.Features.UserManager.Commands;
+﻿using Application.DTOs.UserManager;
+using Application.Features.UserManager.Commands;
 using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
@@ -8,8 +9,8 @@ namespace Api.GraphQL.Mutations;
 
 public class UserManagerMutations
 {
-    public ILogger<UserManagerMutations> Logger { get; set; } = null!;
-    public IMediator Mediator { get; set; } = null!;
+    private readonly IMediator Mediator;
+    private readonly ILogger<UserManagerMutations> Logger;
     
     /// <summary>
     /// Constructor.
@@ -55,15 +56,19 @@ public class UserManagerMutations
         }
     }
 
-    public async Task<bool> Login([Service] ISender Mediator, UserData credentials)
+    public async Task<UserWithJsonWebToken> Authenticate([Service] ISender Mediator, UserData credentials)
     {
         try
         {
             Logger.LogInformation("UserManagerMutations --> Login --> Start");
 
-            var result = await Mediator.Send(new LoginUserRequest(credentials));
-            
-            return result.Data;
+            var result = await Mediator.Send(new AuthenticateUserRequest(credentials));
+
+            return new UserWithJsonWebToken()
+            {
+                Username = credentials.Username,
+                Token = result
+            };
         }
         catch (DogiException ex)
         {

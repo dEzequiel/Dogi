@@ -46,11 +46,11 @@ public class UserManager : IUserManager
     }
 
     ///<inheritdoc />
-    public async Task<bool> Login(UserData user, CancellationToken ct = default)
+    public async Task<string> Authenticate(UserData user, CancellationToken ct = default)
     {
-        var result = await Mediator.Send(new LoginUserRequest(user), ct);
+        var result = await Mediator.Send(new AuthenticateUserRequest(user), ct);
 
-        return result.Data;
+        return result;
     }
     
     public void Dispose()

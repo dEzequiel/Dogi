@@ -10,7 +10,7 @@ namespace Application.Features.UserManager.Commands;
 /// <summary>
 /// User login request implementation.
 /// </summary>
-public class LoginUserRequest : IRequest<ApiResponse<bool>>
+public class LoginUserRequest : IRequest<string>
 {
     public UserData UserData { get; private set; }
 
@@ -27,7 +27,7 @@ public class LoginUserRequest : IRequest<ApiResponse<bool>>
 /// <summary>
 /// User login request handler implementation.
 /// </summary>
-public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, ApiResponse<bool>>
+public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, string>
 {
     private readonly ILogger<LoginUserRequestHandler> Logger;
     private readonly IUserManager UserManager;
@@ -44,16 +44,16 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, ApiResp
     }
 
     ///<inheritdoc />
-    public async Task<ApiResponse<bool>> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+    public async Task<string> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         Logger.LogInformation("LoginUserRequestHandler --> Handle --> Start");
         
         Guard.Against.Null(request, nameof(request));
 
-        var result = await UserManager.Login(request.UserData, cancellationToken);
+        var result = await UserManager.Authenticate(request.UserData, cancellationToken);
         
         Logger.LogInformation("LoginUserRequestHandler --> Handle --> End");
 
-        return new ApiResponse<bool>(result);
+        return result;
     }
 }

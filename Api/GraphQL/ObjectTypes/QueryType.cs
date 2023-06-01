@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
 using Api.GraphQL.GraphQLQueries;
 using Api.GraphQL.ObjectTypes;
+using Application.Service.Interfaces;
 using HotChocolate.Types.Pagination;
+using MediatR;
 
 namespace Api.GraphQL.GraphQLTypes
 {
@@ -14,16 +17,17 @@ namespace Api.GraphQL.GraphQLTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
-            descriptor.Field("GetAllMedicalRecordByStatus")
+            /*descriptor.Field("GetAllMedicalRecordByStatus")
                 .Type<ListType<MedicalRecordType>>()
                 .Argument("status", a => a.Type<NonNullType<IntType>>())
-                .ResolveWith<VeterinaryManagerQueries>(q => 
+                .Authorize()
+                .ResolveWith<VeterinaryManagerQueries>(q =>
                     q.GetAllByStatus(default, default, default));
             
             descriptor.Field("GetAllMedicalRecord")
                 .Type<ListType<MedicalRecordType>>()
                 .ResolveWith<VeterinaryManagerQueries>(q => 
-                    q.GetAllAsync(default, default));
+                    q.GetAllAsync(default, default));*/
             
             descriptor.Field(q => q.ReceptionDocumentId)
                 .Type<ReceptionDocumentType>()

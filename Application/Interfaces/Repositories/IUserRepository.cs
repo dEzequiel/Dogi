@@ -17,4 +17,12 @@ public interface IUserRepository
     /// </summary>
     /// <returns></returns>
     Task<User> GetAsync(string username, CancellationToken ct = default);
+
+    /// <summary>
+    /// Get username by id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<User> GetAsync(Guid id, CancellationToken ct = default);
 }

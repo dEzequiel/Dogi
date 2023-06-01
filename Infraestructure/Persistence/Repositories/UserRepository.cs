@@ -31,4 +31,10 @@ public class UserRepository : IUserRepository
     {
         return await Users.FirstOrDefaultAsync(x => x.Username == username);
     }
+
+    ///<inheritdoc />
+    public async Task<User> GetAsync(Guid id, CancellationToken ct = default)
+    {
+        return await Users.FirstOrDefaultAsync(x => x.Id == id);
+    }
 }

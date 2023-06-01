@@ -1,5 +1,6 @@
 ﻿using Application.Features.MedicalRecord.Queries;
 using Domain.Entities;
+using HotChocolate.Authorization;
 using MediatR;
 
 namespace Api.GraphQL.GraphQLQueries;
@@ -31,6 +32,7 @@ public class VeterinaryManagerQueries
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
+    [Authorize]
     public async Task<IEnumerable<MedicalRecord>> GetAllByStatus([Service] ISender Mediator, int status,
         CancellationToken ct = default)
     {

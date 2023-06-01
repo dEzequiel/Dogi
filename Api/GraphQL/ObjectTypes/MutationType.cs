@@ -65,7 +65,7 @@ namespace Api.GraphQL.Types
             
             descriptor.Field("LoginUser")
                 .Argument("credentials", arg => arg.Type<UserInput>())
-                .ResolveWith<UserManagerMutations>(v => v.Login(default, default));
+                .ResolveWith<UserManagerMutations>(v => v.Authenticate(default, default));
             #endregion
 
         }

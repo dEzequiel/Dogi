@@ -3,6 +3,7 @@ using Application.Managers.Abstraction;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Application.Service.Interfaces;
 
 namespace Application
 {
@@ -19,6 +20,7 @@ namespace Application
             services.AddTransient<IWelcomeManager, WelcomeManager>();
             services.AddTransient<IVeterinaryManager, VeterinaryManager>();
             services.AddTransient<IUserManager, UserManager>();
+            
 
             services.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 
