@@ -2,6 +2,7 @@
 using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
 using Api.GraphQL.Mutations;
 using Api.GraphQL.RootMutations;
+using Infraestructure.Helpers;
 
 namespace Api.GraphQL.Types
 {
@@ -9,6 +10,7 @@ namespace Api.GraphQL.Types
     public class MutationType : ObjectType<Mutation>
     {
         ///<inheritdoc/>
+        [Authorize]
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
             descriptor.Field(f => f.RegisterAnimal)
@@ -62,10 +64,11 @@ namespace Api.GraphQL.Types
             descriptor.Field("RegisterUser")
                 .Argument("credentials", arg => arg.Type<UserInput>())
                 .ResolveWith<UserManagerMutations>(v => v.Register(default, default));
-            
+
             descriptor.Field("LoginUser")
                 .Argument("credentials", arg => arg.Type<UserInput>())
                 .ResolveWith<UserManagerMutations>(v => v.Authenticate(default, default));
+
             #endregion
 
         }

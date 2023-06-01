@@ -5,6 +5,7 @@ using Api.GraphQL.ObjectTypes;
 using Application.Service.Interfaces;
 using HotChocolate.Types.Pagination;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.GraphQL.GraphQLTypes
 {
@@ -17,6 +18,8 @@ namespace Api.GraphQL.GraphQLTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
+            
+            
             /*descriptor.Field("GetAllMedicalRecordByStatus")
                 .Type<ListType<MedicalRecordType>>()
                 .Argument("status", a => a.Type<NonNullType<IntType>>())

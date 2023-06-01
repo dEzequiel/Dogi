@@ -29,7 +29,7 @@ public class UserRead : IUserWriteService
     }
     
     ///<inheritdoc />
-    public async Task<User> AddAsync(UserData entity, CancellationToken ct = default)
+    public async Task<User> Register(UserData entity, CancellationToken ct = default)
     {
         Logger.LogInformation("UserWrite --> AddAsync --> Start");
 

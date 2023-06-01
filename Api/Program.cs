@@ -25,13 +25,14 @@ builder.Services
     .InitInfrastructure()
     .InitApplication(builder.Configuration);
 
-//builder.Services.AddAuthorization();
+builder.Services.AddAuthorization();
 
 ///<summary>
 /// GraphQL Setup.
 /// </summary>
 builder.Services
     .AddGraphQLServer()
+    .AddAuthorization()
     .AddApiTypes()
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
     .RegisterDbContext<ApplicationDbContext>()

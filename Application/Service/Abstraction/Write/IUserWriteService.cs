@@ -12,7 +12,7 @@ public interface IUserWriteService : IApplicationServiceBase
     /// <param name="entity"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<User> AddAsync(UserData entity, CancellationToken ct = default);
+    Task<User> Register(UserData entity, CancellationToken ct = default);
 
     
 }

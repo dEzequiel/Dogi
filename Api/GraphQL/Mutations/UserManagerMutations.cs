@@ -4,6 +4,7 @@ using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.GraphQL.Mutations;
 
@@ -23,6 +24,7 @@ public class UserManagerMutations
         Mediator = mediator;
     }
 
+    [AllowAnonymous]
     public async Task<User> Register([Service] ISender Mediator, UserData credentials)
     {
         try

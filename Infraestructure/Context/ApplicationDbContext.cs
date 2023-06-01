@@ -26,6 +26,7 @@ namespace Infraestructure.Context
         public DbSet<Vaccine> Vaccines { get; set; } = null!;
         public DbSet<VaccinationCard> VaccinationCards { get; set; } = null!;
         public DbSet<VaccinationCardVaccine> VaccinationCardVaccines { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
 
 
         // Support Tables
@@ -55,6 +56,7 @@ namespace Infraestructure.Context
             new VaccineTypeConfiguration().Configure(modelBuilder.Entity<Vaccine>());
             new VaccinationCardVaccineTypeConfiguration().Configure(modelBuilder.Entity<VaccinationCardVaccine>());
             new VaccinationCardTypeConfiguration().Configure(modelBuilder.Entity<VaccinationCard>());
+            new UserTypeConfiguration().Configure(modelBuilder.Entity<User>());
         }
     }
 }
