@@ -4,7 +4,6 @@ using System.Text.Json;
 using Application.Service.Abstraction.Read;
 using Crosscuting.Base.Exceptions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Infraestructure.Helpers;
@@ -12,7 +11,6 @@ namespace Infraestructure.Helpers;
 public class JwtMiddleware
 {
     private readonly RequestDelegate Next;
-    private readonly ILogger<JwtMiddleware> Logger;
 
     private const string TOKEN_NOT_VALID = "TOKEN IS IN INVALID STATE";
     private const string UNAUTHORIZED = "UNAUTHORIZED";
@@ -23,38 +21,46 @@ public class JwtMiddleware
     /// Constructor.
     /// </summary>
     /// <param name="next"></param>
-    public JwtMiddleware(RequestDelegate next, ILogger<JwtMiddleware> logger)
+    public JwtMiddleware(RequestDelegate next)
     {
         Next = next;
-        Logger = logger;
     }
+
+    private async Task TokenNotPresent(HttpResponse response)
+    {
+        response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+        response.ContentType = "application/json";
+
+        var responseBody = JsonSerializer.Serialize(new
+        {
+            name = TOKEN_NOT_PRESENT,
+            statusCode = StatusCodes.Status422UnprocessableEntity,
+            statusText = TOKEN_NOT_PRESENT,
+            bodyText = ""
+        });
+
+        await response.WriteAsync(responseBody);
+    }
+
 
     public async Task Invoke(HttpContext context, IUserReadService userService)
     {
-        Logger.LogInformation("JwtMiddleware --> Invoke --> Start");
+        if (context is null)
+        {
+            var httpResponse = new DefaultHttpContext().Response;
+            await TokenNotPresent(httpResponse);
+            return;
+        }
 
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ");
 
-        if (token.Count() < 2 || token.Count() > 2)
+        if (token is null || token.Length < 2 || token.Length > 2)
         {
-            Logger.LogInformation("JwtMiddleware --> Invoke --> Token not present");
-
-            context.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            context.Response.ContentType = "application/json";
-
-            var response = new
-            {
-                name = TOKEN_NOT_PRESENT,
-                statusCode = StatusCodes.Status422UnprocessableEntity,
-                statusText = TOKEN_NOT_PRESENT,
-                bodyText = ""
-            };
-
-            var responseBody = JsonSerializer.Serialize(response);
-            await context.Response.WriteAsync(responseBody);
-
+            var httpResponse = new DefaultHttpContext().Response;
+            await TokenNotPresent(httpResponse);
             return;
         }
+
 
         if (token != null)
         {
@@ -62,8 +68,6 @@ public class JwtMiddleware
         }
         else
         {
-            Logger.LogInformation("JwtMiddleware --> Invoke --> Unauthorized");
-
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             context.Response.ContentType = "application/json";
 
@@ -77,23 +81,18 @@ public class JwtMiddleware
 
             var responseBody = JsonSerializer.Serialize(response);
             await context.Response.WriteAsync(responseBody);
-
             return;
         }
-
-
-        Logger.LogInformation("JwtMiddleware --> Invoke --> End");
 
         // Pass request to next endpoint or middleware.
         await Next(context);
     }
 
+
     private async Task attachUserToContext(HttpContext context, IUserReadService userService, string token)
     {
         try
         {
-            Logger.LogInformation("JwtMiddleware --> attachUserToContext --> Start");
-
             // Token handler to validate jwt.
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authentication");
@@ -111,15 +110,11 @@ public class JwtMiddleware
             // Get JWT user identifier.
             var userId = Guid.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
-            Logger.LogInformation("JwtMiddleware --> attachUserToContext --> End");
-
             // Attach user to context on successful JWT validation
             context.Items["User"] = await userService.GetByIdAsync(userId);
         }
         catch
         {
-            Logger.LogInformation("JwtMiddleware --> attachUserToContext --> Error --> Invalid token");
-
             throw new UnauthorizedException(TOKEN_NOT_VALID);
         }
     }
