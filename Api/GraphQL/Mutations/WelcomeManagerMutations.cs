@@ -2,6 +2,7 @@
 using Application.Features.WelcomeManagerFeature.Command;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
+using Domain.Entities;
 using Infraestructure.Helpers;
 using MediatR;
 
@@ -41,7 +42,7 @@ namespace Api.GraphQL.Mutations
                 Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> Start");
 
                 var result = await Mediator.Send(new InsertRegisterInformationRequest(input,
-                    GetAdminData()));
+                    GetAdminData(httpContextAccessor)));
 
                 Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> End");
 
@@ -64,12 +65,13 @@ namespace Api.GraphQL.Mutations
         /// Get current user information.
         /// </summary>
         /// <returns>Object representing user information.</returns>
-        private AdminData GetAdminData()
+        private AdminData GetAdminData(IHttpContextAccessor context)
         {
+            var user = (User)context.HttpContext.Items["User"];
             return new AdminData()
             {
-                Id = Guid.NewGuid(),
-                Email = "test"
+                Id = Guid.Parse(user.Id.ToString()),
+                Email = user.Email
             };
         }
     }
