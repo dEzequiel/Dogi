@@ -6,4 +6,5 @@
 public enum Roles
 {
     Administrator = 1,
+    Veterinary = 2
 }
