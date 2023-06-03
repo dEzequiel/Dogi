@@ -1,9 +1,11 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs.UserManager;
+using Application.Features.Person.Commands;
+using Application.Features.User.Commands;
+using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities.Authorization;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -29,7 +31,8 @@ public class UserManager : IUserManager
     }
 
     ///<inheritdoc />
-    public async Task<User> Register(UserDataRegister user, CancellationToken ct = default)
+    public async Task<RegisteredUserWithPersonCredentials> Register(UserDataRegister user,
+        CancellationToken ct = default)
     {
         var userRepository = UnitOfWork.UserRepository;
         var userExist = await userRepository.GetAsync(user.Email);
@@ -39,9 +42,19 @@ public class UserManager : IUserManager
         }
 
         var createdUser = await Mediator.Send(new RegisterUserRequest(user), ct);
-        Guard.Against.Null(createdUser.Data);
 
-        return createdUser.Data;
+        user.Person.User = createdUser.Data;
+
+        var createdPerson = await Mediator.Send(new InsertPersonRequest(user.Person), ct);
+
+        Guard.Against.Null(createdUser.Data);
+        Guard.Against.Null(createdPerson.Data);
+
+        return new RegisteredUserWithPersonCredentials()
+        {
+            Email = createdUser.Data.Email,
+            Person = createdPerson.Data
+        };
     }
 
     ///<inheritdoc />

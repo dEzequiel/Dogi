@@ -1,15 +1,15 @@
-﻿using Application.Managers.Abstraction;
+﻿using Application.DTOs.UserManager;
+using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Api.DTOs.Response;
-using Domain.Entities.Authorization;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
 /// User registration request implementation.
 /// </summary>
-public class RegisterUserRequest : IRequest<ApiResponse<User>>
+public class RegisterUserWithPersonRequest : IRequest<ApiResponse<RegisteredUserWithPersonCredentials>>
 {
     public UserDataRegister UserDataRegister { get; private set; }
 
@@ -17,7 +17,7 @@ public class RegisterUserRequest : IRequest<ApiResponse<User>>
     /// Constructor.
     /// </summary>
     /// <param name="userData"></param>
-    public RegisterUserRequest(UserDataRegister userDataRegister)
+    public RegisterUserWithPersonRequest(UserDataRegister userDataRegister)
     {
         UserDataRegister = userDataRegister;
     }
@@ -26,7 +26,8 @@ public class RegisterUserRequest : IRequest<ApiResponse<User>>
 /// <summary>
 /// User registration request handler implementation.
 /// </summary>
-public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, ApiResponse<User>>
+public class RegisterUserRequestHandler : IRequestHandler<RegisterUserWithPersonRequest,
+    ApiResponse<RegisteredUserWithPersonCredentials>>
 {
     private readonly ILogger<RegisterUserRequestHandler> Logger;
     private readonly IUserManager UserManager;
@@ -42,17 +43,18 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, A
         UserManager = userManager;
     }
 
-    public async Task<ApiResponse<User>> Handle(RegisterUserRequest request,
+    public async Task<ApiResponse<RegisteredUserWithPersonCredentials>> Handle(
+        RegisterUserWithPersonRequest withPersonRequest,
         CancellationToken cancellationToken)
     {
         Logger.LogInformation("RegisterUserRequestHandler --> Handle --> Start");
 
-        Guard.Against.Null(request, nameof(request));
+        Guard.Against.Null(withPersonRequest, nameof(withPersonRequest));
 
-        var result = await UserManager.Register(request.UserDataRegister, cancellationToken);
+        var result = await UserManager.Register(withPersonRequest.UserDataRegister, cancellationToken);
 
         Logger.LogInformation("RegisterUserRequestHandler --> Handle --> End");
 
-        return new ApiResponse<User>(result);
+        return new ApiResponse<RegisteredUserWithPersonCredentials>(result);
     }
 }

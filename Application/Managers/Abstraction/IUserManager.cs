@@ -1,6 +1,6 @@
-﻿using Crosscuting.Api;
+﻿using Application.DTOs.UserManager;
+using Crosscuting.Api;
 using Crosscuting.Base.Interfaces;
-using Domain.Entities.Authorization;
 
 namespace Application.Managers.Abstraction;
 
@@ -12,7 +12,7 @@ public interface IUserManager : IApplicationServiceBase
     /// <param name="user"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<User> Register(UserDataRegister user, CancellationToken ct = default);
+    Task<RegisteredUserWithPersonCredentials> Register(UserDataRegister user, CancellationToken ct = default);
 
     /// <summary>
     /// Login user.

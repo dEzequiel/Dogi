@@ -19,7 +19,7 @@ namespace Api.GraphQL.InputObjectTypes.Shelter
                 .Type<AnimalChipInput>();
 
             descriptor.Field(f => f.Person)
-                .Type<PersonInput>();
+                .Type<PersonInputType>();
         }
     }
 }

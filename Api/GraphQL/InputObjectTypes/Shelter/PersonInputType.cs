@@ -2,7 +2,7 @@ using Domain.Entities.Shelter;
 
 namespace Api.GraphQL.InputObjectTypes.Shelter
 {
-    public class PersonInput : InputObjectType<Person>
+    public class PersonInputType : InputObjectType<Person>
     {
         protected override void Configure(IInputObjectTypeDescriptor<Person> descriptor)
         {
@@ -29,6 +29,10 @@ namespace Api.GraphQL.InputObjectTypes.Shelter
             descriptor.Ignore(f => f.IsBan);
             descriptor.Ignore(f => f.Created);
             descriptor.Ignore(f => f.LastModified);
+            descriptor.Ignore(f => f.User);
+            descriptor.Ignore(f => f.UserId);
+            descriptor.Ignore(f => f.Bans);
+            descriptor.Ignore(f => f.AnimalChip);
         }
     }
 }

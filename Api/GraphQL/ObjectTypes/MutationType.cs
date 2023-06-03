@@ -66,11 +66,11 @@ namespace Api.GraphQL.ObjectTypes
             #region "USER MUTATIONS"
 
             descriptor.Field("RegisterUser")
-                .Argument("credentials", arg => arg.Type<UserInput>())
+                .Argument("credentials", arg => arg.Type<UserInputType>())
                 .ResolveWith<UserManagerMutations>(v => v.Register(default, default));
 
             descriptor.Field("LoginUser")
-                .Argument("credentials", arg => arg.Type<UserInput>())
+                .Argument("credentials", arg => arg.Type<UserInputType>())
                 .ResolveWith<UserManagerMutations>(v => v.Authenticate(default, default));
 
             #endregion

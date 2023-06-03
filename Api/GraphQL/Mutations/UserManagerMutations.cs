@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.UserManager;
 using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 
@@ -24,13 +23,14 @@ public class UserManagerMutations
         Mediator = mediator;
     }
 
-    public async Task<User> Register([Service] ISender Mediator, UserDataRegister credentials)
+    public async Task<RegisteredUserWithPersonCredentials> Register([Service] ISender Mediator,
+        UserDataRegister credentials)
     {
         try
         {
             Logger.LogInformation("UserManagerMutations --> Register --> Start");
 
-            var result = await Mediator.Send(new RegisterUserRequest(credentials));
+            var result = await Mediator.Send(new RegisterUserWithPersonRequest(credentials));
 
             if (result.Data is null)
             {
