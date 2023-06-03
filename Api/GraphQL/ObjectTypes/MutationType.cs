@@ -1,12 +1,13 @@
-﻿using Api.GraphQL.InputObjectTypes;
+﻿using Api.GraphQL.InputObjectTypes.Authorization;
+using Api.GraphQL.InputObjectTypes.Shelter;
+using Api.GraphQL.InputObjectTypes.Veterinary;
 using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
 using Api.GraphQL.Middlewares;
 using Api.GraphQL.Mutations;
-using Api.GraphQL.RootMutations;
-using Domain.Enums;
+using Domain.Enums.Authorization;
 using HotChocolate.Authorization;
 
-namespace Api.GraphQL.Types
+namespace Api.GraphQL.ObjectTypes
 {
     /// <inheritdoc />
     public class MutationType : ObjectType<Mutation>
@@ -14,7 +15,7 @@ namespace Api.GraphQL.Types
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
-            descriptor.Field(f => f.RegisterAnimal)
+            descriptor.Field("RegisterAnimal")
                 .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                 .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default,
                     default, default))
@@ -27,19 +28,19 @@ namespace Api.GraphQL.Types
 
             #region "VETERINARY MANAGER MUTATIONS"
 
-            descriptor.Field(f => f.CreateMedicalRecord)
+            descriptor.Field("CreateMedicalRecord")
                 .Argument("individualProceedingId", arg => arg.Type<NonNullType<UuidType>>())
                 .Argument("medicalRecord", arg => arg.Type<NonNullType<MedicalRecordInput>>())
                 .Argument("vaccinesIds", arg => arg.Type<ListType<UuidType>>())
                 .ResolveWith<VeterinaryManagerMutations>(q =>
                     q.CreateMedicalRecord(default, default, default, default));
 
-            descriptor.Field(f => f.CheckMedicalRecord)
+            descriptor.Field("CheckMedicalRecord")
                 .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
                 .Argument("observations", arg => arg.Type<StringType>())
                 .ResolveWith<VeterinaryManagerMutations>(q => q.CheckMedicalRecord(default, default, default));
 
-            descriptor.Field(f => f.CloseMedicalRecord)
+            descriptor.Field("CloseMedicalRecord")
                 .Argument("medicalRecordId", arg => arg.Type<NonNullType<UuidType>>())
                 .Argument("conclusions", arg => arg.Type<NonNullType<StringType>>())
                 .ResolveWith<VeterinaryManagerMutations>(q => q.CloseMedicalRecord(default, default, default));
@@ -48,7 +49,7 @@ namespace Api.GraphQL.Types
             //    .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
             //    .ResolveWith<VeterinaryManagerMutations>(v => v.AssignVaccine(default, default));
 
-            descriptor.Field(f => f.Vaccine)
+            descriptor.Field("Vaccine")
                 .Argument("input", arg => arg.Type<VaccinationCardWithVaccineCredentialsInput>())
                 .ResolveWith<VeterinaryManagerMutations>(v => v.Vaccine(default, default));
 
@@ -56,7 +57,7 @@ namespace Api.GraphQL.Types
 
             #region "VACCINE MUTATIONS"
 
-            descriptor.Field(f => f.AddVaccine)
+            descriptor.Field("AddVaccine")
                 .Argument("input", arg => arg.Type<ListType<VaccineInput>>())
                 .ResolveWith<VaccineMutations>(q => q.AddVaccine(default, default));
 

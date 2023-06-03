@@ -3,11 +3,6 @@ using Application.Service.Abstraction.Read;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs.Response;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test.Utils.Attributes;
 
 namespace Test.Application.Features.IndividualProceedingStatus.Queries
@@ -26,10 +21,9 @@ namespace Test.Application.Features.IndividualProceedingStatus.Queries
 
         [Theory]
         [AutoMoqData]
-
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IIndividualProceedingStatusReadService> individualProceedingStatusReadMock,
-            Domain.Support.IndividualProceedingStatus statusForGet,
+            Domain.Entities.Shelter.IndividualProceedingStatus statusForGet,
             GetIndividualProceedingStatusByIdRequest request,
             GetIndividualProceedingStatusByIdRequestHandler handler)
         {
@@ -41,7 +35,7 @@ namespace Test.Application.Features.IndividualProceedingStatus.Queries
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Support.IndividualProceedingStatus>>(result);
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.IndividualProceedingStatus>>(result);
             individualProceedingStatusReadMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
     }

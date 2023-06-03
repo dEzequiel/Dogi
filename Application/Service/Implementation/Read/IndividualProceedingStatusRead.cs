@@ -1,13 +1,8 @@
-﻿using Application.Service.Abstraction.Read;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
-using Domain.Support;
+using Domain.Entities.Shelter;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Service.Implementation.Read
 {

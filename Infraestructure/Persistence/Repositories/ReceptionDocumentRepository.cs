@@ -1,14 +1,10 @@
-﻿
-using Domain.Entities;
+﻿using System.Linq.Expressions;
+using Application.Service.Interfaces;
+using Crosscuting.Api.DTOs;
+using Crosscuting.Base.Exceptions;
+using Domain.Entities.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using Application.Service.Interfaces;
-using Crosscuting.Api.DTOs.Response;
-using Azure.Core;
-using Crosscuting.Base.Exceptions;
-using MediatR;
-using Crosscuting.Api.DTOs;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -18,6 +14,7 @@ namespace Infraestructure.Persistence.Repositories
         /// Attributes.
         /// </summary>
         private const string RECEPTION_DOCUMENT_NOT_FOUND = "ReceptionDocument with id {0} not found.";
+
         protected IQueryable<ReceptionDocument> _receptions;
         protected DbSet<ReceptionDocument> _receptionsAll;
 
@@ -35,7 +32,6 @@ namespace Infraestructure.Persistence.Repositories
         public async Task AddAsync(ReceptionDocument entity)
         {
             await _receptionsAll.AddAsync(entity);
-
         }
 
         /// <inheritdoc/>
@@ -57,11 +53,11 @@ namespace Infraestructure.Persistence.Repositories
         public async Task<IEnumerable<ReceptionDocument>> GetAllAsync(CancellationToken ct = default)
         {
             return await _receptions.AsNoTracking().ToListAsync(ct);
-
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipPossessionAsync(bool? hasChip, CancellationToken ct = default)
+        public async Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipPossessionAsync(bool? hasChip,
+            CancellationToken ct = default)
         {
             return await _receptions.Where(x => x.HasChip == hasChip).AsNoTracking().ToListAsync(ct);
         }

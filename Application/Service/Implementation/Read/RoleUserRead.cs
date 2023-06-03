@@ -1,5 +1,5 @@
-﻿using Application.Service.Abstraction.Read;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Read;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Read;

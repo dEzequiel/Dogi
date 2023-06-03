@@ -1,4 +1,6 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Authorization;
+using Domain.Entities.Shelter;
 using Domain.Support;
 using Infraestructure.EntityFrameworkConfiguration;
 using Microsoft.EntityFrameworkCore;

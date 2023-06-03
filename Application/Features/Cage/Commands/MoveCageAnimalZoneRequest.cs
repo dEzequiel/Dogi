@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Cage.Commands
 {
-    public class MoveCageAnimalZoneRequest : IRequest<ApiResponse<Domain.Entities.Cage>>
+    public class MoveCageAnimalZoneRequest : IRequest<ApiResponse<Domain.Entities.Shelter.Cage>>
     {
         public Guid CageId { get; private set; }
         public int AnimalZoneId { get; private set; }
@@ -28,7 +28,7 @@ namespace Application.Features.Cage.Commands
     }
 
     public class MoveCageAnimalZoneRequestHandler : IRequestHandler<MoveCageAnimalZoneRequest,
-        ApiResponse<Domain.Entities.Cage>>
+        ApiResponse<Domain.Entities.Shelter.Cage>>
     {
         private readonly ILogger<MoveCageAnimalZoneRequestHandler> Logger;
         private readonly ICageWriteService CageWrite;
@@ -38,14 +38,16 @@ namespace Application.Features.Cage.Commands
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="cageWrite"></param>
-        public MoveCageAnimalZoneRequestHandler(ILogger<MoveCageAnimalZoneRequestHandler> logger, ICageWriteService cageWrite)
+        public MoveCageAnimalZoneRequestHandler(ILogger<MoveCageAnimalZoneRequestHandler> logger,
+            ICageWriteService cageWrite)
         {
             Logger = logger;
             CageWrite = cageWrite;
         }
 
         ///<inheritdoc/>
-        public async Task<ApiResponse<Domain.Entities.Cage>> Handle(MoveCageAnimalZoneRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Domain.Entities.Shelter.Cage>> Handle(MoveCageAnimalZoneRequest request,
+            CancellationToken cancellationToken)
         {
             Logger.LogInformation("MoveCageAnimalZoneRequestHandler --> UpdateAnimalZone --> Start");
 
@@ -53,12 +55,12 @@ namespace Application.Features.Cage.Commands
             Guard.Against.NullOrEmpty(request.CageId, nameof(request.CageId));
             Guard.Against.Null(request.AnimalZoneId, nameof(request.AnimalZoneId));
 
-            var result = await CageWrite.MoveCageAnimalZoneAsync(request.CageId, request.AnimalZoneId, request.Admin, cancellationToken);
+            var result = await CageWrite.MoveCageAnimalZoneAsync(request.CageId, request.AnimalZoneId, request.Admin,
+                cancellationToken);
 
             Logger.LogInformation("MoveCageAnimalZoneRequestHandler --> UpdateAnimalZone --> End");
 
-            return new ApiResponse<Domain.Entities.Cage>(result);
-
+            return new ApiResponse<Domain.Entities.Shelter.Cage>(result);
         }
     }
 }

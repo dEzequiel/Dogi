@@ -1,5 +1,5 @@
 ﻿using Application.Service.Interfaces;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 
 namespace Application.Interfaces.Repositories
 {

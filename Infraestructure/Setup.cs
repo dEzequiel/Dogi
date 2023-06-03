@@ -1,4 +1,4 @@
-﻿using Application.Service.Interfaces;
+﻿using Application.Interfaces;
 using Infraestructure.Authentication;
 using Infraestructure.Persistence.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;

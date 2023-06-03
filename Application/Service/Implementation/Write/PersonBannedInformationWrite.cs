@@ -1,8 +1,8 @@
-﻿using Application.Service.Abstraction.Write;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
@@ -24,7 +24,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<PersonBannedInformation> AddAsync(PersonBannedInformation entity, AdminData admin, CancellationToken ct = default)
+        public async Task<PersonBannedInformation> AddAsync(PersonBannedInformation entity, AdminData admin,
+            CancellationToken ct = default)
         {
             Logger.LogInformation("PersonBannedInformationWrite --> AddAsync --> Start");
 

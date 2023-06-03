@@ -1,5 +1,4 @@
-using Api.GraphQL.GraphQLTypes;
-using Api.GraphQL.Types;
+using Api.GraphQL.ObjectTypes;
 using Application;
 using Infraestructure;
 using Infraestructure.Authentication;

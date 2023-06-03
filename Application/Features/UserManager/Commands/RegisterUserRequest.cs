@@ -2,15 +2,14 @@
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Api.DTOs.Response;
+using Domain.Entities.Authorization;
 using MediatR;
 using Microsoft.Extensions.Logging;
-
-namespace Application.Features.UserManager.Commands;
 
 /// <summary>
 /// User registration request implementation.
 /// </summary>
-public class RegisterUserRequest : IRequest<ApiResponse<Domain.Entities.User>>
+public class RegisterUserRequest : IRequest<ApiResponse<User>>
 {
     public UserDataRegister UserDataRegister { get; private set; }
 
@@ -27,7 +26,7 @@ public class RegisterUserRequest : IRequest<ApiResponse<Domain.Entities.User>>
 /// <summary>
 /// User registration request handler implementation.
 /// </summary>
-public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, ApiResponse<Domain.Entities.User>>
+public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, ApiResponse<User>>
 {
     private readonly ILogger<RegisterUserRequestHandler> Logger;
     private readonly IUserManager UserManager;
@@ -43,7 +42,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, A
         UserManager = userManager;
     }
 
-    public async Task<ApiResponse<Domain.Entities.User>> Handle(RegisterUserRequest request,
+    public async Task<ApiResponse<User>> Handle(RegisterUserRequest request,
         CancellationToken cancellationToken)
     {
         Logger.LogInformation("RegisterUserRequestHandler --> Handle --> Start");
@@ -54,6 +53,6 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, A
 
         Logger.LogInformation("RegisterUserRequestHandler --> Handle --> End");
 
-        return new ApiResponse<Domain.Entities.User>(result);
+        return new ApiResponse<User>(result);
     }
 }

@@ -12,32 +12,36 @@
 
 
 	<ItemGroup>
-	<PackageReference Include="GraphQL" Version="7.4.0" />
-	<PackageReference Include="HotChocolate.AspNetCore" Version="13.0.5" />
-	<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.1.0" />
-	<PackageReference Include="HotChocolate.Data" Version="13.0.5" />
-	<PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.0.5" />
-	<PackageReference Include="HotChocolate.Types.Analyzers" Version="13.0.5" />
-	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.5" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-	<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
-	<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-  </ItemGroup>
+		<PackageReference Include="GraphQL" Version="7.4.0"/>
+		<PackageReference Include="HotChocolate.AspNetCore" Version="13.0.5"/>
+		<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.1.0"/>
+		<PackageReference Include="HotChocolate.Data" Version="13.0.5"/>
+		<PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.0.5"/>
+		<PackageReference Include="HotChocolate.Types.Analyzers" Version="13.0.5"/>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.5"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0"/>
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0"/>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2"/>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3"/>
+	</ItemGroup>
 
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
 	</PropertyGroup>
 
-  <ItemGroup>
-	<ProjectReference Include="..\Application\Application.csproj" />
-	<ProjectReference Include="..\Infraestructure\Infraestructure.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Application\Application.csproj"/>
+		<ProjectReference Include="..\Infraestructure\Infraestructure.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="GraphQL\ObjectTypes\Authorization"/>
+	</ItemGroup>
 
 </Project>

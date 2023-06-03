@@ -1,7 +1,6 @@
-﻿using Crosscuting.Api;
-using Domain.Entities;
+﻿using Domain.Entities.Authorization;
 
-namespace Application.Service.Interfaces;
+namespace Application.Interfaces;
 
 public interface IJsonWebTokenProvider
 {

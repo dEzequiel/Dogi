@@ -1,8 +1,7 @@
 ﻿using Application.DTOs.UserManager;
-using Application.Features.UserManager.Commands;
 using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities;
+using Domain.Entities.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 

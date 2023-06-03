@@ -1,9 +1,9 @@
-﻿using Application.Service.Abstraction.Read;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Read;
 using Application.Service.Abstraction.Write;
-using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
@@ -19,7 +19,8 @@ namespace Application.Service.Implementation.Write
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="unitOfWork"></param>
-        public CageWrite(ILogger<CageWrite> logger, IUnitOfWork unitOfWork, IAnimalZoneReadService animalZoneReadService)
+        public CageWrite(ILogger<CageWrite> logger, IUnitOfWork unitOfWork,
+            IAnimalZoneReadService animalZoneReadService)
         {
             Logger = logger;
             UnitOfWork = unitOfWork;
@@ -45,7 +46,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<Cage> MoveCageAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin, CancellationToken cancellationToken)
+        public async Task<Cage> MoveCageAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin,
+            CancellationToken cancellationToken)
         {
             Logger.LogInformation($"CageWrite --> MoveCageAnimalZoneAsync({id}) --> Start");
 
@@ -63,7 +65,6 @@ namespace Application.Service.Implementation.Write
             Logger.LogInformation("CageWrite --> MoveCageAnimalZoneAsync --> End");
 
             return cage;
-
         }
 
         ///<inheritdoc/>
@@ -71,7 +72,5 @@ namespace Application.Service.Implementation.Write
         {
             UnitOfWork.Dispose();
         }
-
-
     }
 }

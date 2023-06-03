@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using Application.Service.Implementation.Write;
-using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Moq;
@@ -23,9 +23,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<Domain.Entities.MedicalRecord>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<Domain.Entities.MedicalRecord>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act
@@ -61,10 +61,10 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.CompleteRevisionAsync(
-                It.IsAny<Guid>(),
-                It.IsAny<string>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<Guid>(),
+                    It.IsAny<string>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(medicalRecordReturn);
 
             // Act
@@ -99,10 +99,10 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.CloseRevisionAsync(
-                It.IsAny<Guid>(),
-                It.IsAny<string>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<Guid>(),
+                    It.IsAny<string>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(medicalRecordAdd);
 
             // Act
@@ -136,10 +136,10 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.UpdateAsync(
-                It.IsAny<Guid>(),
-                It.IsAny<Domain.Entities.MedicalRecord>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<Guid>(),
+                    It.IsAny<Domain.Entities.MedicalRecord>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(medicalRecordUpdate);
 
             // Act

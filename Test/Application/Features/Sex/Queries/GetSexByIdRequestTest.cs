@@ -23,7 +23,7 @@ namespace Test.Application.Features.Sex.Queries
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<ISexReadService> sexReadMock,
-            Domain.Support.Sex sexForGet,
+            Domain.Entities.Shelter.Sex sexForGet,
             GetSexByIdRequest request,
             GetSexByIdRequestHandler handler)
         {
@@ -35,7 +35,7 @@ namespace Test.Application.Features.Sex.Queries
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Support.Sex>>(result);
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.Sex>>(result);
             sexReadMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
     }

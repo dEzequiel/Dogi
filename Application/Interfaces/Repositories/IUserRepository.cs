@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.Authorization;
 
 namespace Application.Interfaces.Repositories;
 
@@ -11,7 +11,7 @@ public interface IUserRepository
     /// <param name="ct"></param>
     /// <returns></returns>
     Task AddAsync(User user, CancellationToken ct = default);
-    
+
     /// <summary>
     /// Get username by name.
     /// </summary>

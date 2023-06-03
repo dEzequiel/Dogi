@@ -2,7 +2,7 @@
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -26,7 +26,7 @@ namespace Application.Features.IndividualPro.Commands
     }
 
     public class InsertIndividualProceedingRequestHandler : IRequestHandler<InsertIndividualProceedingRequest,
-                                                         ApiResponse<IndividualProceeding>>
+        ApiResponse<IndividualProceeding>>
     {
         private readonly ILogger<InsertIndividualProceedingRequestHandler> _logger;
         private readonly IIndividualProceedingWriteService _individualProceedingWrite;
@@ -36,20 +36,23 @@ namespace Application.Features.IndividualPro.Commands
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="individualProceedingWrite"></param>
-        public InsertIndividualProceedingRequestHandler(ILogger<InsertIndividualProceedingRequestHandler> logger, IIndividualProceedingWriteService individualProceedingWrite)
+        public InsertIndividualProceedingRequestHandler(ILogger<InsertIndividualProceedingRequestHandler> logger,
+            IIndividualProceedingWriteService individualProceedingWrite)
         {
             _logger = logger;
             _individualProceedingWrite = individualProceedingWrite;
         }
 
         ///<inheritdoc/>
-        public async Task<ApiResponse<IndividualProceeding>> Handle(InsertIndividualProceedingRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<IndividualProceeding>> Handle(InsertIndividualProceedingRequest request,
+            CancellationToken cancellationToken)
         {
             _logger.LogInformation("InsertIndividualProceedingRequestHandler --> AddAsync --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            IndividualProceeding result = await _individualProceedingWrite.AddAsync(request.IndividualProceedingData, request.AdminData);
+            IndividualProceeding result =
+                await _individualProceedingWrite.AddAsync(request.IndividualProceedingData, request.AdminData);
 
             return new ApiResponse<IndividualProceeding>(result);
         }

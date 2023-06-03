@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authentication\Policies"/>
     <Folder Include="Interfaces\" />
     <Folder Include="Scripts\" />
   </ItemGroup>

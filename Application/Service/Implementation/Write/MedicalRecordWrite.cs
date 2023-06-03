@@ -1,5 +1,5 @@
-﻿using Application.Service.Abstraction.Write;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
@@ -66,7 +66,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<MedicalRecord> CheckAsync(Guid id, string? observations, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CheckAsync(Guid id, string? observations, AdminData admin,
+            CancellationToken ct = default)
         {
             Logger.LogInformation("MedicalRecordWrite --> CheckAsync --> Start");
 
@@ -86,7 +87,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<MedicalRecord> CloseAsync(Guid id, string conclusions, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> CloseAsync(Guid id, string conclusions, AdminData admin,
+            CancellationToken ct = default)
         {
             Logger.LogInformation("MedicalRecordWrite --> CloseAsync --> Start");
 
@@ -106,7 +108,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, CancellationToken ct = default)
+        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin,
+            CancellationToken ct = default)
         {
             Logger.LogInformation("MedicalRecordWrite --> CloseAsync --> Start");
 

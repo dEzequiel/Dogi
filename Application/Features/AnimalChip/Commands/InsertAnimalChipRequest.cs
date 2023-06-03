@@ -2,18 +2,17 @@
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
-using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.InsertAnimalChipRequest.Commands
+namespace Application.Features.AnimalChip.Commands
 {
     /// <summary>
     /// Insert AnimalChipOwner request implementation.
     /// </summary>>
-    public class InsertAnimalChipRequest : IRequest<ApiResponse<AnimalChip>>
+    public class InsertAnimalChipRequest : IRequest<ApiResponse<Domain.Entities.Shelter.AnimalChip>>
     {
-        public AnimalChip AnimalChipData { get; private set; } = null!;
+        public Domain.Entities.Shelter.AnimalChip AnimalChipData { get; private set; } = null!;
         public AdminData AdminData { get; private set; } = null!;
 
         /// <summary>
@@ -21,7 +20,7 @@ namespace Application.Features.InsertAnimalChipRequest.Commands
         /// </summary>
         /// <param name="animalChipData"></param>
         /// <param name="adminData"></param>
-        public InsertAnimalChipRequest(AnimalChip animalChipData, AdminData adminData)
+        public InsertAnimalChipRequest(Domain.Entities.Shelter.AnimalChip animalChipData, AdminData adminData)
         {
             AnimalChipData = animalChipData;
             AdminData = adminData;
@@ -32,7 +31,7 @@ namespace Application.Features.InsertAnimalChipRequest.Commands
     /// Insert AnimalChipOwner Request Handler.
     /// </summary>
     public class InsertAnimalChipRequestHandler : IRequestHandler<InsertAnimalChipRequest,
-                                                   ApiResponse<AnimalChip>>
+        ApiResponse<Domain.Entities.Shelter.AnimalChip>>
     {
         private readonly ILogger<InsertAnimalChipRequestHandler> _logger;
         private readonly IAnimalChipWriteService _animalChipWrite;
@@ -42,7 +41,7 @@ namespace Application.Features.InsertAnimalChipRequest.Commands
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="animalChipOwnerWriteService"></param>
-        public InsertAnimalChipRequestHandler(ILogger<InsertAnimalChipRequestHandler> logger, 
+        public InsertAnimalChipRequestHandler(ILogger<InsertAnimalChipRequestHandler> logger,
             IAnimalChipWriteService animalChipWrite)
         {
             _logger = Guard.Against.Null(logger, nameof(logger));
@@ -50,17 +49,19 @@ namespace Application.Features.InsertAnimalChipRequest.Commands
         }
 
         ///<inheritdoc/>
-        public async Task<ApiResponse<AnimalChip>> Handle(InsertAnimalChipRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Domain.Entities.Shelter.AnimalChip>> Handle(InsertAnimalChipRequest request,
+            CancellationToken cancellationToken)
         {
             _logger.LogInformation("InsertAnimalChipRequestHandler --> AddAsync --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            AnimalChip result = await _animalChipWrite.AddAsync(request.AnimalChipData, request.AdminData, cancellationToken);
+            Domain.Entities.Shelter.AnimalChip result =
+                await _animalChipWrite.AddAsync(request.AnimalChipData, request.AdminData, cancellationToken);
 
             _logger.LogInformation("InsertAnimalChipRequestHandler --> AddAsync --> End");
 
-            return new ApiResponse<AnimalChip>(result);
+            return new ApiResponse<Domain.Entities.Shelter.AnimalChip>(result);
         }
     }
 }

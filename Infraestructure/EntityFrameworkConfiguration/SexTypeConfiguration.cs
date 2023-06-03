@@ -1,4 +1,4 @@
-﻿using Domain.Support;
+﻿using Domain.Entities.Shelter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +14,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .IsClustered(false);
 
 
-            var totalSexTypes = Enum.GetNames(typeof(Domain.Enums.Sex));
+            var totalSexTypes = Enum.GetNames(typeof(Domain.Enums.Shelter.Sex));
 
             int id = 0;
             foreach (var type in totalSexTypes)

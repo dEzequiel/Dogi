@@ -1,4 +1,3 @@
-using Infraestructure.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -19,7 +18,7 @@ namespace Api.Controllers
             _logger = logger;
         }
 
-        [Authorize]
+
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

@@ -1,10 +1,9 @@
-﻿using Application.Features.User.Commands;
+﻿using Application.Interfaces;
 using Application.Managers.Abstraction;
-using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities;
+using Domain.Entities.Authorization;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

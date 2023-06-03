@@ -9,7 +9,7 @@ namespace Application.Features.AnimalCategory.Queries
     /// <summary>
     /// Get AnimalCategory by identifier request implementation.
     /// </summary>
-    public class GetAnimalCategoryByIdRequest : IRequest<ApiResponse<Domain.Support.AnimalCategory>>
+    public class GetAnimalCategoryByIdRequest : IRequest<ApiResponse<Domain.Entities.Shelter.AnimalCategory>>
     {
         public int Id { get; private set; }
 
@@ -28,7 +28,7 @@ namespace Application.Features.AnimalCategory.Queries
     /// Get AnimalCategory by identifier handler implementation.
     /// </summary>
     public class GetAnimalCategoryByIdRequestHandler : IRequestHandler<GetAnimalCategoryByIdRequest,
-        ApiResponse<Domain.Support.AnimalCategory>>
+        ApiResponse<Domain.Entities.Shelter.AnimalCategory>>
     {
         private readonly ILogger<GetAnimalCategoryByIdRequestHandler> Logger;
         private readonly IAnimalCategoryReadService AnimalCategoryRead;
@@ -47,20 +47,22 @@ namespace Application.Features.AnimalCategory.Queries
         }
 
         ///<inheritdoc/>
-        public async Task<ApiResponse<Domain.Support.AnimalCategory>> Handle(GetAnimalCategoryByIdRequest request,
+        public async Task<ApiResponse<Domain.Entities.Shelter.AnimalCategory>> Handle(
+            GetAnimalCategoryByIdRequest request,
             CancellationToken cancellationToken)
         {
             Logger.LogInformation($"GetAnimalCategoryByIdRequestHandler --> GetByIdAsync({request.Id}) --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            Domain.Support.AnimalCategory? result = await AnimalCategoryRead.GetByIdAsync(request.Id);
+            Domain.Entities.Shelter.AnimalCategory? result = await AnimalCategoryRead.GetByIdAsync(request.Id);
 
             if (result is null)
             {
-                Logger.LogInformation($"GetAnimalCategoryByIdRequestHandler --> GetByIdAsync({request.Id}) --> Not Found");
+                Logger.LogInformation(
+                    $"GetAnimalCategoryByIdRequestHandler --> GetByIdAsync({request.Id}) --> Not Found");
 
-                return new ApiResponse<Domain.Support.AnimalCategory>()
+                return new ApiResponse<Domain.Entities.Shelter.AnimalCategory>()
                 {
                     Succeeded = false,
                     Message = string.Format(ANIMAL_CATEGORY_NOT_FOUND, request.Id),
@@ -70,7 +72,7 @@ namespace Application.Features.AnimalCategory.Queries
 
             Logger.LogInformation($"GetAnimalCategoryByIdRequestHandler --> GetByIdAsync --> End");
 
-            return new ApiResponse<Domain.Support.AnimalCategory>(result);
+            return new ApiResponse<Domain.Entities.Shelter.AnimalCategory>(result);
         }
     }
 }

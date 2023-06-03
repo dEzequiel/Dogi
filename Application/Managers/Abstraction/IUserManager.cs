@@ -1,6 +1,6 @@
 ﻿using Crosscuting.Api;
 using Crosscuting.Base.Interfaces;
-using Domain.Entities;
+using Domain.Entities.Authorization;
 
 namespace Application.Managers.Abstraction;
 

@@ -1,10 +1,10 @@
-﻿using Application.Service.Implementation.Read;
+﻿using Application.Interfaces;
+using Application.Service.Implementation.Read;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Moq;
 using Test.Utils.Attributes;
-
 
 namespace Test.Application.ReadServices;
 

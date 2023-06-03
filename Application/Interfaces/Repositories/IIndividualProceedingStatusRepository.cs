@@ -1,4 +1,4 @@
-﻿using Domain.Support;
+﻿using Domain.Entities.Shelter;
 
 namespace Application.Interfaces.Repositories
 {

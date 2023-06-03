@@ -2,7 +2,7 @@
 using Domain.Entities;
 using MediatR;
 
-namespace Api.GraphQL.GraphQLQueries;
+namespace Api.GraphQL.Queries;
 
 public class VeterinaryManagerQueries
 {

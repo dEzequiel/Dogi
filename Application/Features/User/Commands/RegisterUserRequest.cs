@@ -10,7 +10,7 @@ namespace Application.Features.User.Commands;
 /// <summary>
 /// Register user request implementation.
 /// </summary>
-public class RegisterUserRequest : IRequest<ApiResponse<Domain.Entities.User>>
+public class RegisterUserRequest : IRequest<ApiResponse<Domain.Entities.Authorization.User>>
 {
     public UserDataRegister UserDataRegister { get; private set; }
 
@@ -27,7 +27,8 @@ public class RegisterUserRequest : IRequest<ApiResponse<Domain.Entities.User>>
 /// <summary>
 /// Register user request handler implementation.
 /// </summary>
-public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, ApiResponse<Domain.Entities.User>>
+public class
+    RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, ApiResponse<Domain.Entities.Authorization.User>>
 {
     private readonly ILogger<RegisterUserRequestHandler> Logger;
     private readonly IUserWriteService _userWriteService;
@@ -44,7 +45,7 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, A
     }
 
     ///<inheritdoc />
-    public async Task<ApiResponse<Domain.Entities.User>> Handle(RegisterUserRequest request,
+    public async Task<ApiResponse<Domain.Entities.Authorization.User>> Handle(RegisterUserRequest request,
         CancellationToken cancellationToken)
     {
         Logger.LogInformation("RegisterUserRequestHandler --> AddAsync --> Start");
@@ -58,6 +59,6 @@ public class RegisterUserRequestHandler : IRequestHandler<RegisterUserRequest, A
 
         Logger.LogInformation("RegisterUserRequestHandler --> AddAsync --> End");
 
-        return new ApiResponse<Domain.Entities.User>(result);
+        return new ApiResponse<Domain.Entities.Authorization.User>(result);
     }
 }

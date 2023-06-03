@@ -1,11 +1,11 @@
-﻿using Application.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Interfaces.Repositories;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities;
-using Domain.Enums;
+using Domain.Entities.Shelter;
+using Domain.Enums.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -15,6 +15,7 @@ namespace Infraestructure.Persistence.Repositories
         /// Attributes.
         /// </summary>
         private const string INDIVIDUAL_PROCEEDING_NOT_FOUND = "IndividualProceeding with id {0} not found.";
+
         protected IQueryable<IndividualProceeding> _individualProceedings;
         protected DbSet<IndividualProceeding> _individualProceedingsAll;
 
@@ -69,12 +70,12 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatuses status, CancellationToken ct = default)
+        public async Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(
+            IndividualProceedingStatuses status, CancellationToken ct = default)
         {
             return await _individualProceedings.AsNoTracking()
-                                               .Where(x => x.IndividualProceedingStatusId == ((int)status))
-                                               .ToListAsync();
-
+                .Where(x => x.IndividualProceedingStatusId == ((int)status))
+                .ToListAsync();
         }
 
         /// <inheritdoc/>
@@ -97,7 +98,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task UpdateAsync(Guid id, IndividualProceedingStatuses status, AdminData admin, CancellationToken ct = default)
+        public async Task UpdateAsync(Guid id, IndividualProceedingStatuses status, AdminData admin,
+            CancellationToken ct = default)
         {
             var individualProceeding = await _individualProceedings.FirstOrDefaultAsync(x => x.Id == id);
 

@@ -1,14 +1,9 @@
-﻿using Application.Features.InsertAnimalChipRequest.Commands;
+﻿using Application.Features.AnimalChip.Commands;
 using Application.Service.Abstraction.Write;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test.Utils.Attributes;
 
 namespace Test.Application.Features.AnimalChip.Command
@@ -17,7 +12,7 @@ namespace Test.Application.Features.AnimalChip.Command
     {
         [Theory]
         [AutoMoqData]
-        internal void RequestShouldSetAnmalDataProperty(Domain.Entities.AnimalChip data,
+        internal void RequestShouldSetAnmalDataProperty(Domain.Entities.Shelter.AnimalChip data,
             AdminData adminData)
         {
             // Act
@@ -30,24 +25,24 @@ namespace Test.Application.Features.AnimalChip.Command
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IAnimalChipWriteService> animalChipWriteMock,
-            Domain.Entities.AnimalChip animalChipForGet,
+            Domain.Entities.Shelter.AnimalChip animalChipForGet,
             InsertAnimalChipRequest request,
             InsertAnimalChipRequestHandler handler)
         {
             // Arrange
-            animalChipWriteMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.AnimalChip>(),
-                                                      It.IsAny<AdminData>(),
-                                                      It.IsAny<CancellationToken>()))
+            animalChipWriteMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.Shelter.AnimalChip>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(animalChipForGet);
-            
+
             // Act
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Entities.AnimalChip>>(result);
-            animalChipWriteMock.Verify(i => i.AddAsync(It.IsAny<Domain.Entities.AnimalChip>(),
-                                                       It.IsAny<AdminData>(),
-                                                       It.IsAny<CancellationToken>()), Times.Once);
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.AnimalChip>>(result);
+            animalChipWriteMock.Verify(i => i.AddAsync(It.IsAny<Domain.Entities.Shelter.AnimalChip>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

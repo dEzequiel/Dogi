@@ -1,5 +1,5 @@
-﻿using Domain.Enums;
-using Domain.Support;
+﻿using Domain.Entities.Shelter;
+using Domain.Enums.Shelter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using Application.Service.Implementation.Write;
-using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Moq;
 using Test.Utils.Attributes;
@@ -23,7 +23,7 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.UpdateOccupiedStatusAsync(
-                It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                    It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act
@@ -34,7 +34,7 @@ namespace Test.Application.WriteServices
 
             unitOfWorkMock.Verify(u => u.CageRepository, Times.Once);
             repositoryMock.Verify(r => r.UpdateOccupiedStatusAsync(
-                               It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once);
+                It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

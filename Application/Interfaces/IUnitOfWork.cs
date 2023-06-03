@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.Repositories;
+using Application.Service.Interfaces;
 
-namespace Application.Service.Interfaces
+namespace Application.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

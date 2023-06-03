@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Domain.Entities.Shelter;
 
 namespace Application.DTOs.WelcomeManager
 {
@@ -15,7 +15,8 @@ namespace Application.DTOs.WelcomeManager
         /// <param name="receptionDocument"></param>
         /// <param name="individualProceeding"></param>
         /// <param name="animalChip"></param>
-        public RegisterInformation(ReceptionDocument receptionDocument, IndividualProceeding individualProceeding, AnimalChip? animalChip, Person? person)
+        public RegisterInformation(ReceptionDocument receptionDocument, IndividualProceeding individualProceeding,
+            AnimalChip? animalChip, Person? person)
         {
             ReceptionDocument = receptionDocument;
             IndividualProceeding = individualProceeding;
@@ -23,8 +24,8 @@ namespace Application.DTOs.WelcomeManager
             Person = person;
         }
 
-        public RegisterInformation() { }
-
-
+        public RegisterInformation()
+        {
+        }
     }
 }

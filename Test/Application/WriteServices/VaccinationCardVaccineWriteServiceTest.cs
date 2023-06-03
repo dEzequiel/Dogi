@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.VeterinaryManager;
+using Application.Interfaces;
 using Application.Interfaces.Repositories;
 using Application.Service.Implementation.Write;
-using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Moq;
@@ -24,8 +24,8 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.VaccinationCardVaccine>(),
-            It.IsAny<AdminData>(),
-            It.IsAny<CancellationToken>()))
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act
@@ -57,9 +57,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(x => x.VaccineAsync(It.IsAny<Guid>(),
-            It.IsAny<VaccinesToComplish>(),
-            It.IsAny<AdminData>(),
-            It.IsAny<CancellationToken>()))
+                    It.IsAny<VaccinesToComplish>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(vaccinationCardVaccineAdd);
 
             // Act

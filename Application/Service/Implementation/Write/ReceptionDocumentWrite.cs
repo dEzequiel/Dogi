@@ -1,10 +1,9 @@
-﻿using Application.Service.Abstraction;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction;
 using Ardalis.GuardClauses;
 using AutoMapper;
 using Crosscuting.Api.DTOs;
-using Crosscuting.Base.Exceptions;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Command
@@ -23,7 +22,8 @@ namespace Application.Service.Implementation.Command
         }
 
         ///<inheritdoc />
-        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity, AdminData admin, CancellationToken ct = default)
+        public async Task<ReceptionDocument> AddAsync(ReceptionDocument entity, AdminData admin,
+            CancellationToken ct = default)
         {
             _logger.LogInformation("ReceptionDocumentWrite --> AddAsync --> Start");
 
@@ -62,7 +62,6 @@ namespace Application.Service.Implementation.Command
             _logger.LogInformation("ReceptionDocumentWrite --> LogicRemoveAsync --> End");
 
             return true;
-
         }
 
 

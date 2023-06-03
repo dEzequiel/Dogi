@@ -1,6 +1,6 @@
 ﻿using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Interfaces;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 
 namespace Application.Service.Abstraction.Write
 {
@@ -12,6 +12,7 @@ namespace Application.Service.Abstraction.Write
         /// <param name="entity"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<PersonBannedInformation> AddAsync(PersonBannedInformation entity, AdminData adminData, CancellationToken ct = default);
+        Task<PersonBannedInformation> AddAsync(PersonBannedInformation entity, AdminData adminData,
+            CancellationToken ct = default);
     }
 }

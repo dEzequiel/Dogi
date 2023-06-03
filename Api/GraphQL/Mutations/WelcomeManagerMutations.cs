@@ -2,7 +2,7 @@
 using Application.Features.WelcomeManagerFeature.Command;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities;
+using Domain.Entities.Authorization;
 using MediatR;
 
 namespace Api.GraphQL.Mutations

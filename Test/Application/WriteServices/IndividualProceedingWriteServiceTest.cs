@@ -1,9 +1,9 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using Application.Service.Implementation.Write;
-using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -23,13 +23,13 @@ namespace Test.Application.WriteServices
             // Arrange
             unitOfWorkMock.Setup(u => u.IndividualProceedingRepository)
                 .Returns(repositoryMock.Object);
-            
+
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<IndividualProceeding>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<IndividualProceeding>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
-            
+
             // act
             var result = await sut.AddAsync(individualProceedingAdd, admin);
 
@@ -60,9 +60,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<IndividualProceeding>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<IndividualProceeding>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act & assert
@@ -84,9 +84,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<IndividualProceeding>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<IndividualProceeding>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act & assert
@@ -94,4 +94,3 @@ namespace Test.Application.WriteServices
         }
     }
 }
-

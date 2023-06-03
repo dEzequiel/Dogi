@@ -1,13 +1,12 @@
-﻿using Application.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Interfaces.Repositories;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Infraestructure.Persistence.Repositories
 {
-
     public class PersonRepository : IPersonRepository
     {
         protected DbSet<Person> Persons;
@@ -52,7 +51,6 @@ namespace Infraestructure.Persistence.Repositories
             person.IsBan = true;
 
             return person;
-
         }
 
         ///<inheritdoc />

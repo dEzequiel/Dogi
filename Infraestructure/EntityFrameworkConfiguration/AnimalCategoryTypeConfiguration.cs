@@ -1,4 +1,4 @@
-﻿using Domain.Support;
+﻿using Domain.Entities.Shelter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +14,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .IsClustered(false);
 
 
-            var totalAnimalCategories = Enum.GetNames(typeof(Domain.Enums.AnimalCategory));
+            var totalAnimalCategories = Enum.GetNames(typeof(Domain.Enums.Shelter.AnimalCategory));
 
             int id = 0;
             foreach (var category in totalAnimalCategories)

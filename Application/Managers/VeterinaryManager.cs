@@ -5,14 +5,15 @@ using Application.Features.MedicalRecord.Comamnds;
 using Application.Features.MedicalRecord.Commands;
 using Application.Features.MedicalRecordStatus.Queries;
 using Application.Features.VaccinationCardVaccine.Commands;
+using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Application.Service.Abstraction.Read;
-using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
-using Domain.Enums;
+using Domain.Enums.Shelter;
+using Domain.Enums.Veterinary;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -31,7 +32,8 @@ namespace Application.Managers
         /// <param name="logger"></param>
         /// <param name="mediator"></param>
         /// <param name="unitOfWork"></param>
-        public VeterinaryManager(ILogger<VeterinaryManager> logger, IMediator mediator, IUnitOfWork unitOfWork, IVaccinationCardVaccineReadService vaccinationCardVaccineReadService)
+        public VeterinaryManager(ILogger<VeterinaryManager> logger, IMediator mediator, IUnitOfWork unitOfWork,
+            IVaccinationCardVaccineReadService vaccinationCardVaccineReadService)
         {
             Logger = logger;
             Mediator = mediator;
@@ -47,20 +49,23 @@ namespace Application.Managers
             AdminData adminData,
             CancellationToken ct = default)
         {
-            var individualProceeding = await Mediator.Send(new GetIndividualProceedingByIdRequest(individualProceedingId), ct);
+            var individualProceeding =
+                await Mediator.Send(new GetIndividualProceedingByIdRequest(individualProceedingId), ct);
             Guard.Against.Null(individualProceeding.Data);
 
-            await Mediator.Send(new MoveCageAnimalZoneRequest(individualProceeding.Data.CageId, ((int)AnimalZones.WaitingForMedicalRevision), adminData));
+            await Mediator.Send(new MoveCageAnimalZoneRequest(individualProceeding.Data.CageId,
+                ((int)AnimalZones.WaitingForMedicalRevision), adminData));
 
-            var medicalRecordStatus = await Mediator.Send(new GetMedicalRecordStatusByIdRequest((int)MedicalRecordStatuses.Waiting), ct);
+            var medicalRecordStatus =
+                await Mediator.Send(new GetMedicalRecordStatusByIdRequest((int)MedicalRecordStatuses.Waiting), ct);
             Guard.Against.Null(medicalRecordStatus.Data);
-
 
 
             medicalRecord.IndividualProceedingId = individualProceeding.Data.Id;
             medicalRecord.MedicalStatusId = medicalRecordStatus.Data.Id;
 
-            var createdMedicalRecord = await Mediator.Send(new InsertMedicalRecordRequest(medicalRecord, adminData), ct);
+            var createdMedicalRecord =
+                await Mediator.Send(new InsertMedicalRecordRequest(medicalRecord, adminData), ct);
             Guard.Against.Null(createdMedicalRecord.Data);
 
             if (!vaccinesIds.Any())
@@ -75,10 +80,13 @@ namespace Application.Managers
 
             if (!individualProceeding.Data.VaccinationCardId.HasValue)
             {
-                throw new DogiException($"No vaccination card found for individual proceeding with id: ({individualProceeding.Data.Id})");
+                throw new DogiException(
+                    $"No vaccination card found for individual proceeding with id: ({individualProceeding.Data.Id})");
             }
 
-            await Mediator.Send(new InsertCollectionVaccinationCardVaccineVaccinesRequest(individualProceeding.Data.VaccinationCardId.Value, vaccinesIds, adminData));
+            await Mediator.Send(
+                new InsertCollectionVaccinationCardVaccineVaccinesRequest(
+                    individualProceeding.Data.VaccinationCardId.Value, vaccinesIds, adminData));
 
 
             return new IndividualProceedingWithMedicalRecord()
@@ -95,7 +103,8 @@ namespace Application.Managers
             AdminData adminData,
             CancellationToken ct = default)
         {
-            var checkedMedicalRecord = await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, observations, adminData), ct);
+            var checkedMedicalRecord =
+                await Mediator.Send(new CheckMedicalRecordRequest(medicalRecordId, observations, adminData), ct);
 
             Guard.Against.Null(checkedMedicalRecord.Data);
 
@@ -115,7 +124,8 @@ namespace Application.Managers
         {
             Logger.LogInformation("VeterinaryManager --> CloseMedicalRecord --> Start");
 
-            var closedMedicalRecord = await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordId, conclusions, AdminData), ct);
+            var closedMedicalRecord =
+                await Mediator.Send(new CloseMedicalRecordRequest(medicalRecordId, conclusions, AdminData), ct);
 
             Guard.Against.Null(closedMedicalRecord.Data);
 
@@ -129,7 +139,8 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public async Task<IndividualProceedingWithVaccinationCard> AssignPendingVaccine(Guid vaccinationCardId, Guid vaccineId, AdminData adminData, CancellationToken ct = default)
+        public async Task<IndividualProceedingWithVaccinationCard> AssignPendingVaccine(Guid vaccinationCardId,
+            Guid vaccineId, AdminData adminData, CancellationToken ct = default)
         {
             var vaccinationCardVaccine = new VaccinationCardVaccine()
             {
@@ -140,10 +151,13 @@ namespace Application.Managers
                 VaccineEnd = null,
             };
 
-            var response = await Mediator.Send(new InsertVaccinationCardVaccineVaccineRequest(vaccinationCardVaccine, adminData), ct);
+            var response =
+                await Mediator.Send(new InsertVaccinationCardVaccineVaccineRequest(vaccinationCardVaccine, adminData),
+                    ct);
 
             Guard.Against.Null(response.Data);
-            var currentVaccinationCardVaccine = await VaccinationCardVaccineReadService.GetByIdLoadedAsync(response.Data.Id);
+            var currentVaccinationCardVaccine =
+                await VaccinationCardVaccineReadService.GetByIdLoadedAsync(response.Data.Id);
             Guard.Against.Null(currentVaccinationCardVaccine);
 
             return new IndividualProceedingWithVaccinationCard()
@@ -154,9 +168,12 @@ namespace Application.Managers
         }
 
         ///<inheritdoc />
-        public async Task<IEnumerable<VaccinationCardVaccine>> Vaccine(Guid vaccinationCardId,  VaccinesToComplish vaccinesIds, AdminData adminData, CancellationToken ct = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> Vaccine(Guid vaccinationCardId,
+            VaccinesToComplish vaccinesIds, AdminData adminData, CancellationToken ct = default)
         {
-            var response = await Mediator.Send(new VaccinationCardVaccineVaccineRequest(vaccinationCardId, vaccinesIds, adminData), ct);
+            var response =
+                await Mediator.Send(new VaccinationCardVaccineVaccineRequest(vaccinationCardId, vaccinesIds, adminData),
+                    ct);
 
             Guard.Against.Null(response.Data);
 
@@ -168,7 +185,5 @@ namespace Application.Managers
         {
             UnitOfWork.Dispose();
         }
-
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Application.Features.ReceptionDocument.Commands;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using MediatR;
 
 namespace Api.GraphQL.Mutations
@@ -30,7 +30,8 @@ namespace Api.GraphQL.Mutations
         }
 
 
-        public async Task<ReceptionDocument> AddReceptionDocumentAsync([Service] ISender Mediator, ReceptionDocument input)
+        public async Task<ReceptionDocument> AddReceptionDocumentAsync([Service] ISender Mediator,
+            ReceptionDocument input)
         {
             Logger.LogInformation("ReceptionDocumentMutations --> AddReceptionDocumentAsync --> Start");
 

@@ -1,6 +1,5 @@
-﻿using Domain.Entities;
-using Crosscuting.Api.DTOs.Response;
-using Crosscuting.Api.DTOs;
+﻿using Crosscuting.Api.DTOs;
+using Domain.Entities.Shelter;
 
 namespace Application.Service.Interfaces
 {
@@ -26,7 +25,8 @@ namespace Application.Service.Interfaces
         /// </summary>
         /// <param name="hasChip"></param>
         /// <returns></returns>
-        Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipPossessionAsync(bool? hasChip, CancellationToken ct = default);
+        Task<IEnumerable<ReceptionDocument>> GetAllFilterByChipPossessionAsync(bool? hasChip,
+            CancellationToken ct = default);
 
         /// <summary>
         /// Mark ReceptionDocument as deleted.

@@ -1,5 +1,5 @@
-﻿using Application.Service.Abstraction.Write;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -38,7 +38,6 @@ namespace Application.Service.Implementation.Write
             Logger.LogInformation("VaccineWriteService --> AddAsync --> End");
 
             return entities;
-
         }
 
         public void Dispose()
