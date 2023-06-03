@@ -1,8 +1,10 @@
 ﻿using System.Security.Cryptography;
+using Application.Authentication;
 using Application.Interfaces;
 using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using Domain.Entities.Authorization;
 using Microsoft.Extensions.Logging;
 

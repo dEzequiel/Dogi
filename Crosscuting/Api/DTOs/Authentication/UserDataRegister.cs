@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.Shelter;
 
-namespace Crosscuting.Api;
+namespace Crosscuting.Api.DTOs.Authentication;
 
 /// <summary>
 /// Represents user register data.

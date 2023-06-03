@@ -1,4 +1,5 @@
 ﻿using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Interfaces;
 using Domain.Entities.Authorization;
 

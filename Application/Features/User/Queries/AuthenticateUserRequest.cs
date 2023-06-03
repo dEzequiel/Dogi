@@ -1,20 +1,20 @@
 ﻿using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
-using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 public class AuthenticateUserRequest : IRequest<string>
 {
-    public UserDataRegister UserDataRegister { get; private set; }
+    public UserDataLogin UserDataLogin { get; private set; }
 
     /// <summary>
     /// Constructor.
     /// </summary>
-    /// <param name="userDataRegister"></param>
-    public AuthenticateUserRequest(UserDataRegister userDataRegister)
+    /// <param name="userDataLogin"></param>
+    public AuthenticateUserRequest(UserDataLogin userDataLogin)
     {
-        UserDataRegister = userDataRegister;
+        UserDataLogin = userDataLogin;
     }
 }
 
@@ -45,7 +45,7 @@ public class AuthenticateUserRequestHandler : IRequestHandler<AuthenticateUserRe
 
         Guard.Against.Null(request, nameof(request));
 
-        var result = await _userReadService.Authenticate(request.UserDataRegister, cancellationToken);
+        var result = await _userReadService.Authenticate(request.UserDataLogin, cancellationToken);
 
         Logger.LogInformation("LoginUserRequestHandler --> AddAsync --> End");
 

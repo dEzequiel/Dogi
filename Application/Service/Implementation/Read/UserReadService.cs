@@ -1,8 +1,11 @@
-﻿using System.Security.Cryptography;
+﻿
+
+using System.Security.Cryptography;
+using Application.Authentication;
 using Application.Interfaces;
 using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
-using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities.Authorization;
 using Microsoft.Extensions.Logging;
@@ -46,7 +49,7 @@ public class UserReadService : IUserReadService
     }
 
     ///<inheritdoc />
-    public async Task<string> Authenticate(UserDataRegister entity, CancellationToken ct = default)
+    public async Task<string> Authenticate(UserDataLogin entity, CancellationToken ct = default)
     {
         Logger.LogInformation("UserWrite --> LoginAsync --> Start");
 
@@ -71,7 +74,7 @@ public class UserReadService : IUserReadService
 
         Logger.LogInformation("UserWrite --> LoginAsync --> End");
 
-        string token = JsonWebTokenProvider.Generate(user);
+        var token = await JsonWebTokenProvider.Generate(user);
 
         return token;
     }

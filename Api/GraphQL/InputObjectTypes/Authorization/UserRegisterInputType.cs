@@ -1,9 +1,9 @@
 ﻿using Api.GraphQL.InputObjectTypes.Shelter;
-using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 
 namespace Api.GraphQL.InputObjectTypes.Authorization;
 
-public class UserInputType : InputObjectType<UserDataRegister>
+public class UserRegisterInputType : InputObjectType<UserDataRegister>
 {
     protected override void Configure(IInputObjectTypeDescriptor<UserDataRegister> descriptor)
     {

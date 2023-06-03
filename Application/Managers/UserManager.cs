@@ -7,6 +7,7 @@ using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -60,7 +61,7 @@ public class UserManager : IUserManager
     }
 
     ///<inheritdoc />
-    public async Task<string> Authenticate(UserDataRegister user, CancellationToken ct = default)
+    public async Task<string> Authenticate(UserDataLogin user, CancellationToken ct = default)
     {
         var result = await Mediator.Send(new AuthenticateUserRequest(user), ct);
 
