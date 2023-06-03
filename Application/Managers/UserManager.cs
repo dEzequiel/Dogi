@@ -1,5 +1,7 @@
 ﻿using Application.DTOs.UserManager;
 using Application.Features.Person.Commands;
+using Application.Features.RoleUser.Commands;
+using Application.Features.RoleUser.Queries;
 using Application.Features.User.Commands;
 using Application.Interfaces;
 using Application.Managers.Abstraction;
@@ -63,6 +65,21 @@ public class UserManager : IUserManager
         var result = await Mediator.Send(new AuthenticateUserRequest(user), ct);
 
         return result;
+    }
+
+    ///<inheritdoc />
+    public async Task<UserWithPermissions> AssigneRole(UserWithRoles userRoles, CancellationToken ct = default)
+    {
+        await Mediator.Send(new AssigneUserToRoleRequest(userRoles.UserId, userRoles.RolesIds));
+
+        var permissions = await Mediator.Send(new GetUserPermissionsRequest(userRoles.UserId));
+
+        var userPermissions = new KeyValuePair<Guid, HashSet<string>?>(userRoles.UserId, permissions.Data);
+
+        return new UserWithPermissions()
+        {
+            Permissions = userPermissions
+        };
     }
 
     public void Dispose()

@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.UserManager;
+using Application.Features.UserManager.Commands;
 using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
 using MediatR;
@@ -80,6 +81,24 @@ public class UserManagerMutations
         catch (Exception ex)
         {
             Logger.LogInformation("UserManagerMutations --> Login --> Error");
+
+            throw new DogiException(ex.Message);
+        }
+    }
+
+    public async Task<UserWithPermissions> AssigneRole([Service] ISender Mediator, UserWithRoles userWithRoles)
+    {
+        try
+        {
+            Logger.LogInformation("UserManagerMutations --> AssigneRole --> Error");
+
+            var result = await Mediator.Send(new AssigneUserRoleRequest(userWithRoles));
+
+            return result.Data;
+        }
+        catch (DogiException ex)
+        {
+            Logger.LogInformation("UserManagerMutations --> AssigneRole --> Error");
 
             throw new DogiException(ex.Message);
         }

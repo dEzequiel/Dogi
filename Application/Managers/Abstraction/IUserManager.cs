@@ -21,4 +21,12 @@ public interface IUserManager : IApplicationServiceBase
     /// <param name="ct"></param>
     /// <returns></returns>
     Task<string> Authenticate(UserDataRegister user, CancellationToken ct = default);
+
+    /// <summary>
+    /// Assigne role to user.
+    /// </summary>
+    /// <param name="roleUser"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<UserWithPermissions> AssigneRole(UserWithRoles userRoles, CancellationToken ct = default);
 }

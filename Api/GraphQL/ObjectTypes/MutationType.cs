@@ -73,6 +73,12 @@ namespace Api.GraphQL.ObjectTypes
                 .Argument("credentials", arg => arg.Type<UserInputType>())
                 .ResolveWith<UserManagerMutations>(v => v.Authenticate(default, default));
 
+            descriptor.Field("AssigneRole")
+                .Argument("userWithRoles", arg => arg.Type<NonNullType<UserWithRolesInputType>>())
+                .ResolveWith<UserManagerMutations>(v => v.AssigneRole(default, default));
+            //.Use<ValidateJWTokenAndAppendUserMiddleware>();
+            //.Authorize(Permissions.CanAssigneRole.ToString(), ApplyPolicy.AfterResolver);
+
             #endregion
         }
     }
