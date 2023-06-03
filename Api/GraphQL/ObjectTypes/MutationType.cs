@@ -1,5 +1,6 @@
 ﻿using Api.GraphQL.InputObjectTypes;
 using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
+using Api.GraphQL.Middlewares;
 using Api.GraphQL.Mutations;
 using Api.GraphQL.RootMutations;
 
@@ -14,8 +15,8 @@ namespace Api.GraphQL.Types
             descriptor.Field(f => f.RegisterAnimal)
                 .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                 .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default,
-                    default, default));
-
+                    default, default))
+                .Use<ValidateJWTokenAndAppendUserMiddleware>();
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                 .Argument("idToDelete", arg => arg.Type<UuidType>())

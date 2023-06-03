@@ -7,6 +7,7 @@ namespace Infraestructure.Authentication;
 public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {
     private const string ID_KEY = "Id";
+    private const string HEADER_AUTHORIZATION = "Authorization";
     private readonly IServiceScopeFactory ServiceScopeFactory;
 
     /// <summary>

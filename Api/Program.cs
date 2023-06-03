@@ -1,11 +1,9 @@
 using Api.GraphQL.GraphQLTypes;
-using Api.GraphQL.Helpers;
 using Api.GraphQL.Types;
 using Application;
 using Infraestructure;
 using Infraestructure.Authentication;
 using Infraestructure.Context;
-using Infraestructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +26,7 @@ builder.Services
 
 
 builder.Services.AddAuthorization();
+
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
@@ -41,13 +40,13 @@ builder.Services.AddHttpContextAccessor();
 /// </summary>
 builder.Services
     .AddGraphQLServer()
-    .AddHttpRequestInterceptor<HttpRequestInterceptor>()
     .AddAuthorization()
     .AddApiTypes()
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
     .RegisterDbContext<ApplicationDbContext>()
     .AddQueryType<QueryType>()
     .AddMutationType<MutationType>();
+
 //.AddErrorFilter<ErrorFilter>();
 
 // Database SqlServer connetion.
@@ -80,7 +79,7 @@ app.UseHttpsRedirection();
 /// <summary>
 /// Call JWT Token validator for requests.
 /// <summary>
-app.UseMiddleware<JwtMiddleware>();
+//app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
