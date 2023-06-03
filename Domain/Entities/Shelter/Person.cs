@@ -1,3 +1,4 @@
+using Domain.Entities.Authorization;
 using Domain.ValueObjects;
 
 namespace Domain.Entities.Shelter
@@ -11,6 +12,11 @@ namespace Domain.Entities.Shelter
         /// Person Identifier.
         /// </summary>
         public string PersonIdentifier { get; set; } = null!;
+
+        /// <summary>
+        /// User identifier.
+        /// </summary>
+        public Guid? UserId { get; set; }
 
         /// <summary>
         /// Person Name/
@@ -56,6 +62,11 @@ namespace Domain.Entities.Shelter
         /// Animal chip relationship.
         /// </summary>
         public virtual AnimalChip? AnimalChip { get; set; }
+
+        /// <summary>
+        /// User relationship.
+        /// </summary>
+        public virtual User? User { get; set; }
 
         /// <summary>
         /// Constructor.

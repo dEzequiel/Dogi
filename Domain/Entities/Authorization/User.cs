@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities.Shelter;
 
 namespace Domain.Entities.Authorization;
 
@@ -21,6 +22,11 @@ public class User : Entity
     /// Added text.
     /// </summary>
     public byte[] PasswordSalt { get; set; }
+
+    /// <summary>
+    /// Person relationship.
+    /// </summary>
+    public virtual Person Person { get; set; }
 
     /// <summary>
     /// Constructor.

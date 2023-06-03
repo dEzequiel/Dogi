@@ -20,6 +20,10 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .WithOne(p => p.Person)
                 .HasForeignKey(p => p.PersonIdentifierId);
 
+            builder.HasOne(p => p.User)
+                .WithOne(u => u.Person)
+                .HasForeignKey<Person>(x => x.UserId);
+
             builder.OwnsOne(person => person.Address, address =>
             {
                 address.Property(x => x.Street).HasColumnName("AddressStreet");
