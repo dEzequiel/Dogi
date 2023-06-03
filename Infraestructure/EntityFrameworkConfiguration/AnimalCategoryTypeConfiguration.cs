@@ -9,7 +9,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<AnimalCategory> builder)
         {
             builder
-                .ToTable("AnimalCategory", "Dogi")
+                .ToTable("AnimalCategory", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
@@ -22,7 +22,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 id++;
                 builder.HasData(new AnimalCategory(id, category));
             }
-
         }
     }
 }

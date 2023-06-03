@@ -10,7 +10,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<AnimalZone> builder)
         {
             builder
-                .ToTable("Zone", "Dogi")
+                .ToTable("Zone", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 

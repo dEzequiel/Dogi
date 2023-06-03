@@ -10,15 +10,13 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<MedicalRecord> builder)
         {
             builder
-                .ToTable("MedicalRecord", "Dogi")
+                .ToTable("MedicalRecord", "Veterinary")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
             builder.HasOne<MedicalRecordStatus>(f => f.MedicalRecordStatus)
                 .WithMany(m => m.MedicalRecords)
                 .HasForeignKey(fk => fk.MedicalStatusId);
-
-
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<IndividualProceeding> builder)
         {
             builder
-                .ToTable("IndividualProceeding", "Dogi")
+                .ToTable("IndividualProceeding", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
@@ -42,9 +42,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
             builder.HasOne<VaccinationCard>(f => f.VaccinationCard)
                 .WithOne(r => r.IndividualProceeding)
                 .HasForeignKey<IndividualProceeding>(fk => fk.VaccinationCardId);
-
-
-
         }
     }
 }

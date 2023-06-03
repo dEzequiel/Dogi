@@ -9,7 +9,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<ReceptionDocument> builder)
         {
             builder
-                .ToTable("ReceptionDocument", "Dogi")
+                .ToTable("ReceptionDocument", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
         }

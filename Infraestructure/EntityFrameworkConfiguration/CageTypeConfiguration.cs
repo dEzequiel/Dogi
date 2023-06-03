@@ -11,7 +11,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<Cage> builder)
         {
             builder
-                .ToTable("Cage", "Dogi")
+                .ToTable("Cage", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
@@ -31,7 +31,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                     );
                 }
             }
-
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Support;
+﻿using Domain.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +9,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<Sex> builder)
         {
             builder
-                .ToTable("Sex", "Dogi")
+                .ToTable("Sex", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 

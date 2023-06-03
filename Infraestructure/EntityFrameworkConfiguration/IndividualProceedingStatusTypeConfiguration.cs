@@ -10,7 +10,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<IndividualProceedingStatus> builder)
         {
             builder
-                .ToTable("IndividualProceedingStatus", "Dogi")
+                .ToTable("IndividualProceedingStatus", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
@@ -22,7 +22,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                     Id = (int)e,
                     Status = e.ToString()
                 })
-             );
+            );
         }
     }
 }

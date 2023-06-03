@@ -1,4 +1,3 @@
-
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -10,10 +9,9 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<PersonBannedInformation> builder)
         {
             builder
-                .ToTable("PersonBannedInformation", "Dogi")
+                .ToTable("PersonBannedInformation", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
-
         }
     }
 }

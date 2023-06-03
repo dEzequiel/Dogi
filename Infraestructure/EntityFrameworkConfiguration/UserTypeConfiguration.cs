@@ -1,5 +1,4 @@
-﻿using Crosscuting.Api;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,8 +9,8 @@ public class UserTypeConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder
-            .ToTable("User", "Dogi")
+            .ToTable("User", "Authorization")
             .HasKey(x => x.Id)
-            .IsClustered(false);    
+            .IsClustered(false);
     }
 }
