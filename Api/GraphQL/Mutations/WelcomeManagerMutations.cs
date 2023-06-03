@@ -3,6 +3,8 @@ using Application.Features.WelcomeManagerFeature.Command;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
+using Domain.Enums;
+using HotChocolate.Authorization;
 using Infraestructure.Helpers;
 using MediatR;
 
@@ -32,7 +34,8 @@ namespace Api.GraphQL.Mutations
         /// <param name="input"></param>
         /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
         /// <exception cref="DogiException"></exception>
-        [Authorize]
+        [HasPermission(Permissions.CanRegister)]
+        [Authorize(Policy = "CanRegister")]
         public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender Mediator,
             [Service] IHttpContextAccessor? httpContextAccessor,
             RegisterInformation input)

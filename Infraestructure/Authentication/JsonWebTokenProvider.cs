@@ -19,8 +19,8 @@ public class JsonWebTokenProvider : IJsonWebTokenProvider
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim("id", user.Id.ToString()),
-                new Claim("email", user.Email)
+                new Claim("Id", user.Id.ToString()),
+                new Claim("Email", user.Email)
             }),
             Expires = DateTime.UtcNow.AddDays(365),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
