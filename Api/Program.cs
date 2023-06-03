@@ -30,6 +30,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
+
 //////<summary>
 /// GraphQL Setup.
 /// </summary>

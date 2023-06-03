@@ -3,9 +3,6 @@ using Application.Features.WelcomeManagerFeature.Command;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
-using Domain.Enums;
-using HotChocolate.Authorization;
-using Infraestructure.Helpers;
 using MediatR;
 
 namespace Api.GraphQL.Mutations
@@ -28,14 +25,14 @@ namespace Api.GraphQL.Mutations
         }
 
         /// <summary>
-        /// Add a new reception document taking into account whether the animal has a chip or not. With this condition you take one way or the other.
+        /// Add a new reception document taking into account whether the animal has a chip or not. With this condition
+        /// you take one way or the other.
         /// </summary>
         /// <param name="Mediator"></param>
         /// <param name="input"></param>
-        /// <returns>An object where the information of the reception document and the information of the chip can be consulted together with that of the owner.</returns>
+        /// <returns>An object where the information of the reception document and the information of the chip
+        /// can be consulted together with that of the owner.</returns>
         /// <exception cref="DogiException"></exception>
-        [HasPermission(Permissions.CanRegister)]
-        [Authorize(Policy = "CanRegister")]
         public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender Mediator,
             [Service] IHttpContextAccessor? httpContextAccessor,
             RegisterInformation input)

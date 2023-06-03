@@ -3,6 +3,8 @@ using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
 using Api.GraphQL.Middlewares;
 using Api.GraphQL.Mutations;
 using Api.GraphQL.RootMutations;
+using Domain.Enums;
+using HotChocolate.Authorization;
 
 namespace Api.GraphQL.Types
 {
@@ -16,7 +18,8 @@ namespace Api.GraphQL.Types
                 .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                 .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default,
                     default, default))
-                .Use<ValidateJWTokenAndAppendUserMiddleware>();
+                .Use<ValidateJWTokenAndAppendUserMiddleware>()
+                .Authorize(Permissions.CanRegister.ToString(), ApplyPolicy.AfterResolver);
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                 .Argument("idToDelete", arg => arg.Type<UuidType>())
