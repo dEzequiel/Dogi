@@ -1,5 +1,4 @@
-﻿
-using Application.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
 
 namespace Application.Service.Interfaces
 {
@@ -9,6 +8,7 @@ namespace Application.Service.Interfaces
         /// ReceptionDocumentRepository
         /// </summary>
         IReceptionDocumentRepository ReceptionDocumentRepository { get; }
+
         IIndividualProceedingRepository IndividualProceedingRepository { get; }
         IAnimalChipRepository AnimalChipRepository { get; }
         IAnimalZoneRepository AnimalZoneRepository { get; }
@@ -25,6 +25,10 @@ namespace Application.Service.Interfaces
         IPersonBannedInformationRepository PersonBannedInformationRepository { get; }
         IMedicalRecordStatusRepository MedicalRecordStatusRepository { get; }
         IUserRepository UserRepository { get; }
+        IRoleUserRepository RoleUserRepository { get; }
+        IRolePermissionRepository RolePermissionRepository { get; }
+        IRoleRepository RoleRepository { get; }
+
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>
