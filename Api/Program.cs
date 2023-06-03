@@ -1,12 +1,13 @@
 using Api.GraphQL.GraphQLTypes;
+using Api.GraphQL.Helpers;
 using Api.GraphQL.Types;
 using Application;
 using Infraestructure;
+using Infraestructure.Authentication;
 using Infraestructure.Context;
 using Infraestructure.Helpers;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,13 +26,22 @@ builder.Services
     .InitInfrastructure()
     .InitApplication(builder.Configuration);
 
+
 builder.Services.AddAuthorization();
+builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+
+//////<summary>
+/// GraphQL Setup.
+/// </summary>
+builder.Services.AddHttpContextAccessor();
 
 ///<summary>
 /// GraphQL Setup.
 /// </summary>
 builder.Services
     .AddGraphQLServer()
+    .AddHttpRequestInterceptor<HttpRequestInterceptor>()
     .AddAuthorization()
     .AddApiTypes()
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
@@ -40,19 +50,14 @@ builder.Services
     .AddMutationType<MutationType>();
 //.AddErrorFilter<ErrorFilter>();
 
-//////<summary>
-/// GraphQL Setup.
-/// </summary>
-builder.Services.AddHttpContextAccessor();
-
 // Database SqlServer connetion.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseLazyLoadingProxies();
     options.UseSqlServer(builder.Configuration.GetConnectionString("DogiConnection"))
-    //options.UseSqlServer(builder.Configuration["Azure:ConnectionString"])
-           .EnableSensitiveDataLogging()
-           .EnableDetailedErrors();
+        //options.UseSqlServer(builder.Configuration["Azure:ConnectionString"])
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors();
 });
 
 var app = builder.Build();
@@ -81,12 +86,14 @@ app.MapControllers();
 
 app.UseRouting();
 
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapGraphQL();
+    endpoints.MapGraphQL("/auth", schemaName: "auth");
 });
 
 
