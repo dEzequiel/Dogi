@@ -1,13 +1,18 @@
 ﻿using Application.Service.Abstraction.Read;
+using Domain.Entities;
+using HotChocolate.Resolvers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infraestructure.Authentication;
 
-public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
+/// <summary>
+/// Handler authorization to check if current context user has request permissions.
+/// </summary>
+public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement, IResolverContext>
 {
-    private const string ID_KEY = "Id";
-    private const string HEADER_AUTHORIZATION = "Authorization";
+    private const string HTTP_CONTEXT = "HttpContext";
     private readonly IServiceScopeFactory ServiceScopeFactory;
 
     /// <summary>
@@ -21,10 +26,13 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
 
     ///<inheritdoc />
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
-        PermissionRequirement requirement)
+        PermissionRequirement requirement,
+        IResolverContext resource)
     {
-        var userId = context.User.Claims.FirstOrDefault(x => x.Type == ID_KEY)?.Value;
-        if (!Guid.TryParse(userId, out Guid parsedUserId))
+        var httpCtx = resource.ContextData[HTTP_CONTEXT] as HttpContext;
+        var user = (User)httpCtx.Items["User"];
+
+        if (!Guid.TryParse(user.Id.ToString(), out Guid parsedUserId))
         {
             return;
         }
