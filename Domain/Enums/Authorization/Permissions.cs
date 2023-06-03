@@ -11,4 +11,5 @@ public enum Permissions
     CanCheckMedicalRecord = 4,
     CanCloseMedicalRecord = 5,
     CanVaccine = 6,
+    CanAssigneRole = 7
 }
