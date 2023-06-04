@@ -1,4 +1,5 @@
-﻿using Application.Managers.Abstraction;
+﻿using Application.DTOs.UserManager;
+using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Authentication;
 using MediatR;
@@ -9,7 +10,7 @@ namespace Application.Features.UserManager.Commands;
 /// <summary>
 /// User login request implementation.
 /// </summary>
-public class LoginUserRequest : IRequest<string>
+public class LoginUserRequest : IRequest<UserWithCredentials>
 {
     public UserDataLogin UserDataLogin { get; private set; }
 
@@ -26,7 +27,7 @@ public class LoginUserRequest : IRequest<string>
 /// <summary>
 /// User login request handler implementation.
 /// </summary>
-public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, string>
+public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, UserWithCredentials>
 {
     private readonly ILogger<LoginUserRequestHandler> Logger;
     private readonly IUserManager UserManager;
@@ -43,7 +44,7 @@ public class LoginUserRequestHandler : IRequestHandler<LoginUserRequest, string>
     }
 
     ///<inheritdoc />
-    public async Task<string> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+    public async Task<UserWithCredentials> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         Logger.LogInformation("LoginUserRequestHandler --> Handle --> Start");
 

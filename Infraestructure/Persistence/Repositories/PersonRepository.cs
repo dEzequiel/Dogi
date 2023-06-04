@@ -54,6 +54,19 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
+        public async Task<Person> GetByUserIdAsync(Guid userId, CancellationToken ct = default)
+        {
+            var entity = await Persons.FirstOrDefaultAsync(x => x.UserId == userId, ct);
+
+            if (entity is null)
+            {
+                throw new DogiException("Person not found");
+            }
+
+            return entity;
+        }
+
+        ///<inheritdoc />
         public Task<IEnumerable<Person>> FindAsync(Expression<Func<Person, bool>> predicate)
         {
             throw new NotImplementedException();

@@ -58,19 +58,15 @@ public class UserManagerMutations
     }
 
     //[Authorize]
-    public async Task<UserWithJsonWebToken> Authenticate([Service] ISender Mediator, UserDataLogin credentials)
+    public async Task<UserWithCredentials> Authenticate([Service] ISender Mediator, UserDataLogin credentials)
     {
         try
         {
             Logger.LogInformation("UserManagerMutations --> Login --> Start");
 
-            var result = await Mediator.Send(new AuthenticateUserRequest(credentials));
+            var result = await Mediator.Send(new LoginUserRequest(credentials));
 
-            return new UserWithJsonWebToken()
-            {
-                Username = credentials.Email,
-                Token = result
-            };
+            return result;
         }
         catch (DogiException ex)
         {

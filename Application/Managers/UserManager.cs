@@ -1,12 +1,12 @@
 ﻿using Application.DTOs.UserManager;
 using Application.Features.Person.Commands;
+using Application.Features.Person.Queries;
 using Application.Features.RoleUser.Commands;
 using Application.Features.RoleUser.Queries;
 using Application.Features.User.Commands;
 using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
-using Crosscuting.Api;
 using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Exceptions;
 using MediatR;
@@ -61,11 +61,21 @@ public class UserManager : IUserManager
     }
 
     ///<inheritdoc />
-    public async Task<string> Authenticate(UserDataLogin user, CancellationToken ct = default)
+    public async Task<UserWithCredentials> Authenticate(UserDataLogin user, CancellationToken ct = default)
     {
-        var result = await Mediator.Send(new AuthenticateUserRequest(user), ct);
+        var userToken = await Mediator.Send(new AuthenticateUserRequest(user), ct);
 
-        return result;
+        var associatedPersonEntity = await Mediator.Send(new GetPersonByUserIdRequest(userToken.Id));
+
+        Guard.Against.Null(associatedPersonEntity.Data);
+
+        return new UserWithCredentials()
+        {
+            Id = userToken.Id,
+            Email = userToken.Email,
+            Token = userToken.Token,
+            Person = associatedPersonEntity.Data
+        };
     }
 
     ///<inheritdoc />

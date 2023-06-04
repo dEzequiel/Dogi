@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.UserManager;
-using Crosscuting.Api;
 using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Interfaces;
 
@@ -21,7 +20,7 @@ public interface IUserManager : IApplicationServiceBase
     /// <param name="user"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<string> Authenticate(UserDataLogin user, CancellationToken ct = default);
+    Task<UserWithCredentials> Authenticate(UserDataLogin user, CancellationToken ct = default);
 
     /// <summary>
     /// Assigne role to user.
