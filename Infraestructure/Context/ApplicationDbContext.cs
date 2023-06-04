@@ -30,7 +30,8 @@ namespace Infraestructure.Context
         public DbSet<VaccinationCardVaccine> VaccinationCardVaccines { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<RoleUser> RolesUsers { get; set; } = null!;
-
+        public DbSet<AdoptionPending> AdoptionPendings { get; set; } = null!;
+        public DbSet<AdoptionApplication> AdoptionApplications { get; set; } = null!;
 
         // Support Tables
         public DbSet<Sex> Sex { get; set; } = null!;
@@ -41,7 +42,7 @@ namespace Infraestructure.Context
         public DbSet<VaccineStatus> VaccineStatuses { get; set; } = null!;
         public DbSet<AdoptionApplicationStatus> AdoptionApplicationStatuses { get; set; } = null!;
         public DbSet<AdoptionPendingStatus> AdoptionPendingStatuses { get; set; } = null!;
-
+        public DbSet<HousingType> HousingTypes { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,6 +71,9 @@ namespace Infraestructure.Context
             new AdoptionApplicationStatusTypeConfiguration().Configure(modelBuilder
                 .Entity<AdoptionApplicationStatus>());
             new AdoptionPendingStatusTypeConfiguration().Configure(modelBuilder.Entity<AdoptionPendingStatus>());
+            new HousingTypeTypeConfiguration().Configure(modelBuilder.Entity<HousingType>());
+            new AdoptionPendingTypeConfiguration().Configure(modelBuilder.Entity<AdoptionPending>());
+            new AdoptionApplicationTypeConfiguration().Configure(modelBuilder.Entity<AdoptionApplication>());
         }
     }
 }

@@ -31,6 +31,11 @@ public class AdoptionPending : Entity
     public virtual AdoptionPendingStatus AdoptionPendingStatus { get; set; } = null!;
 
     /// <summary>
+    /// Adoption applications.
+    /// </summary>
+    public virtual ICollection<AdoptionApplication> AdoptionApplications { get; set; } = null!;
+
+    /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="id"></param>
