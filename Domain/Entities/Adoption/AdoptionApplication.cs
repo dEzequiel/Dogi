@@ -29,17 +29,17 @@ public class AdoptionApplication : AuditableEntity
     /// <summary>
     /// House description.
     /// </summary>
-    public virtual House HouseDescription { get; set; } = null!;
+    public House HouseDescription { get; set; } = null!;
 
     /// <summary>
     /// Other animals.
     /// </summary>
-    public virtual OtherAnimal? OtherAnimals { get; set; }
+    public OtherAnimal? OtherAnimals { get; set; }
 
     /// <summary>
     /// Personal references.
     /// </summary>
-    public virtual PersonalReference? PersonalReferences { get; set; }
+    public PersonalReference? PersonalReferences { get; set; }
 
     /// <summary>
     /// AdoptionPending relationship.
