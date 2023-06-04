@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Application.Service.Abstraction.Read;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infraestructure.Authentication.Policies;
@@ -21,20 +22,27 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
     }
 
     ///<inheritdoc />
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
         PermissionRequirement requirement)
     {
-        var permissions = context.User
+        var userId = context.User
             .Claims
-            .Where(x => x.Type == "Permissions")
-            .Select(x => x.Value)
-            .ToHashSet();
+            .FirstOrDefault(x => x.Type == "Id")?.Value;
+
+        if (!Guid.TryParse(userId, out Guid parsedUserId))
+        {
+            return;
+        }
+
+        using IServiceScope scope = ServiceScopeFactory.CreateScope();
+
+        IRoleUserReadService roleUserReadService = scope.ServiceProvider.GetService<IRoleUserReadService>();
+
+        HashSet<string> permissions = await roleUserReadService.GetPermissionsAsync(parsedUserId);
 
         if (permissions.Contains(requirement.Permission))
         {
             context.Succeed(requirement);
         }
-
-        return Task.CompletedTask;
     }
 }

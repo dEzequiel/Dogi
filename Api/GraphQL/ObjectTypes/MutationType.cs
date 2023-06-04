@@ -72,7 +72,7 @@ namespace Api.GraphQL.ObjectTypes
                 .ResolveWith<UserManagerMutations>(v => v.Authenticate(default, default));
 
             descriptor.Field("AssigneRole")
-                .Authorize("CanAssigneRole")
+                .Authorize(Permissions.CanAssigneRole.ToString())
                 .Argument("userWithRoles", arg => arg.Type<NonNullType<UserWithRolesInputType>>())
                 .ResolveWith<UserManagerMutations>(v => v.AssigneRole(default, default));
 

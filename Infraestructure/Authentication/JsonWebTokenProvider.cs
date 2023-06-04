@@ -32,13 +32,6 @@ public class JsonWebTokenProvider : IJsonWebTokenProvider
             new Claim("Email", user.Email),
         };
 
-        var permisions = await RoleUserReadService.GetPermissionsAsync(user.Id);
-
-        foreach (string permission in permisions)
-        {
-            claims.Add(new("Permissions", permission));
-        }
-
         // Create Token. It passed then to JwtMiddleware for validation.
         var tokenDescriptor = new SecurityTokenDescriptor
         {
