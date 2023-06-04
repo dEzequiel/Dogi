@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Adoption;
 using Domain.Entities.Authorization;
 using Domain.Entities.Shelter;
 using Domain.Support;
@@ -38,6 +39,7 @@ namespace Infraestructure.Context
         public DbSet<AnimalZone> AnimalZone { get; set; } = null!;
         public DbSet<MedicalRecordStatus> MedicalRecordStatuses { get; set; } = null!;
         public DbSet<VaccineStatus> VaccineStatuses { get; set; } = null!;
+        public DbSet<AdoptionApplicationStatus> AdoptionApplicationStatuses { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -64,6 +66,8 @@ namespace Infraestructure.Context
             new PermissionTypeConfiguration().Configure(modelBuilder.Entity<Permission>());
             new RolePermissionTypeConfiguration().Configure(modelBuilder.Entity<RolePermission>());
             new RoleUserTypeConfiguration().Configure(modelBuilder.Entity<RoleUser>());
+            new AdoptionApplicationStatusTypeConfiguration().Configure(modelBuilder
+                .Entity<AdoptionApplicationStatus>());
         }
     }
 }
