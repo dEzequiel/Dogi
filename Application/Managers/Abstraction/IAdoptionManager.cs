@@ -12,5 +12,6 @@ public interface IAdoptionManager : IApplicationServiceBase
     /// <param name="adoptionPendingId"></param>
     /// <param name="application"></param>
     /// <returns></returns>
-    Task RegisterAdoptionApplication(Guid adoptionPendingId, AdoptionApplication application, UserData userData);
+    Task<AdoptionApplication> RegisterAdoptionApplication(Guid adoptionPendingId, AdoptionApplication application,
+        UserData userData);
 }
