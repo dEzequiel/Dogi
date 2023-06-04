@@ -23,24 +23,23 @@ namespace Test.Application.Features.Cage.Queries
         [AutoMoqData]
         internal async Task HandleShoudlCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<ICageReadService> cageReadServiceMock,
-            Domain.Entities.Cage cageForGet,
+            Domain.Entities.Shelter.Cage cageForGet,
             GetFreeCageByZoneRequest request,
             GetFreeCageByZoneRequestHandler handler)
         {
             // Arrange
             cageReadServiceMock.Setup(x => x.GetFreeCageByZone(It.IsAny<int>(),
-                                                                    It.IsAny<CancellationToken>()))
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(cageForGet);
 
             // Act
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Entities.Cage>>(result);
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.Cage>>(result);
             cageReadServiceMock.Verify(i => i.GetFreeCageByZone(It.IsAny<int>(),
-                                                                It.IsAny<CancellationToken>()),
-                                                                Times.Once);
-
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
         }
     }
 }

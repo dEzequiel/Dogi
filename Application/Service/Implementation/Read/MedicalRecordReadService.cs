@@ -1,5 +1,5 @@
-﻿using Application.Service.Abstraction.Read;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
 using Domain.Entities;
 using Microsoft.Extensions.Logging;
@@ -32,7 +32,7 @@ public class MedicalRecordReadService : IMedicalRecordReadService
         var repository = UnitOfWork.MedicalRecordRepository;
 
         var records = await repository.GetAllByStatusAsync(statusId, ct);
-        
+
         Logger.LogInformation("MedicalRecordReadService --> GetAllByStatusAsync --> End");
 
         return records;
@@ -42,11 +42,11 @@ public class MedicalRecordReadService : IMedicalRecordReadService
     public async Task<IEnumerable<MedicalRecord>> GetAllAsync()
     {
         Logger.LogInformation("MedicalRecordReadService --> GetAllAsync --> Start");
-        
+
         var repository = UnitOfWork.MedicalRecordRepository;
 
         var records = await repository.GetAllAsync();
-        
+
         Logger.LogInformation("MedicalRecordReadService --> GetAllAsync --> End");
 
         return records;

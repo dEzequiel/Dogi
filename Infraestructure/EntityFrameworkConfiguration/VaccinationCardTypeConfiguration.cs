@@ -9,10 +9,9 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<VaccinationCard> builder)
         {
             builder
-                .ToTable("VaccinationCard", "Dogi")
+                .ToTable("VaccinationCard", "Veterinary")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
-
         }
     }
 }

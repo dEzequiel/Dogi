@@ -1,7 +1,7 @@
 ﻿using Application.Service.Interfaces;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
-using Domain.Enums;
+using Domain.Entities.Shelter;
+using Domain.Enums.Shelter;
 
 namespace Application.Interfaces.Repositories
 {
@@ -29,7 +29,8 @@ namespace Application.Interfaces.Repositories
         /// <param name="status"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatuses status, CancellationToken ct = default);
+        Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatuses status,
+            CancellationToken ct = default);
 
         /// <summary>
         /// Mark IndividualProceeding as deleted.

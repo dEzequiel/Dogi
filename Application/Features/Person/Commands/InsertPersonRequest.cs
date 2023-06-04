@@ -6,21 +6,22 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Person.Commands
 {
-    public class InsertPersonRequest : IRequest<ApiResponse<Domain.Entities.Person>>
+    public class InsertPersonRequest : IRequest<ApiResponse<Domain.Entities.Shelter.Person>>
     {
-        public Domain.Entities.Person PersonData { get; private set; }
+        public Domain.Entities.Shelter.Person PersonData { get; private set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="personData"></param>
-        public InsertPersonRequest(Domain.Entities.Person personData)
+        public InsertPersonRequest(Domain.Entities.Shelter.Person personData)
         {
             PersonData = personData;
         }
     }
 
-    public class InsertPersonRequestHandler : IRequestHandler<InsertPersonRequest, ApiResponse<Domain.Entities.Person>>
+    public class
+        InsertPersonRequestHandler : IRequestHandler<InsertPersonRequest, ApiResponse<Domain.Entities.Shelter.Person>>
     {
         private readonly ILogger<InsertPersonRequestHandler> Logger;
         private readonly IPersonWriteService PersonWrite;
@@ -36,18 +37,18 @@ namespace Application.Features.Person.Commands
             PersonWrite = personWrite;
         }
 
-        public async Task<ApiResponse<Domain.Entities.Person>> Handle(InsertPersonRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Domain.Entities.Shelter.Person>> Handle(InsertPersonRequest request,
+            CancellationToken cancellationToken)
         {
             Logger.LogInformation("InsertPersonRequest --> AddAsync --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            Domain.Entities.Person result = await PersonWrite.AddAsync(request.PersonData);
+            Domain.Entities.Shelter.Person result = await PersonWrite.AddAsync(request.PersonData);
 
             Logger.LogInformation("InsertPersonRequest --> AddAsync --> End");
 
-            return new ApiResponse<Domain.Entities.Person>(result);
-
+            return new ApiResponse<Domain.Entities.Shelter.Person>(result);
         }
     }
 }

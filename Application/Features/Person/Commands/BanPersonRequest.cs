@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Person.Commands
 {
-    public class BanPersonRequest : IRequest<ApiResponse<Domain.Entities.Person>>
+    public class BanPersonRequest : IRequest<ApiResponse<Domain.Entities.Shelter.Person>>
     {
         public string PersonId { get; private set; }
 
@@ -20,7 +20,8 @@ namespace Application.Features.Person.Commands
         }
     }
 
-    public class BanPersonRequestHandler : IRequestHandler<BanPersonRequest, ApiResponse<Domain.Entities.Person>>
+    public class
+        BanPersonRequestHandler : IRequestHandler<BanPersonRequest, ApiResponse<Domain.Entities.Shelter.Person>>
     {
         private readonly ILogger<BanPersonRequestHandler> Logger;
         private readonly IPersonWriteService PersonWrite;
@@ -37,17 +38,18 @@ namespace Application.Features.Person.Commands
         }
 
         ///<inheritdoc />
-        public async Task<ApiResponse<Domain.Entities.Person>> Handle(BanPersonRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Domain.Entities.Shelter.Person>> Handle(BanPersonRequest request,
+            CancellationToken cancellationToken)
         {
             Logger.LogInformation("BanPersonRequest --> BanAsync --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            Domain.Entities.Person result = await PersonWrite.BanAsync(request.PersonId);
+            Domain.Entities.Shelter.Person result = await PersonWrite.BanAsync(request.PersonId);
 
             Logger.LogInformation("BanPersonRequest --> BanAsync --> End");
 
-            return new ApiResponse<Domain.Entities.Person>(result);
+            return new ApiResponse<Domain.Entities.Shelter.Person>(result);
         }
     }
 }

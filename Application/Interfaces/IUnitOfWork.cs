@@ -1,7 +1,7 @@
-﻿
-using Application.Interfaces.Repositories;
+﻿using Application.Interfaces.Repositories;
+using Application.Service.Interfaces;
 
-namespace Application.Service.Interfaces
+namespace Application.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -9,6 +9,7 @@ namespace Application.Service.Interfaces
         /// ReceptionDocumentRepository
         /// </summary>
         IReceptionDocumentRepository ReceptionDocumentRepository { get; }
+
         IIndividualProceedingRepository IndividualProceedingRepository { get; }
         IAnimalChipRepository AnimalChipRepository { get; }
         IAnimalZoneRepository AnimalZoneRepository { get; }
@@ -21,10 +22,14 @@ namespace Application.Service.Interfaces
         IVaccinationCardVaccineRepository VaccinationCardVaccineRepository { get; }
         IVaccineRepository VaccineRepository { get; }
         IVaccineStatusRepository VaccineStatusRepository { get; }
-
         IPersonRepository PersonRepository { get; }
         IPersonBannedInformationRepository PersonBannedInformationRepository { get; }
         IMedicalRecordStatusRepository MedicalRecordStatusRepository { get; }
+        IUserRepository UserRepository { get; }
+        IRoleUserRepository RoleUserRepository { get; }
+        IRolePermissionRepository RolePermissionRepository { get; }
+        IRoleRepository RoleRepository { get; }
+
         /// <summary>
         /// Complete method for transaction complete
         /// </summary>

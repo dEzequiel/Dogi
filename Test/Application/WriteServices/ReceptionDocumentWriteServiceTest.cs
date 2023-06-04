@@ -1,8 +1,9 @@
-﻿using Application.Service.Implementation.Command;
+﻿using Application.Interfaces;
+using Application.Service.Implementation.Command;
 using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -15,7 +16,7 @@ namespace Test.Application.WriteServices
         internal async Task ShouldAddNewReceptionDocumentAsync([Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
             [Frozen] AdminData admin,
-            Domain.Entities.ReceptionDocument documentAdd,
+            ReceptionDocument documentAdd,
             ReceptionDocumentWrite sut)
         {
             // Arrange
@@ -23,9 +24,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<Domain.Entities.ReceptionDocument>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<ReceptionDocument>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act
@@ -37,7 +38,7 @@ namespace Test.Application.WriteServices
 
             unitOfWorkMock.Verify(u => u.ReceptionDocumentRepository, Times.Once);
             repositoryMock.Verify(r => r.AddAsync(
-                It.IsAny<Domain.Entities.ReceptionDocument>(),
+                It.IsAny<ReceptionDocument>(),
                 It.IsAny<AdminData>(),
                 It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
@@ -52,15 +53,15 @@ namespace Test.Application.WriteServices
             ReceptionDocumentWrite sut)
         {
             // Arrange
-            Domain.Entities.ReceptionDocument documentAdd = null!;
+            ReceptionDocument documentAdd = null!;
 
             unitOfWorkMock.Setup(u => u.ReceptionDocumentRepository)
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<Domain.Entities.ReceptionDocument>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<ReceptionDocument>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act & assert
@@ -72,7 +73,7 @@ namespace Test.Application.WriteServices
         internal async Task ShouldntAddNewReceptionDocumentIfAdminIsNullAsync(
             [Frozen] Mock<IUnitOfWork> unitOfWorkMock,
             [Frozen] Mock<IReceptionDocumentRepository> repositoryMock,
-            Domain.Entities.ReceptionDocument documentAdd,
+            ReceptionDocument documentAdd,
             ReceptionDocumentWrite sut)
         {
             // Arrange
@@ -82,9 +83,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<Domain.Entities.ReceptionDocument>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<ReceptionDocument>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act & assert
@@ -106,9 +107,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.LogicRemoveAsync(
-                It.IsAny<Guid>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<Guid>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act
@@ -141,9 +142,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.LogicRemoveAsync(
-                It.IsAny<Guid>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<Guid>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act & Assert
@@ -167,9 +168,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.LogicRemoveAsync(
-                It.IsAny<Guid>(),
-                It.IsAny<AdminData>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<Guid>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act & Assert
@@ -178,5 +179,4 @@ namespace Test.Application.WriteServices
                 admin));
         }
     }
-    
 }

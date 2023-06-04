@@ -1,8 +1,7 @@
 ﻿using Application.Interfaces.Repositories;
-using Domain.Support;
+using Domain.Entities.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -18,7 +17,7 @@ namespace Infraestructure.Persistence.Repositories
         public IndividualProceedingStatusRepository(ApplicationDbContext context)
         {
             IndividualProceedingStatusAll = context.Set<IndividualProceedingStatus>();
-        } 
+        }
 
         ///<inheritdoc />
         public async Task<IEnumerable<IndividualProceedingStatus>> GetAllAsync()
@@ -31,6 +30,5 @@ namespace Infraestructure.Persistence.Repositories
         {
             return await IndividualProceedingStatusAll.FirstOrDefaultAsync(x => x.Id == id);
         }
-
     }
 }

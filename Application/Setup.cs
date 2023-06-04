@@ -1,8 +1,8 @@
-﻿using Application.Managers;
+﻿using System.Reflection;
+using Application.Managers;
 using Application.Managers.Abstraction;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Application
 {
@@ -11,15 +11,15 @@ namespace Application
         public static IServiceCollection InitApplication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddMediatR(conf =>
-            {
-                conf.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            });
+            services.AddMediatR(conf => { conf.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()); });
 
             services.AddTransient<IWelcomeManager, WelcomeManager>();
             services.AddTransient<IVeterinaryManager, VeterinaryManager>();
+            services.AddTransient<IUserManager, UserManager>();
+
 
             services.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+
 
             return services;
         }
@@ -30,7 +30,8 @@ namespace Application
         public static void RegisterServicesFromAssembly(this IServiceCollection services, Assembly assembly)
         {
             var types = assembly.GetExportedTypes();
-            var serviceTypes = types.Where(t => t.IsInterface && t.Name.EndsWith("Service") || t.Name.EndsWith("Manager") && !t.Name.StartsWith("I"));
+            var serviceTypes = types.Where(t => t.IsInterface && t.Name.EndsWith("Service")
+                                                || t.Name.EndsWith("Manager") && !t.Name.StartsWith("I"));
 
             foreach (var serviceType in serviceTypes)
             {

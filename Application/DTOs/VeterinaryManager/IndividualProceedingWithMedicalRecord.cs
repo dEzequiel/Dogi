@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Shelter;
 
 namespace Application.DTOs.VeterinaryManager
 {
@@ -12,7 +13,8 @@ namespace Application.DTOs.VeterinaryManager
         /// </summary>
         /// <param name="individualProceeding"></param>
         /// <param name="medicalRecord"></param>
-        public IndividualProceedingWithMedicalRecord(IndividualProceeding individualProceeding, MedicalRecord medicalRecord)
+        public IndividualProceedingWithMedicalRecord(IndividualProceeding individualProceeding,
+            MedicalRecord medicalRecord)
         {
             IndividualProceeding = individualProceeding;
             MedicalRecord = medicalRecord;

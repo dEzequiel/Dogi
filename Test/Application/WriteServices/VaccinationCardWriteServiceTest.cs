@@ -1,6 +1,6 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories;
 using Application.Service.Implementation.Write;
-using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
 using Moq;
@@ -23,9 +23,9 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.VaccinationCard>(),
-                                                 It.IsAny<AdminData>(),
-                                                 It.IsAny<CancellationToken>()))
-                                                    .Returns(Task.CompletedTask);
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
 
             // Act
             var result = await sut.AddAsync(vaccinationCardAdd, admin);
@@ -55,10 +55,10 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Guid>(),
-                                                 It.IsAny<string>(),
-                                                 It.IsAny<AdminData>(),
-                                                 It.IsAny<CancellationToken>()))
-                                                    .ReturnsAsync(vaccinationCardAdd);
+                    It.IsAny<string>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(vaccinationCardAdd);
 
             // Act
             var result = await sut.UpdateAsync(vaccinationCardAdd.Id, vaccinationCardObservations, admin);
@@ -67,9 +67,9 @@ namespace Test.Application.WriteServices
             Assert.NotNull(result);
             Assert.IsType<Domain.Entities.VaccinationCard>(result);
             repositoryMock.Verify(r => r.UpdateAsync(It.IsAny<Guid>(),
-                                                     It.IsAny<string>(),
-                                                     It.IsAny<AdminData>(),
-                                                     It.IsAny<CancellationToken>()), Times.Once);
+                It.IsAny<string>(),
+                It.IsAny<AdminData>(),
+                It.IsAny<CancellationToken>()), Times.Once);
             unitOfWorkMock.Verify(u => u.CompleteAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
     }

@@ -2,7 +2,7 @@
 using Domain.Entities;
 using MediatR;
 
-namespace Api.GraphQL.GraphQLQueries;
+namespace Api.GraphQL.Queries;
 
 public class VeterinaryManagerQueries
 {
@@ -16,6 +16,7 @@ public class VeterinaryManagerQueries
     {
         Mediator = mediator;
     }
+
     /// <summary>
     /// Constructor
     /// </summary>
@@ -53,7 +54,8 @@ public class VeterinaryManagerQueries
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    public async Task<IEnumerable<MedicalRecord>> GetAllAsync([Service] ISender Mediator, CancellationToken ct = default)
+    public async Task<IEnumerable<MedicalRecord>> GetAllAsync([Service] ISender Mediator,
+        CancellationToken ct = default)
     {
         try
         {

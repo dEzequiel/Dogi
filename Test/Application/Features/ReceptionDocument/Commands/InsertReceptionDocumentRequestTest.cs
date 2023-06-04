@@ -12,7 +12,8 @@ namespace Test.Application.Features.ReceptionDocument.Commands
     {
         [Theory]
         [AutoMoqData]
-        internal void RequestShouldSetReceptionDocumentDataProperty(Domain.Entities.ReceptionDocument documentDataForAdd,
+        internal void RequestShouldSetReceptionDocumentDataProperty(
+            Domain.Entities.Shelter.ReceptionDocument documentDataForAdd,
             AdminData adminData)
         {
             // Act
@@ -25,21 +26,22 @@ namespace Test.Application.Features.ReceptionDocument.Commands
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IReceptionDocumentWriteService> receptionDocumentWriteServiceMock,
-            Domain.Entities.ReceptionDocument documentDataForGet,
+            Domain.Entities.Shelter.ReceptionDocument documentDataForGet,
             InsertReceptionDocumentRequest request,
             InsertReceptionDocumentRequestHandler handler)
         {
             // Arrange
-            receptionDocumentWriteServiceMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.ReceptionDocument>(),
-                                                                    It.IsAny<AdminData>(),
-                                                                    It.IsAny<CancellationToken>()))
+            receptionDocumentWriteServiceMock.Setup(x =>
+                    x.AddAsync(It.IsAny<Domain.Entities.Shelter.ReceptionDocument>(),
+                        It.IsAny<AdminData>(),
+                        It.IsAny<CancellationToken>()))
                 .ReturnsAsync(documentDataForGet);
 
             // Act
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Entities.ReceptionDocument>>(result);
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.ReceptionDocument>>(result);
         }
     }
 }

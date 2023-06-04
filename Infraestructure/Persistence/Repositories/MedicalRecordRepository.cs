@@ -1,11 +1,12 @@
-﻿using Application.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Interfaces.Repositories;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
-using Domain.Enums;
+using Domain.Enums.Shelter;
+using Domain.Enums.Veterinary;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -50,7 +51,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CloseRevisionAsync(Guid id, string conclusions, AdminData admin, 
+        public async Task<MedicalRecord> CloseRevisionAsync(Guid id, string conclusions, AdminData admin,
             CancellationToken ct = default)
         {
             var entity = await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
@@ -60,7 +61,7 @@ namespace Infraestructure.Persistence.Repositories
                 throw new DogiException($"MedicalRecord with id {id} not found");
             }
 
-            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.Cure) && 
+            if (entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.Cure) &&
                 entity.IndividualProceeding.Cage!.AnimalZoneId != ((int)AnimalZones.WaitingForMedicalRevision))
             {
                 throw new DogiException("The cage is not in the cure area.");
@@ -74,7 +75,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, string? observations, AdminData admin, 
+        public async Task<MedicalRecord> CompleteRevisionAsync(Guid id, string? observations, AdminData admin,
             CancellationToken ct = default)
         {
             var entity = await MedicalRecords.FirstOrDefaultAsync(x => x.Id == id);
@@ -133,7 +134,7 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc/>
-        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin, 
+        public async Task<MedicalRecord> UpdateAsync(Guid id, MedicalRecord newEntity, AdminData admin,
             CancellationToken ct = default)
         {
             var entity = await GetAsync(id);

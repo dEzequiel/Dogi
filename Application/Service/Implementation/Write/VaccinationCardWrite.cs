@@ -1,5 +1,5 @@
-﻿using Application.Service.Abstraction.Write;
-using Application.Service.Interfaces;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
@@ -24,7 +24,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<VaccinationCard> AddAsync(VaccinationCard entity, AdminData admin, CancellationToken ct = default)
+        public async Task<VaccinationCard> AddAsync(VaccinationCard entity, AdminData admin,
+            CancellationToken ct = default)
         {
             Logger.LogInformation("VaccinationCardWrite --> AddAsync --> Start");
 
@@ -45,8 +46,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-
-        public async Task<VaccinationCard> UpdateAsync(Guid id, string observations, AdminData admin, CancellationToken ct = default)
+        public async Task<VaccinationCard> UpdateAsync(Guid id, string observations, AdminData admin,
+            CancellationToken ct = default)
         {
             Logger.LogInformation("VaccinationCardWrite --> AddAsync --> Start");
 
@@ -72,7 +73,5 @@ namespace Application.Service.Implementation.Write
         {
             UnitOfWork.Dispose();
         }
-
-
     }
 }

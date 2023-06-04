@@ -1,10 +1,10 @@
 ﻿using Application.DTOs.VeterinaryManager;
+using Application.Interfaces;
 using Application.Service.Abstraction.Write;
-using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Domain.Entities;
-using Domain.Enums;
+using Domain.Enums.Veterinary;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write
@@ -26,7 +26,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<VaccinationCardVaccine> AddAsync(VaccinationCardVaccine entity, AdminData admin, CancellationToken ct = default)
+        public async Task<VaccinationCardVaccine> AddAsync(VaccinationCardVaccine entity, AdminData admin,
+            CancellationToken ct = default)
         {
             Logger.LogInformation("VaccinationCardVaccine --> AddAsync --> Start");
 
@@ -50,7 +51,8 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, AdminData admin, CancellationToken ct = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId,
+            IEnumerable<Guid> vaccinesId, AdminData admin, CancellationToken ct = default)
         {
             Logger.LogInformation("VaccinationCardVaccine --> AddRangeAsync --> Start");
 
@@ -74,13 +76,15 @@ namespace Application.Service.Implementation.Write
         }
 
         ///<inheritdoc />
-        public Task<VaccinationCardVaccine> UpdateAsync(Guid id, VaccinationCardVaccine newEntity, AdminData admin, CancellationToken ct = default)
+        public Task<VaccinationCardVaccine> UpdateAsync(Guid id, VaccinationCardVaccine newEntity, AdminData admin,
+            CancellationToken ct = default)
         {
             throw new NotImplementedException();
         }
 
         ///<inheritdoc />
-        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccinationCardId, VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken ct = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccinationCardId,
+            VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken ct = default)
         {
             Logger.LogInformation("VaccinationCardVaccine --> VaccineAsync --> Start");
 
@@ -106,6 +110,5 @@ namespace Application.Service.Implementation.Write
         {
             UnitOfWork.Dispose();
         }
-
     }
 }

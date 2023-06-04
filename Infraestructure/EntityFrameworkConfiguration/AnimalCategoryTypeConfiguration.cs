@@ -1,4 +1,4 @@
-﻿using Domain.Support;
+﻿using Domain.Entities.Shelter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,12 +9,12 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<AnimalCategory> builder)
         {
             builder
-                .ToTable("AnimalCategory", "Dogi")
+                .ToTable("AnimalCategory", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 
 
-            var totalAnimalCategories = Enum.GetNames(typeof(Domain.Enums.AnimalCategory));
+            var totalAnimalCategories = Enum.GetNames(typeof(Domain.Enums.Shelter.AnimalCategory));
 
             int id = 0;
             foreach (var category in totalAnimalCategories)
@@ -22,7 +22,6 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 id++;
                 builder.HasData(new AnimalCategory(id, category));
             }
-
         }
     }
 }

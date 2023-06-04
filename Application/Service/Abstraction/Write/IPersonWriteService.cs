@@ -1,5 +1,5 @@
 ﻿using Crosscuting.Base.Interfaces;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 
 namespace Application.Service.Abstraction.Write
 {

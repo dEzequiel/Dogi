@@ -2,7 +2,6 @@
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
-using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -11,9 +10,9 @@ namespace Application.Features.ReceptionDocument.Commands
     /// <summary>
     /// Insert ReceptionDocument request implementation.
     /// </summary>
-    public class InsertReceptionDocumentRequest : IRequest<ApiResponse<Domain.Entities.ReceptionDocument>>
+    public class InsertReceptionDocumentRequest : IRequest<ApiResponse<Domain.Entities.Shelter.ReceptionDocument>>
     {
-        public Domain.Entities.ReceptionDocument ReceptionDocumentData { get; private set; } = null!;
+        public Domain.Entities.Shelter.ReceptionDocument ReceptionDocumentData { get; private set; } = null!;
         public AdminData AdminData { get; private set; } = null!;
 
         /// <summary>
@@ -21,7 +20,8 @@ namespace Application.Features.ReceptionDocument.Commands
         /// </summary>
         /// <param name="receptionDocumentData"></param>
         /// <param name="adminData"></param>
-        public InsertReceptionDocumentRequest(Domain.Entities.ReceptionDocument receptionDocumentData, AdminData adminData)
+        public InsertReceptionDocumentRequest(Domain.Entities.Shelter.ReceptionDocument receptionDocumentData,
+            AdminData adminData)
         {
             ReceptionDocumentData = receptionDocumentData;
             AdminData = adminData;
@@ -31,8 +31,8 @@ namespace Application.Features.ReceptionDocument.Commands
     /// <summary>
     /// Insert ReceptionDocument handler implementation.
     /// </summary>
-    public class InsertReceptionDocumentRequestHandler : IRequestHandler<InsertReceptionDocumentRequest, 
-                                                         ApiResponse<Domain.Entities.ReceptionDocument>>
+    public class InsertReceptionDocumentRequestHandler : IRequestHandler<InsertReceptionDocumentRequest,
+        ApiResponse<Domain.Entities.Shelter.ReceptionDocument>>
     {
         private readonly ILogger<InsertReceptionDocumentRequestHandler> _logger;
         private readonly IReceptionDocumentWriteService _receptionDocumentWriteService;
@@ -42,7 +42,7 @@ namespace Application.Features.ReceptionDocument.Commands
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="receptionDocumentWriteService"></param>
-        public InsertReceptionDocumentRequestHandler(ILogger<InsertReceptionDocumentRequestHandler> logger, 
+        public InsertReceptionDocumentRequestHandler(ILogger<InsertReceptionDocumentRequestHandler> logger,
             IReceptionDocumentWriteService receptionDocumentWriteService)
         {
             _logger = Guard.Against.Null(logger, nameof(logger));
@@ -50,19 +50,21 @@ namespace Application.Features.ReceptionDocument.Commands
         }
 
         ///<inheritdoc/>
-        public async Task<ApiResponse<Domain.Entities.ReceptionDocument>> Handle(InsertReceptionDocumentRequest request, 
-                                                                       CancellationToken cancellationToken)
+        public async Task<ApiResponse<Domain.Entities.Shelter.ReceptionDocument>> Handle(
+            InsertReceptionDocumentRequest request,
+            CancellationToken cancellationToken)
         {
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> Start");
 
             Guard.Against.Null(request, nameof(request));
-            
-            Domain.Entities.ReceptionDocument result = await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData, request.AdminData, cancellationToken);
+
+            Domain.Entities.Shelter.ReceptionDocument result =
+                await _receptionDocumentWriteService.AddAsync(request.ReceptionDocumentData, request.AdminData,
+                    cancellationToken);
 
             _logger.LogInformation("InsertReceptionDocumentRequestHandler --> AddAsync --> End");
 
-            return new ApiResponse<Domain.Entities.ReceptionDocument>(result);
-
+            return new ApiResponse<Domain.Entities.Shelter.ReceptionDocument>(result);
         }
     }
 }

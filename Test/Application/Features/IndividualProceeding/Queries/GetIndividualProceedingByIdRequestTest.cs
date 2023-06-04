@@ -22,10 +22,10 @@ namespace Test.Application.Features.IndividualProceeding.Queries
         [Theory]
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
-        [Frozen] Mock<IIndividualProceedingReadService> individualProceedingReadService,
-        Domain.Entities.IndividualProceeding individualProceedingForGet,
-        GetIndividualProceedingByIdRequest request,
-        GetIndividualProceedingByIdRequestHandler handler)
+            [Frozen] Mock<IIndividualProceedingReadService> individualProceedingReadService,
+            Domain.Entities.Shelter.IndividualProceeding individualProceedingForGet,
+            GetIndividualProceedingByIdRequest request,
+            GetIndividualProceedingByIdRequestHandler handler)
         {
             // Arrange
             individualProceedingReadService.Setup(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
@@ -35,8 +35,9 @@ namespace Test.Application.Features.IndividualProceeding.Queries
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Entities.IndividualProceeding>>(result);
-            individualProceedingReadService.Verify(x => x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.IndividualProceeding>>(result);
+            individualProceedingReadService.Verify(x =>
+                x.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()));
         }
     }
 }

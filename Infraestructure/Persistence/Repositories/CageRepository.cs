@@ -1,10 +1,10 @@
-﻿using Application.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Interfaces.Repositories;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -14,6 +14,7 @@ namespace Infraestructure.Persistence.Repositories
         /// Attributes.
         /// </summary>
         private const string CAGE_NOT_FOUND = "Cage with id {0} not found.";
+
         private const string CAGE_IS_OCCUPIED = "Cage with id {0} is occupied.";
         protected DbSet<Cage> Cages;
 
@@ -64,7 +65,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<Cage> UpdateAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin, CancellationToken ct = default)
+        public async Task<Cage> UpdateAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin,
+            CancellationToken ct = default)
         {
             var entity = await Cages.FirstOrDefaultAsync(x => x.Id == id);
 

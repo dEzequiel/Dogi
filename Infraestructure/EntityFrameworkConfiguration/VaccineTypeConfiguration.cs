@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Support;
+using Domain.Entities.Shelter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +10,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<Vaccine> builder)
         {
             builder
-                .ToTable("Vaccine", "Dogi")
+                .ToTable("Vaccine", "Veterinary")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 

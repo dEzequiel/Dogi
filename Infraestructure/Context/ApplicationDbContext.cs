@@ -1,7 +1,10 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Authorization;
+using Domain.Entities.Shelter;
 using Domain.Support;
 using Infraestructure.EntityFrameworkConfiguration;
 using Microsoft.EntityFrameworkCore;
+
 namespace Infraestructure.Context
 {
     /// <summary>
@@ -9,10 +12,8 @@ namespace Infraestructure.Context
     /// </summary>
     public class ApplicationDbContext : DbContext
     {
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
         }
 
         // Tables
@@ -26,6 +27,8 @@ namespace Infraestructure.Context
         public DbSet<Vaccine> Vaccines { get; set; } = null!;
         public DbSet<VaccinationCard> VaccinationCards { get; set; } = null!;
         public DbSet<VaccinationCardVaccine> VaccinationCardVaccines { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<RoleUser> RolesUsers { get; set; } = null!;
 
 
         // Support Tables
@@ -44,7 +47,8 @@ namespace Infraestructure.Context
             new IndividualProceedingTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceeding>());
             new SexTypeConfiguration().Configure(modelBuilder.Entity<Sex>());
             new AnimalCategoryTypeConfiguration().Configure(modelBuilder.Entity<AnimalCategory>());
-            new IndividualProceedingStatusTypeConfiguration().Configure(modelBuilder.Entity<IndividualProceedingStatus>());
+            new IndividualProceedingStatusTypeConfiguration().Configure(
+                modelBuilder.Entity<IndividualProceedingStatus>());
             new AnimalZoneTypeConfiguration().Configure(modelBuilder.Entity<AnimalZone>());
             new PersonTypeConfiguration().Configure(modelBuilder.Entity<Person>());
             new PersonBannedInformationTypeConfiguration().Configure(modelBuilder.Entity<PersonBannedInformation>());
@@ -55,6 +59,11 @@ namespace Infraestructure.Context
             new VaccineTypeConfiguration().Configure(modelBuilder.Entity<Vaccine>());
             new VaccinationCardVaccineTypeConfiguration().Configure(modelBuilder.Entity<VaccinationCardVaccine>());
             new VaccinationCardTypeConfiguration().Configure(modelBuilder.Entity<VaccinationCard>());
+            new UserTypeConfiguration().Configure(modelBuilder.Entity<User>());
+            new RoleTypeConfiguration().Configure(modelBuilder.Entity<Role>());
+            new PermissionTypeConfiguration().Configure(modelBuilder.Entity<Permission>());
+            new RolePermissionTypeConfiguration().Configure(modelBuilder.Entity<RolePermission>());
+            new RoleUserTypeConfiguration().Configure(modelBuilder.Entity<RoleUser>());
         }
     }
 }

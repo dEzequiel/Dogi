@@ -1,5 +1,4 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities.Shelter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +9,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<AnimalChip> builder)
         {
             builder
-                .ToTable("AnimalChip", "Dogi")
+                .ToTable("AnimalChip", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 

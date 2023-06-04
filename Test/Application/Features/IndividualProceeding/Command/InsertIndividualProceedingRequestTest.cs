@@ -12,7 +12,8 @@ namespace Test.Application.Features.IndividualProceeding.Command
     {
         [Theory]
         [AutoMoqData]
-        internal void RequestShouldSetIndividualProceedingDataProperty(Domain.Entities.IndividualProceeding data,
+        internal void RequestShouldSetIndividualProceedingDataProperty(
+            Domain.Entities.Shelter.IndividualProceeding data,
             AdminData adminData)
         {
             // Act
@@ -25,24 +26,26 @@ namespace Test.Application.Features.IndividualProceeding.Command
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IIndividualProceedingWriteService> individualProceedingWriteServiceMock,
-            Domain.Entities.IndividualProceeding individualProceedingForGet,
+            Domain.Entities.Shelter.IndividualProceeding individualProceedingForGet,
             InsertIndividualProceedingRequest request,
             InsertIndividualProceedingRequestHandler handler)
         {
             // Arrange
-            individualProceedingWriteServiceMock.Setup(x => x.AddAsync(It.IsAny<Domain.Entities.IndividualProceeding>(),
-                                                                                It.IsAny<AdminData>(),
-                                                                                It.IsAny<CancellationToken>()))
+            individualProceedingWriteServiceMock.Setup(x =>
+                    x.AddAsync(It.IsAny<Domain.Entities.Shelter.IndividualProceeding>(),
+                        It.IsAny<AdminData>(),
+                        It.IsAny<CancellationToken>()))
                 .ReturnsAsync(individualProceedingForGet);
 
             // Act
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Entities.IndividualProceeding>>(result);
-            individualProceedingWriteServiceMock.Verify(i => i.AddAsync(It.IsAny<Domain.Entities.IndividualProceeding>(),
-                                                                                It.IsAny<AdminData>(),
-                                                                                It.IsAny<CancellationToken>()), Times.Once);
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.IndividualProceeding>>(result);
+            individualProceedingWriteServiceMock.Verify(i =>
+                i.AddAsync(It.IsAny<Domain.Entities.Shelter.IndividualProceeding>(),
+                    It.IsAny<AdminData>(),
+                    It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

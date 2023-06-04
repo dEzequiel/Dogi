@@ -9,20 +9,20 @@ namespace Application.Features.Sex.Queries
     /// <summary>
     /// Get sex by identifier request implementation.
     /// </summary>
-    public class GetSexByIdRequest : IRequest<ApiResponse<Domain.Support.Sex>>
+    public class GetSexByIdRequest : IRequest<ApiResponse<Domain.Entities.Shelter.Sex>>
     {
         public int Id { get; private set; }
 
         public GetSexByIdRequest(int id)
         {
-           Id = Guard.Against.Null(id, nameof(id));
+            Id = Guard.Against.Null(id, nameof(id));
         }
     }
 
     /// <summary>
     /// Get sex by identifier request handler implementation.
     /// </summary>
-    public class GetSexByIdRequestHandler : IRequestHandler<GetSexByIdRequest, ApiResponse<Domain.Support.Sex>>
+    public class GetSexByIdRequestHandler : IRequestHandler<GetSexByIdRequest, ApiResponse<Domain.Entities.Shelter.Sex>>
     {
         private readonly ILogger<GetSexByIdRequestHandler> Logger;
         private readonly ISexReadService SexRead;
@@ -35,19 +35,20 @@ namespace Application.Features.Sex.Queries
         }
 
         ///<inheritdoc />
-        public async Task<ApiResponse<Domain.Support.Sex>> Handle(GetSexByIdRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Domain.Entities.Shelter.Sex>> Handle(GetSexByIdRequest request,
+            CancellationToken cancellationToken)
         {
             Logger.LogInformation($"GetSexByIdRequestHandler --> GetByIdAsync({request.Id}) --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            Domain.Support.Sex? result = await SexRead.GetByIdAsync(request.Id);
+            Domain.Entities.Shelter.Sex? result = await SexRead.GetByIdAsync(request.Id);
 
             if (result is null)
             {
                 Logger.LogInformation($"GetSexByIdRequestHandler --> GetByIdAsync({request.Id}) --> Not Found");
 
-                return new ApiResponse<Domain.Support.Sex>()
+                return new ApiResponse<Domain.Entities.Shelter.Sex>()
                 {
                     Succeeded = false,
                     Message = string.Format(SEX_NOT_FOUND, request.Id),
@@ -57,7 +58,7 @@ namespace Application.Features.Sex.Queries
 
             Logger.LogInformation($"GetSexByIdRequestHandler --> GetByIdAsync --> End");
 
-            return new ApiResponse<Domain.Support.Sex>(result);
+            return new ApiResponse<Domain.Entities.Shelter.Sex>(result);
         }
     }
 }

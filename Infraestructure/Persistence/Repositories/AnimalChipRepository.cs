@@ -1,8 +1,8 @@
-﻿using Application.Interfaces.Repositories;
-using Domain.Entities;
+﻿using System.Linq.Expressions;
+using Application.Interfaces.Repositories;
+using Domain.Entities.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Infraestructure.Persistence.Repositories
 {

@@ -1,6 +1,6 @@
 using Application.Interfaces.Repositories;
 using Crosscuting.Base.Exceptions;
-using Domain.Support;
+using Domain.Entities.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 

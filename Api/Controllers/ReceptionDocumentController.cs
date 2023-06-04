@@ -1,7 +1,7 @@
 ﻿using Application.Features.ReceptionDocument.Queries;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +13,13 @@ public class ReceptionDocumentController : ControllerBase
 {
     private readonly ILogger<ReceptionDocumentController> _logger;
     private readonly IMediator _mediator;
-    
+
     public ReceptionDocumentController(ILogger<ReceptionDocumentController> logger, IMediator mediator)
     {
         _logger = Guard.Against.Null(logger, nameof(logger));
         _mediator = Guard.Against.Null(mediator, nameof(mediator));
     }
-    
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ApiResponse<ReceptionDocument>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,10 +1,8 @@
-﻿using Application.Service.Abstraction.Read;
+﻿using Application.Interfaces;
+using Application.Service.Abstraction.Read;
 using Application.Service.Implementation.Command;
-using Application.Service.Interfaces;
 using Ardalis.GuardClauses;
-using AutoMapper;
-using Crosscuting.Api.DTOs.Response;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Read;
@@ -16,24 +14,24 @@ public class ReceptionDocumentRead : IReceptionDocumentReadService
 {
     private readonly ILogger<ReceptionDocumentWrite> _logger;
     private readonly IUnitOfWork _unitOfWork;
-    
+
     public ReceptionDocumentRead(IUnitOfWork unitOfWork, ILogger<ReceptionDocumentWrite> logger)
     {
         _unitOfWork = Guard.Against.Null(unitOfWork, nameof(unitOfWork));
         _logger = Guard.Against.Null(logger, nameof(logger));
     }
-    
+
     /// <inheritdoc/>
     public async Task<ReceptionDocument?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         _logger.LogInformation($"ReceptionDocumentRead --> GetByIdAsync({id}) --> Start");
 
         Guard.Against.NullOrEmpty(id, nameof(id));
-        
+
         var repository = _unitOfWork.ReceptionDocumentRepository;
 
         var document = await repository.GetAsync(id);
-        
+
         _logger.LogInformation($"ReceptionDocumentRead --> GetByIdAsync({id}) --> End");
 
         return document;
@@ -47,13 +45,14 @@ public class ReceptionDocumentRead : IReceptionDocumentReadService
         var repository = _unitOfWork.ReceptionDocumentRepository;
 
         var documents = await repository.GetAllAsync(ct);
-        
+
         _logger.LogInformation("ReceptionDocumentRead --> GetAllPaginatedAsync --> End");
 
         return documents;
     }
 
-    public async Task<IEnumerable<ReceptionDocument>?> GetAllFilterByChipAsync(bool hasChip, CancellationToken ct = default)
+    public async Task<IEnumerable<ReceptionDocument>?> GetAllFilterByChipAsync(bool hasChip,
+        CancellationToken ct = default)
     {
         _logger.LogInformation($"ReceptionDocumentRead --> GetAllFilterByChipAsync({hasChip}) --> Start");
 
@@ -61,12 +60,12 @@ public class ReceptionDocumentRead : IReceptionDocumentReadService
 
 
         var documents = await repository.GetAllFilterByChipPossessionAsync(hasChip, ct);
-        
+
         _logger.LogInformation("ReceptionDocumentRead --> GetAllFilterByChipAsync --> End");
 
         return documents;
     }
-    
+
     public void Dispose()
     {
         _unitOfWork.Dispose();

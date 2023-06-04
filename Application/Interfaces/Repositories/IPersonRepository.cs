@@ -1,5 +1,5 @@
 ﻿using Application.Service.Interfaces;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 
 namespace Application.Interfaces.Repositories
 {
@@ -20,5 +20,13 @@ namespace Application.Interfaces.Repositories
         /// <param name="ct"></param>
         /// <returns></returns>
         Task<Person> BanAsync(string id, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get Person by user identifier.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<Person> GetByUserIdAsync(Guid userId, CancellationToken ct = default);
     }
 }

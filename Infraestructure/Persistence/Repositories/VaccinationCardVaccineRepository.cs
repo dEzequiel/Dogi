@@ -1,12 +1,12 @@
-﻿using Application.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Application.DTOs.VeterinaryManager;
+using Application.Interfaces.Repositories;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities;
-using Domain.Enums;
+using Domain.Enums.Veterinary;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using Application.DTOs.VeterinaryManager;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -14,8 +14,13 @@ namespace Infraestructure.Persistence.Repositories
     {
         private const string VACCINATION_CARD_VACCINE_NOT_FOUND = "VaccinationCardVaccine with id {0} not found.";
         private const string VACCINATION_CARD_VACCINE_ALREADY_DONE = "VaccinationCardVaccine with id {0} already done.";
-        private const string VACCINATION_CARD_VACCINE_ALREADY_ASSIGNED = "VaccinationCardVaccine with id {0} already assgined.";
-        private const string VACCINATION_CARD_VACCINE_ALREADY_ADDED = "Vaccine with id {0} already added in VaccinationCard with id {1}.";
+
+        private const string VACCINATION_CARD_VACCINE_ALREADY_ASSIGNED =
+            "VaccinationCardVaccine with id {0} already assgined.";
+
+        private const string VACCINATION_CARD_VACCINE_ALREADY_ADDED =
+            "Vaccine with id {0} already added in VaccinationCard with id {1}.";
+
         private const string VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND = "VaccinationCard with id {1} not found.";
 
         protected DbSet<VaccinationCardVaccine> VaccinationCardVaccines;
@@ -44,11 +49,11 @@ namespace Infraestructure.Persistence.Repositories
             entity.VaccineStatusId = ((int)VaccineStatuses.Pending);
 
             await VaccinationCardVaccines.AddAsync(entity, ct);
-
         }
 
         ///<inheritdoc />
-        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId, IEnumerable<Guid> vaccinesId, int vaccineStatusId, AdminData admin, CancellationToken ct = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> AddRangeAsync(Guid vaccinationCardId,
+            IEnumerable<Guid> vaccinesId, int vaccineStatusId, AdminData admin, CancellationToken ct = default)
         {
             var entities = new List<VaccinationCardVaccine>();
 
@@ -63,7 +68,6 @@ namespace Infraestructure.Persistence.Repositories
                     VaccineStatusId = vaccineStatusId,
                     Created = DateTime.UtcNow,
                     CreatedBy = admin.Email
-
                 };
                 await AddAsync(entity, admin, ct);
                 entities.Add(entity);
@@ -74,11 +78,13 @@ namespace Infraestructure.Persistence.Repositories
 
         private async Task CheckIfPendingVaccineExistAsync(IEnumerable<Guid> vaccinesIds)
         {
-            var pendingVaccines = await VaccinationCardVaccines.AsNoTracking().Where(x => vaccinesIds.Contains(x.VaccineId) && x.VaccineStatusId == (int)VaccineStatuses.Pending).ToListAsync();
+            var pendingVaccines = await VaccinationCardVaccines.AsNoTracking().Where(x =>
+                vaccinesIds.Contains(x.VaccineId) && x.VaccineStatusId == (int)VaccineStatuses.Pending).ToListAsync();
 
             if (pendingVaccines.Any())
             {
-                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_ASSIGNED, pendingVaccines.FirstOrDefault().Id));
+                throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_ALREADY_ASSIGNED,
+                    pendingVaccines.FirstOrDefault().Id));
             }
         }
 
@@ -94,7 +100,8 @@ namespace Infraestructure.Persistence.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Domain.Entities.VaccinationCardVaccine>> FindAsync(Expression<Func<Domain.Entities.VaccinationCardVaccine, bool>> predicate)
+        public Task<IEnumerable<Domain.Entities.VaccinationCardVaccine>> FindAsync(
+            Expression<Func<Domain.Entities.VaccinationCardVaccine, bool>> predicate)
         {
             throw new NotImplementedException();
         }
@@ -113,9 +120,9 @@ namespace Infraestructure.Persistence.Repositories
         public async Task<VaccinationCardVaccine> GetLoadedAsync(Guid id, CancellationToken ct = default)
         {
             var entity = await VaccinationCardVaccines
-                            .Include(r => r.VaccinationCard)
-                                .ThenInclude(r => r.IndividualProceeding)
-                            .FirstOrDefaultAsync(x => x.Id == id, ct);
+                .Include(r => r.VaccinationCard)
+                .ThenInclude(r => r.IndividualProceeding)
+                .FirstOrDefaultAsync(x => x.Id == id, ct);
 
             if (entity is null)
             {
@@ -126,7 +133,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
-        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccineCardId, VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<VaccinationCardVaccine>> VaccineAsync(Guid vaccineCardId,
+            VaccinesToComplish vaccinesIds, AdminData admin, CancellationToken cancellationToken = default)
         {
             var entity = await VaccinationCardVaccines.Where(x => x.VaccinationCardId == vaccineCardId).ToListAsync();
 
@@ -134,7 +142,7 @@ namespace Infraestructure.Persistence.Repositories
             {
                 throw new DogiException(string.Format(VACCINATION_CARD_VACCINE_MEMBERS_NOT_FOUND, vaccineCardId));
             }
-            
+
             foreach (var vaccine in entity)
             {
                 if (vaccinesIds.Needed.Contains(vaccine.VaccineId))
@@ -145,7 +153,7 @@ namespace Infraestructure.Persistence.Repositories
                     vaccine.VaccineStart = DateTime.UtcNow;
                     vaccine.VaccineEnd = vaccine.VaccineStart.Value.AddDays(365);
                 }
-                
+
                 if (vaccinesIds.NotNeeded.Contains(vaccine.VaccineId))
                 {
                     vaccine.VaccineStatusId = ((int)VaccineStatuses.NotNeeded);

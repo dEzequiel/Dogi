@@ -3,11 +3,6 @@ using Application.Service.Abstraction.Read;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs.Response;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Test.Utils.Attributes;
 
 namespace Test.Application.Features.AnimalCategory.Queries
@@ -28,7 +23,7 @@ namespace Test.Application.Features.AnimalCategory.Queries
         [AutoMoqData]
         internal async Task HandleShouldCallServiceAndReturnApiResponseDtoAsync(
             [Frozen] Mock<IAnimalCategoryReadService> animalCategoryReadMock,
-            Domain.Support.AnimalCategory animalCategoryForGet,
+            Domain.Entities.Shelter.AnimalCategory animalCategoryForGet,
             GetAnimalCategoryByIdRequest request,
             GetAnimalCategoryByIdRequestHandler handler)
         {
@@ -40,7 +35,7 @@ namespace Test.Application.Features.AnimalCategory.Queries
             var result = await handler.Handle(request, default);
 
             // Assert
-            Assert.IsType<ApiResponse<Domain.Support.AnimalCategory>>(result);
+            Assert.IsType<ApiResponse<Domain.Entities.Shelter.AnimalCategory>>(result);
             animalCategoryReadMock.Verify(x => x.GetByIdAsync(It.IsAny<int>()), Times.Once);
         }
     }

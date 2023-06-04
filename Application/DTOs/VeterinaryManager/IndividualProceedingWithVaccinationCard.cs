@@ -1,6 +1,5 @@
-﻿
-
-using Domain.Entities;
+﻿using Domain.Entities;
+using Domain.Entities.Shelter;
 
 namespace Application.DTOs.VeterinaryManager
 {
@@ -14,7 +13,8 @@ namespace Application.DTOs.VeterinaryManager
         /// </summary>
         /// <param name="individualProceeding"></param>
         /// <param name="vaccinationCard"></param>
-        public IndividualProceedingWithVaccinationCard(IndividualProceeding individualProceeding, VaccinationCard vaccinationCard)
+        public IndividualProceedingWithVaccinationCard(IndividualProceeding individualProceeding,
+            VaccinationCard vaccinationCard)
         {
             IndividualProceeding = individualProceeding;
             VaccinationCard = vaccinationCard;
@@ -23,6 +23,8 @@ namespace Application.DTOs.VeterinaryManager
         /// <summary>
         /// Constructor.
         /// </summary>
-        public IndividualProceedingWithVaccinationCard() { }
+        public IndividualProceedingWithVaccinationCard()
+        {
+        }
     }
 }

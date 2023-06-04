@@ -3,24 +3,22 @@ using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.ReceptionDocument.Queries
 {
     /// <summary>
     /// Get all ReceptionDocuments request implementation.
     /// </summary>
-    public class GetAllReceptionDocumentsRequest : IRequest<ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>> { }
+    public class
+        GetAllReceptionDocumentsRequest : IRequest<ApiResponse<IEnumerable<Domain.Entities.Shelter.ReceptionDocument>>>
+    {
+    }
 
     /// <summary>
     /// Get all ReceptionDocuments handler implementation.
     /// </summary>
     public class GetAllReceptionDocumentsRequestHandler : IRequestHandler<GetAllReceptionDocumentsRequest,
-        ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>>
+        ApiResponse<IEnumerable<Domain.Entities.Shelter.ReceptionDocument>>>
     {
         private readonly ILogger<GetReceptionDocumentByIdRequestHandler> _logger;
         private readonly IReceptionDocumentReadService _receptionDocumentReadService;
@@ -30,26 +28,29 @@ namespace Application.Features.ReceptionDocument.Queries
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="receptionDocumentReadService"></param>
-        public GetAllReceptionDocumentsRequestHandler(ILogger<GetReceptionDocumentByIdRequestHandler> logger, 
+        public GetAllReceptionDocumentsRequestHandler(ILogger<GetReceptionDocumentByIdRequestHandler> logger,
             IReceptionDocumentReadService receptionDocumentReadService)
         {
             _logger = Guard.Against.Null(logger, nameof(logger));
-            _receptionDocumentReadService = Guard.Against.Null(receptionDocumentReadService, nameof(receptionDocumentReadService));
+            _receptionDocumentReadService =
+                Guard.Against.Null(receptionDocumentReadService, nameof(receptionDocumentReadService));
         }
 
         ///<inheritdoc />
-        public async Task<ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>> Handle(GetAllReceptionDocumentsRequest request, 
+        public async Task<ApiResponse<IEnumerable<Domain.Entities.Shelter.ReceptionDocument>>> Handle(
+            GetAllReceptionDocumentsRequest request,
             CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("GetAllReceptionDocumentsRequestHandler --> Handler --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            IEnumerable<Domain.Entities.ReceptionDocument> result = await _receptionDocumentReadService.GetAllAsync(cancellationToken);
+            IEnumerable<Domain.Entities.Shelter.ReceptionDocument> result =
+                await _receptionDocumentReadService.GetAllAsync(cancellationToken);
 
             _logger.LogInformation("GetAllReceptionDocumentsRequestHandler --> Handler --> End");
 
-            return new ApiResponse<IEnumerable<Domain.Entities.ReceptionDocument>>(result);
+            return new ApiResponse<IEnumerable<Domain.Entities.Shelter.ReceptionDocument>>(result);
         }
     }
 }

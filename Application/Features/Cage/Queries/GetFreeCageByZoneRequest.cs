@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Cage.Queries
 {
-    public class GetFreeCageByZoneRequest : IRequest<ApiResponse<Domain.Entities.Cage>>
+    public class GetFreeCageByZoneRequest : IRequest<ApiResponse<Domain.Entities.Shelter.Cage>>
     {
         public int ZoneId { get; private set; }
 
@@ -20,7 +20,9 @@ namespace Application.Features.Cage.Queries
         }
     }
 
-    public class GetFreeCageByZoneRequestHandler : IRequestHandler<GetFreeCageByZoneRequest, ApiResponse<Domain.Entities.Cage>>
+    public class
+        GetFreeCageByZoneRequestHandler : IRequestHandler<GetFreeCageByZoneRequest,
+            ApiResponse<Domain.Entities.Shelter.Cage>>
     {
         private readonly ILogger<GetFreeCageByZoneRequestHandler> _logger;
         private readonly ICageReadService _cageRead;
@@ -31,28 +33,30 @@ namespace Application.Features.Cage.Queries
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="cageRead"></param>
-        public GetFreeCageByZoneRequestHandler(ILogger<GetFreeCageByZoneRequestHandler> logger, ICageReadService cageRead)
+        public GetFreeCageByZoneRequestHandler(ILogger<GetFreeCageByZoneRequestHandler> logger,
+            ICageReadService cageRead)
         {
             _logger = logger;
             _cageRead = cageRead;
         }
 
         ///<inheritdoc/>
-        public async Task<ApiResponse<Domain.Entities.Cage>> Handle(GetFreeCageByZoneRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Domain.Entities.Shelter.Cage>> Handle(GetFreeCageByZoneRequest request,
+            CancellationToken cancellationToken)
         {
             _logger.LogInformation("GetFreeCageByZoneRequestHandler --> GetFreeCageByZone --> Start");
 
             Guard.Against.Null(request, nameof(request));
 
-            Domain.Entities.Cage result = await _cageRead.GetFreeCageByZone(request.ZoneId, cancellationToken);
+            Domain.Entities.Shelter.Cage result = await _cageRead.GetFreeCageByZone(request.ZoneId, cancellationToken);
 
             if (result is null)
             {
                 _logger.LogError("GetFreeCageByZoneRequestHandler --> GetFreeCageByZone --> Error");
-                throw new NotFoundException(nameof(Domain.Entities.Cage), FREE_CAGE_NOT_FOUND);
+                throw new NotFoundException(nameof(Domain.Entities.Shelter.Cage), FREE_CAGE_NOT_FOUND);
             }
 
-            return new ApiResponse<Domain.Entities.Cage>(result);
+            return new ApiResponse<Domain.Entities.Shelter.Cage>(result);
         }
     }
 }

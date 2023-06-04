@@ -1,5 +1,5 @@
-using Domain.Enums;
-using Domain.Support;
+using Domain.Entities.Shelter;
+using Domain.Enums.Shelter;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +10,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
         public void Configure(EntityTypeBuilder<AnimalZone> builder)
         {
             builder
-                .ToTable("Zone", "Dogi")
+                .ToTable("Zone", "Shelter")
                 .HasKey(x => x.Id)
                 .IsClustered(false);
 

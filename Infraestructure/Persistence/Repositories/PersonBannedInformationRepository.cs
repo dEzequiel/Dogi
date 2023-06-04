@@ -1,9 +1,9 @@
-﻿using Application.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Interfaces.Repositories;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -42,7 +42,8 @@ namespace Infraestructure.Persistence.Repositories
         }
 
         ///<inheritdoc />
-        public Task<IEnumerable<PersonBannedInformation>> FindAsync(Expression<Func<PersonBannedInformation, bool>> predicate)
+        public Task<IEnumerable<PersonBannedInformation>> FindAsync(
+            Expression<Func<PersonBannedInformation, bool>> predicate)
         {
             throw new NotImplementedException();
         }
@@ -50,8 +51,6 @@ namespace Infraestructure.Persistence.Repositories
         ///<inheritdoc />
         public async Task AddAsync(PersonBannedInformation entity)
         {
-
-
             await Bans.AddAsync(entity);
         }
 

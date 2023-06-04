@@ -1,9 +1,9 @@
+using Application.Interfaces;
 using Application.Interfaces.Repositories;
 using Application.Service.Implementation.Write;
-using Application.Service.Interfaces;
 using AutoFixture.Xunit2;
 using Crosscuting.Api.DTOs;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using Moq;
 using Test.Utils.Attributes;
 
@@ -25,8 +25,8 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<AnimalChip>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<AnimalChip>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act
@@ -58,8 +58,8 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<AnimalChip>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<AnimalChip>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act & assert
@@ -81,8 +81,8 @@ namespace Test.Application.WriteServices
                 .Returns(repositoryMock.Object);
 
             repositoryMock.Setup(r => r.AddAsync(
-                It.IsAny<AnimalChip>(),
-                It.IsAny<CancellationToken>()))
+                    It.IsAny<AnimalChip>(),
+                    It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // act & assert

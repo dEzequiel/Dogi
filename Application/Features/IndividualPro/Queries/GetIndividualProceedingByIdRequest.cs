@@ -1,7 +1,7 @@
 ﻿using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Response;
-using Domain.Entities;
+using Domain.Entities.Shelter;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -10,7 +10,7 @@ namespace Application.Features.IndividualPro.Queries
     /// <summary>
     /// Get IndividualProceeding by identifier request implementation.
     /// </summary>
-    public class GetIndividualProceedingByIdRequest : IRequest<ApiResponse<Domain.Entities.IndividualProceeding>>
+    public class GetIndividualProceedingByIdRequest : IRequest<ApiResponse<IndividualProceeding>>
     {
         public Guid Id { get; private set; }
 
@@ -22,7 +22,7 @@ namespace Application.Features.IndividualPro.Queries
     }
 
     public class GetIndividualProceedingByIdRequestHandler : IRequestHandler<GetIndividualProceedingByIdRequest,
-        ApiResponse<Domain.Entities.IndividualProceeding>>
+        ApiResponse<IndividualProceeding>>
     {
         private readonly ILogger<GetIndividualProceedingByIdRequestHandler> Logger;
         private readonly IIndividualProceedingReadService IndividualProceedingReadService;
@@ -34,23 +34,26 @@ namespace Application.Features.IndividualPro.Queries
         /// <param name="logger"></param>
         /// <param name="individualProceedingReadService"></param>
         public GetIndividualProceedingByIdRequestHandler(ILogger<GetIndividualProceedingByIdRequestHandler> logger,
-                                                         IIndividualProceedingReadService individualProceedingReadService)
+            IIndividualProceedingReadService individualProceedingReadService)
         {
             Logger = Guard.Against.Null(logger);
             IndividualProceedingReadService = Guard.Against.Null(individualProceedingReadService);
         }
 
-        public async Task<ApiResponse<IndividualProceeding>> Handle(GetIndividualProceedingByIdRequest request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<IndividualProceeding>> Handle(GetIndividualProceedingByIdRequest request,
+            CancellationToken cancellationToken)
         {
             Logger.LogInformation($"GetIndividualProceedingByIdRequestHandler --> GetAsync({request.Id}) -> Start");
 
             Guard.Against.Null(request);
 
-            IndividualProceeding? result = await IndividualProceedingReadService.GetByIdAsync(request.Id, cancellationToken);
+            IndividualProceeding? result =
+                await IndividualProceedingReadService.GetByIdAsync(request.Id, cancellationToken);
 
             if (result is null)
             {
-                Logger.LogInformation($"GetIndividualProceedingByIdRequestHandler --> GetByIdAsync({request.Id}) --> Not Found");
+                Logger.LogInformation(
+                    $"GetIndividualProceedingByIdRequestHandler --> GetByIdAsync({request.Id}) --> Not Found");
 
                 return new ApiResponse<IndividualProceeding>()
                 {
