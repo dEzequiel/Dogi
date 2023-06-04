@@ -81,6 +81,15 @@ namespace Api.GraphQL.ObjectTypes
                 .ResolveWith<UserManagerMutations>(v => v.AssigneRole(default, default));
 
             #endregion
+
+            #region "ADOPTION MUTATIONS"
+
+            /*descriptor.Field("RegisterAdoptionApplication")
+                .Argument("adoptionPendingId", arg => arg.Type<NonNullType<UuidType>>())
+                .Argument("application", arg => arg.Type<NonNullType<AdoptionApplicationInputType>>())
+                .ResolveWith<AdoptionManagerMutations>(a => a.RegisterAdoptionApplication(default, default, default));*/
+
+            #endregion
         }
     }
 }
