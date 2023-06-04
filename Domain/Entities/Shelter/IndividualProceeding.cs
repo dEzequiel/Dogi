@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities.Adoption;
 
 namespace Domain.Entities.Shelter
 {
@@ -90,6 +91,11 @@ namespace Domain.Entities.Shelter
         /// Vaccination card relationship.
         /// </summary>
         public virtual VaccinationCard? VaccinationCard { get; set; }
+
+        /// <summary>
+        /// Adoption pendings relationship.
+        /// </summary>
+        public virtual AdoptionPending? AdoptionPending { get; set; }
 
         /// <summary>
         /// Constructor.

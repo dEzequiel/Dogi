@@ -16,6 +16,11 @@ public class AdoptionPendingStatus
     public string Status { get; set; } = null!;
 
     /// <summary>
+    /// Collection of AdoptionPending relationships.
+    /// </summary>
+    public virtual ICollection<AdoptionPending>? AdoptionPendings { get; set; }
+
+    /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="id"></param>
