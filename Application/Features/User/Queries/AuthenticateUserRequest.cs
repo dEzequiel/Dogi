@@ -1,10 +1,11 @@
-﻿using Application.Service.Abstraction.Read;
+﻿using Application.DTOs.User;
+using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Authentication;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-public class AuthenticateUserRequest : IRequest<string>
+public class AuthenticateUserRequest : IRequest<UserWithToken>
 {
     public UserDataLogin UserDataLogin { get; private set; }
 
@@ -21,7 +22,7 @@ public class AuthenticateUserRequest : IRequest<string>
 /// <summary>
 /// Login user request handler implementation
 /// </summary>
-public class AuthenticateUserRequestHandler : IRequestHandler<AuthenticateUserRequest, string>
+public class AuthenticateUserRequestHandler : IRequestHandler<AuthenticateUserRequest, UserWithToken>
 {
     private readonly ILogger<AuthenticateUserRequestHandler> Logger;
     private readonly IUserReadService _userReadService;
@@ -39,7 +40,7 @@ public class AuthenticateUserRequestHandler : IRequestHandler<AuthenticateUserRe
     }
 
     ///<inheritdoc />
-    public async Task<string> Handle(AuthenticateUserRequest request, CancellationToken cancellationToken)
+    public async Task<UserWithToken> Handle(AuthenticateUserRequest request, CancellationToken cancellationToken)
     {
         Logger.LogInformation("LoginUserRequestHandler --> AddAsync --> Start");
 

@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using Application.DTOs.User;
 using Application.Interfaces;
 using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
@@ -46,7 +47,7 @@ public class UserReadService : IUserReadService
     }
 
     ///<inheritdoc />
-    public async Task<string> Authenticate(UserDataLogin entity, CancellationToken ct = default)
+    public async Task<UserWithToken> Authenticate(UserDataLogin entity, CancellationToken ct = default)
     {
         Logger.LogInformation("UserWrite --> LoginAsync --> Start");
 
@@ -73,7 +74,12 @@ public class UserReadService : IUserReadService
 
         var token = await JsonWebTokenProvider.Generate(user);
 
-        return token;
+        return new UserWithToken()
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Token = token
+        };
     }
 
     private bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)

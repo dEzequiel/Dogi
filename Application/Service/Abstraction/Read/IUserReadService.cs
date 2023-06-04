@@ -1,4 +1,4 @@
-﻿using Crosscuting.Api;
+﻿using Application.DTOs.User;
 using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Interfaces;
 using Domain.Entities.Authorization;
@@ -21,5 +21,5 @@ public interface IUserReadService : IApplicationServiceBase
     /// <param name="entity"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<string> Authenticate(UserDataLogin entity, CancellationToken ct = default);
+    Task<UserWithToken> Authenticate(UserDataLogin entity, CancellationToken ct = default);
 }
