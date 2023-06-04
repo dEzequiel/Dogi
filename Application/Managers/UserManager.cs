@@ -34,8 +34,9 @@ public class UserManager : IUserManager
     }
 
     ///<inheritdoc />
-    public async Task<RegisteredUserWithPersonCredentials> Register(UserDataRegister user,
-        CancellationToken ct = default)
+    public async Task<RegisteredUserWithPersonCredentials>
+        Register(UserDataRegister user,
+            CancellationToken ct = default)
     {
         var userRepository = UnitOfWork.UserRepository;
         var userExist = await userRepository.GetAsync(user.Email);
