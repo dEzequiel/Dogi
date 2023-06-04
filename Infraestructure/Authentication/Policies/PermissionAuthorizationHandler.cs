@@ -1,16 +1,12 @@
-﻿using Application.Service.Abstraction.Read;
-using Domain.Entities.Authorization;
-using HotChocolate.Resolvers;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infraestructure.Authentication;
+namespace Infraestructure.Authentication.Policies;
 
 /// <summary>
 /// Handler authorization to check if current context user has request permissions.
 /// </summary>
-public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement, IResolverContext>
+public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {
     private const string HTTP_CONTEXT = "HttpContext";
     private readonly IServiceScopeFactory ServiceScopeFactory;
@@ -25,27 +21,20 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionReq
     }
 
     ///<inheritdoc />
-    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context,
-        PermissionRequirement requirement,
-        IResolverContext resource)
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
+        PermissionRequirement requirement)
     {
-        var httpCtx = resource.ContextData[HTTP_CONTEXT] as HttpContext;
-        var user = (User)httpCtx.Items["User"];
-
-        if (!Guid.TryParse(user.Id.ToString(), out Guid parsedUserId))
-        {
-            return;
-        }
-
-        using IServiceScope scope = ServiceScopeFactory.CreateScope();
-
-        IRoleUserReadService roleUserReadService = scope.ServiceProvider.GetRequiredService<IRoleUserReadService>();
-
-        HashSet<string> permissions = await roleUserReadService.GetPermissionsAsync(parsedUserId);
+        var permissions = context.User
+            .Claims
+            .Where(x => x.Type == "Permissions")
+            .Select(x => x.Value)
+            .ToHashSet();
 
         if (permissions.Contains(requirement.Permission))
         {
             context.Succeed(requirement);
         }
+
+        return Task.CompletedTask;
     }
 }
