@@ -91,11 +91,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-/// <summary>
-/// Call JWT Token validator for requests.
-/// <summary>
-//app.UseMiddleware<JwtMiddleware>();
-
 app.MapControllers();
 
 app.UseRouting();
@@ -106,7 +101,5 @@ app.UseAuthentication();
 
 app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
 
-
-//app.UseMiddleware<ValidateJWTokenAndAppendUserMiddleware>();
 
 app.Run();
