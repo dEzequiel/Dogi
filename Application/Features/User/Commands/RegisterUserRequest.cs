@@ -1,6 +1,6 @@
 ﻿using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
-using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
 using Microsoft.Extensions.Logging;

@@ -1,10 +1,11 @@
+using System.Text;
 using Api.GraphQL.ObjectTypes;
 using Application;
 using Infraestructure;
-using Infraestructure.Authentication;
 using Infraestructure.Context;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +24,24 @@ builder.Services
     .InitInfrastructure()
     .InitApplication(builder.Configuration);
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    var signingKey = new SymmetricSecurityKey(
+        Encoding.UTF8.GetBytes("this is my custom Secret key for authentication"));
 
-builder.Services.AddAuthorization();
-
-builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
-builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
-
+    options.TokenValidationParameters =
+        new TokenValidationParameters
+        {
+            ValidIssuer = "local",
+            ValidAudience = "local",
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKey
+        };
+});
 
 //////<summary>
 /// GraphQL Setup.
@@ -47,6 +60,7 @@ builder.Services
     .AddQueryType<QueryType>()
     .AddMutationType<MutationType>();
 
+
 //.AddErrorFilter<ErrorFilter>();
 
 // Database SqlServer connetion.
@@ -60,6 +74,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 var app = builder.Build();
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -87,13 +102,11 @@ app.UseRouting();
 
 
 app.UseAuthentication();
-app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapGraphQL();
-    endpoints.MapGraphQL("/auth", schemaName: "auth");
-});
 
+app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
+
+
+//app.UseMiddleware<ValidateJWTokenAndAppendUserMiddleware>();
 
 app.Run();

@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.UserManager;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
-using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
 using Microsoft.Extensions.Logging;

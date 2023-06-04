@@ -10,7 +10,7 @@ namespace Api.GraphQL.Middlewares;
 /// <summary>
 /// This middleware is responsible for validating the token and anchoring the user entity to the context of the request.
 /// </summary>
-public class ValidateJWTokenAndAppendUserMiddleware
+public class ValidateJwtTokenMiddleware
 {
     private const string ID_KEY = "Id";
     private const string ID_USER = "User";
@@ -22,7 +22,7 @@ public class ValidateJWTokenAndAppendUserMiddleware
     private readonly FieldDelegate Next;
     private readonly IUserReadService UserReadService;
 
-    public ValidateJWTokenAndAppendUserMiddleware(FieldDelegate next)
+    public ValidateJwtTokenMiddleware(FieldDelegate next)
     {
         Next = next;
     }
@@ -57,8 +57,8 @@ public class ValidateJWTokenAndAppendUserMiddleware
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuer = true,
+                ValidateAudience = true,
             }, out SecurityToken validatedToken);
 
             // Get valid token as JWT.

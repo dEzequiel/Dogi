@@ -2,7 +2,6 @@
 using Api.GraphQL.InputObjectTypes.Shelter;
 using Api.GraphQL.InputObjectTypes.Veterinary;
 using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
-using Api.GraphQL.Middlewares;
 using Api.GraphQL.Mutations;
 using Domain.Enums.Authorization;
 using HotChocolate.Authorization;
@@ -19,7 +18,6 @@ namespace Api.GraphQL.ObjectTypes
                 .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                 .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default,
                     default, default))
-                .Use<ValidateJWTokenAndAppendUserMiddleware>()
                 .Authorize(Permissions.CanRegister.ToString(), ApplyPolicy.AfterResolver);
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
@@ -66,18 +64,17 @@ namespace Api.GraphQL.ObjectTypes
             #region "USER MUTATIONS"
 
             descriptor.Field("RegisterUser")
-                .Argument("credentials", arg => arg.Type<UserInputType>())
+                .Argument("credentials", arg => arg.Type<UserRegisterInputType>())
                 .ResolveWith<UserManagerMutations>(v => v.Register(default, default));
 
             descriptor.Field("LoginUser")
-                .Argument("credentials", arg => arg.Type<UserInputType>())
+                .Argument("credentials", arg => arg.Type<UserLoginInputType>())
                 .ResolveWith<UserManagerMutations>(v => v.Authenticate(default, default));
 
             descriptor.Field("AssigneRole")
+                .Authorize("CanAssigneRole")
                 .Argument("userWithRoles", arg => arg.Type<NonNullType<UserWithRolesInputType>>())
                 .ResolveWith<UserManagerMutations>(v => v.AssigneRole(default, default));
-            //.Use<ValidateJWTokenAndAppendUserMiddleware>();
-            //.Authorize(Permissions.CanAssigneRole.ToString(), ApplyPolicy.AfterResolver);
 
             #endregion
         }

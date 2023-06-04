@@ -9,5 +9,5 @@ public interface IJsonWebTokenProvider
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
-    string Generate(User user);
+    Task<string> Generate(User user);
 }

@@ -1,13 +1,12 @@
 ﻿using Application.DTOs.UserManager;
 using Application.Features.UserManager.Commands;
-using Crosscuting.Api;
+using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Exceptions;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Api.GraphQL.Mutations;
 
-[AllowAnonymous]
+[Microsoft.AspNetCore.Authorization.AllowAnonymous]
 public class UserManagerMutations
 {
     private readonly IMediator Mediator;
@@ -58,7 +57,8 @@ public class UserManagerMutations
         }
     }
 
-    public async Task<UserWithJsonWebToken> Authenticate([Service] ISender Mediator, UserDataRegister credentials)
+    //[Authorize]
+    public async Task<UserWithJsonWebToken> Authenticate([Service] ISender Mediator, UserDataLogin credentials)
     {
         try
         {
@@ -86,6 +86,7 @@ public class UserManagerMutations
         }
     }
 
+    //[HotChocolate.Authorization.Authorize("CanAssigneRole", ApplyPolicy.BeforeResolver) ]
     public async Task<UserWithPermissions> AssigneRole([Service] ISender Mediator, UserWithRoles userWithRoles)
     {
         try
@@ -97,6 +98,12 @@ public class UserManagerMutations
             return result.Data;
         }
         catch (DogiException ex)
+        {
+            Logger.LogInformation("UserManagerMutations --> AssigneRole --> Error");
+
+            throw new DogiException(ex.Message);
+        }
+        catch (Exception ex)
         {
             Logger.LogInformation("UserManagerMutations --> AssigneRole --> Error");
 

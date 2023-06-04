@@ -1,9 +1,7 @@
 ﻿using System.Security.Cryptography;
-using Application.Authentication;
 using Application.Interfaces;
 using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
-using Crosscuting.Api;
 using Crosscuting.Api.DTOs.Authentication;
 using Domain.Entities.Authorization;
 using Microsoft.Extensions.Logging;
@@ -14,18 +12,16 @@ public class UserRead : IUserWriteService
 {
     private readonly ILogger<UserRead> Logger;
     private readonly IUnitOfWork UnitOfWork;
-    private readonly IJsonWebTokenProvider JsonWebTokenProvider;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="unitOfWork"></param>
-    public UserRead(ILogger<UserRead> logger, IUnitOfWork unitOfWork, IJsonWebTokenProvider jsonWebTokenProvider)
+    public UserRead(ILogger<UserRead> logger, IUnitOfWork unitOfWork)
     {
         Logger = logger;
         UnitOfWork = unitOfWork;
-        JsonWebTokenProvider = jsonWebTokenProvider;
     }
 
     ///<inheritdoc />
