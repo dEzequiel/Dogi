@@ -40,6 +40,7 @@ namespace Infraestructure.Context
         public DbSet<MedicalRecordStatus> MedicalRecordStatuses { get; set; } = null!;
         public DbSet<VaccineStatus> VaccineStatuses { get; set; } = null!;
         public DbSet<AdoptionApplicationStatus> AdoptionApplicationStatuses { get; set; } = null!;
+        public DbSet<AdoptionPendingStatus> AdoptionPendingStatuses { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -68,6 +69,7 @@ namespace Infraestructure.Context
             new RoleUserTypeConfiguration().Configure(modelBuilder.Entity<RoleUser>());
             new AdoptionApplicationStatusTypeConfiguration().Configure(modelBuilder
                 .Entity<AdoptionApplicationStatus>());
+            new AdoptionPendingStatusTypeConfiguration().Configure(modelBuilder.Entity<AdoptionPendingStatus>());
         }
     }
 }

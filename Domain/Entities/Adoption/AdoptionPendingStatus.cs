@@ -3,7 +3,7 @@ namespace Domain.Entities.Adoption;
 /// <summary>
 /// Support table representing records equivalent to AdoptionApplicationStatuses domain enumerator.
 /// </summary>
-public class AdoptionApplicationStatus
+public class AdoptionPendingStatus
 {
     /// <summary>
     /// Identifier.
@@ -20,7 +20,7 @@ public class AdoptionApplicationStatus
     /// </summary>
     /// <param name="id"></param>
     /// <param name="status"></param>
-    public AdoptionApplicationStatus(int id, string status)
+    public AdoptionPendingStatus(int id, string status)
     {
         Id = id;
         Status = status;
@@ -29,7 +29,7 @@ public class AdoptionApplicationStatus
     /// <summary>
     /// Constructor.
     /// </summary>
-    public AdoptionApplicationStatus()
+    public AdoptionPendingStatus()
     {
     }
 }
