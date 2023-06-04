@@ -67,7 +67,7 @@ namespace Test.Application.WriteServices
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<Domain.Entities.VaccinationCardVaccine>(result);
+            Assert.IsAssignableFrom<IEnumerable<Domain.Entities.VaccinationCardVaccine>>(result);
             repositoryMock.Verify(r => r.VaccineAsync(It.IsAny<Guid>(),
                 It.IsAny<VaccinesToComplish>(),
                 It.IsAny<AdminData>(),

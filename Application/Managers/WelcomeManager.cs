@@ -159,28 +159,6 @@ namespace Application.Managers
             };
         }
 
-
-        private async Task<AnimalChip> RegisterResponsibleOwnerAnimalChipAsync(IndividualProceeding proceeding,
-            AnimalChip animalChip, AdminData adminData)
-        {
-            await AssignCageForIndividualProceedingWithChipOwnerResponsible(proceeding);
-
-            var animalChipEntity = await Mediator.Send(new InsertAnimalChipRequest(animalChip, adminData));
-
-            return animalChipEntity.Data;
-        }
-
-        private async Task<IndividualProceeding> CreateIndividualProceedingForNotResponsibleOwnerAsync(
-            IndividualProceeding proceeding, AnimalChip animalChip, AdminData adminData)
-        {
-            await RegisterResponsibleOwnerAnimalChipAsync(proceeding, animalChip, adminData);
-
-            var individualProceeding =
-                await CreateIndividualProceedingWithVaccinationCardMedicalRecordAsync(proceeding, adminData);
-
-            return individualProceeding;
-        }
-
         private async Task BanPerson(Person person, AdminData admin)
         {
             var ban = new PersonBannedInformation(
