@@ -67,6 +67,8 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
     {
         await CheckIfApplicationAlreadyDone(entity.AdoptionPendingId, entity.UserId);
 
+        entity.AdoptionApplicationStatusId = (int)AdoptionApplicationStatuses.Waiting;
+
         entity.Created = DateTime.UtcNow;
         entity.CreatedBy = userData.Email;
 
