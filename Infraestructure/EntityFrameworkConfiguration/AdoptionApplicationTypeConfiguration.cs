@@ -26,6 +26,10 @@ public class AdoptionApplicationTypeConfiguration : IEntityTypeConfiguration<Ado
             .WithMany(x => x.AdoptionApplications)
             .HasForeignKey(fk => fk.HousingTypeId);
 
+        builder.HasOne<AdoptionApplicationStatus>(f => f.AdoptionApplicationStatus)
+            .WithMany(x => x.AdoptionApplications)
+            .HasForeignKey(fk => fk.AdoptionApplicationStatusId);
+
         builder.OwnsOne(x => x.HouseDescription);
         builder.OwnsOne(x => x.OtherAnimals);
         builder.OwnsOne(x => x.PersonalReferences);

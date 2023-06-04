@@ -16,6 +16,11 @@ public class AdoptionApplicationStatus
     public string Status { get; set; } = null!;
 
     /// <summary>
+    /// AdoptionApplications relationship.
+    /// </summary>
+    public virtual ICollection<AdoptionApplication>? AdoptionApplications { get; set; }
+
+    /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="id"></param>

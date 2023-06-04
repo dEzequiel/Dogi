@@ -29,6 +29,7 @@ namespace Application.Interfaces
         IRoleUserRepository RoleUserRepository { get; }
         IRolePermissionRepository RolePermissionRepository { get; }
         IRoleRepository RoleRepository { get; }
+        IAdoptionApplicationRepository AdoptionApplicationRepository { get; }
 
         /// <summary>
         /// Complete method for transaction complete

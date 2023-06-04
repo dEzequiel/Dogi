@@ -51,6 +51,9 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IRolePermissionRepository RolePermissionRepository => new RolePermissionRepository(_context);
         public IRoleRepository RoleRepository => new RoleRepository(_context);
 
+        public IAdoptionApplicationRepository AdoptionApplicationRepository =>
+            new AdoptionApplicationRepository(_context);
+
         /// <summary>
         /// Constructor.
         /// </summary>

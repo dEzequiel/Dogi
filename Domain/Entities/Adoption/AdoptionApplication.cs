@@ -22,6 +22,11 @@ public class AdoptionApplication : AuditableEntity
     public int HousingTypeId { get; set; }
 
     /// <summary>
+    /// AdoptionApplication status.
+    /// </summary>
+    public int AdoptionApplicationStatusId { get; set; }
+
+    /// <summary>
     /// House description.
     /// </summary>
     public virtual House HouseDescription { get; set; } = null!;
@@ -50,6 +55,11 @@ public class AdoptionApplication : AuditableEntity
     /// Housing type relationship.
     /// </summary>
     public virtual HousingType HousingType { get; set; } = null!;
+
+    /// <summary>
+    /// AdoptionApplicationStatus relationship.
+    /// </summary>
+    public virtual AdoptionApplicationStatus AdoptionApplicationStatus { get; set; } = null!;
 
     /// <summary>
     /// Constructor
