@@ -68,7 +68,7 @@ namespace Application.Managers
                 await Mediator.Send(new InsertMedicalRecordRequest(medicalRecord, adminData), ct);
             Guard.Against.Null(createdMedicalRecord.Data);
 
-            if (!vaccinesIds.Any())
+            if (vaccinesIds is null)
             {
                 return new IndividualProceedingWithMedicalRecord()
                 {
