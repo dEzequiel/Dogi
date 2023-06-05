@@ -36,6 +36,11 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
                 RoleId = (int)Roles.Administrator,
                 PermissionId = (int)Permissions.CanAssigneRole
             },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanCreateAdoptionPending
+            }
         });
 
         /// Veterinary permissions.
