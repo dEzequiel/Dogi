@@ -1,4 +1,5 @@
-﻿using Api.GraphQL.InputObjectTypes.Authorization;
+﻿using Api.GraphQL.InputObjectTypes.Adoption;
+using Api.GraphQL.InputObjectTypes.Authorization;
 using Api.GraphQL.InputObjectTypes.Shelter;
 using Api.GraphQL.InputObjectTypes.Veterinary;
 using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
@@ -84,10 +85,10 @@ namespace Api.GraphQL.ObjectTypes
 
             #region "ADOPTION MUTATIONS"
 
-            /*descriptor.Field("RegisterAdoptionApplication")
-                .Argument("adoptionPendingId", arg => arg.Type<NonNullType<UuidType>>())
-                .Argument("application", arg => arg.Type<NonNullType<AdoptionApplicationInputType>>())
-                .ResolveWith<AdoptionManagerMutations>(a => a.RegisterAdoptionApplication(default, default, default));*/
+            descriptor.Field("ApplyForAdoption")
+                .Argument("applicationInformation",
+                    arg => arg.Type<NonNullType<AdoptionApplicationInformationInputType>>())
+                .ResolveWith<AdoptionManagerMutations>(a => a.ApplyForAdoption(default, default, default));
 
             #endregion
         }
