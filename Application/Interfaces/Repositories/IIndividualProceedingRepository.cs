@@ -60,5 +60,14 @@ namespace Application.Interfaces.Repositories
         /// <param name="ct"></param>
         /// <returns></returns>
         Task<IndividualProceeding> AdoptAsync(Guid id, AdminData admin, CancellationToken ct = default);
+
+        /// <summary>
+        /// Close Individual proceesing.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="adminData"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IndividualProceeding> CloseAsync(Guid id, AdminData adminData, CancellationToken ct = default);
     }
 }

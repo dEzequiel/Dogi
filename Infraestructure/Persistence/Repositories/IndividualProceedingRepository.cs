@@ -130,5 +130,17 @@ namespace Infraestructure.Persistence.Repositories
 
             return entity;
         }
+
+        /// <inheritdoc/>
+        public async Task<IndividualProceeding> CloseAsync(Guid id, AdminData adminData, CancellationToken ct = default)
+        {
+            var entity = await GetAsync(id);
+
+            entity.IndividualProceedingStatusId = (int)IndividualProceedingStatuses.Close;
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = adminData.Email;
+
+            return entity;
+        }
     }
 }
