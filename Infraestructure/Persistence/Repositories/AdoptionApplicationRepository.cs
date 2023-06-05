@@ -79,7 +79,7 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
     /// <inheritdoc/>
     public async Task<AdoptionApplication> GetAsync(Guid id, CancellationToken ct = default)
     {
-        var entity = await AdoptionApplications.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, ct);
+        var entity = await AdoptionApplications.FirstOrDefaultAsync(x => x.Id == id, ct);
 
         if (entity is null)
         {

@@ -58,6 +58,8 @@ public class AdoptionApplicationWrite : IAdoptionApplicationWriteService
 
         var result = await repository.AcceptApplication(id, adminData, ct);
 
+        await _unitOfWork.CompleteAsync();
+
         _logger.LogInformation("AdoptionApplicationWrite --> AddAsync --> End");
 
         return result;

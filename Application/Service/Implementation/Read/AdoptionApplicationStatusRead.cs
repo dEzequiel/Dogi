@@ -22,6 +22,7 @@ public class AdoptionApplicationStatusRead : IAdoptionApplicationStatusReadServi
         _unitOfWork = unitOfWork;
     }
 
+    ///<inheritdoc />
     public async Task<AdoptionApplicationStatus> GetByIdAsync(int id, CancellationToken ct = default)
     {
         _logger.LogInformation($"AdoptionApplicationStatusRead --> GetByIdAsync({id}) --> Start");
@@ -37,6 +38,7 @@ public class AdoptionApplicationStatusRead : IAdoptionApplicationStatusReadServi
         return status;
     }
 
+    ///<inheritdoc />
     public void Dispose()
     {
         _unitOfWork.Dispose();
