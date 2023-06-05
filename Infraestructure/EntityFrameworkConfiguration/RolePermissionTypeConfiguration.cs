@@ -45,6 +45,26 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
             {
                 RoleId = (int)Roles.Administrator,
                 PermissionId = (int)Permissions.CanCompleteAdoption
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadUserContext
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadAdoptionApplications
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadVaccinationCard
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadMedicalRecord
             }
         });
 
@@ -71,6 +91,21 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
                 RoleId = (int)Roles.Veterinary,
                 PermissionId = (int)Permissions.CanVaccine
             },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadVaccinationCard
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadUserContext
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadMedicalRecord
+            }
         });
     }
 }

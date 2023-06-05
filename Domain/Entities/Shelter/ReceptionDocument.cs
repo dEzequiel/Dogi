@@ -3,22 +3,22 @@
 namespace Domain.Entities.Shelter
 {
     /// <summary>
-    /// Represents the arrival of an animal at the shelter.
+    /// Represents the first arrival of an animal at the shelter.
     /// </summary>
     public class ReceptionDocument : AuditableEntity
     {
         /// <summary>
-        /// Animal chip posession.
+        /// Chip possession.
         /// </summary>
         public bool HasChip { get; set; }
 
         /// <summary>
-        /// Animal first observations.
+        /// First observations.
         /// </summary>
         public string? Observations { get; set; } = string.Empty;
 
         /// <summary>
-        /// Animal pickup location.
+        /// Pickup location.
         /// </summary>
         public string? PickupLocation { get; set; } = null!;
 
@@ -26,7 +26,7 @@ namespace Domain.Entities.Shelter
         public bool IsDeleted { get; set; } = false;
 
         /// <summary>
-        /// Animal individual proceeding relationship.
+        /// Individual proceeding relationship.
         /// </summary>
         public virtual IndividualProceeding? IndividualProceeding { get; set; }
 
