@@ -1,4 +1,5 @@
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Interfaces;
 using Domain.Entities.Adoption;
 
@@ -21,6 +22,14 @@ public interface IAdoptionManager : IApplicationServiceBase
     /// <param name="individualProceedingId"></param>
     /// <param name="adoptionInformation"></param>
     /// <returns></returns>
-    Task<AdoptionPending> RegisterAdoptionPending(Guid individualProceedingId,
+    Task<AdoptionPending> RegisterAdoptionPending(Guid individualProceedingId, AdminData adminData,
         AdoptionPending adoptionInformation);
+
+    /// <summary>
+    /// Complete Adoption application.
+    /// </summary>
+    /// <param name="adoptionApplicationId"></param>
+    /// <param name="adminData"></param>
+    /// <returns></returns>
+    Task CompleteAdoptionApplication(Guid adoptionApplicationId, AdminData adminData);
 }

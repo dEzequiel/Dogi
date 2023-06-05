@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Application.DTOs.AdoptionManager;
 using Application.Features.AdoptionManager.Commands;
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities.Adoption;
 using MediatR;
@@ -67,7 +68,8 @@ public class AdoptionManagerMutations
             _logger.LogInformation("AdoptionManagerMutations --> CreateAdoptionPending --> Start");
 
             var result = await mediator.Send(new RegisterAdoptionPendingRequest(
-                adoptionPendingInformation.IndividualProceedingId, adoptionPendingInformation.AdoptionPendingData));
+                adoptionPendingInformation.IndividualProceedingId, adoptionPendingInformation.AdoptionPendingData,
+                GetAdminData()));
 
             _logger.LogInformation("AdoptionManagerMutations --> CreateAdoptionPending --> End");
 
@@ -93,6 +95,19 @@ public class AdoptionManagerMutations
     private UserData GetUserData()
     {
         return new UserData
+        {
+            Id = Guid.Parse(_claimsPrincipal.FindFirstValue("Id")),
+            Email = _claimsPrincipal.FindFirstValue("Email")
+        };
+    }
+
+    /// <summary>
+    /// Get current admin user information.
+    /// </summary>
+    /// <returns></returns>
+    private AdminData GetAdminData()
+    {
+        return new AdminData()
         {
             Id = Guid.Parse(_claimsPrincipal.FindFirstValue("Id")),
             Email = _claimsPrincipal.FindFirstValue("Email")

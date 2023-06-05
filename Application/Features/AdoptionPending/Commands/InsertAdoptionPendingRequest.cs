@@ -1,5 +1,6 @@
 using Application.Service.Abstraction.Read;
 using Application.Service.Abstraction.Write;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -9,14 +10,18 @@ namespace Application.Features.AdoptionPending.Commands;
 public class InsertAdoptionPendingRequest : IRequest<ApiResponse<Domain.Entities.Adoption.AdoptionPending>>
 {
     public Domain.Entities.Adoption.AdoptionPending AdoptionPendingData { get; private set; } = null;
+    public AdminData AdminData { get; private set; } = null!;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="adoptionPendingData"></param>
-    public InsertAdoptionPendingRequest(Domain.Entities.Adoption.AdoptionPending adoptionPendingData)
+    /// <param name="adminData"></param>
+    public InsertAdoptionPendingRequest(Domain.Entities.Adoption.AdoptionPending adoptionPendingData,
+        AdminData adminData)
     {
         AdoptionPendingData = adoptionPendingData;
+        AdminData = adminData;
     }
 }
 
@@ -58,7 +63,7 @@ public class InsertAdoptionPendingRequestHandler : IRequestHandler<InsertAdoptio
             await _pendingStatusReadService.GetByIdAsync(request.AdoptionPendingData.AdoptionPendingStatusId);
         request.AdoptionPendingData.AdoptionPendingStatusId = adoptionPendingStatus.Id;
 
-        var result = await _adoptionPending.AddAsync(request.AdoptionPendingData, cancellationToken);
+        var result = await _adoptionPending.AddAsync(request.AdoptionPendingData, request.AdminData, cancellationToken);
 
         _logger.LogInformation("InsertAdoptionApplicationRequestHandler --> AddAsync --> Start");
 

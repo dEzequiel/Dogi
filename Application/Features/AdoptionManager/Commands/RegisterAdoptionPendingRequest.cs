@@ -1,5 +1,6 @@
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -11,16 +12,20 @@ public class RegisterAdoptionPendingRequest : IRequest<ApiResponse<Domain.Entiti
     public Guid IndividualProceedingId { get; private set; }
     public Domain.Entities.Adoption.AdoptionPending AdoptionPendingData { get; private set; }
 
+    public AdminData AdminData { get; private set; }
+
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="individualProceedingId"></param>
     /// <param name="adoptionPendingData"></param>
+    /// <param name="adminData"></param>
     public RegisterAdoptionPendingRequest(Guid individualProceedingId,
-        Domain.Entities.Adoption.AdoptionPending adoptionPendingData)
+        Domain.Entities.Adoption.AdoptionPending adoptionPendingData, AdminData adminData)
     {
         IndividualProceedingId = individualProceedingId;
         AdoptionPendingData = adoptionPendingData;
+        AdminData = adminData;
     }
 }
 
@@ -52,7 +57,8 @@ public class RegisterAdoptionPendingRequestHandler : IRequestHandler<RegisterAdo
         Guard.Against.Null(request.IndividualProceedingId, nameof(request.IndividualProceedingId));
 
         var result =
-            await _adoptionManager.RegisterAdoptionPending(request.IndividualProceedingId, request.AdoptionPendingData);
+            await _adoptionManager.RegisterAdoptionPending(request.IndividualProceedingId, request.AdminData,
+                request.AdoptionPendingData);
 
         _logger.LogInformation("RegisterAdoptionPendingRequestHandler --> AddAsync --> End");
 

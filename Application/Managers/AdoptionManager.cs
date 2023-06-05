@@ -1,9 +1,11 @@
 using Application.Features.AdoptionApplication.Commands;
+using Application.Features.AdoptionApplication.Queries;
 using Application.Features.AdoptionPending.Commands;
 using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs;
 using Domain.Entities.Adoption;
 using Domain.Enums.Adoption;
 using MediatR;
@@ -47,16 +49,24 @@ public class AdoptionManager : IAdoptionManager
 
     ///<inheritdoc />
     public async Task<AdoptionPending> RegisterAdoptionPending(Guid individualProceedingId,
-        AdoptionPending adoptionInformation)
+        AdminData adminData, AdoptionPending adoptionInformation)
     {
         adoptionInformation.IndividualProceedingId = individualProceedingId;
         adoptionInformation.AdoptionPendingStatusId = (int)AdoptionPendingStatuses.Open;
 
         var adoptionPendingRequest =
-            await _mediator.Send(new InsertAdoptionPendingRequest(adoptionInformation));
+            await _mediator.Send(new InsertAdoptionPendingRequest(adoptionInformation, adminData));
 
         Guard.Against.Null(adoptionPendingRequest.Data);
         return adoptionPendingRequest.Data;
+    }
+
+    public async Task CompleteAdoptionApplication(Guid adoptionApplicationId, AdminData adminData)
+    {
+        await _mediator.Send(new CompleteAdoptionApplicationRequest(adoptionApplicationId, adminData));
+
+        var adoptionApplicationRequest =
+            await _mediator.Send(new GetAdoptionApplicationByIdRequest(adoptionApplicationId));
     }
 
 
