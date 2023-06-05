@@ -1,9 +1,9 @@
+using System.Security.Claims;
 using Application.DTOs.AdoptionManager;
 using Application.Features.AdoptionManager.Commands;
 using Crosscuting.Api;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities.Adoption;
-using Domain.Entities.Authorization;
 using MediatR;
 
 namespace Api.GraphQL.Mutations;
@@ -11,14 +11,17 @@ namespace Api.GraphQL.Mutations;
 public class AdoptionManagerMutations
 {
     private readonly ILogger<AdoptionManagerMutations> _logger;
+    private readonly ClaimsPrincipal _claimsPrincipal;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="logger"></param>
-    public AdoptionManagerMutations(ILogger<AdoptionManagerMutations> logger)
+    /// <param name="claimsPrincipal"></param>
+    public AdoptionManagerMutations(ILogger<AdoptionManagerMutations> logger, ClaimsPrincipal claimsPrincipal)
     {
         _logger = logger;
+        _claimsPrincipal = claimsPrincipal;
     }
 
     /// <summary>
@@ -30,15 +33,14 @@ public class AdoptionManagerMutations
     /// <returns></returns>
     /// <exception cref="DogiException"></exception>
     public async Task<AdoptionApplication> ApplyForAdoption([Service] ISender mediator,
-        [Service] IHttpContextAccessor? httpContextAccessor, AdoptionApplicationInformation applicationInformation)
+        AdoptionApplicationInformation applicationInformation)
     {
         try
         {
             _logger.LogInformation("AdoptionManagerMutations --> ApplyForAdoption --> Start");
 
             var result = await mediator.Send(new ApplyForAdoptionRequest(
-                applicationInformation.AdoptionPendingId, applicationInformation.AdoptionApplication,
-                GetUserData(httpContextAccessor)));
+                applicationInformation.AdoptionPendingId, applicationInformation.AdoptionApplication, GetUserData()));
 
             _logger.LogInformation("AdoptionManagerMutations --> ApplyForAdoption --> End");
 
@@ -61,13 +63,12 @@ public class AdoptionManagerMutations
     /// Get current user information.
     /// </summary>
     /// <returns>Object representing user information.</returns>
-    private UserData GetUserData(IHttpContextAccessor context)
+    private UserData GetUserData()
     {
-        var user = (User)context.HttpContext.Items["User"];
-        return new UserData()
+        return new UserData
         {
-            Id = Guid.Parse(user.Id.ToString()),
-            Email = user.Email
+            Id = Guid.Parse(_claimsPrincipal.FindFirstValue("Id")),
+            Email = _claimsPrincipal.FindFirstValue("Email")
         };
     }
 }
