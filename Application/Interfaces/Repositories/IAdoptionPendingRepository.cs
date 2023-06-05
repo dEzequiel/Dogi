@@ -1,4 +1,5 @@
 using Application.Service.Interfaces;
+using Crosscuting.Api.DTOs;
 using Domain.Entities.Adoption;
 
 namespace Application.Interfaces.Repositories;
@@ -19,5 +20,5 @@ public interface IAdoptionPendingRepository : IRepository<AdoptionPending>
     /// <param name="entity"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task AddAsync(AdoptionPending entity, CancellationToken ct = default);
+    Task AddAsync(AdoptionPending entity, AdminData adminData, CancellationToken ct = default);
 }

@@ -1,3 +1,4 @@
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Interfaces;
 using Domain.Entities.Adoption;
 
@@ -11,5 +12,7 @@ public interface IAdoptionPendingWriteService : IApplicationServiceBase
     /// <param name="entity"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<AdoptionPending> AddAsync(AdoptionPending entity, CancellationToken ct = default);
+    Task<AdoptionPending> AddAsync(AdoptionPending entity, AdminData adminData, CancellationToken ct = default);
+
+    Task<bool> CloseAdoptionAsync(Guid id, AdminData adminData, CancellationToken ct = default);
 }

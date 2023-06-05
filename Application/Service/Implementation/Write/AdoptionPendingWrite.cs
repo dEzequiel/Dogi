@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
+using Crosscuting.Api.DTOs;
 using Domain.Entities.Adoption;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +24,8 @@ public class AdoptionPendingWrite : IAdoptionPendingWriteService
     }
 
     ///<inheritdoc />
-    public async Task<AdoptionPending> AddAsync(AdoptionPending entity, CancellationToken ct = default)
+    public async Task<AdoptionPending> AddAsync(AdoptionPending entity, AdminData adminData,
+        CancellationToken ct = default)
     {
         _logger.LogInformation("AdoptionPendingWrite --> AddAsync --> Start");
 
@@ -33,7 +35,7 @@ public class AdoptionPendingWrite : IAdoptionPendingWriteService
 
         var repository = _unitOfWork.AdoptionPendingRepository;
 
-        await repository.AddAsync(entity, ct);
+        await repository.AddAsync(entity, adminData, ct);
 
         await _unitOfWork.CompleteAsync();
 

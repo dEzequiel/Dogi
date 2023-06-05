@@ -3,7 +3,7 @@ using Domain.Entities.Shelter;
 
 namespace Domain.Entities.Adoption;
 
-public class AdoptionPending : Entity
+public class AdoptionPending : AuditableEntity
 {
     /// <summary>
     /// Individual proceeding allowed to be adopted.

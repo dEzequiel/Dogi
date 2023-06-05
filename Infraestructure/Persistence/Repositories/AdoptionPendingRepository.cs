@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Application.Interfaces.Repositories;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities.Adoption;
 using Domain.Enums.Adoption;
@@ -46,9 +47,13 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
     }
 
     /// <inheritdoc/>
-    public async Task AddAsync(AdoptionPending entity, CancellationToken ct = default)
+    public async Task AddAsync(AdoptionPending entity, AdminData adminData, CancellationToken ct = default)
     {
         await CheckIfPendingAlreadyOpenAsync(entity.IndividualProceedingId);
+
+        entity.Created = DateTime.UtcNow;
+        entity.CreatedBy = adminData.Email;
+
         await AdoptionPendings.AddAsync(entity, ct);
     }
 
