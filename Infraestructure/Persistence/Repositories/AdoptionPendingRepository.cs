@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using Application.Interfaces.Repositories;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities.Adoption;
+using Domain.Enums.Adoption;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,9 @@ namespace Infraestructure.Persistence.Repositories;
 public class AdoptionPendingRepository : IAdoptionPendingRepository
 {
     private const string ADOPTION_PENDING_NOT_FOUND = "ADOPTION PENDING WITH ID {0} NOT FOUND.";
+
+    private const string ADOPTION_PENDING_FOR_INDIVIDUAL_PROCEEDING_OPEND =
+        "ADOPTION PENDING FOR INDIVIDUAL PROCEEDING {0} IS OPEN.";
 
     protected DbSet<AdoptionPending> AdoptionPendings;
 
@@ -44,7 +48,22 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
     /// <inheritdoc/>
     public async Task AddAsync(AdoptionPending entity, CancellationToken ct = default)
     {
+        await CheckIfPendingAlreadyOpenAsync(entity.IndividualProceedingId);
         await AdoptionPendings.AddAsync(entity, ct);
+    }
+
+    private async Task CheckIfPendingAlreadyOpenAsync(Guid individualProceedingId)
+    {
+        var pending = await AdoptionPendings.FirstOrDefaultAsync(x => x.IndividualProceedingId == individualProceedingId
+                                                                      && x.AdoptionPendingStatusId ==
+                                                                      (int)AdoptionPendingStatuses.Open);
+        if (pending is null)
+        {
+            return;
+        }
+
+        throw new DogiException(string.Format(ADOPTION_PENDING_FOR_INDIVIDUAL_PROCEEDING_OPEND,
+            individualProceedingId));
     }
 
     /// <inheritdoc/>
