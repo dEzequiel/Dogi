@@ -1,4 +1,5 @@
 using Application.Managers.Abstraction;
+using Application.Service.Abstraction.Read;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Api.DTOs.Response;
@@ -32,17 +33,20 @@ public class ApplyForAdoptionRequestHandler : IRequestHandler<ApplyForAdoptionRe
     ApiResponse<Domain.Entities.Adoption.AdoptionApplication>>
 {
     private readonly ILogger<ApplyForAdoptionRequestHandler> _logger;
+    private readonly IUserReadService _userRead;
     private readonly IAdoptionManager _adoptionManager;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="logger"></param>
+    /// <param name="userRead"></param>
     /// <param name="adoptionManager"></param>
-    public ApplyForAdoptionRequestHandler(ILogger<ApplyForAdoptionRequestHandler> logger,
+    public ApplyForAdoptionRequestHandler(ILogger<ApplyForAdoptionRequestHandler> logger, IUserReadService userRead,
         IAdoptionManager adoptionManager)
     {
         _logger = logger;
+        _userRead = userRead;
         _adoptionManager = adoptionManager;
     }
 
@@ -55,6 +59,10 @@ public class ApplyForAdoptionRequestHandler : IRequestHandler<ApplyForAdoptionRe
         Guard.Against.Null(request.AdoptionPendingId, nameof(request.AdoptionPendingId));
         Guard.Against.Null(request.UserData, nameof(request.UserData));
         Guard.Against.Null(request.AdoptionApplicationData, nameof(request.AdoptionApplicationData));
+
+        var user = await _userRead.GetByIdAsync(request.UserData.Id, cancellationToken);
+
+        request.AdoptionApplicationData.User = user;
 
         var result = await _adoptionManager.RegisterAdoptionApplication(request.AdoptionPendingId,
             request.AdoptionApplicationData, request.UserData);

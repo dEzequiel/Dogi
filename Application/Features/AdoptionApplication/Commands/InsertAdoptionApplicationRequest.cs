@@ -1,3 +1,5 @@
+using Application.Service.Abstraction;
+using Application.Service.Abstraction.Read;
 using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
@@ -29,35 +31,62 @@ public class InsertAdoptionApplicationRequest : IRequest<ApiResponse<Domain.Enti
 public class InsertAdoptionApplicationRequestHandler : IRequestHandler<InsertAdoptionApplicationRequest,
     ApiResponse<Domain.Entities.Adoption.AdoptionApplication>>
 {
-    private readonly ILogger<InsertAdoptionApplicationRequestHandler> Logger;
-    private readonly IAdoptionApplicationWriteService AdoptionApplicationWriteService;
+    private readonly ILogger<InsertAdoptionApplicationRequestHandler> _logger;
+    private readonly IAdoptionApplicationWriteService _adoptionApplicationWriteService;
+    private readonly IAdoptionPendingReadService _adoptionPendingReadService;
+    private readonly IHousingTypeReadService _housingTypeReadService;
+    private readonly IAdoptionApplicationStatusReadService _applicationStatus;
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="adoptionApplicationWriteService"></param>
+    /// <param name="adoptionPendingReadService"></param>
+    /// <param name="housingTypeReadService"></param>
+    /// <param name="applicationStatus"></param>
     public InsertAdoptionApplicationRequestHandler(ILogger<InsertAdoptionApplicationRequestHandler> logger,
-        IAdoptionApplicationWriteService adoptionApplicationWriteService)
+        IAdoptionApplicationWriteService adoptionApplicationWriteService,
+        IAdoptionPendingReadService adoptionPendingReadService, IHousingTypeReadService housingTypeReadService,
+        IAdoptionApplicationStatusReadService applicationStatus)
     {
-        Logger = logger;
-        AdoptionApplicationWriteService = adoptionApplicationWriteService;
+        _logger = logger;
+        _adoptionApplicationWriteService = adoptionApplicationWriteService;
+        _adoptionPendingReadService = adoptionPendingReadService;
+        _housingTypeReadService = housingTypeReadService;
+        _applicationStatus = applicationStatus;
     }
+
 
     /// <inheritdoc />
     public async Task<ApiResponse<Domain.Entities.Adoption.AdoptionApplication>> Handle(
         InsertAdoptionApplicationRequest request,
         CancellationToken cancellationToken)
     {
-        Logger.LogInformation("InsertAdoptionApplicationRequestHandler --> AddAsync --> Start");
+        _logger.LogInformation("InsertAdoptionApplicationRequestHandler --> AddAsync --> Start");
 
         Guard.Against.Null(request, nameof(request));
         Guard.Against.Null(request.UserData, nameof(request.UserData));
         Guard.Against.Null(request.AdoptionApplicationData, nameof(request.AdoptionApplicationData));
 
-        var result = await AdoptionApplicationWriteService.AddAsync(request.AdoptionApplicationData, request.UserData);
+        var housingType =
+            await _housingTypeReadService.GetByIdAsync(request.AdoptionApplicationData.HousingTypeId,
+                cancellationToken);
+        request.AdoptionApplicationData.HousingType = housingType;
 
-        Logger.LogInformation("InsertAdoptionApplicationRequestHandler --> AddAsync --> End");
+        var adoptionPending =
+            await _adoptionPendingReadService.GetByIdAsync(request.AdoptionApplicationData.AdoptionPendingId,
+                cancellationToken);
+        request.AdoptionApplicationData.AdoptionPending = adoptionPending;
+
+        var applicationStatus =
+            await _applicationStatus.GetByIdAsync(request.AdoptionApplicationData.AdoptionApplicationStatusId,
+                cancellationToken);
+        request.AdoptionApplicationData.AdoptionApplicationStatus = applicationStatus;
+
+        var result = await _adoptionApplicationWriteService.AddAsync(request.AdoptionApplicationData, request.UserData);
+
+        _logger.LogInformation("InsertAdoptionApplicationRequestHandler --> AddAsync --> End");
 
         return new ApiResponse<Domain.Entities.Adoption.AdoptionApplication>(result);
     }

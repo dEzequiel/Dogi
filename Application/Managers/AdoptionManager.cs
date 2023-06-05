@@ -1,10 +1,10 @@
 using Application.Features.AdoptionApplication.Commands;
-using Application.Features.AdoptionPending.Queries;
 using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Domain.Entities.Adoption;
+using Domain.Enums.Adoption;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -33,17 +33,8 @@ public class AdoptionManager : IAdoptionManager
     public async Task<AdoptionApplication> RegisterAdoptionApplication(Guid adoptionPendingId,
         AdoptionApplication application, UserData userData)
     {
-        // Get AdoptionPending
-        var adoptionPending = await _mediator.Send(new GetAdoptionPendingByIdRequest(adoptionPendingId));
-        Guard.Against.Null(adoptionPending.Data, nameof(adoptionPending.Data));
-
-        application.AdoptionPending = adoptionPending.Data;
-
-        // Get HousingType
-        // AdoptionPendingStatus
-
-
         application.AdoptionPendingId = adoptionPendingId;
+        application.AdoptionApplicationStatusId = (int)AdoptionApplicationStatuses.Waiting;
         application.UserId = userData.Id;
 
         var adoptionApplicationRequest =
