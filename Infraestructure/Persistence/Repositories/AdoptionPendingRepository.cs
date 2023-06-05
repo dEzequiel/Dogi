@@ -28,6 +28,7 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc/>
     public async Task<AdoptionPending> GetAsync(Guid id, CancellationToken ct = default)
     {
         var entity = await AdoptionPendings.FirstOrDefaultAsync(x => x.Id == id, ct);
@@ -38,6 +39,12 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
         }
 
         return entity;
+    }
+
+    /// <inheritdoc/>
+    public async Task AddAsync(AdoptionPending entity, CancellationToken ct = default)
+    {
+        await AdoptionPendings.AddAsync(entity, ct);
     }
 
     /// <inheritdoc/>
@@ -53,9 +60,9 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
     }
 
     /// <inheritdoc/>
-    public Task AddAsync(AdoptionPending entity)
+    public async Task AddAsync(AdoptionPending entity)
     {
-        throw new NotImplementedException();
+        await AdoptionPendings.AddAsync(entity);
     }
 
     /// <inheritdoc/>
