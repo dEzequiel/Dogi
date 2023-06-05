@@ -23,9 +23,14 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
     }
 
     /// <inheritdoc/>
-    public async Task<AdoptionPending?> GetAsync(Guid id)
+    public Task<AdoptionPending?> GetAsync(Guid id)
     {
-        var entity = await AdoptionPendings.FirstOrDefaultAsync(x => x.Id == id);
+        throw new NotImplementedException();
+    }
+
+    public async Task<AdoptionPending> GetAsync(Guid id, CancellationToken ct = default)
+    {
+        var entity = await AdoptionPendings.FirstOrDefaultAsync(x => x.Id == id, ct);
 
         if (entity is null)
         {
