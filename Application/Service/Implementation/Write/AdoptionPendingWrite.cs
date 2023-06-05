@@ -44,6 +44,26 @@ public class AdoptionPendingWrite : IAdoptionPendingWriteService
         return entity;
     }
 
+    ///<inheritdoc />
+    public async Task<bool> CloseAdoptionAsync(Guid id, AdminData adminData, CancellationToken ct = default)
+    {
+        _logger.LogInformation($"AdoptionPendingWrite --> CloseAdoptionAsync({id}) --> Start");
+
+        Guard.Against.NullOrEmpty(id, nameof(id));
+        Guard.Against.NullOrEmpty(adminData.Email, nameof(adminData.Email));
+        Guard.Against.NullOrEmpty(adminData.Id, nameof(adminData.Id));
+
+        var repository = _unitOfWork.AdoptionPendingRepository;
+
+        var result = await repository.CloseAsync(id, adminData, ct);
+
+        await _unitOfWork.CompleteAsync(ct);
+
+        _logger.LogInformation("AdoptionPendingWrite --> CloseAdoptionAsync --> End");
+
+        return result;
+    }
+
 
     ///<inheritdoc />
     public void Dispose()

@@ -57,6 +57,19 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
         await AdoptionPendings.AddAsync(entity, ct);
     }
 
+    /// <inheritdoc/>
+    public async Task<bool> CloseAsync(Guid id, AdminData adminData, CancellationToken ct = default)
+    {
+        var entity = await GetAsync(id, ct);
+
+        entity.LastModified = DateTime.UtcNow;
+        entity.LastModifiedBy = adminData.Email;
+        entity.AdoptionPendingStatusId = (int)AdoptionPendingStatuses.Close;
+
+        return true;
+    }
+
+
     private async Task CheckIfPendingAlreadyOpenAsync(Guid individualProceedingId)
     {
         var pending = await AdoptionPendings.FirstOrDefaultAsync(x => x.IndividualProceedingId == individualProceedingId

@@ -21,4 +21,13 @@ public interface IAdoptionPendingRepository : IRepository<AdoptionPending>
     /// <param name="ct"></param>
     /// <returns></returns>
     Task AddAsync(AdoptionPending entity, AdminData adminData, CancellationToken ct = default);
+
+    /// <summary>
+    /// Close adoption pending.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="adminData"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<bool> CloseAsync(Guid id, AdminData adminData, CancellationToken ct = default);
 }
