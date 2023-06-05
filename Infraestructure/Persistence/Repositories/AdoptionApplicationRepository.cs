@@ -11,7 +11,7 @@ namespace Infraestructure.Persistence.Repositories;
 
 public class AdoptionApplicationRepository : IAdoptionApplicationRepository
 {
-    private const string ADOPTION_APPLICATION_NOT_FOUND = "AdoptionApplication with id {0} not found.";
+    private const string ADOPTION_APPLICATION_NOT_FOUND = "ADOPTION APPLICATION WITH ID {0} NOT FOUND";
     private const string ADOPTION_APPLICATION_IS_WAITING_FOR_REVISION = "ADOPTION APPLICATION IS WAITING FOR REVISION";
 
     protected DbSet<AdoptionApplication> AdoptionApplications;
@@ -71,13 +71,24 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
 
         entity.Created = DateTime.UtcNow;
         entity.CreatedBy = userData.Email;
+    }
 
-        await AdoptionApplications.AddAsync(entity, ct);
+    /// <inheritdoc/>
+    public async Task<AdoptionApplication> GetAsync(Guid id, CancellationToken ct = default)
+    {
+        var entity = await AdoptionApplications.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, ct);
+
+        if (entity is null)
+        {
+            throw new DogiException(string.Format(ADOPTION_APPLICATION_NOT_FOUND, id));
+        }
+
+        return entity;
     }
 
     private async Task CheckIfApplicationAlreadyDone(Guid adoptionPendingId, Guid userId)
     {
-        var entity = await AdoptionApplications.FirstOrDefaultAsync(x =>
+        var entity = await AdoptionApplications.AsNoTracking().FirstOrDefaultAsync(x =>
             x.AdoptionPendingId == adoptionPendingId
             && x.UserId == userId
             && x.AdoptionApplicationStatusId ==

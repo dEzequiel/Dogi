@@ -14,4 +14,12 @@ public interface IAdoptionApplicationRepository : IRepository<AdoptionApplicatio
     /// <param name="ct"></param>
     /// <returns></returns>
     Task AddAsync(AdoptionApplication entity, UserData userData, CancellationToken ct = default);
+
+    /// <summary>
+    /// Get Adoption application by id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<AdoptionApplication> GetAsync(Guid id, CancellationToken ct = default);
 }
