@@ -1,4 +1,5 @@
 using Application.Features.AdoptionApplication.Commands;
+using Application.Features.AdoptionPending.Commands;
 using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
@@ -42,6 +43,20 @@ public class AdoptionManager : IAdoptionManager
 
         Guard.Against.Null(adoptionApplicationRequest.Data);
         return adoptionApplicationRequest.Data;
+    }
+
+    ///<inheritdoc />
+    public async Task<AdoptionPending> RegisterAdoptionPending(Guid individualProceedingId,
+        AdoptionPending adoptionInformation)
+    {
+        adoptionInformation.IndividualProceedingId = individualProceedingId;
+        adoptionInformation.AdoptionPendingStatusId = (int)AdoptionPendingStatuses.Open;
+
+        var adoptionPendingRequest =
+            await _mediator.Send(new InsertAdoptionPendingRequest(adoptionInformation));
+
+        Guard.Against.Null(adoptionPendingRequest.Data);
+        return adoptionPendingRequest.Data;
     }
 
 

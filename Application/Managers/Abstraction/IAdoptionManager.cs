@@ -14,4 +14,13 @@ public interface IAdoptionManager : IApplicationServiceBase
     /// <returns></returns>
     Task<AdoptionApplication> RegisterAdoptionApplication(Guid adoptionPendingId, AdoptionApplication application,
         UserData userData);
+
+    /// <summary>
+    /// Register new Adoption pending.
+    /// </summary>
+    /// <param name="individualProceedingId"></param>
+    /// <param name="adoptionInformation"></param>
+    /// <returns></returns>
+    Task<AdoptionPending> RegisterAdoptionPending(Guid individualProceedingId,
+        AdoptionPending adoptionInformation);
 }

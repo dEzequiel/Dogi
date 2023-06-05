@@ -59,6 +59,33 @@ public class AdoptionManagerMutations
         }
     }
 
+    public async Task<AdoptionPending> CreateAdoptionPending([Service] ISender mediator,
+        AdoptionPendingInformation adoptionPendingInformation)
+    {
+        try
+        {
+            _logger.LogInformation("AdoptionManagerMutations --> CreateAdoptionPending --> Start");
+
+            var result = await mediator.Send(new RegisterAdoptionPendingRequest(
+                adoptionPendingInformation.IndividualProceedingId, adoptionPendingInformation.AdoptionPendingData));
+
+            _logger.LogInformation("AdoptionManagerMutations --> CreateAdoptionPending --> End");
+
+            return result.Data;
+        }
+        catch (DogiException ex)
+        {
+            _logger.LogInformation("AdoptionManagerMutations --> CreateAdoptionPending --> Error");
+
+            throw new DogiException(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogInformation("AdoptionManagerMutations --> CreateAdoptionPending --> Error");
+            throw new DogiException(ex.Message);
+        }
+    }
+
     /// <summary>
     /// Get current user information.
     /// </summary>

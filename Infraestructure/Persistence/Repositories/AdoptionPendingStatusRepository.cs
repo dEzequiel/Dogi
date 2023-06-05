@@ -23,7 +23,7 @@ public class AdoptionPendingStatusRepository : IAdoptionPendingStatusRepository
     ///<inheritdoc />
     public async Task<AdoptionPendingStatus> GetAsync(int id, CancellationToken ct = default)
     {
-        var entity = await AdoptionPendingStatuses.FirstOrDefaultAsync(x => x.Id == id);
+        var entity = await AdoptionPendingStatuses.FirstOrDefaultAsync(x => x.Id == id, ct);
 
         if (entity is null)
         {
