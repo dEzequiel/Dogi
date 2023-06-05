@@ -42,7 +42,7 @@ public class UserManager : IUserManager
         var userExist = await userRepository.GetAsync(user.Email);
         if (userExist is not null)
         {
-            throw new DogiException("User with username already exist.");
+            throw new DogiException("Email already registered.");
         }
 
         var createdUser = await Mediator.Send(new RegisterUserRequest(user), ct);
