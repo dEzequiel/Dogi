@@ -54,6 +54,8 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IAdoptionApplicationRepository AdoptionApplicationRepository =>
             new AdoptionApplicationRepository(_context);
 
+        public IAdoptionPendingRepository AdoptionPendingRepository => new AdoptionPendingRepository(_context);
+
         /// <summary>
         /// Constructor.
         /// </summary>
