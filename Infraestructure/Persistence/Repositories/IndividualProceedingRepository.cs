@@ -14,7 +14,7 @@ namespace Infraestructure.Persistence.Repositories
         /// <summary>
         /// Attributes.
         /// </summary>
-        private const string INDIVIDUAL_PROCEEDING_NOT_FOUND = "IndividualProceeding with id {0} not found.";
+        private const string INDIVIDUAL_PROCEEDING_NOT_FOUND = "INDIVIDUAL PROCEEDING WITH ID {0} NOT FOUND.";
 
         protected IQueryable<IndividualProceeding> _individualProceedings;
         protected DbSet<IndividualProceeding> _individualProceedingsAll;
@@ -81,7 +81,14 @@ namespace Infraestructure.Persistence.Repositories
         /// <inheritdoc/>
         public async Task<IndividualProceeding?> GetAsync(Guid id)
         {
-            return await _individualProceedings.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _individualProceedings.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (entity is null)
+            {
+                throw new DogiException(string.Format(INDIVIDUAL_PROCEEDING_NOT_FOUND, id));
+            }
+
+            return entity;
         }
 
         /// <inheritdoc/>
@@ -110,6 +117,18 @@ namespace Infraestructure.Persistence.Repositories
             individualProceeding.LastModifiedBy = admin.Email;
 
             individualProceeding.IndividualProceedingStatusId = ((int)status);
+        }
+
+        /// <inheritdoc/>
+        public async Task<IndividualProceeding> AdoptAsync(Guid id, AdminData admin, CancellationToken ct = default)
+        {
+            var entity = await GetAsync(id);
+
+            entity.IndividualProceedingStatusId = (int)IndividualProceedingStatuses.Adopted;
+            entity.LastModified = DateTime.UtcNow;
+            entity.LastModifiedBy = admin.Email;
+
+            return entity;
         }
     }
 }

@@ -50,5 +50,15 @@ namespace Application.Interfaces.Repositories
         /// <param name="ct"></param>
         /// <returns></returns>
         Task UpdateAsync(Guid id, IndividualProceedingStatuses entity, AdminData admin, CancellationToken ct = default);
+
+        /// <summary>
+        /// Update individual proceeding status to adopt.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        /// <param name="admin"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IndividualProceeding> AdoptAsync(Guid id, AdminData admin, CancellationToken ct = default);
     }
 }
