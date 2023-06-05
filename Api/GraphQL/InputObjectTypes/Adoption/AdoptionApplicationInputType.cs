@@ -7,8 +7,7 @@ public class AdoptionApplicationInputType : InputObjectType<AdoptionApplication>
 {
     protected override void Configure(IInputObjectTypeDescriptor<AdoptionApplication> descriptor)
     {
-        descriptor.Field(f => f.HousingTypeId).Type<NonNullType<HousingTypeEnumType>>();
-
+        descriptor.Field(f => f.HousingTypeId).Type<NonNullType<HousingTypeEnumType>>().Name("housingType");
         descriptor.Field(f => f.HouseDescription).Type<NonNullType<HouseDescriptionInputType>>();
         descriptor.Field(f => f.OtherAnimals).Type<OtherAnimalInputType>();
         descriptor.Field(f => f.PersonalReferences).Type<PersonalReferenceInputType>();
@@ -20,6 +19,7 @@ public class AdoptionApplicationInputType : InputObjectType<AdoptionApplication>
         descriptor.Ignore(f => f.AdoptionApplicationStatus);
         descriptor.Ignore(f => f.AdoptionPendingId);
         descriptor.Ignore(f => f.UserId);
+        descriptor.Ignore(f => f.AdoptionApplicationStatusId);
 
         descriptor.Ignore(f => f.Created);
         descriptor.Ignore(f => f.CreatedBy);
