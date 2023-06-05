@@ -53,7 +53,7 @@ namespace Application.Managers
                 await Mediator.Send(new GetIndividualProceedingByIdRequest(individualProceedingId), ct);
             Guard.Against.Null(individualProceeding.Data);
 
-            await Mediator.Send(new MoveCageAnimalZoneRequest(individualProceeding.Data.CageId,
+            await Mediator.Send(new MoveCageAnimalZoneRequest(individualProceeding.Data.CageId.Value,
                 ((int)AnimalZones.WaitingForMedicalRevision), adminData));
 
             var medicalRecordStatus =

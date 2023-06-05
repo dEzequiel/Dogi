@@ -10,16 +10,19 @@ namespace Application.Features.AdoptionManager.Commands;
 public class CompleteAdoptionRequest : IRequest<ApiResponse<Domain.Entities.Adoption.AdoptionApplication>>
 {
     public Guid AdoptionApplicationId { get; private set; }
+    public bool PickedUp { get; private set; }
     public AdminData AdminData { get; private set; }
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="adoptionApplicationId"></param>
+    /// <param name="pickedUp"></param>
     /// <param name="adminData"></param>
-    public CompleteAdoptionRequest(Guid adoptionApplicationId, AdminData adminData)
+    public CompleteAdoptionRequest(Guid adoptionApplicationId, bool pickedUp, AdminData adminData)
     {
         AdoptionApplicationId = adoptionApplicationId;
+        PickedUp = pickedUp;
         AdminData = adminData;
     }
 }
@@ -52,7 +55,8 @@ public class CompleteAdoptionRequestHandler : IRequestHandler<CompleteAdoptionRe
         Guard.Against.Null(request.AdminData, nameof(request.AdminData));
 
         var result =
-            await _adoptionManager.CompleteAdoptionApplication(request.AdoptionApplicationId, request.AdminData);
+            await _adoptionManager.CompleteAdoptionApplication(request.AdoptionApplicationId, request.PickedUp,
+                request.AdminData);
 
         _logger.LogInformation("CompleteAdoptionRequestHandler --> CompleteAdoptionApplication --> End");
 

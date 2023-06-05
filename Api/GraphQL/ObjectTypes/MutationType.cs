@@ -101,7 +101,8 @@ namespace Api.GraphQL.ObjectTypes
                 .Authorize(Permissions.CanCompleteAdoption.ToString())
                 .Argument("adoptionApplicationId",
                     arg => arg.Type<NonNullType<UuidType>>())
-                .ResolveWith<AdoptionManagerMutations>(a => a.CompleteAdoptionApplication(default, default));
+                .Argument("pickedUp", arg => arg.Type<NonNullType<BooleanType>>())
+                .ResolveWith<AdoptionManagerMutations>(a => a.CompleteAdoptionApplication(default, default, default));
 
             #endregion
         }

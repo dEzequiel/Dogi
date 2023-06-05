@@ -89,14 +89,14 @@ public class AdoptionManagerMutations
     }
 
     public async Task<AdoptionApplication> CompleteAdoptionApplication([Service] ISender mediator,
-        Guid adoptionApplicationId)
+        Guid adoptionApplicationId, bool pickedUp)
     {
         try
         {
             _logger.LogInformation("AdoptionManagerMutations --> CompleteAdoptionApplication --> Start");
 
             var result = await mediator.Send(new CompleteAdoptionRequest(
-                adoptionApplicationId, GetAdminData()));
+                adoptionApplicationId, pickedUp, GetAdminData()));
 
             _logger.LogInformation("AdoptionManagerMutations --> CompleteAdoptionApplication --> Start");
 

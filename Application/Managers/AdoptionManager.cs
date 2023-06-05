@@ -8,7 +8,9 @@ using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Api.DTOs;
+using Crosscuting.Api.DTOs.Response;
 using Domain.Entities.Adoption;
+using Domain.Entities.Shelter;
 using Domain.Enums.Adoption;
 using Domain.Enums.Shelter;
 using MediatR;
@@ -64,7 +66,8 @@ public class AdoptionManager : IAdoptionManager
         return adoptionPendingRequest.Data;
     }
 
-    public async Task<AdoptionApplication> CompleteAdoptionApplication(Guid adoptionApplicationId, AdminData adminData)
+    public async Task<AdoptionApplication> CompleteAdoptionApplication(Guid adoptionApplicationId, bool pickedUp,
+        AdminData adminData)
     {
         await _mediator.Send(new CompleteAdoptionApplicationRequest(adoptionApplicationId, adminData));
 
@@ -76,19 +79,27 @@ public class AdoptionManager : IAdoptionManager
             adminData));
 
         var individualProceeding = adoptionApplicationRequest.Data.AdoptionPending.IndividualProceeding;
-        await AdoptIndividualProceedingAndMoveCageZone(individualProceeding.Id, adminData);
+        await AdoptIndividualProceedingAndMoveCageZone(individualProceeding.Id, pickedUp, adminData);
 
         Guard.Against.Null(adoptionApplicationRequest.Data);
         return adoptionApplicationRequest.Data;
     }
 
-    private async Task AdoptIndividualProceedingAndMoveCageZone(Guid individiualProceedingId, AdminData adminData)
+    private async Task AdoptIndividualProceedingAndMoveCageZone(Guid individiualProceedingId, bool pickedUp,
+        AdminData adminData)
     {
-        var individualProceedingRequest =
-            await _mediator.Send(new AdoptIndividualProceedingRequest(individiualProceedingId, adminData));
+        ApiResponse<IndividualProceeding> individualProceedingRequest = null;
+        if (pickedUp is false)
+        {
+            individualProceedingRequest =
+                await _mediator.Send(new AdoptIndividualProceedingRequest(individiualProceedingId, adminData));
+            await _mediator.Send(new MoveCageAnimalZoneRequest(individualProceedingRequest.Data.CageId.Value,
+                (int)AnimalZones.WaitingForOwner, adminData));
+            return;
+        }
 
-        await _mediator.Send(new MoveCageAnimalZoneRequest(individualProceedingRequest.Data.CageId,
-            (int)AnimalZones.WaitingForOwner, adminData));
+        individualProceedingRequest =
+            await _mediator.Send(new CloseIndividualProceedingRequest(individiualProceedingId, adminData));
     }
 
     ///<inheritdoc />
