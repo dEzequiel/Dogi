@@ -9,6 +9,8 @@ namespace Infraestructure.Persistence.Repositories
 {
     public class PersonRepository : IPersonRepository
     {
+        private const string IDENTIFIER_ALREADY_REGISTER = "Person identifier already registered";
+
         protected DbSet<Person> Persons;
 
         /// <summary>
@@ -23,9 +25,23 @@ namespace Infraestructure.Persistence.Repositories
         ///<inheritdoc />
         public async Task AddAsync(Person entity, CancellationToken ct = default)
         {
+            await CheckIfIdentifierAlreadyExistAsync(entity.PersonIdentifier);
+
             entity.Created = DateTime.Now;
 
             await Persons.AddAsync(entity, ct);
+        }
+
+        private async Task CheckIfIdentifierAlreadyExistAsync(string personIdentifierId)
+        {
+            var entity = await Persons.FirstOrDefaultAsync(x => x.PersonIdentifier == personIdentifierId);
+
+            if (entity is null)
+            {
+                return;
+            }
+
+            throw new DogiException(IDENTIFIER_ALREADY_REGISTER);
         }
 
         ///<inheritdoc />
