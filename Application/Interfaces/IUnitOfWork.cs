@@ -31,6 +31,7 @@ namespace Application.Interfaces
         IRoleRepository RoleRepository { get; }
         IAdoptionApplicationRepository AdoptionApplicationRepository { get; }
         IAdoptionPendingRepository AdoptionPendingRepository { get; }
+        IHousingTypeRepository HousingTypeRepository { get; }
 
         /// <summary>
         /// Complete method for transaction complete
