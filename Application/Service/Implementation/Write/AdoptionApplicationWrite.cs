@@ -2,6 +2,7 @@ using Application.Interfaces;
 using Application.Service.Abstraction.Write;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs;
 using Domain.Entities.Adoption;
 using Microsoft.Extensions.Logging;
 
@@ -46,6 +47,20 @@ public class AdoptionApplicationWrite : IAdoptionApplicationWriteService
         _logger.LogInformation("AdoptionApplicationWrite --> AddAsync --> End");
 
         return entity;
+    }
+
+    ///<inheritdoc />
+    public async Task<bool> CompleteApplicationAsync(Guid id, AdminData adminData, CancellationToken ct = default)
+    {
+        _logger.LogInformation($"AdoptionApplicationWrite --> CompleteApplicationAsync({id}) --> Start");
+
+        var repository = _unitOfWork.AdoptionApplicationRepository;
+
+        var result = await repository.AcceptApplication(id, adminData, ct);
+
+        _logger.LogInformation("AdoptionApplicationWrite --> AddAsync --> End");
+
+        return result;
     }
 
     ///<inheritdoc />

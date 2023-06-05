@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Application.Interfaces.Repositories;
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
 using Domain.Entities.Adoption;
 using Domain.Enums.Adoption;
@@ -89,11 +90,14 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
     }
 
     /// <inheritdoc/>
-    public async Task<bool> AcceptApplication(Guid id, CancellationToken ct = default)
+    public async Task<bool> AcceptApplication(Guid id, AdminData adminData, CancellationToken ct = default)
     {
         var entity = await GetAsync(id, ct);
 
         entity.AdoptionApplicationStatusId = (int)AdoptionApplicationStatuses.Accepted;
+
+        entity.LastModified = DateTime.UtcNow;
+        entity.LastModifiedBy = adminData.Email;
 
         return true;
     }

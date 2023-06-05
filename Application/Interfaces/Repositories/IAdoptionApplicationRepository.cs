@@ -1,5 +1,6 @@
 using Application.Service.Interfaces;
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs;
 using Domain.Entities.Adoption;
 
 namespace Application.Interfaces.Repositories;
@@ -29,7 +30,7 @@ public interface IAdoptionApplicationRepository : IRepository<AdoptionApplicatio
     /// <param name="id"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<bool> AcceptApplication(Guid id, CancellationToken ct = default);
+    Task<bool> AcceptApplication(Guid id, AdminData adminData, CancellationToken ct = default);
 
     /// <summary>
     /// Decline adoption application by id.

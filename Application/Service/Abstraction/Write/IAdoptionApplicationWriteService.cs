@@ -1,4 +1,5 @@
 using Crosscuting.Api;
+using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Interfaces;
 using Domain.Entities.Adoption;
 
@@ -13,4 +14,12 @@ public interface IAdoptionApplicationWriteService : IApplicationServiceBase
     /// <param name="userData"></param>
     /// <returns></returns>
     Task<AdoptionApplication> AddAsync(AdoptionApplication entity, UserData userData);
+
+    /// <summary>
+    /// Complete waiting adoption application.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<bool> CompleteApplicationAsync(Guid id, AdminData adminData, CancellationToken ct = default);
 }
