@@ -18,7 +18,7 @@ namespace Api.GraphQL.ObjectTypes
                 .Authorize(Permissions.CanRegister.ToString())
                 .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                 .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default,
-                    default, default));
+                    default));
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                 .Authorize(Permissions.CanDelete.ToString())
@@ -86,9 +86,10 @@ namespace Api.GraphQL.ObjectTypes
             #region "ADOPTION MUTATIONS"
 
             descriptor.Field("ApplyForAdoption")
+                .Authorize()
                 .Argument("applicationInformation",
                     arg => arg.Type<NonNullType<AdoptionApplicationInformationInputType>>())
-                .ResolveWith<AdoptionManagerMutations>(a => a.ApplyForAdoption(default, default, default));
+                .ResolveWith<AdoptionManagerMutations>(a => a.ApplyForAdoption(default, default));
 
             #endregion
         }
