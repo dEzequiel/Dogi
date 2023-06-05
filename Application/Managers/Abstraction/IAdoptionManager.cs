@@ -31,5 +31,5 @@ public interface IAdoptionManager : IApplicationServiceBase
     /// <param name="adoptionApplicationId"></param>
     /// <param name="adminData"></param>
     /// <returns></returns>
-    Task CompleteAdoptionApplication(Guid adoptionApplicationId, AdminData adminData);
+    Task<AdoptionApplication> CompleteAdoptionApplication(Guid adoptionApplicationId, AdminData adminData);
 }

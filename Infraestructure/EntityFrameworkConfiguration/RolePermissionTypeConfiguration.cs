@@ -40,6 +40,11 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
             {
                 RoleId = (int)Roles.Administrator,
                 PermissionId = (int)Permissions.CanCreateAdoptionPending
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanCompleteAdoption
             }
         });
 

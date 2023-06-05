@@ -12,5 +12,10 @@ public class AdoptionPendingInputType : InputObjectType<AdoptionPending>
         descriptor.Ignore(f => f.IndividualProceedingId);
         descriptor.Ignore(f => f.AdoptionPendingStatus);
         descriptor.Ignore(f => f.AdoptionPendingStatusId);
+
+        descriptor.Ignore(f => f.Created);
+        descriptor.Ignore(f => f.CreatedBy);
+        descriptor.Ignore(f => f.LastModified);
+        descriptor.Ignore(f => f.LastModifiedBy);
     }
 }

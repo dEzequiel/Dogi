@@ -88,6 +88,33 @@ public class AdoptionManagerMutations
         }
     }
 
+    public async Task<AdoptionApplication> CompleteAdoptionApplication([Service] ISender mediator,
+        Guid adoptionApplicationId)
+    {
+        try
+        {
+            _logger.LogInformation("AdoptionManagerMutations --> CompleteAdoptionApplication --> Start");
+
+            var result = await mediator.Send(new CompleteAdoptionRequest(
+                adoptionApplicationId, GetAdminData()));
+
+            _logger.LogInformation("AdoptionManagerMutations --> CompleteAdoptionApplication --> Start");
+
+            return result.Data;
+        }
+        catch (DogiException ex)
+        {
+            _logger.LogInformation("AdoptionManagerMutations --> CompleteAdoptionApplication --> Error");
+
+            throw new DogiException(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogInformation("AdoptionManagerMutations --> CompleteAdoptionApplication --> Error");
+            throw new DogiException(ex.Message);
+        }
+    }
+
     /// <summary>
     /// Get current user information.
     /// </summary>

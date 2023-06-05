@@ -13,4 +13,5 @@ public enum Permissions
     CanVaccine = 6,
     CanAssigneRole = 7,
     CanCreateAdoptionPending = 8,
+    CanCompleteAdoption = 9,
 }

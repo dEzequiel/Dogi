@@ -97,6 +97,12 @@ namespace Api.GraphQL.ObjectTypes
                     arg => arg.Type<NonNullType<AdoptionPendingInformationInputType>>())
                 .ResolveWith<AdoptionManagerMutations>(a => a.CreateAdoptionPending(default, default));
 
+            descriptor.Field("CompleteAdoption")
+                .Authorize(Permissions.CanCompleteAdoption.ToString())
+                .Argument("adoptionApplicationId",
+                    arg => arg.Type<NonNullType<UuidType>>())
+                .ResolveWith<AdoptionManagerMutations>(a => a.CompleteAdoptionApplication(default, default));
+
             #endregion
         }
     }
