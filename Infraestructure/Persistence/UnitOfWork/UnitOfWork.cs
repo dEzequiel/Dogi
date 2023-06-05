@@ -60,6 +60,9 @@ namespace Infraestructure.Persistence.UnitOfWork
         public IAdoptionApplicationStatusRepository AdoptionApplicationStatusRepository =>
             new AdoptionApplicationStatusRepository(_context);
 
+        public IAdoptionPendingStatusRepository AdoptionPendingStatusRepository =>
+            new AdoptionPendingStatusRepository(_context);
+
         /// <summary>
         /// Constructor.
         /// </summary>

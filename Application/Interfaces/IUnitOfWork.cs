@@ -33,6 +33,7 @@ namespace Application.Interfaces
         IAdoptionPendingRepository AdoptionPendingRepository { get; }
         IHousingTypeRepository HousingTypeRepository { get; }
         IAdoptionApplicationStatusRepository AdoptionApplicationStatusRepository { get; }
+        IAdoptionPendingStatusRepository AdoptionPendingStatusRepository { get; }
 
         /// <summary>
         /// Complete method for transaction complete
