@@ -52,7 +52,7 @@ namespace Domain.Entities.Shelter
         /// <summary>
         /// Animal cage id.
         /// </summary>
-        public Guid CageId { get; set; }
+        public Guid? CageId { get; set; }
 
         public bool IsDeleted { get; set; } = false;
 
@@ -80,7 +80,7 @@ namespace Domain.Entities.Shelter
         /// <summary>
         /// Animal cage relationship.
         /// </summary>
-        public virtual Cage Cage { get; set; } = null!;
+        public virtual Cage? Cage { get; set; }
 
         /// <summary>
         /// Animal medical record relationship.

@@ -67,6 +67,24 @@ namespace Application.Service.Implementation.Write
             return cage;
         }
 
+        ///<inheritdoc />
+        public async Task<Cage> FreeCageAsync(Guid id, CancellationToken ct = default)
+        {
+            Logger.LogInformation($"CageWrite --> FreeCageAsync({id}) --> Start");
+
+            Guard.Against.NullOrEmpty(id, nameof(id));
+
+            var repository = UnitOfWork.CageRepository;
+
+            var cage = await repository.FreeCageAsync(id, ct);
+
+            await UnitOfWork.CompleteAsync(ct);
+
+            Logger.LogInformation("CageWrite --> FreeCageAsync --> End");
+
+            return cage;
+        }
+
         ///<inheritdoc/>
         public void Dispose()
         {

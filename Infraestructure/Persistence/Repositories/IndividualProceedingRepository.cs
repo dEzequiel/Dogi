@@ -137,6 +137,8 @@ namespace Infraestructure.Persistence.Repositories
             var entity = await GetAsync(id);
 
             entity.IndividualProceedingStatusId = (int)IndividualProceedingStatuses.Close;
+            entity.Cage = null;
+            entity.CageId = null;
             entity.LastModified = DateTime.UtcNow;
             entity.LastModifiedBy = adminData.Email;
 

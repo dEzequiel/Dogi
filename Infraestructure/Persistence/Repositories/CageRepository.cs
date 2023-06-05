@@ -76,8 +76,21 @@ namespace Infraestructure.Persistence.Repositories
             }
 
             entity.AnimalZoneId = animalZoneId;
-            entity.LastModified = DateTime.UtcNow;
-            entity.LastModifiedBy = admin.Email;
+
+            return entity;
+        }
+
+        /// <inheritdoc />
+        public async Task<Cage> FreeCageAsync(Guid id, CancellationToken ct = default)
+        {
+            var entity = await Cages.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (entity == null)
+            {
+                throw new DogiException(string.Format(CAGE_NOT_FOUND, id));
+            }
+
+            entity.IsOccupied = false;
 
             return entity;
         }
@@ -85,13 +98,6 @@ namespace Infraestructure.Persistence.Repositories
         /// <inheritdoc />
         public async Task UpdateOccupiedStatusAsync(Guid id, CancellationToken ct = default)
         {
-            var isOccupied = await CheckIfOccupied(id);
-
-            if (isOccupied)
-            {
-                throw new DogiException(string.Format(CAGE_IS_OCCUPIED, id));
-            }
-
             var entity = await Cages.FirstOrDefaultAsync(x => x.Id == id);
 
             if (entity == null)

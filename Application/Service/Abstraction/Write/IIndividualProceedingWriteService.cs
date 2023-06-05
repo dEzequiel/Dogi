@@ -48,5 +48,14 @@ namespace Application.Service.Abstraction.Write
         /// <param name="ct"></param>
         /// <returns></returns>
         Task<IndividualProceeding> AdoptAsync(Guid id, AdminData adminData, CancellationToken ct = default);
+
+        /// <summary>
+        /// Close IndividualProceeding.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="adminData"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IndividualProceeding> CloseAsync(Guid id, AdminData adminData, CancellationToken ct = default);
     }
 }
