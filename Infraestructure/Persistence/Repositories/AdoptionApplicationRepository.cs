@@ -88,6 +88,21 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
         return entity;
     }
 
+    /// <inheritdoc/>
+    public async Task<bool> AcceptApplication(Guid id, CancellationToken ct = default)
+    {
+        var entity = await GetAsync(id, ct);
+
+        entity.AdoptionApplicationStatusId = (int)AdoptionApplicationStatuses.Accepted;
+
+        return true;
+    }
+
+    public Task<bool> DeclinesApplicationAsync(Guid id, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
+    }
+
     private async Task CheckIfApplicationAlreadyDone(Guid adoptionPendingId, Guid userId)
     {
         var entity = await AdoptionApplications.AsNoTracking().FirstOrDefaultAsync(x =>

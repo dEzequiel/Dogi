@@ -22,4 +22,20 @@ public interface IAdoptionApplicationRepository : IRepository<AdoptionApplicatio
     /// <param name="ct"></param>
     /// <returns></returns>
     Task<AdoptionApplication> GetAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>
+    /// Accept adoption application by id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<bool> AcceptApplication(Guid id, CancellationToken ct = default);
+
+    /// <summary>
+    /// Decline adoption application by id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<bool> DeclinesApplicationAsync(Guid id, CancellationToken ct = default);
 }
