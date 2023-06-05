@@ -30,7 +30,7 @@ namespace Infraestructure.Context
         public DbSet<VaccinationCardVaccine> VaccinationCardVaccines { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<RoleUser> RolesUsers { get; set; } = null!;
-        public DbSet<AdoptionPending> AdoptionPendings { get; set; } = null!;
+        public DbSet<AdoptionPending> AdoptionPending { get; set; } = null!;
         public DbSet<AdoptionApplication> AdoptionApplications { get; set; } = null!;
 
         // Support Tables

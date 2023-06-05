@@ -72,17 +72,17 @@ public class InsertAdoptionApplicationRequestHandler : IRequestHandler<InsertAdo
         var housingType =
             await _housingTypeReadService.GetByIdAsync(request.AdoptionApplicationData.HousingTypeId,
                 cancellationToken);
-        request.AdoptionApplicationData.HousingType = housingType;
+        request.AdoptionApplicationData.HousingTypeId = housingType.Id;
 
         var adoptionPending =
             await _adoptionPendingReadService.GetByIdAsync(request.AdoptionApplicationData.AdoptionPendingId,
                 cancellationToken);
-        request.AdoptionApplicationData.AdoptionPending = adoptionPending;
+        request.AdoptionApplicationData.AdoptionPendingId = adoptionPending.Id;
 
         var applicationStatus =
             await _applicationStatus.GetByIdAsync(request.AdoptionApplicationData.AdoptionApplicationStatusId,
                 cancellationToken);
-        request.AdoptionApplicationData.AdoptionApplicationStatus = applicationStatus;
+        request.AdoptionApplicationData.AdoptionApplicationStatusId = applicationStatus.Id;
 
         var result = await _adoptionApplicationWriteService.AddAsync(request.AdoptionApplicationData, request.UserData);
 

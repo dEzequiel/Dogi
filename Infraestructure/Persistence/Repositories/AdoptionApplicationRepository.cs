@@ -71,6 +71,8 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
 
         entity.Created = DateTime.UtcNow;
         entity.CreatedBy = userData.Email;
+
+        await AdoptionApplications.AddAsync(entity, ct);
     }
 
     /// <inheritdoc/>

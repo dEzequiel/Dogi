@@ -9,8 +9,8 @@ namespace Application.Service.Implementation.Write;
 
 public class AdoptionApplicationWrite : IAdoptionApplicationWriteService
 {
-    private readonly ILogger<AdoptionApplicationWrite> Logger;
-    private readonly IUnitOfWork UnitOfWork;
+    private readonly ILogger<AdoptionApplicationWrite> _logger;
+    private readonly IUnitOfWork _unitOfWork;
 
     /// <summary>
     /// Constructor.
@@ -19,14 +19,14 @@ public class AdoptionApplicationWrite : IAdoptionApplicationWriteService
     /// <param name="unitOfWork"></param>
     public AdoptionApplicationWrite(ILogger<AdoptionApplicationWrite> logger, IUnitOfWork unitOfWork)
     {
-        Logger = logger;
-        UnitOfWork = unitOfWork;
+        _logger = logger;
+        _unitOfWork = unitOfWork;
     }
 
     ///<inheritdoc />
     public async Task<AdoptionApplication> AddAsync(AdoptionApplication entity, UserData userData)
     {
-        Logger.LogInformation("AdoptionApplicationWrite --> AddAsync --> Start");
+        _logger.LogInformation("AdoptionApplicationWrite --> AddAsync --> Start");
 
         Guard.Against.Null(entity, nameof(entity));
         Guard.Against.NullOrEmpty(entity.AdoptionPendingId, nameof(entity.AdoptionPendingId));
@@ -37,13 +37,13 @@ public class AdoptionApplicationWrite : IAdoptionApplicationWriteService
         Guard.Against.NullOrEmpty(userData.Id, nameof(userData.Id));
         Guard.Against.NullOrEmpty(userData.Email, nameof(userData.Email));
 
-        var repository = UnitOfWork.AdoptionApplicationRepository;
+        var repository = _unitOfWork.AdoptionApplicationRepository;
 
         await repository.AddAsync(entity, userData);
 
-        await UnitOfWork.CompleteAsync();
+        await _unitOfWork.CompleteAsync();
 
-        Logger.LogInformation("AdoptionApplicationWrite --> AddAsync --> End");
+        _logger.LogInformation("AdoptionApplicationWrite --> AddAsync --> End");
 
         return entity;
     }
@@ -51,6 +51,6 @@ public class AdoptionApplicationWrite : IAdoptionApplicationWriteService
     ///<inheritdoc />
     public void Dispose()
     {
-        UnitOfWork.Dispose();
+        _unitOfWork.Dispose();
     }
 }
