@@ -49,7 +49,7 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
             new RolePermission()
             {
                 RoleId = (int)Roles.Administrator,
-                PermissionId = (int)Permissions.CanReadUserContext
+                PermissionId = (int)Permissions.CanReadUser
             },
             new RolePermission()
             {
@@ -65,6 +65,26 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
             {
                 RoleId = (int)Roles.Administrator,
                 PermissionId = (int)Permissions.CanReadMedicalRecord
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadCage
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadPerson
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadAnimalChip
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadIndividualProceeding
             }
         });
 
@@ -99,12 +119,42 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
             new RolePermission()
             {
                 RoleId = (int)Roles.Veterinary,
-                PermissionId = (int)Permissions.CanReadUserContext
+                PermissionId = (int)Permissions.CanReadUser
             },
             new RolePermission()
             {
                 RoleId = (int)Roles.Veterinary,
                 PermissionId = (int)Permissions.CanReadMedicalRecord
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadCage
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadPerson
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadAnimalChip
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadIndividualProceeding
+            }
+        });
+
+        /// Guest permissions.
+        builder.HasData(new List<RolePermission>()
+        {
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanReadPerson
             }
         });
     }

@@ -9,6 +9,7 @@ using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Exceptions;
+using Domain.Enums.Authorization;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -53,6 +54,8 @@ public class UserManager : IUserManager
 
         Guard.Against.Null(createdUser.Data);
         Guard.Against.Null(createdPerson.Data);
+
+        await Mediator.Send(new AssigneUserToRoleRequest(createdUser.Data.Id, new[] { (int)Roles.Guest }));
 
         return new RegisteredUserWithPersonCredentials()
         {
