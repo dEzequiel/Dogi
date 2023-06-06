@@ -3,12 +3,14 @@ using Application.Features.AdoptionApplication.Queries;
 using Application.Features.AdoptionPending.Commands;
 using Application.Features.Cage.Commands;
 using Application.Features.IndividualPro.Commands;
+using Application.Features.Person.Queries;
 using Application.Interfaces;
 using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Api.DTOs.Response;
+using Crosscuting.Base.Exceptions;
 using Domain.Entities.Adoption;
 using Domain.Entities.Shelter;
 using Domain.Enums.Adoption;
@@ -23,6 +25,8 @@ public class AdoptionManager : IAdoptionManager
     private readonly ILogger<AdoptionManager> _logger;
     private readonly IMediator _mediator;
     private readonly IUnitOfWork _unitOfWork;
+
+    private const string PERSON_WITH_ID_IS_BANNED = "PERSON WITH ID {0} IS BANNED";
 
     /// <summary>
     /// Constructor.
@@ -45,11 +49,24 @@ public class AdoptionManager : IAdoptionManager
         application.AdoptionApplicationStatusId = (int)AdoptionApplicationStatuses.Waiting;
         application.UserId = userData.Id;
 
+        await CheckIfPersonBanned(userData.Id);
+
         var adoptionApplicationRequest =
             await _mediator.Send(new InsertAdoptionApplicationRequest(application, userData));
 
         Guard.Against.Null(adoptionApplicationRequest.Data);
         return adoptionApplicationRequest.Data;
+    }
+
+    private async Task CheckIfPersonBanned(Guid userId)
+    {
+        var person = await _mediator.Send(new GetPersonByUserIdRequest(userId));
+        Guard.Against.Null(person.Data);
+
+        if (person.Data.IsBan)
+        {
+            throw new DogiException(string.Format(PERSON_WITH_ID_IS_BANNED, person.Data.PersonIdentifier));
+        }
     }
 
     ///<inheritdoc />
