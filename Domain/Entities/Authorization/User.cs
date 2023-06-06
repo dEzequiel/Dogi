@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities.Adoption;
 using Domain.Entities.Shelter;
 
 namespace Domain.Entities.Authorization;
@@ -27,6 +28,11 @@ public class User : Entity
     /// Person relationship.
     /// </summary>
     public virtual Person Person { get; set; }
+
+    /// <summary>
+    /// Adoption applications relationships.
+    /// </summary>
+    public virtual ICollection<AdoptionApplication>? AdoptionApplications { get; set; }
 
     /// <summary>
     /// Constructor.

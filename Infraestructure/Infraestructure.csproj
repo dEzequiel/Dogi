@@ -7,27 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HotChocolate.Authorization" Version="13.1.0"/>
-    <PackageReference Include="HotChocolate.Types" Version="13.1.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4"/>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0"/>
+      <PackageReference Include="HotChocolate.Authorization" Version="13.1.0"/>
+      <PackageReference Include="HotChocolate.Types" Version="13.1.0"/>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16"/>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4"/>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4"/>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0"/>
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj"/>
-    <ProjectReference Include="..\Domain\Domain.csproj"/>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Application\Application.csproj"/>
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Interfaces\"/>
+        <Folder Include="Scripts\"/>
+    </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\"/>
-    <Folder Include="Scripts\"/>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Authentication\JsonWebTokenUtils.cs"/>
+      <Compile Remove="Authentication\JsonWebTokenUtils.cs"/>
   </ItemGroup>
 
 </Project>

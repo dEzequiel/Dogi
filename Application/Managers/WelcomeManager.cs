@@ -178,7 +178,7 @@ namespace Application.Managers
 
             individualProceeding.CageId = cage.Data.Id;
 
-            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId.Value));
         }
 
         private async Task AssignCageForIndividualProceedingWithChipOwnerResponsible(
@@ -190,7 +190,7 @@ namespace Application.Managers
 
             individualProceeding.CageId = cage.Data.Id;
 
-            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId));
+            await Mediator.Send(new UpdateCageOccupiedStatusRequest(individualProceeding.CageId.Value));
         }
 
         private async Task CreateMedicalRecordForIndividualProceedingAsync(IndividualProceeding individualProceeding,

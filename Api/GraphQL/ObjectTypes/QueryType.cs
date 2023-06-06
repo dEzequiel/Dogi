@@ -25,13 +25,13 @@ namespace Api.GraphQL.ObjectTypes
                     q.GetAllAsync(default, default));*/
 
             descriptor.Field("GetById")
-                .Type<ReceptionDocumentType>()
+                .Type<ReceptionDocumentObjectType>()
                 .Argument("id", a => a.Type<NonNullType<UuidType>>())
                 .ResolveWith<ReceptionDocumentQueries>(q => q.GetById(default, default, default));
 
             descriptor.Field("GetAll")
-                .Type<ReceptionDocumentType>()
-                .UsePaging<ReceptionDocumentType>(
+                .Type<ReceptionDocumentObjectType>()
+                .UsePaging<ReceptionDocumentObjectType>(
                     options: new PagingOptions
                     {
                         DefaultPageSize = 10,
@@ -41,9 +41,9 @@ namespace Api.GraphQL.ObjectTypes
                 .ResolveWith<ReceptionDocumentQueries>(q => q.GetAllPaginatedAsync(default, default));
 
             descriptor.Field("GetByChip")
-                .Type<ReceptionDocumentType>()
+                .Type<ReceptionDocumentObjectType>()
                 .Argument("hasChip", a => a.Type<BooleanType>())
-                .UsePaging<ReceptionDocumentType>(
+                .UsePaging<ReceptionDocumentObjectType>(
                     options: new PagingOptions
                     {
                         DefaultPageSize = 10,

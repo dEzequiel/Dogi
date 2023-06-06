@@ -30,5 +30,13 @@ namespace Application.Interfaces.Repositories
         /// <param name="ct"></param>
         /// <returns></returns>
         Task<Cage> UpdateAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin, CancellationToken ct = default);
+
+        /// <summary>
+        /// Free cage.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<Cage> FreeCageAsync(Guid id, CancellationToken ct = default);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Api.GraphQL.InputObjectTypes.Authorization;
+﻿using Api.GraphQL.InputObjectTypes.Adoption;
+using Api.GraphQL.InputObjectTypes.Authorization;
 using Api.GraphQL.InputObjectTypes.Shelter;
 using Api.GraphQL.InputObjectTypes.Veterinary;
 using Api.GraphQL.InputObjectTypes.VeterinaryObjects;
@@ -13,16 +14,20 @@ namespace Api.GraphQL.ObjectTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
+            #region "WELCOME MANAGER MUTATIONS"
+
             descriptor.Field("RegisterAnimal")
                 .Authorize(Permissions.CanRegister.ToString())
                 .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
                 .ResolveWith<WelcomeManagerMutations>(q => q.RegisterNewAnimalHost(default,
-                    default, default));
+                    default));
 
             descriptor.Field("MarkReceptionDocumentAsRemovedAsync")
                 .Authorize(Permissions.CanDelete.ToString())
                 .Argument("idToDelete", arg => arg.Type<UuidType>())
                 .ResolveWith<ReceptionDocumentMutations>(q => q.MarkReceptionDocumentAsRemovedAsync(default, default));
+
+            #endregion
 
             #region "VETERINARY MANAGER MUTATIONS"
 
@@ -79,6 +84,29 @@ namespace Api.GraphQL.ObjectTypes
                 .Authorize(Permissions.CanAssigneRole.ToString())
                 .Argument("userWithRoles", arg => arg.Type<NonNullType<UserWithRolesInputType>>())
                 .ResolveWith<UserManagerMutations>(v => v.AssigneRole(default, default));
+
+            #endregion
+
+            #region "ADOPTION MUTATIONS"
+
+            descriptor.Field("ApplyForAdoption")
+                .Authorize()
+                .Argument("applicationInformation",
+                    arg => arg.Type<NonNullType<AdoptionApplicationInformationInputType>>())
+                .ResolveWith<AdoptionManagerMutations>(a => a.ApplyForAdoption(default, default));
+
+            descriptor.Field("RegisterAdoptionPending")
+                .Authorize(Permissions.CanCreateAdoptionPending.ToString())
+                .Argument("adoptionPendingInformation",
+                    arg => arg.Type<NonNullType<AdoptionPendingInformationInputType>>())
+                .ResolveWith<AdoptionManagerMutations>(a => a.CreateAdoptionPending(default, default));
+
+            descriptor.Field("CompleteAdoption")
+                .Authorize(Permissions.CanCompleteAdoption.ToString())
+                .Argument("adoptionApplicationId",
+                    arg => arg.Type<NonNullType<UuidType>>())
+                .Argument("pickedUp", arg => arg.Type<NonNullType<BooleanType>>())
+                .ResolveWith<AdoptionManagerMutations>(a => a.CompleteAdoptionApplication(default, default, default));
 
             #endregion
         }

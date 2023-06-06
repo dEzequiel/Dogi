@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Implementation.Write;
 
-public class UserRead : IUserWriteService
+public class UserWrite : IUserWriteService
 {
-    private readonly ILogger<UserRead> Logger;
+    private readonly ILogger<UserWrite> Logger;
     private readonly IUnitOfWork UnitOfWork;
 
     /// <summary>
@@ -18,7 +18,7 @@ public class UserRead : IUserWriteService
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="unitOfWork"></param>
-    public UserRead(ILogger<UserRead> logger, IUnitOfWork unitOfWork)
+    public UserWrite(ILogger<UserWrite> logger, IUnitOfWork unitOfWork)
     {
         Logger = logger;
         UnitOfWork = unitOfWork;

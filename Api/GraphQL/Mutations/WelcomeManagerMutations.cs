@@ -1,8 +1,8 @@
-﻿using Application.DTOs.WelcomeManager;
+﻿using System.Security.Claims;
+using Application.DTOs.WelcomeManager;
 using Application.Features.WelcomeManagerFeature.Command;
 using Crosscuting.Api.DTOs;
 using Crosscuting.Base.Exceptions;
-using Domain.Entities.Authorization;
 using MediatR;
 
 namespace Api.GraphQL.Mutations
@@ -13,15 +13,17 @@ namespace Api.GraphQL.Mutations
     public class WelcomeManagerMutations
     {
         private readonly ILogger<WelcomeManagerMutations> Logger;
+        private readonly ClaimsPrincipal _claimsPrincipal;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="_mediator"></param>
-        /// <param name="_logger"></param>
-        public WelcomeManagerMutations(ILogger<WelcomeManagerMutations> _logger)
+        /// <param name="logger"></param>
+        /// <param name="claimsPrincipal"></param>
+        public WelcomeManagerMutations(ILogger<WelcomeManagerMutations> logger, ClaimsPrincipal claimsPrincipal)
         {
-            Logger = _logger;
+            Logger = logger;
+            _claimsPrincipal = claimsPrincipal;
         }
 
         /// <summary>
@@ -34,7 +36,6 @@ namespace Api.GraphQL.Mutations
         /// can be consulted together with that of the owner.</returns>
         /// <exception cref="DogiException"></exception>
         public async Task<RegisterInformation> RegisterNewAnimalHost([Service] ISender Mediator,
-            [Service] IHttpContextAccessor? httpContextAccessor,
             RegisterInformation input)
         {
             try
@@ -42,7 +43,7 @@ namespace Api.GraphQL.Mutations
                 Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> Start");
 
                 var result = await Mediator.Send(new InsertRegisterInformationRequest(input,
-                    GetAdminData(httpContextAccessor)));
+                    GetAdminData()));
 
                 Logger.LogInformation("WelcomeManagerMutations --> RegisterNewAnimalHost --> End");
 
@@ -65,13 +66,12 @@ namespace Api.GraphQL.Mutations
         /// Get current user information.
         /// </summary>
         /// <returns>Object representing user information.</returns>
-        private AdminData GetAdminData(IHttpContextAccessor context)
+        private AdminData GetAdminData()
         {
-            var user = (User)context.HttpContext.Items["User"];
-            return new AdminData()
+            return new AdminData
             {
-                Id = Guid.Parse(user.Id.ToString()),
-                Email = user.Email
+                Id = Guid.Parse(_claimsPrincipal.FindFirstValue("Id")),
+                Email = _claimsPrincipal.FindFirstValue("Email")
             };
         }
     }

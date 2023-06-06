@@ -1,22 +1,23 @@
 using Api.GraphQL.ObjectTypes.Veterinary;
 using Domain.Entities.Shelter;
+using Domain.Enums.Authorization;
 
 namespace Api.GraphQL.ObjectTypes.Shelter
 {
     ///<summary>
     /// IndividualProceeding HotChocolate Type implementation.
     ///</summary>
-    public class IndividualProceedingType : ObjectType<IndividualProceeding>
+    public class IndividualProceedingObjectType : ObjectType<IndividualProceeding>
     {
         protected override void Configure(IObjectTypeDescriptor<IndividualProceeding> descriptor)
         {
-            descriptor.Field(f => f.Id).Type<UuidType>();
-            descriptor.Field(f => f.Name).Type<StringType>();
-            descriptor.Field(f => f.Age).Type<IntType>();
-            descriptor.Field(f => f.Color).Type<StringType>();
-
             descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordType>>();
             descriptor.Field(f => f.VaccinationCard).Type<VaccinationCardType>();
+
+            descriptor.Field(f => f.VaccinationCard)
+                .Authorize(Permissions.CanReadVaccinationCard.ToString());
+            descriptor.Field(f => f.MedicalRecords)
+                .Authorize(Permissions.CanReadMedicalRecord.ToString());
 
             descriptor.Ignore(f => f.ReceptionDocumentId);
             descriptor.Ignore(f => f.VaccinationCardId);

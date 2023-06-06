@@ -22,5 +22,13 @@ namespace Application.Service.Abstraction.Write
         /// <returns></returns>
         Task<Cage> MoveCageAnimalZoneAsync(Guid id, int animalZoneId, AdminData admin,
             CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Free cage.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<Cage> FreeCageAsync(Guid id, CancellationToken ct = default);
     }
 }

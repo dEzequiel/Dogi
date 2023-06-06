@@ -9,6 +9,7 @@ using Application.Managers.Abstraction;
 using Ardalis.GuardClauses;
 using Crosscuting.Api.DTOs.Authentication;
 using Crosscuting.Base.Exceptions;
+using Domain.Enums.Authorization;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -42,7 +43,7 @@ public class UserManager : IUserManager
         var userExist = await userRepository.GetAsync(user.Email);
         if (userExist is not null)
         {
-            throw new DogiException("User with username already exist.");
+            throw new DogiException("Email already registered.");
         }
 
         var createdUser = await Mediator.Send(new RegisterUserRequest(user), ct);
@@ -53,6 +54,8 @@ public class UserManager : IUserManager
 
         Guard.Against.Null(createdUser.Data);
         Guard.Against.Null(createdPerson.Data);
+
+        await Mediator.Send(new AssigneUserToRoleRequest(createdUser.Data.Id, new[] { (int)Roles.Guest }));
 
         return new RegisteredUserWithPersonCredentials()
         {

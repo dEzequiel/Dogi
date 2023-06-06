@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using Api.GraphQL.ObjectTypes;
 using Application;
@@ -47,6 +48,9 @@ builder.Services.AddAuthentication(options =>
 /// GraphQL Setup.
 /// </summary>
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddTransient<ClaimsPrincipal>(s =>
+    s.GetService<IHttpContextAccessor>().HttpContext.User);
 
 ///<summary>
 /// GraphQL Setup.

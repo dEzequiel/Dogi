@@ -36,6 +36,66 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
                 RoleId = (int)Roles.Administrator,
                 PermissionId = (int)Permissions.CanAssigneRole
             },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanCreateAdoptionPending
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanCompleteAdoption
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadUser
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadAdoptionApplications
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadVaccinationCard
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadMedicalRecord
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadCage
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadPerson
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadAnimalChip
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadIndividualProceeding
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanApplyForAdoption
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadAdoptionPending
+            }
         });
 
         /// Veterinary permissions.
@@ -61,6 +121,66 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
                 RoleId = (int)Roles.Veterinary,
                 PermissionId = (int)Permissions.CanVaccine
             },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadVaccinationCard
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadUser
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadMedicalRecord
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadCage
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadPerson
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadAnimalChip
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Veterinary,
+                PermissionId = (int)Permissions.CanReadIndividualProceeding
+            }
+        });
+
+        /// Guest permissions.
+        builder.HasData(new List<RolePermission>()
+        {
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanReadPerson
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanReadIndividualProceeding
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanApplyForAdoption
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanReadAdoptionPending
+            }
         });
     }
 }

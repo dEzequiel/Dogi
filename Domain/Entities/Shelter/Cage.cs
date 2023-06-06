@@ -5,7 +5,7 @@ namespace Domain.Entities.Shelter
     /// <summary>
     /// Represents the cage where the animal is located.
     /// </summary>
-    public class Cage : AuditableEntity
+    public class Cage : Entity
     {
         /// <summary>
         /// Cage number.
