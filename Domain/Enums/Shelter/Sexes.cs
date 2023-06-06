@@ -3,7 +3,7 @@
     /// <summary>
     /// Options representing Entity sex.
     /// </summary>
-    public enum Sex
+    public enum Sexes
     {
         Male = 1,
         Female = 2,

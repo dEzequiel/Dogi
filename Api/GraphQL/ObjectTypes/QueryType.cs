@@ -12,6 +12,8 @@ namespace Api.GraphQL.ObjectTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
+            //descritpro.Field("GetAvailableAdoptions")
+
             /*descriptor.Field("GetAllMedicalRecordByStatus")
                 .Type<ListType<MedicalRecordType>>()
                 .Argument("status", a => a.Type<NonNullType<IntType>>())

@@ -1,3 +1,4 @@
+using Api.GraphQL.EnumType;
 using Domain.Entities.Shelter;
 
 namespace Api.GraphQL.InputObjectTypes.Shelter
@@ -12,8 +13,8 @@ namespace Api.GraphQL.InputObjectTypes.Shelter
             descriptor.Field(f => f.Name).Type<StringType>();
             descriptor.Field(f => f.Age).Type<IntType>();
             descriptor.Field(f => f.Color).Type<StringType>();
-            descriptor.Field(f => f.CategoryId).Type<NonNullType<IntType>>();
-            descriptor.Field(f => f.SexId).Type<NonNullType<IntType>>();
+            descriptor.Field(f => f.CategoryId).Type<NonNullType<AnimalCategoryEnumType>>().Name("category");
+            descriptor.Field(f => f.SexId).Type<NonNullType<SexEnumType>>().Name("sex");
 
             descriptor.Ignore(f => f.Id);
             descriptor.Ignore(f => f.ReceptionDocumentId);

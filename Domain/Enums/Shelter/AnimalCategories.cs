@@ -3,7 +3,7 @@
     /// <summary>
     /// Options representing the animal category to which the animal belongs.
     /// </summary>
-    public enum AnimalCategory
+    public enum AnimalCategories
     {
         Dogs = 1,
         Cats = 2,

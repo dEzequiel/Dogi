@@ -14,7 +14,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .IsClustered(false);
 
 
-            var totalSexTypes = Enum.GetNames(typeof(Domain.Enums.Shelter.Sex));
+            var totalSexTypes = Enum.GetNames(typeof(Domain.Enums.Shelter.Sexes));
 
             int id = 0;
             foreach (var type in totalSexTypes)
