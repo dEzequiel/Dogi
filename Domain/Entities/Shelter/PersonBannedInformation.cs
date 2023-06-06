@@ -3,7 +3,7 @@ using Domain.Common;
 namespace Domain.Entities.Shelter
 {
     /// <summary>
-    /// Represents collection of banned persons.
+    /// Person ban information.
     /// </summary>
     public class PersonBannedInformation : AuditableEntity
     {

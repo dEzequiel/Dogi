@@ -11,11 +11,6 @@ namespace Api.GraphQL.ObjectTypes.Shelter
     {
         protected override void Configure(IObjectTypeDescriptor<IndividualProceeding> descriptor)
         {
-            descriptor.Field(f => f.Id).Type<UuidType>();
-            descriptor.Field(f => f.Name).Type<StringType>();
-            descriptor.Field(f => f.Age).Type<IntType>();
-            descriptor.Field(f => f.Color).Type<StringType>();
-
             descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordType>>();
             descriptor.Field(f => f.VaccinationCard).Type<VaccinationCardType>();
 

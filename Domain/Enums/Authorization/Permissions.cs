@@ -14,8 +14,12 @@ public enum Permissions
     CanAssigneRole = 7,
     CanCreateAdoptionPending = 8,
     CanCompleteAdoption = 9,
-    CanReadUserContext = 10,
+    CanReadUser = 10,
     CanReadAdoptionApplications = 11,
     CanReadVaccinationCard = 12,
     CanReadMedicalRecord = 13,
+    CanReadCage = 14,
+    CanReadPerson = 15,
+    CanReadAnimalChip = 16,
+    CanReadIndividualProceeding = 17,
 }

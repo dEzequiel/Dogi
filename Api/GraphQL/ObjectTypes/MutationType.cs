@@ -14,6 +14,8 @@ namespace Api.GraphQL.ObjectTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Mutation> descriptor)
         {
+            #region "WELCOME MANAGER MUTATIONS"
+
             descriptor.Field("RegisterAnimal")
                 .Authorize(Permissions.CanRegister.ToString())
                 .Argument("input", arg => arg.Type<RegisterAnimalHostInput>())
@@ -24,6 +26,8 @@ namespace Api.GraphQL.ObjectTypes
                 .Authorize(Permissions.CanDelete.ToString())
                 .Argument("idToDelete", arg => arg.Type<UuidType>())
                 .ResolveWith<ReceptionDocumentMutations>(q => q.MarkReceptionDocumentAsRemovedAsync(default, default));
+
+            #endregion
 
             #region "VETERINARY MANAGER MUTATIONS"
 

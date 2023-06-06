@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Shelter;
+using Domain.Enums.Authorization;
 
 namespace Api.GraphQL.ObjectTypes.Shelter;
 
@@ -9,8 +10,10 @@ public class ReceptionDocumentObjectType : ObjectType<ReceptionDocument>
 {
     protected override void Configure(IObjectTypeDescriptor<ReceptionDocument> descriptor)
     {
-        descriptor.Ignore(f => f.IndividualProceeding);
-        descriptor.Ignore(f => f.AnimalChip);
-        descriptor.Ignore(f => f.IsDeleted);
+        descriptor.Field(f => f.IndividualProceeding)
+            .Authorize(Permissions.CanReadIndividualProceeding.ToString());
+
+        descriptor.Field(f => f.AnimalChip)
+            .Authorize(Permissions.CanReadCage.ToString());
     }
 }

@@ -3,7 +3,7 @@
 namespace Domain.Entities.Shelter
 {
     /// <summary>
-    /// Represents the electronic chip of an animal.
+    /// Represents information of electronic animal chip.
     /// </summary>
     public class AnimalChip : Entity
     {
@@ -13,7 +13,7 @@ namespace Domain.Entities.Shelter
         public string ChipNumber { get; set; } = null!;
 
         /// <summary>
-        /// Name appearing on chip.
+        /// Appearing name on chip.
         /// </summary>
         public string? Name { get; set; }
 
@@ -22,6 +22,9 @@ namespace Domain.Entities.Shelter
         /// </summary>
         public string PersonIdentifierId { get; set; } = null!;
 
+        /// <summary>
+        /// ReceptionDocument identifier.
+        /// </summary>
         public Guid ReceptionDocumentId { get; set; }
 
         /// <summary>

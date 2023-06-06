@@ -8,7 +8,7 @@ public class AdoptionApplicationObjectType : ObjectType<AdoptionApplication>
     protected override void Configure(IObjectTypeDescriptor<AdoptionApplication> descriptor)
     {
         descriptor.Field(f => f.User)
-            .Authorize(Permissions.CanReadUserContext.ToString());
+            .Authorize(Permissions.CanReadUser.ToString());
 
         descriptor.Ignore(f => f.UserId);
         descriptor.Ignore(f => f.AdoptionPendingId);
