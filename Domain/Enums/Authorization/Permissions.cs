@@ -22,4 +22,6 @@ public enum Permissions
     CanReadPerson = 15,
     CanReadAnimalChip = 16,
     CanReadIndividualProceeding = 17,
+    CanReadAdoptionPending = 18,
+    CanApplyForAdoption = 19,
 }

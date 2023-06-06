@@ -85,6 +85,16 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
             {
                 RoleId = (int)Roles.Administrator,
                 PermissionId = (int)Permissions.CanReadIndividualProceeding
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanApplyForAdoption
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Administrator,
+                PermissionId = (int)Permissions.CanReadAdoptionPending
             }
         });
 
@@ -155,6 +165,21 @@ public class RolePermissionTypeConfiguration : IEntityTypeConfiguration<RolePerm
             {
                 RoleId = (int)Roles.Guest,
                 PermissionId = (int)Permissions.CanReadPerson
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanReadIndividualProceeding
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanApplyForAdoption
+            },
+            new RolePermission()
+            {
+                RoleId = (int)Roles.Guest,
+                PermissionId = (int)Permissions.CanReadAdoptionPending
             }
         });
     }
