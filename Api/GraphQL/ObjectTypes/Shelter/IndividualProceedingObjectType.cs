@@ -11,6 +11,8 @@ namespace Api.GraphQL.ObjectTypes.Shelter
     {
         protected override void Configure(IObjectTypeDescriptor<IndividualProceeding> descriptor)
         {
+            descriptor.Authorize(Permissions.CanReadIndividualProceeding.ToString());
+
             descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordType>>();
             descriptor.Field(f => f.VaccinationCard).Type<VaccinationCardType>();
 

@@ -7,6 +7,7 @@ namespace Api.GraphQL.ObjectTypes.Shelter
     {
         protected override void Configure(IObjectTypeDescriptor<Cage> descriptor)
         {
+            descriptor.Ignore(f => f.AnimalZoneId);
             descriptor.Authorize(Permissions.CanReadCage.ToString());
         }
     }
