@@ -1,5 +1,8 @@
-﻿using Api.GraphQL.ObjectTypes.Shelter;
+﻿using Api.GraphQL.EnumType;
+using Api.GraphQL.ObjectTypes.Shelter;
+using Api.GraphQL.ObjectTypes.Veterinary;
 using Api.GraphQL.Queries;
+using Domain.Enums.Authorization;
 using HotChocolate.Types.Pagination;
 
 namespace Api.GraphQL.ObjectTypes
@@ -12,7 +15,12 @@ namespace Api.GraphQL.ObjectTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
-            //descritpro.Field("GetAvailableAdoptions")
+            descriptor.Field("GetMedicalRecordsWaitingForRevision")
+                .Authorize(Permissions.CanReadMedicalRecord.ToString())
+                .Type<ListType<MedicalRecordObjectType>>()
+                .Argument("status", arg => arg.Type<NonNullType<MedicalRecordStatusEnumType>>())
+                .ResolveWith<MedicalRecordQueries>(q => q.GetAllByStatus(default, default, default));
+
 
             /*descriptor.Field("GetAllMedicalRecordByStatus")
                 .Type<ListType<MedicalRecordType>>()

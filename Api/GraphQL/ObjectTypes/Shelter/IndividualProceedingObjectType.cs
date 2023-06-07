@@ -13,7 +13,7 @@ namespace Api.GraphQL.ObjectTypes.Shelter
         {
             descriptor.Authorize(Permissions.CanReadIndividualProceeding.ToString());
 
-            descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordType>>();
+            descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordObjectType>>();
             descriptor.Field(f => f.VaccinationCard).Type<VaccinationCardType>();
 
             descriptor.Field(f => f.VaccinationCard)
