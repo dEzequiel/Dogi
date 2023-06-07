@@ -69,6 +69,13 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
         return true;
     }
 
+    /// <inheritdoc/>
+    public async Task<IEnumerable<AdoptionPending>> GetAllByStatus(int status, CancellationToken ct = default)
+    {
+        var entities = await AdoptionPendings.Where(x => x.AdoptionPendingStatusId == status).ToListAsync();
+
+        return entities;
+    }
 
     private async Task CheckIfPendingAlreadyOpenAsync(Guid individualProceedingId)
     {
@@ -85,9 +92,9 @@ public class AdoptionPendingRepository : IAdoptionPendingRepository
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<AdoptionPending>> GetAllAsync()
+    public async Task<IEnumerable<AdoptionPending>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await AdoptionPendings.ToListAsync();
     }
 
     /// <inheritdoc/>

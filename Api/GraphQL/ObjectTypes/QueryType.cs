@@ -1,4 +1,5 @@
 ﻿using Api.GraphQL.EnumType;
+using Api.GraphQL.ObjectTypes.Adoption;
 using Api.GraphQL.ObjectTypes.Shelter;
 using Api.GraphQL.ObjectTypes.Veterinary;
 using Api.GraphQL.Queries;
@@ -45,6 +46,15 @@ namespace Api.GraphQL.ObjectTypes
 
             #endregion
 
+            #region "ADOPTION PENDING QUERIES"
+
+            descriptor.Field("GetAdoptionPendingsFilterByStatus")
+                .Authorize()
+                .Type<ListType<AdoptionPendingObjectType>>()
+                .Argument("status", arg => arg.Type<NonNullType<AdoptionPendingStatusEnumType>>())
+                .ResolveWith<AdoptionPendingQueries>(q => q.GetAllAdoptionPendingByStatus(default, default, default));
+
+            #endregion
 
             descriptor.Field("GetById")
                 .Type<ReceptionDocumentObjectType>()

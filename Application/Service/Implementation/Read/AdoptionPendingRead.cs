@@ -39,6 +39,22 @@ public class AdoptionPendingRead : IAdoptionPendingReadService
     }
 
     ///<inheritdoc />
+    public async Task<IEnumerable<AdoptionPending>> GetAllByStatusIdAsync(int status, CancellationToken ct = default)
+    {
+        _logger.LogInformation("AdoptionPendingRead --> GetAllByStatusIdAsync --> Start");
+
+        Guard.Against.Null(status, nameof(status));
+
+        var repository = _unitOfWork.AdoptionPendingRepository;
+
+        var entities = await repository.GetAllByStatus(status);
+
+        _logger.LogInformation("AdoptionPendingRead --> GetAllByStatusIdAsync --> End");
+
+        return entities;
+    }
+
+    ///<inheritdoc />
     public void Dispose()
     {
         _unitOfWork.Dispose();
