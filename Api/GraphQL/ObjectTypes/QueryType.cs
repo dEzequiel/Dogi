@@ -25,24 +25,26 @@ namespace Api.GraphQL.ObjectTypes
 
             #endregion
 
+            #region "MEDICAL RECORDS QUERIES"
+
             descriptor.Field("GetMedicalRecordsFilterByStatus")
                 .Authorize(Permissions.CanReadMedicalRecord.ToString())
                 .Type<ListType<MedicalRecordObjectType>>()
                 .Argument("status", arg => arg.Type<NonNullType<MedicalRecordStatusEnumType>>())
                 .ResolveWith<MedicalRecordQueries>(q => q.GetAllByStatus(default, default, default));
 
+            #endregion
 
-            /*descriptor.Field("GetAllMedicalRecordByStatus")
-                .Type<ListType<MedicalRecordType>>()
-                .Argument("status", a => a.Type<NonNullType<IntType>>())
-                .Authorize()
-                .ResolveWith<VeterinaryManagerQueries>(q =>
-                    q.GetAllByStatus(default, default, default));
-            
-            descriptor.Field("GetAllMedicalRecord")
-                .Type<ListType<MedicalRecordType>>()
-                .ResolveWith<VeterinaryManagerQueries>(q => 
-                    q.GetAllAsync(default, default));*/
+            #region "VACCINES QUERIES"
+
+            descriptor.Field("GetAllVaccinesByAnimalCategory")
+                .Authorize(Permissions.CanReadMedicalRecord.ToString())
+                .Type<ListType<VaccineObjectType>>()
+                .Argument("category", arg => arg.Type<AnimalCategoryEnumType>())
+                .ResolveWith<VaccineQueries>(q => q.GetAllByAnimalCategory(default, default, default));
+
+            #endregion
+
 
             descriptor.Field("GetById")
                 .Type<ReceptionDocumentObjectType>()
