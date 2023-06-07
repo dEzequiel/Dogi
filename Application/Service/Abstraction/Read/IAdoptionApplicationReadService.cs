@@ -12,4 +12,13 @@ public interface IAdoptionApplicationReadService : IApplicationServiceBase
     /// <param name="ct"></param>
     /// <returns></returns>
     Task<AdoptionApplication> GetByIdAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>
+    /// Get all AdoptionApplications for a specific AdoptionPending.
+    /// </summary>
+    /// <param name="adoptionPendingId"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<IEnumerable<AdoptionApplication>> GetAllByAdoptionPendingIdAsync(Guid adoptionPendingId,
+        CancellationToken ct = default);
 }

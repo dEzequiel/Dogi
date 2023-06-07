@@ -56,6 +56,17 @@ namespace Api.GraphQL.ObjectTypes
 
             #endregion
 
+            #region "ADOPTION APPLICATION QUERIES"
+
+            descriptor.Field("GetAdoptionApplicationsFilterByAdoptionPendingId")
+                .Authorize(Permissions.CanReadAdoptionApplications.ToString())
+                .Type<ListType<AdoptionApplicationObjectType>>()
+                .Argument("adoptionPendingId", arg => arg.Type<NonNullType<UuidType>>())
+                .ResolveWith<AdoptionApplicationQueries>(q =>
+                    q.GetAllAdoptionApplicationsByAdoptionPendingId(default, default, default));
+
+            #endregion
+
             descriptor.Field("GetById")
                 .Type<ReceptionDocumentObjectType>()
                 .Argument("id", a => a.Type<NonNullType<UuidType>>())

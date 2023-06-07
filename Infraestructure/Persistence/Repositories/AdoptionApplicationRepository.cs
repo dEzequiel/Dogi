@@ -102,9 +102,19 @@ public class AdoptionApplicationRepository : IAdoptionApplicationRepository
         return true;
     }
 
-    public Task<bool> DeclinesApplicationAsync(Guid id, CancellationToken ct = default)
+    public Task<bool> DeclinesApplicationAsync(IEnumerable<Guid> id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public async Task<IEnumerable<AdoptionApplication>> GetAllByAdoptionPendingIdAsync(Guid adoptionPendingId,
+        CancellationToken ct = default)
+    {
+        var entities = await AdoptionApplications.Where(x =>
+            x.AdoptionPendingId == adoptionPendingId).ToListAsync(ct);
+
+        return entities;
     }
 
     private async Task CheckIfApplicationAlreadyDone(Guid adoptionPendingId, Guid userId)
