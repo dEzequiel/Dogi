@@ -1,8 +1,8 @@
-﻿using Application.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace Infraestructure.Persistence.Repositories
 {
@@ -43,14 +43,22 @@ namespace Infraestructure.Persistence.Repositories
             await Vaccines.AddRangeAsync(entities, ct);
         }
 
+        ///<inheritdoc />
+        public async Task<IEnumerable<Vaccine>> GetAllByAnimalCategoryAsync(int category,
+            CancellationToken ct = default)
+        {
+            return await Vaccines.Where(x => x.AnimalCategoryId == category).ToListAsync(ct);
+        }
+
         public Task<IEnumerable<Vaccine>> FindAsync(Expression<Func<Vaccine, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Vaccine>> GetAllAsync()
+        ///<inheritdoc />
+        public async Task<IEnumerable<Vaccine>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await Vaccines.ToListAsync();
         }
 
         public Task<Vaccine?> GetAsync(Guid id)

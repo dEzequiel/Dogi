@@ -11,5 +11,13 @@ namespace Application.Service.Abstraction.Read
         /// <param name="id"></param>
         /// <returns></returns>
         Task<IndividualProceeding?> GetByIdAsync(Guid id, CancellationToken ct = default);
+
+        /// <summary>
+        /// Get individual proceeding filter by status.
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        Task<IEnumerable<IndividualProceeding>> GetAllByStatusAsync(int status, CancellationToken ct = default);
     }
 }

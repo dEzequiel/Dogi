@@ -12,4 +12,10 @@ public interface IAdoptionPendingReadService : IApplicationServiceBase
     /// <param name="ct"></param>
     /// <returns></returns>
     Task<AdoptionPending> GetByIdAsync(Guid id, CancellationToken ct = default);
+
+    /// <summary>
+    /// Get all adoption pendings filter by status.
+    /// </summary>
+    /// <returns></returns>
+    Task<IEnumerable<AdoptionPending>> GetAllByStatusIdAsync(int status, CancellationToken ct = default);
 }

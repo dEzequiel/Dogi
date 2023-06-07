@@ -30,4 +30,12 @@ public interface IAdoptionPendingRepository : IRepository<AdoptionPending>
     /// <param name="ct"></param>
     /// <returns></returns>
     Task<bool> CloseAsync(Guid id, AdminData adminData, CancellationToken ct = default);
+
+    /// <summary>
+    /// Get all adoption pendings filter by status.
+    /// </summary>
+    /// <param name="status"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<IEnumerable<AdoptionPending>> GetAllByStatus(int status, CancellationToken ct = default);
 }

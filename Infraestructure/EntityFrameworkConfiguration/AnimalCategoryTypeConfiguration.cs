@@ -14,7 +14,7 @@ namespace Infraestructure.EntityFrameworkConfiguration
                 .IsClustered(false);
 
 
-            var totalAnimalCategories = Enum.GetNames(typeof(Domain.Enums.Shelter.AnimalCategory));
+            var totalAnimalCategories = Enum.GetNames(typeof(Domain.Enums.Shelter.AnimalCategories));
 
             int id = 0;
             foreach (var category in totalAnimalCategories)

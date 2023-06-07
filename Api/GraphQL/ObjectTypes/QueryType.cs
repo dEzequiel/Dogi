@@ -1,5 +1,9 @@
-﻿using Api.GraphQL.ObjectTypes.Shelter;
+﻿using Api.GraphQL.EnumType;
+using Api.GraphQL.ObjectTypes.Adoption;
+using Api.GraphQL.ObjectTypes.Shelter;
+using Api.GraphQL.ObjectTypes.Veterinary;
 using Api.GraphQL.Queries;
+using Domain.Enums.Authorization;
 using HotChocolate.Types.Pagination;
 
 namespace Api.GraphQL.ObjectTypes
@@ -12,17 +16,56 @@ namespace Api.GraphQL.ObjectTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
-            /*descriptor.Field("GetAllMedicalRecordByStatus")
-                .Type<ListType<MedicalRecordType>>()
-                .Argument("status", a => a.Type<NonNullType<IntType>>())
+            #region "INDIVIDUAL PROCEEDING QUERIES"
+
+            descriptor.Field("GetIndividualProceedingFilterByStatus")
+                .Authorize(Permissions.CanReadIndividualProceeding.ToString())
+                .Type<ListType<IndividualProceedingObjectType>>()
+                .Argument("status", arg => arg.Type<NonNullType<IndividualProceedingStatusEnumType>>())
+                .ResolveWith<IndividualProceedingQueries>(q => q.GetAllByStatus(default, default, default));
+
+            #endregion
+
+            #region "MEDICAL RECORDS QUERIES"
+
+            descriptor.Field("GetMedicalRecordsFilterByStatus")
+                .Authorize(Permissions.CanReadMedicalRecord.ToString())
+                .Type<ListType<MedicalRecordObjectType>>()
+                .Argument("status", arg => arg.Type<NonNullType<MedicalRecordStatusEnumType>>())
+                .ResolveWith<MedicalRecordQueries>(q => q.GetAllByStatus(default, default, default));
+
+            #endregion
+
+            #region "VACCINES QUERIES"
+
+            descriptor.Field("GetAllVaccinesByAnimalCategory")
+                .Authorize(Permissions.CanReadMedicalRecord.ToString())
+                .Type<ListType<VaccineObjectType>>()
+                .Argument("category", arg => arg.Type<AnimalCategoryEnumType>())
+                .ResolveWith<VaccineQueries>(q => q.GetAllByAnimalCategory(default, default, default));
+
+            #endregion
+
+            #region "ADOPTION PENDING QUERIES"
+
+            descriptor.Field("GetAdoptionPendingsFilterByStatus")
                 .Authorize()
-                .ResolveWith<VeterinaryManagerQueries>(q =>
-                    q.GetAllByStatus(default, default, default));
-            
-            descriptor.Field("GetAllMedicalRecord")
-                .Type<ListType<MedicalRecordType>>()
-                .ResolveWith<VeterinaryManagerQueries>(q => 
-                    q.GetAllAsync(default, default));*/
+                .Type<ListType<AdoptionPendingObjectType>>()
+                .Argument("status", arg => arg.Type<NonNullType<AdoptionPendingStatusEnumType>>())
+                .ResolveWith<AdoptionPendingQueries>(q => q.GetAllAdoptionPendingByStatus(default, default, default));
+
+            #endregion
+
+            #region "ADOPTION APPLICATION QUERIES"
+
+            descriptor.Field("GetAdoptionApplicationsFilterByAdoptionPendingId")
+                .Authorize(Permissions.CanReadAdoptionApplications.ToString())
+                .Type<ListType<AdoptionApplicationObjectType>>()
+                .Argument("adoptionPendingId", arg => arg.Type<NonNullType<UuidType>>())
+                .ResolveWith<AdoptionApplicationQueries>(q =>
+                    q.GetAllAdoptionApplicationsByAdoptionPendingId(default, default, default));
+
+            #endregion
 
             descriptor.Field("GetById")
                 .Type<ReceptionDocumentObjectType>()

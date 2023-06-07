@@ -39,6 +39,23 @@ public class AdoptionApplicationRead : IAdoptionApplicationReadService
     }
 
     ///<inheritdoc />
+    public async Task<IEnumerable<AdoptionApplication>> GetAllByAdoptionPendingIdAsync(Guid adoptionPendingId,
+        CancellationToken ct = default)
+    {
+        _logger.LogInformation($"AdoptionApplicationRead --> GetAllByAdoptionPendingId({adoptionPendingId}) --> Start");
+
+        Guard.Against.NullOrEmpty(adoptionPendingId, nameof(adoptionPendingId));
+
+        var repository = _unitOfWork.AdoptionApplicationRepository;
+
+        var applications = await repository.GetAllByAdoptionPendingIdAsync(adoptionPendingId, ct);
+
+        _logger.LogInformation($"AdoptionApplicationRead --> GetByIdAsync --> End");
+
+        return applications;
+    }
+
+    ///<inheritdoc />
     public void Dispose()
     {
         _unitOfWork.Dispose();

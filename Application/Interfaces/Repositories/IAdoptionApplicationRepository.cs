@@ -38,5 +38,14 @@ public interface IAdoptionApplicationRepository : IRepository<AdoptionApplicatio
     /// <param name="id"></param>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<bool> DeclinesApplicationAsync(Guid id, CancellationToken ct = default);
+    Task<bool> DeclinesApplicationAsync(IEnumerable<Guid> id, CancellationToken ct = default);
+
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="adoptionPendingId"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<IEnumerable<AdoptionApplication>> GetAllByAdoptionPendingIdAsync(Guid adoptionPendingId,
+        CancellationToken ct = default);
 }

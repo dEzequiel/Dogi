@@ -6,7 +6,7 @@ namespace Api.GraphQL.ObjectTypes.Veterinary
     {
         protected override void Configure(IObjectTypeDescriptor<MedicalRecordStatus> descriptor)
         {
-            descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordType>>();
+            descriptor.Field(f => f.MedicalRecords).Type<ListType<MedicalRecordObjectType>>();
         }
     }
 }

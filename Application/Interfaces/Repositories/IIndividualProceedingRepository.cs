@@ -29,7 +29,7 @@ namespace Application.Interfaces.Repositories
         /// <param name="status"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(IndividualProceedingStatuses status,
+        Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(int status,
             CancellationToken ct = default);
 
         /// <summary>

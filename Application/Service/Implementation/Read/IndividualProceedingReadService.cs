@@ -39,6 +39,23 @@ namespace Application.Service.Implementation.Read
         }
 
         ///<inheritdoc />
+        public async Task<IEnumerable<IndividualProceeding>> GetAllByStatusAsync(int status,
+            CancellationToken ct = default)
+        {
+            Logger.LogInformation($"IndividualProceedingReadService --> GetAllByStatusAsync({status}) --> Start");
+
+            Guard.Against.Null(status, nameof(status));
+
+            var repository = UnitOfWork.IndividualProceedingRepository;
+
+            var individualProceedings = await repository.GetAllFilterByStatusAsync(status);
+
+            Logger.LogInformation($"IndividualProceedingReadService --> GetAllByStatusAsync({status}) --> End");
+
+            return individualProceedings;
+        }
+
+        ///<inheritdoc />
         public void Dispose()
         {
             UnitOfWork.Dispose();

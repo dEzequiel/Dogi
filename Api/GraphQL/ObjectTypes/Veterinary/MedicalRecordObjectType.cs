@@ -2,7 +2,7 @@
 
 namespace Api.GraphQL.ObjectTypes.Veterinary
 {
-    public class MedicalRecordType : ObjectType<MedicalRecord>
+    public class MedicalRecordObjectType : ObjectType<MedicalRecord>
     {
         protected override void Configure(IObjectTypeDescriptor<MedicalRecord> descriptor)
         {
