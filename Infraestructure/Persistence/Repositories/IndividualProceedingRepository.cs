@@ -71,10 +71,10 @@ namespace Infraestructure.Persistence.Repositories
 
         /// <inheritdoc/>
         public async Task<IEnumerable<IndividualProceeding>> GetAllFilterByStatusAsync(
-            IndividualProceedingStatuses status, CancellationToken ct = default)
+            int status, CancellationToken ct = default)
         {
-            return await _individualProceedings.AsNoTracking()
-                .Where(x => x.IndividualProceedingStatusId == ((int)status))
+            return await _individualProceedings
+                .Where(x => x.IndividualProceedingStatusId == status)
                 .ToListAsync();
         }
 

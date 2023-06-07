@@ -15,7 +15,17 @@ namespace Api.GraphQL.ObjectTypes
         ///<inheritdoc/>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
-            descriptor.Field("GetMedicalRecordsWaitingForRevision")
+            #region "INDIVIDUAL PROCEEDING QUERIES"
+
+            descriptor.Field("GetIndividualProceedingFilterByStatus")
+                .Authorize(Permissions.CanReadIndividualProceeding.ToString())
+                .Type<ListType<IndividualProceedingObjectType>>()
+                .Argument("status", arg => arg.Type<NonNullType<IndividualProceedingStatusEnumType>>())
+                .ResolveWith<IndividualProceedingQueries>(q => q.GetAllByStatus(default, default, default));
+
+            #endregion
+
+            descriptor.Field("GetMedicalRecordsFilterByStatus")
                 .Authorize(Permissions.CanReadMedicalRecord.ToString())
                 .Type<ListType<MedicalRecordObjectType>>()
                 .Argument("status", arg => arg.Type<NonNullType<MedicalRecordStatusEnumType>>())
