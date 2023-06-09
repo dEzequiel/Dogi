@@ -1,5 +1,5 @@
-using System.Security.Claims;
-using System.Text;
+
+
 using Api.GraphQL.ObjectTypes;
 using Application;
 using Infraestructure;
@@ -7,10 +7,13 @@ using Infraestructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+Console.WriteLine("Hello, World!");
 
 builder.Services.AddControllers();
 
@@ -57,10 +60,10 @@ builder.Services.AddTransient<ClaimsPrincipal>(s =>
 /// </summary>
 builder.Services
     .AddGraphQLServer()
-    .AddAuthorization()
     .AddApiTypes()
     .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
     .RegisterDbContext<ApplicationDbContext>()
+    .AddAuthorization()
     .AddQueryType<QueryType>()
     .AddMutationType<MutationType>();
 
@@ -77,8 +80,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         .EnableDetailedErrors();
 });
 
-var app = builder.Build();
 
+var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -105,5 +108,6 @@ app.UseAuthentication();
 
 app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
 
+Console.WriteLine("Contruida");
 
 app.Run();
