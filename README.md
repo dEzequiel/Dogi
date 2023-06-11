@@ -1,5 +1,22 @@
 # Dogi
 
+La aplicación se encuentra corriendo en la siguiente [dirección](https://hotapi.azurewebsites.net/graphql).
+
+# Tabla de Contenidos
+
+- [Introducción](#introducción)
+- [Descripción técnica](#descripción-técnica)
+  - [Requisitos funcionales y no funcionales](#requisitos-funcionales-y-no-funcionales)
+- [Arquitectura de la aplicación](#arquitectura-de-la-aplicación)
+  - [Componentes](#componentes)
+- [Modelo de datos](#modelo-de-datos)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Metodología de desarrollo](#metodología-de-desarrollo)
+- [Justificacion temporal](#justificacion-temporal)
+- [Conclusiones](#conclusiones)
+  - [Posibles mejoras](#posibles-mejoras)
+  - [Principales dificultades](#principales-dificultades)
+
 
 ## Introducción
 
@@ -102,7 +119,7 @@ Los actores que se involucran en el sistema son 3. Dos de ellos son trabajadores
 
 ![Dogi Data Model](https://github.com/dEzequiel/Dogi/assets/91556738/c4af4170-437c-442d-8b3b-dafd2e6e1477)
 
-## Tecnologías utilizada
+## Tecnologías utilizadas
 
 [C#]()
 
@@ -130,6 +147,16 @@ Por ejemplo, cuando se realizaba el módulo de bienvenida (WelcomeManager) se em
 Otro ejemplo sería el módulo de veterinaria (VeterinaryManager) donde se empezó desarrollando la implementación que permita a un usuario normal realizar aplicaciones encima de una adopción disponible. Al terminarla la implementación se tiene en mente la pregunta "a que estás aplicando?
 
 Esto ha tenido muchos frutos a nivel personal y de conocimientos para organizar código o ideas que no están encima del papel pero que a futuro lo estarán.
+
+# Justificacion temporal
+
+![tiempo](https://github.com/dEzequiel/Dogi/assets/91556738/4a4bc5e8-f90c-4215-87fc-8f6ad3d37366)
+
+Con el trazamiento del tiempo invertido en el proyecto no he tenido problema cuando empecé a desarrollar los módulos. Como se dijo antes, nada de experiencia en el dominio se traduce en que el módulo de recepción, donde todo empieza, fue donde más tiempo se invirtió, duplicando el tiempo que se había establecido en el anteproyecto. En el anteproyecto no sale reflejado las horas que se han invertido en investigación fuera de la implementación de los protocolos de actuación y actividades que realizan las protectoras de animales. Esta investigación se hizo antes de empezar a trazar regularmente el tiempo invertido en el proyecto. No fue algo que tuve en mente trazar, lo hacía en mis horas libres navegando por internet, poniéndome en contacto específicamente con la perrera de Son Reus y leyendo PDF.
+
+Las franjas de algunos módulos se dividen en un mismo bloque al ver que no se podía avanzar en la implementación de x módulo sin tener la implementación y de un módulo. Por ejemplo, el módulo de veterinaria no se podría empezar a desarrollar si no existiese el módulo de expediente individual.
+
+He de admitir que el trazar el tiempo de desarrollo al principio del proyecto cuando no se tiene asumido todo se hace fácil, una tarea regular y cotidiana, pero cuando se me empezaban a venir los días encima se me hizo más complicado siempre.
 
 # Conclusiones
 
@@ -160,3 +187,7 @@ Con Azure he invertido/gastado gran cantidad de tiempo conociendo que servicios 
 - ¿Es Azure Functions la mejor forma de desplegar una API GraphQL?
 
 Otra dificultad con la cual lidie unos 2-3 dias fue entender como Hotchocolate se comportaba junto al sistema de autenticación de .NET. Al principio tenia la idea de que Hotchocolate se encargaría tanto de la autenticación como de la autorización pero no era así. La autenticación corre por parte de .NET y la autorización corre (si así se decide) por parte de Hotchocolate. Gaste tiempo desarrollando un middleware para la autenticación que verificaba el token JWT del usuario, cuando un middleware ya viene incluido para autenticar al usuario (reinventando la rueda como un champion).
+
+## Conclusión
+
+Disfrute haciendo este proyecto, la idea, la misión y la tecnología. El proyecto continuará su desarrollo hasta un producto final gratuito que se pueda implementar, es mi objetivo para estos 6 meses de año que quedan.
