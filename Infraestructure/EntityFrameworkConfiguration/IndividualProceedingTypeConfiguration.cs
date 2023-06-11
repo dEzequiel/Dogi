@@ -1,0 +1,47 @@
+﻿using Domain.Entities;
+using Domain.Entities.Shelter;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Infraestructure.EntityFrameworkConfiguration
+{
+    public class IndividualProceedingTypeConfiguration : IEntityTypeConfiguration<IndividualProceeding>
+    {
+        public void Configure(EntityTypeBuilder<IndividualProceeding> builder)
+        {
+            builder
+                .ToTable("IndividualProceeding", "Shelter")
+                .HasKey(x => x.Id)
+                .IsClustered(false);
+
+            builder.HasOne<ReceptionDocument>(f => f.ReceptionDocument)
+                .WithOne(r => r.IndividualProceeding)
+                .HasForeignKey<IndividualProceeding>(rd => rd.ReceptionDocumentId);
+
+            builder.HasOne<IndividualProceedingStatus>(b => b.IndividualProceedingStatus)
+                .WithMany(p => p.IndivualProceedings)
+                .HasForeignKey(fk => fk.IndividualProceedingStatusId);
+
+            builder.HasOne<AnimalCategory>(f => f.AnimalCategory)
+                .WithMany(r => r.IndividualProceedings)
+                .HasForeignKey(fk => fk.CategoryId);
+
+            builder.HasOne<Cage>(f => f.Cage)
+                .WithOne(r => r.IndividualProceeding)
+                .HasForeignKey<IndividualProceeding>(rd => rd.CageId);
+
+            builder.HasOne<Sex>(f => f.Sex)
+                .WithMany(r => r.IndividualProceedings)
+                .HasForeignKey(fk => fk.SexId);
+
+
+            builder.HasMany(p => p.MedicalRecords)
+                .WithOne(p => p.IndividualProceeding)
+                .HasForeignKey(p => p.IndividualProceedingId);
+
+            builder.HasOne<VaccinationCard>(f => f.VaccinationCard)
+                .WithOne(r => r.IndividualProceeding)
+                .HasForeignKey<IndividualProceeding>(fk => fk.VaccinationCardId);
+        }
+    }
+}

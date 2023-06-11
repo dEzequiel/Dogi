@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Api DB Local": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "graphql",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DogiConnection": "Server=localhost,2433;Database=DogiDB;User Id=sa;Password=password!1234;trustServerCertificate=true"
+
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    }
+  }
+}
