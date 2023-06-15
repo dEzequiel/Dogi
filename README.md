@@ -55,7 +55,9 @@ dotnet run \Api\Api.csproj
 
 La aplicación estuvo corriendo unos días en los servidores de aplicaciones web de Azure, junto a la base de datos en los servicios de bases de datos. He tenido que dar de baja a estos servicios hasta la fecha 12/06/2023 por el costo imprevisto que me supuso tener la base de datos en marcha.
 
-Actualmente hay una deuda que me impide poder utilizar sus servicios y, por lo tanto, seguir dando hospedaje a la aplicación.
+Actualmente, hay una deuda que me impide poder utilizar sus servicios y, por lo tanto, seguir dando hospedaje a la aplicación.
+
+Durante la implementación del despliegue tuve muchos problemas y dudas, fue algo que nunca había realizado ni experimentado al nivel de una aplicación web completa con dependencias externas al propio código. Al principio vinieron las dudas mencionadas en el apartado de [Principales dificultades](#principales-dificultades) y se terminó compilando la aplicación dentro de un contenedor Docker y desplegándolo en Azure App Service. El propio código es el encargado mediante un middleware de cargar ese IDE de Banana Cake Pop que tantas dudas tuve de donde desplegarlo.
 
 ## Presupuesto
 
