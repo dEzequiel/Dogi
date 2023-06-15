@@ -55,9 +55,7 @@ dotnet run \Api\Api.csproj
 
 La aplicación estuvo corriendo unos días en los servidores de aplicaciones web de Azure, junto a la base de datos en los servicios de bases de datos. He tenido que dar de baja a estos servicios hasta la fecha 12/06/2023 por el costo imprevisto que me supuso tener la base de datos en marcha.
 
-Tengo una deuda con Azure (+100 euros) que me impide poder utilizar sus servicios y, por lo tanto, seguir dando hospedaje a la aplicación.
-
-Cuando abone la deuda volverá a estar operativa, por ahora no acarrearé ese coste.
+Actualmente hay una deuda que me impide poder utilizar sus servicios y, por lo tanto, seguir dando hospedaje a la aplicación.
 
 # Descripción técnica
 
