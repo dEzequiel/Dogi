@@ -5,6 +5,9 @@ La aplicación se encuentra corriendo en la siguiente [dirección](https://hota
 # Tabla de Contenidos
 
 - [Introducción](#introducción)
+- [Instalación](#instalación)
+- [Despliegue](#despliegue)
+- []
 - [Descripción técnica](#descripción-técnica)
   - [Requisitos funcionales y no funcionales](#requisitos-funcionales-y-no-funcionales)
 - [Arquitectura de la aplicación](#arquitectura-de-la-aplicación)
@@ -23,6 +26,38 @@ La aplicación se encuentra corriendo en la siguiente [dirección](https://hota
 El objetivo del proyecto es exponer una API que pueda ser integrada y sirva para cualquier protectora de animales facilitando las tareas básicas y estándar de este tipo de establecimientos.
 
 Tareas como nuevos registros, expedientes individuales, adopciones, vacunaciones, revisiones médicas
+
+## Instalación
+
+Necesitas cumplir los siguientes requisitos para poder ejecutar el proyecto.
+
+- NET 6.
+- Windows o sistema Linux.
+
+## Instrucciones
+
+Clona el repositorio.
+```shell
+git clone git@github.com:dEzequiel/Dogi.git
+cd Dogi
+```
+
+Construye el proyecto con sus dependencias.
+```shell
+dotnet build
+```
+
+Ejecuta el proyecto principal.
+```shell
+dotnet run \Api\Api.csproj
+```
+## Despliegue
+
+La aplicación estuvo corriendo unos días en los servidores de aplicaciones web de Azure, junto a la base de datos en los servicios de bases de datos. He tenido que dar de baja a estos servicios hasta la fecha 12/06/2023 por el costo imprevisto que me supuso tener la base de datos en marcha.
+
+Tengo una deuda con Azure (+100 euros) que me impide poder utilizar sus servicios y, por lo tanto, seguir dando hospedaje a la aplicación.
+
+Cuando abone la deuda volverá a estar operativa, por ahora no acarrearé ese coste.
 
 # Descripción técnica
 
