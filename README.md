@@ -1,7 +1,5 @@
 # Dogi
 
-La aplicación se encuentra corriendo en la siguiente [dirección](https://hotapi.azurewebsites.net/graphql).
-
 # Tabla de Contenidos
 
 - [Introducción](#introducción)
