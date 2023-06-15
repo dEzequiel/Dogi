@@ -7,7 +7,7 @@ La aplicación se encuentra corriendo en la siguiente [dirección](https://hota
 - [Introducción](#introducción)
 - [Instalación](#instalación)
 - [Despliegue](#despliegue)
-- []
+- [Presupuesto](#presupuesto)
 - [Descripción técnica](#descripción-técnica)
   - [Requisitos funcionales y no funcionales](#requisitos-funcionales-y-no-funcionales)
 - [Arquitectura de la aplicación](#arquitectura-de-la-aplicación)
@@ -55,7 +55,17 @@ dotnet run \Api\Api.csproj
 
 La aplicación estuvo corriendo unos días en los servidores de aplicaciones web de Azure, junto a la base de datos en los servicios de bases de datos. He tenido que dar de baja a estos servicios hasta la fecha 12/06/2023 por el costo imprevisto que me supuso tener la base de datos en marcha.
 
-Actualmente hay una deuda que me impide poder utilizar sus servicios y, por lo tanto, seguir dando hospedaje a la aplicación. (Hay pruebas de que estuvo operativa) Estoy buscando otra opcion.
+Actualmente hay una deuda que me impide poder utilizar sus servicios y, por lo tanto, seguir dando hospedaje a la aplicación.
+
+## Presupuesto
+
+Servicio Base de datos Azure SQL el coste se calcula según el consumo que se haga de la base de datos. Las estimaciones de Azure son 0.5218$/hora de núcleo virtual con la serie que estoy utilizando para el desarrollo. Cuando se desplego no se presto atencion a la serie escogida y supuso un cargo mayor.
+
+Durante el desarrollo hice uso de Visual Studio Enterprise (250$) pero con una licencia otorgada por mi puesto de trabajo. A finales del proyecto cambie a Rider un IDE de Jetbrains (€149) con una licencia otorgada por el centro de estudios.
+
+La aplicacion web se desplego haciendo uso de Azure App Service con una serie gratuita.
+
+Basándonos en la duración del proyecto de 137 horas, se estima que el costo de la Base de Datos Azure SQL sería de aproximadamente 142.41 $ (considerando 0.5218 $/hora/núcleo virtual y el consumo real).
 
 # Descripción técnica
 
