@@ -67,6 +67,8 @@ La aplicacion web se desplego haciendo uso de Azure App Service con una serie gr
 
 Basándonos en la duración del proyecto de 137 horas, se estima que el costo de la Base de Datos Azure SQL sería de aproximadamente 142.41 $ (considerando 0.5218 $/hora/núcleo virtual y el consumo real).
 
+Si contabilizamos las 137 horas a un sueldo por hora promedio de programador junior en España de 15 euros la hora, saldría 15 euros/hora * 137 horas = 2.055 euros.
+
 # Descripción técnica
 
 ## Requisitos funcionales y no funcionales
