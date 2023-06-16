@@ -193,6 +193,8 @@ Otro ejemplo sería el módulo de veterinaria (VeterinaryManager) donde se empez
 
 Esto ha tenido muchos frutos a nivel personal y de conocimientos para organizar código o ideas que no están encima del papel pero que a futuro lo estarán.
 
+Se trabajo sobre dos ramas principales, master y develop. Se creaban ramas para una tarea en especifica con prefijo fix/ test/ bug/ feature/ y se mergeaban a develop.
+
 # Justificacion temporal
 
 ![tiempo](https://github.com/dEzequiel/Dogi/assets/91556738/4a4bc5e8-f90c-4215-87fc-8f6ad3d37366)
